@@ -255,7 +255,7 @@ public abstract class HarvesterVerb
         this.requestURL = requestURL;
         InputStream in = null;
         URL url = new URL(requestURL);
-        HttpURLConnection con = null;
+        HttpURLConnection con = null; 
         int responseCode = 0;
         do
         {
@@ -267,6 +267,8 @@ public abstract class HarvesterVerb
                 {
                     HttpsHack.disableCertCheck();
                     con = (HttpsURLConnection)url.openConnection();
+                    con.setInstanceFollowRedirects(true);
+                    HttpURLConnection.setFollowRedirects(true);
                 }
                 catch (Exception e)
                 {
@@ -276,7 +278,10 @@ public abstract class HarvesterVerb
             else
             {
                 con = (HttpURLConnection)url.openConnection(); 
+                con.setInstanceFollowRedirects(true);
+                HttpURLConnection.setFollowRedirects(true);
             }
+
             con.setConnectTimeout(10000);
             con.setRequestProperty("User-Agent", "OAIHarvester/2.0");
             con.setRequestProperty("Accept-Encoding",
@@ -284,7 +289,43 @@ public abstract class HarvesterVerb
             try
             {
                 responseCode = con.getResponseCode();
-                log.debug("responseCode=" + responseCode);
+                log.info("Server response:=" + responseCode + " @url: "+ requestURL);
+                boolean redirect = false;
+
+                int status = con.getResponseCode();
+                if (status != HttpURLConnection.HTTP_OK) {
+                    if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                        || status == HttpURLConnection.HTTP_MOVED_PERM
+                            || status == HttpURLConnection.HTTP_SEE_OTHER)
+                    redirect = true;
+                }
+                if (redirect) {
+                    String redirectUrl = con.getHeaderField("Location");
+                    URL newUrl = new URL(redirectUrl);
+                    log.info("Redirect to url: "+ redirectUrl);
+                    protocol = newUrl.getProtocol();  
+                    secure = "https".equals(protocol);
+                    if(secure)
+                    {
+                        try
+                        {
+                            HttpsHack.disableCertCheck();
+                            con = (HttpsURLConnection)newUrl.openConnection();
+                            con.setInstanceFollowRedirects(true);
+                            HttpURLConnection.setFollowRedirects(true);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new IOException("unable to allow connection to url: " + redirectUrl);
+                        }               
+                    }
+                    
+                    con = (HttpURLConnection)newUrl.openConnection();
+                    con.setConnectTimeout(10000);
+                    con.setRequestProperty("User-Agent", "OAIHarvester/2.0");
+                    con.setRequestProperty("Accept-Encoding",
+                        "compress, gzip, identify");
+                }
             }
             catch (FileNotFoundException e)
             {
