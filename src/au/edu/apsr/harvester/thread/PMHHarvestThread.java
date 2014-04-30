@@ -1,7 +1,7 @@
 /**
  * Date Modified: $Date: 2009-08-18 12:43:25 +1000 (Tue, 18 Aug 2009) $
  * Version: $Revision: 84 $
- * 
+ *
  * Copyright 2008 The Australian National University (ANU)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,9 +37,9 @@ import au.edu.apsr.harvester.oai.ListRecords;
  * PMH Harvest is not worried about any other request other
  * than ListRecords. Identify is used to obtain granularity and
  * earliestDatestamp, other requests are currently unused.
- * 
+ *
  * This is the "normal" OAI-PMH harvest class.
- * 
+ *
  * <p>This harvest:
  * <ul><li>harvests from an OAI-PMH data provider</li>
  * <li>only makes use of ListRecord and Identify requests</li>
@@ -47,15 +47,19 @@ import au.edu.apsr.harvester.oai.ListRecords;
  * <li>posts each fragment to a target service</li>
  * <li>on successful completion deletes all fragments stored during the harvest</li>
  * </ul></p>
- * 
+ *
  * @author Scott Yeadon, ANU
  */
 public class PMHHarvestThread extends HarvestThread
 {
     private final Logger log = Logger.getLogger(PMHHarvestThread.class);
-    
+
     private ThreadManager threadManager = null;
 
+    // following fields only used when debugging
+    private int numRecordsRcvd = 0;
+    private int numRecordsSent = 0;
+    private String errorMsg = "";
     /**
      * Constructor obtains a reference to the Thread Manager
      */
@@ -63,7 +67,7 @@ public class PMHHarvestThread extends HarvestThread
     {
         threadManager = ThreadManager.getThreadManager();
     }
-    
+
 
     /**
      * execute the harvest
@@ -77,32 +81,44 @@ public class PMHHarvestThread extends HarvestThread
                 log.info("harvest stopped by user or is running, harvest will not be executed: " + harvest.getHarvestID());
                 return;
             }
-
             threadManager.setThreadRunning(this.harvest);
-            
+
             log.info("harvest running: " + harvest.getHarvestID());
 
-            setResumptionToken(harvest.getResumptionToken());
-            
+            // Commented out due to short expiry on resumption token
+            // on ORCA application. If a previous resumption token is used
+            // chances are high it has expired so currently this harvest
+            // does not support resuming a harvest, it will start from
+            // scratch.
+            // Uncomment the following code to use stored resumption
+            // token. More targetted error handling may also be
+            // necessary if this is done (e.g. what to do if a badResumptionToken
+            // error is received).
+            //setResumptionToken(harvest.getResumptionToken());
+
+
             if (getResumptionToken() == null)
             {
-                Identify identify = new Identify(harvest.getSourceURL()); 
-                Document doc = identify.getDocument();
-                
-                if (doc == null)
+                Identify identify = new Identify(harvest.getSourceURL());
+
+                Document identifyDoc = identify.getDocument();
+
+                if (identifyDoc == null)
                 {
-                    throw new IOException("Response from Identify is null");
+                	errorMsg += "Response from Identify is null\n";
+                	postError(errorMsg, harvest, "application/x-www-form-urlencoded", harvest.getHarvestID());
+                	throw new IOException("Response from Identify is null");
                 }
 
-                NodeList n = doc.getElementsByTagName("granularity");
-                if (n.getLength() == 1)
+                NodeList nl = identifyDoc.getElementsByTagName("granularity");
+                if (nl.getLength() == 1)
                 {
-                    setGranularity(n.item(0).getTextContent());
+                    setGranularity(nl.item(0).getTextContent());
                 }
-                
+
                 if (harvest.getFrom() == null)
                 {
-                    NodeList nl2 = doc.getElementsByTagName("earliestDatestamp");
+                    NodeList nl2 = identifyDoc.getElementsByTagName("earliestDatestamp");
                     if (nl2.getLength() == 1)
                     {
                         setFrom(nl2.item(0).getTextContent());
@@ -112,14 +128,14 @@ public class PMHHarvestThread extends HarvestThread
                 {
                     setFrom(harvest.getFrom());
                 }
-                
-                getFragment(identify.toString(), "Identify");
             }
-            
-            setPMHArguments();            
-            
+
+            setPMHArguments();
+
             ListRecords listRecords;
-            
+
+
+
             if (getResumptionToken() == null || getResumptionToken().length() == 0)
             {
                 if ((harvest.getSet() == null) || (harvest.getSet().length() == 0))
@@ -130,16 +146,27 @@ public class PMHHarvestThread extends HarvestThread
                 {
                     setSet(harvest.getSet());
                 }
-                
-                listRecords = 
-                    new ListRecords(harvest.getSourceURL(), getFrom(), getUntil(), null, getMetadataPrefix());
+                log.info("first ListRecords call for " + harvest.getHarvestID());
+                log.debug("source="+harvest.getSourceURL() + " from=" + getFrom() + " until=" + getUntil() + " set=" + getSet() + " mp=" + getMetadataPrefix());
+
+                //if the harvest is not incremental, remove datefrom and dateuntil from list records
+                //log.info("HARVEST AHM: "+harvest.getAHM());
+                if(harvest.getAHM() != null && !harvest.getAHM().equals("INCREMENTAL")){
+                    setFrom(null);
+                    setUntil(null);
+                }
+
+                log.info("source="+harvest.getSourceURL() + " from=" + getFrom() + " until=" + getUntil() + " set=" + getSet() + " mp=" + getMetadataPrefix());
+                listRecords =
+                    new ListRecords(harvest.getSourceURL(), getFrom(), getUntil(), getSet(), getMetadataPrefix());
             }
             else
             {
-                listRecords = 
+                log.debug("source="+harvest.getSourceURL() + " from=" + getFrom() + " until=" + getUntil() + " set=" + getSet() + " mp=" + getMetadataPrefix());
+                listRecords =
                     new ListRecords(harvest.getSourceURL(), getResumptionToken());
             }
- 
+
             boolean error = false;
             boolean last = false;
 
@@ -149,70 +176,93 @@ public class PMHHarvestThread extends HarvestThread
                 if (errors != null && errors.getLength() > 0)
                 {
                     log.error("Errors in ListRecords response");
+                    errorMsg += "Errors in ListRecords response\n";
                     int length = errors.getLength();
                     for (int i=0; i<length; ++i)
                     {
                         Element item = (Element)errors.item(i);
-                        log.error(item.getTagName() + ":" + 
-                                  item.getAttribute("code") + ":" + 
+                        log.error(item.getTagName() + ":" +
+                                  item.getAttribute("code") + ":" +
                                   item.getTextContent());
-                        
+                        errorMsg += item.getTagName() + ":" +
+                        item.getAttribute("code") + ":" +
+                        item.getTextContent();
+
                         if (item.getAttribute("code").equals(NO_RECORDS))
                         {
-                            error = false;
+                            if (item.getTextContent().contains("server error"))
+                            {
+                                error = true;
+                                break;
+                            }
+                            else
+                            {
+                                error = false;
+                            }
                         }
                         else
                         {
                             error = true;
-                        }                        
+                            break;
+                        }
                     }
 
                     if (error)
                     {
-                        log.error(listRecords.toString());
-                        break;
+                    	postError(errorMsg, harvest, "application/x-www-form-urlencoded", harvest.getHarvestID());
+                    	break;
                     }
                 }
-                
+
                 Fragment frag = getFragment(listRecords.toString(), "ListRecords");
-                
-                if (threadManager.isStopped(harvest))
-                {
-                    log.info("harvest id stopped: " + harvest.getHarvestID());
-                    return;
-                }
-                
-                if ((listRecords.getResumptionToken().length()==0) || (harvest.getMode().equals(Constants.MODE_TEST)))
+
+                if ((listRecords.getResumptionToken().length()==0)  || (harvest.getMode().equals(Constants.MODE_TEST)))
                 {
                     last = true;
                 }
-                
+
+                String oldToken = getResumptionToken();
+                if(oldToken != null && oldToken.equals(listRecords.getResumptionToken()))
+                {
+                    last = true;
+                }
+
                 postFragment(frag, harvest, "application/x-www-form-urlencoded", last);
 
-                if (harvest.getMode().equals("test"))
+                if (harvest.getMode().equals(Constants.MODE_TEST))
                 {
                     threadManager.setThreadComplete(harvest);
                     return;
                 }
-                
+                log.info(harvest.getHarvestID() + " OLD resumption token = " + getResumptionToken());
+                log.info(harvest.getHarvestID() + " resumption token = " + listRecords.getResumptionToken());
                 if (listRecords.getResumptionToken().length() > 0)
                 {
-                    setResumptionToken(listRecords.getResumptionToken());
+
+                    if(oldToken == null || !(oldToken.equals(listRecords.getResumptionToken())))
+                    {
+                        setResumptionToken(listRecords.getResumptionToken());
+                    }
+                    else
+                    {
+                        setResumptionToken(null);
+                        log.info("harvest " + harvest.getHarvestID() + " resumption token same as previous so no more records will be retrieved.");
+                   }
                 }
                 else
                 {
                     setResumptionToken(null);
                 }
-                
+
                 if (threadManager.isStopped(harvest))
                 {
                     log.info("harvest id stopped: " + harvest.getHarvestID());
                     return;
                 }
-                
+
                 harvest.setResumptionToken(getResumptionToken());
                 harvest.update();
-                
+                log.info("harvester is updated");
                 if (getResumptionToken() == null || getResumptionToken().length() == 0)
                 {
                     log.info("harvest " + harvest.getHarvestID() + " has no ListRecords resumption token, no more records will be retrieved.");
@@ -222,9 +272,9 @@ public class PMHHarvestThread extends HarvestThread
                 {
                     log.info("harvest " + harvest.getHarvestID() + " ListRecords resumption token: " + getResumptionToken());
                     listRecords = new ListRecords(harvest.getSourceURL(), getResumptionToken());
-                }                
+                }
             }
-            
+
             if (error)
             {
                 log.info("harvest id errored: " + harvest.getHarvestID());
@@ -232,53 +282,66 @@ public class PMHHarvestThread extends HarvestThread
             }
             else
             {
-                // end of harvest - set next from/until dates for next
-                // incremental harvest
+                //end of harvest - set next from/until dates
+                //uncomment the following lines for incremental harvesting
                 harvest.setFrom(getNextFromDate());
                 harvest.setUntil(null);
                 threadManager.setThreadComplete(harvest);
                 log.info("harvest id completed: " + harvest.getHarvestID());
+                log.debug(harvest.getHarvestID() + " total records received:" + numRecordsRcvd);
+                log.debug(harvest.getHarvestID() + " total records sent:" + numRecordsSent);
             }
         }
         catch (IOException ioe)
         {
-            log.error("IOExcpetion", ioe);
+            log.error("IOException", ioe);
             try
             {
-                threadManager.setThreadError(harvest);
+            	log.info("IOException: so trying no notify ORCA");
+            	postError(ioe.toString(), harvest, "application/x-www-form-urlencoded", harvest.getHarvestID());
+            	threadManager.setThreadError(harvest);
             }
             catch (DAOException daoe)
             {
                 log.error("DAOException", daoe);
-                try
-                {
-                    if (Harvest.find(harvest.getHarvestID()) == null)
-                    {
-                        // in this case, this is OK since on cancel the harvest
-                        // needs to be deleted on cancel
-                        log.info("It appears the harvest was deleted while running");
-                    }
-                }
-                catch (DAOException daoe2)
-                {
-                    log.error("DAOException encountered when attempting to find harvest", daoe2);                
-                }
+            }
+            catch (IOException ioe2)
+            {
+                log.error("IOException", ioe2);
             }
         }
         catch (DAOException daoe)
         {
             log.error("DAOException", daoe);
+            try
+            {
+                if (Harvest.find(harvest.getHarvestID()) == null)
+                {
+                    // in this case, this is OK since on cancel the harvest
+                    // needs to be deleted on cancel
+                    log.info("It appears the harvest was deleted while running");
+                }
+            }
+            catch (DAOException daoe2)
+            {
+                log.error("DAOException while attempting to find harvest", daoe2);
+            }
         }
         catch (Exception e)
         {
-            log.error("An Exception was encountered", e);
+            log.error("An Exception occurred", e);
             try
             {
+                postError(e.toString(), harvest, "application/x-www-form-urlencoded", harvest.getHarvestID());
                 threadManager.setThreadError(harvest);
             }
             catch (DAOException daoe)
             {
                 log.error("DAOException", daoe);
+            }
+            catch (IOException ioe2)
+            {
+                log.error("IOException", ioe2);
             }
         }
     }
