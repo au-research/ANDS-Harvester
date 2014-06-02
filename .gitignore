@@ -1,0 +1,13 @@
+__pycache__
+harvest_handlers/__pycache__
+log
+cert.pem
+harvester_definition.json
+myconfig.py
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+._*
+# Icon?
+Thumbs.db
