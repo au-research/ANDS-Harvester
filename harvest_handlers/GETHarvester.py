@@ -14,4 +14,5 @@ class GETHarvester(Harvester):
     def harvest(self):
         self.getHarvestData()
         self.storeHarvestData()
+        self.postHarvestData()
         self.finishHarvest()

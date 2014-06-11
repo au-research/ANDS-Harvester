@@ -733,7 +733,7 @@
         <xsl:param name="parent"/>
         <xsl:for-each select="$parent/resources">
             <xsl:variable name="url" select="normalize-space(url)"/>
-            <xsl:message>url: <xsl:value-of select="$url"/></xsl:message>
+            <!--xsl:message>url: <xsl:value-of select="$url"/></xsl:message-->
             <xsl:if test="string-length($url)">
                 <xsl:choose>
                     <xsl:when test="contains($url, '?')"> <!-- Indicates parameters -->

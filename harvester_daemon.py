@@ -9,10 +9,12 @@ import os
 import sys
 import pymysql
 import myconfig
-import asyncio
+import time
 import Harvester
+import string
+import threading
 from harvest_handlers import *
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 
 
 class HarvesterDaemon:
@@ -21,6 +23,7 @@ class HarvesterDaemon:
     __database = False
     __harvestRequests = {}
     __runningHarvests = {}
+    __running_threads = {}
     __maxSimHarvestRun = 3
     __lastLogCounter = 999
     __harvesterDefinitionFile = False
@@ -31,6 +34,7 @@ class HarvesterDaemon:
         self.__harvesterDefinitionFile = myconfig.run_dir + "harvester_definition.json"
         self.setupEnv()
         self.describeModules()
+        self.fixBrokenHarvestRequests()
 
     class __Logger:
         __fileName = False
@@ -38,13 +42,11 @@ class HarvesterDaemon:
         __current_log_time = False
         def __init__(self):
             self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
-            if not os.path.exists(myconfig.log_dir):
-                os.makedirs(myconfig.log_dir)
             self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
 
         def logMessage(self, message):
             self.rotateLogFile()
-            self.__file = open(self.__fileName, "a")
+            self.__file = open(self.__fileName, "a", 0o777)
             self.__file.write(message + " %s"  % datetime.now() + "\n")
             self.__file.close()
 
@@ -77,21 +79,22 @@ class HarvesterDaemon:
             return self.__connection
 
     def handleException(self, harvestId, exception):
-        harvesterStatus = 'STOPPED BY EXCEPTION: %s' %(repr(exception).replace("'", "").replace('"', ""))
+        harvesterStatus = 'STOPPED'
+        eMessage = repr(exception).replace("'", "").replace('"', "")
         conn = self.__database.getConnection()
         cur = conn.cursor()
-        cur.execute("UPDATE python_harvest_requests SET `status` ='%s' where `harvest_id` = %s" %(harvesterStatus, str(harvestId)))
+        cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
         conn.commit()
         cur.close()
         del cur
         conn.close()
 
-    def addHarvestRequest(self, harvestID, dataSourceId, nextRun, previousRun, mode, batchNumber):
+    def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
         self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)))
         harvestInfo = {}
         conn = self.__database.getConnection()
         cur = conn.cursor()
-        cur.execute("select `attribute`, `value` FROM dbs_registry.data_source_attributes where `attribute` in('title','harvest_method','uri','provider_type','advanced_harvest_mode','oai_set', 'advanced_harvest_mode') and `data_source_id` =%s;" %str(dataSourceId))
+        cur.execute("select `attribute`, `value` FROM dbs_registry.data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
         for r in cur:
             harvestInfo[r[0]] = r[1]
         harvestInfo['mode'] = mode
@@ -100,7 +103,7 @@ class HarvesterDaemon:
         harvestInfo['data_source_id'] = dataSourceId
         harvestInfo['harvest_id'] = harvestID
         harvestInfo['batch_number'] = batchNumber
-        harvestInfo['from_date'] = previousRun
+        harvestInfo['from_date'] = lastRun
         harvestInfo['until_date'] = nextRun
         try:
             harvester_module = __import__(harvestInfo['harvest_method'], globals={}, locals={}, fromlist=[], level=0)
@@ -118,8 +121,10 @@ class HarvesterDaemon:
         if len(self.__runningHarvests) > 0:
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
-                if harvestReq.getStatus() == "COMPLETED" or harvestReq.getStatus().startswith("STOPPED"):
+                if harvestReq.isCompleted() or harvestReq.isStopped() or harvestReq.getStatus() == "SCHEDULED" or harvestReq.getStatus() == "COMPLETED" or harvestReq.getStatus() == "STOPPED":
                     del harvestReq
+                    if self.__running_threads[harvestID].isAlive() == True:
+                        del self.__running_threads[harvestID]
                     del self.__runningHarvests[harvestID]
         #if max hasn't reached add more harvests are WAITING
         if len(self.__harvestRequests) > 0 and len(self.__runningHarvests) < self.__maxSimHarvestRun:
@@ -130,11 +135,13 @@ class HarvesterDaemon:
                         self.__runningHarvests[harvestID] = harvestReq
                         del self.__harvestRequests[harvestID]
                         harvestReq = self.__runningHarvests[harvestID]
-                        harvestReq.harvest()
+                        t = threading.Thread(target=harvestReq.harvest)
+                        self.__running_threads[harvestID] = t
+                        t.start()
                     if len(self.__runningHarvests) >= self.__maxSimHarvestRun:
                         break
                 except KeyError as e:
-                    print("harvestID %s already scheduled" %str(harvestID))
+                    self.__logger.logMessage("harvestID %s already scheduled" %str(harvestID))
 
 
 
@@ -142,17 +149,25 @@ class HarvesterDaemon:
     def checkForHarvestRequests(self):
         conn = self.__database.getConnection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM python_harvest_requests where `status` like '%SCHEDULED%' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));")
+        cur.execute("SELECT * FROM "+ myconfig.harvest_table +" where `status` like 'SCHEDULED%' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));" )
         if(cur.rowcount > 0):
             self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount))
             for r in cur:
-                self.addHarvestRequest(r[0],r[1],r[3],r[4],r[5],r[6])
+                self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
+        cur.close()
+        del cur
+        conn.close()
+
+    def fixBrokenHarvestRequests(self):
+        conn = self.__database.getConnection()
+        cur = conn.cursor()
+        cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
+        conn.commit()
         cur.close()
         del cur
         conn.close()
 
     def describeModules(self):
-        self.__harvesterDefinitionFile
         harvesterDifinitions = "{'harvester_methods':\n\t"
         notFirst = False
         for files in os.listdir(myconfig.run_dir + '/harvest_handlers'):
@@ -173,10 +188,9 @@ class HarvesterDaemon:
         file = open(self.__harvesterDefinitionFile, "w+")
         file.write(harvesterDifinitions)
         file.close()
-        #and to the database
+        #and add to the database
         conn = self.__database.getConnection()
         cur = conn.cursor()
-        #cur.execute
         cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDifinitions.replace("'", "\\\'")))
         conn.commit()
         cur.close()
@@ -184,60 +198,60 @@ class HarvesterDaemon:
         conn.close()
 
 
+
+
     def setupEnv(self):
         if not os.path.exists(myconfig.data_store_path):
             os.makedirs(myconfig.data_store_path)
-            os.chmod(myconfig.data_store_path, 777)
+            os.chmod(myconfig.data_store_path, 0o777)
+        if not os.path.exists(myconfig.log_dir):
+            os.makedirs(myconfig.log_dir)
+            os.chmod(myconfig.log_dir, 0o777)
 
 
     def run(self):
-        print("STARTING...")
-        print(datetime.now().strftime("%Y-%m-%d-%H:%M"))
-        self.__scheduler = AsyncIOScheduler()
-        self.__scheduler.add_job(self.manageHarvests, 'interval', seconds=30, max_instances=5)
-        self.__scheduler.start()
+        self.__logger.logMessage("\n\nSTARTING HARVESTER...")
+        print("STARTING HARVESTER... %s" %(datetime.now().strftime("%Y-%m-%d-%H:%M")))
         print('Press Ctrl+C to exit')
         try:
-            asyncio.get_event_loop().run_forever()
+            while True:
+                self.manageHarvests()
+                time.sleep(myconfig.polling_frequency)
         except (KeyboardInterrupt, SystemExit):
             self.shutDown()
         except Exception as e:
             print("error %r" %(e))
             pass
 
-        #self.__scheduler = Scheduler(daemon=True)
-        #atexit.register(lambda: self.__scheduler.shutdown(wait=False))
-        #self.__scheduler.add_job(self.manageHarvests, 'interval', seconds=10)
-        #self.__scheduler.start()
 
     def printLogs(self, hCounter):
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
-            print('RUNNING: %s PENDING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))))
-            print('###################################################')
+            self.__logger.logMessage('RUNNING: %s PENDING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))))
+            self.__logger.logMessage('###################################################')
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
-                print(harvestReq.getInfo())
-            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                self.__logger.logMessage(harvestReq.getInfo())
+            self.__logger.logMessage('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             for harvestID in list(self.__harvestRequests):
                 harvestReq = self.__harvestRequests[harvestID]
-                print(harvestReq.getInfo())
-            print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+                self.__logger.logMessage(harvestReq.getInfo())
+            self.__logger.logMessage('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
 
 
     def shutDown(self):
-        print("SHUTTING DOWN...")
-        self.__scheduler.shutdown()
-        print(self.__runningHarvests)
-        if len(self.__runningHarvests) > 0:
-            for harvestID in list(self.__runningHarvests):
-                harvestReq = self.__runningHarvests[harvestID]
-                if harvestReq.getStatus() != "COMPLETED" and not(harvestReq.getStatus().startswith("STOPPED")):
-                    harvestReq.stop()
+        self.__logger.logMessage("SHUTTING DOWN...")
+        try:
+            if len(self.__runningHarvests) > 0:
+                for harvestID in list(self.__runningHarvests):
+                    harvestReq = self.__runningHarvests[harvestID]
+                    #if harvestReq.getStatus() != "COMPLETED" and not(harvestReq.getStatus().startswith("STOPPED")):
                     harvestReq.rescheduleHarvest()
                     del harvestReq
                     del self.__runningHarvests[harvestID]
+        except Exception as e:
+            print("error %r" %(e))
         sys.exit()
 
 

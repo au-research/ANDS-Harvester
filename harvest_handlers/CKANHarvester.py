@@ -15,20 +15,21 @@ class CKANHarvester(Harvester):
     __listQuery = "api/action/package_list"
     __itemQuery = "api/action/package_show"
     __xml = False
-    __xsl = myconfig.run_dir + 'xslt/data.gov.au_json_to_rif-cs.xsl'
+    __xsl = myconfig.run_dir + '/xslt/data.gov.au_json_to_rif-cs.xsl'
     def harvest(self):
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()
         self.storeHarvestData("ckan")
         self.transformToRifcs()
+        self.postHarvestData()
         self.finishHarvest()
 
     def getPackageList(self):
-        if self.errored or self.stopped:
+        if self.stopped:
             return
         getRequest = Request(self.harvestInfo['uri'] +  self.__listQuery)
-        self.setStatus("GETTING-PACKAGE-LIST url:" + self.harvestInfo['uri'] +  self.__listQuery)
+        self.setStatus("HARVESTING")
         try:
             package = json.loads(getRequest.getData().decode("UTF-8"))
             if isinstance(package, dict):
@@ -39,28 +40,40 @@ class CKANHarvester(Harvester):
         del getRequest
 
     def getPackageItems(self):
-        if self.errored or self.stopped:
+        if self.stopped:
             return
+        time.sleep(0.1)
         getRequest = Request(self.harvestInfo['uri'] +  self.__itemQuery)
         ePackages = self.__xml.createElement('datasets')
         self.__xml.appendChild(ePackages)
+        self.listSize = len(self.__packageList)
+        self.recordCount = 0
         try:
             for itemId in self.__packageList:
-                if self.errored or self.stopped:
+                #time.sleep(1)
+                if self.stopped:
                     break
                 data_string = urllib2.quote(json.dumps({'id': itemId}))
-                self.setStatus("GETTING-PACKAGE item:" + itemId)
-                package = json.loads(getRequest.postData(data_string.encode('UTF-8')).decode("UTF-8"))
-                if isinstance(package, dict):
-                    ePackage = self.__xml.createElement('result')
-                    ePackage.setAttribute('id', itemId)
-                    self.parse_element(ePackage, package['result'])
-                    ePackages.appendChild(ePackage)
-                    #break for test
+                self.setStatus("HARVESTING", 'getting ckan record: %s' %itemId)
+                try:
+                    package = json.loads(getRequest.postData(data_string.encode('UTF-8')).decode("UTF-8"))
+                    if isinstance(package, dict):
+                        ePackage = self.__xml.createElement('result')
+                        ePackage.setAttribute('id', itemId)
+                        self.parse_element(ePackage, package['result'])
+                        ePackages.appendChild(ePackage)
+                    self.recordCount = self.recordCount + 1
+                except Exception as e:
+                    self.errored = True
+                    self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s" %itemId
+                    self.handleExceptions(e, terminate=False)
+                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId))
         except Exception as e:
+            self.errored = True
+            self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId))
             self.handleExceptions(e)
         self.data = self.__xml.toprettyxml(encoding='utf-8', indent=' ')
-        #self.setStatus("GETTING-PACKAGE url:" + self.harvestInfo['uri'] +  self.__listQuery)
+        #self.setStatus("GETTING-PACKAGE", "url:" + self.harvestInfo['uri'] +  self.__listQuery)
         #try:
          #   self.__packageList = json.loads(getRequest.getData())
         #except Exception as e:
@@ -69,13 +82,14 @@ class CKANHarvester(Harvester):
         #del getRequest
 
     def transformToRifcs(self):
-        if self.errored or self.stopped:
+        if self.stopped:
             return
-        self.setStatus("RUNNING CROSSWALK")
-        transformerConfig = {'xsl': self.__xsl, 'outFile' : self.outputDir + "rifcs.xml", 'inFile' : self.outputFilePath}
+        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + ".xml"
+        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
+        transformerConfig = {'xsl': self.__xsl, 'outFile' : outFile, 'inFile' : self.outputFilePath}
         tr = XSLT2Transformer(transformerConfig)
         tr.transform()
-        print(self.outputDir + "rifcs.xml")
+
 
 
     def parse_element(self, root, j):
