@@ -2,16 +2,18 @@ from Harvester import *
 
 class PMHHarvester(Harvester):
     """
-       {'harvester_method': {
-        'id': 'PMHHarvester',
-        'title': 'OAI-PMH Harvester to fetch metadata using OAI PMH protocol',
-        'params': [
-            {'name': 'url', 'required': 'true'},
-            {'name': 'metadataPrefix', 'required': 'true'},
-            {'name': 'set', 'required': 'false'},
-            {'name': 'crosswalk', 'required': 'false'}
-        ]
-      }
+        {
+            "id": "PMHHarvester",
+            "title": "OAI-PMH Harvester",
+            "description": "OAI-PMH Harvester to fetch metadata using OAI PMH protocol",
+            "params": [
+                {"name": "uri", "required": "true"},
+                {"name": "metadataPrefix", "required": "true"},
+                {"name": "oai_set", "required": "false"},
+                {"name": "crosswalk", "required": "false"},
+                {"name": "xsl_file", "required": "false"}
+            ]
+        }
     """
     __resumptionToken = False
     __from = "1900-01-01T12:00:00Z"
@@ -37,7 +39,7 @@ class PMHHarvester(Harvester):
             time.sleep(0.1)
             self.getHarvestData()
             self.storeHarvestData()
-
+            self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
@@ -69,6 +71,7 @@ class PMHHarvester(Harvester):
             else:
                 self.__resumptionToken = False
         except Exception:
+            self.__resumptionToken = False
             pass
 
 

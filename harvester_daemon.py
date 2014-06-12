@@ -94,6 +94,8 @@ class HarvesterDaemon:
         harvestInfo = {}
         conn = self.__database.getConnection()
         cur = conn.cursor()
+        harvestInfo['crosswalk'] = None
+        harvestInfo['xsl_file'] = None
         cur.execute("select `attribute`, `value` FROM dbs_registry.data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
         for r in cur:
             harvestInfo[r[0]] = r[1]
@@ -144,8 +146,6 @@ class HarvesterDaemon:
                     self.__logger.logMessage("harvestID %s already scheduled" %str(harvestID))
 
 
-
-
     def checkForHarvestRequests(self):
         conn = self.__database.getConnection()
         cur = conn.cursor()
@@ -161,6 +161,12 @@ class HarvesterDaemon:
     def fixBrokenHarvestRequests(self):
         conn = self.__database.getConnection()
         cur = conn.cursor()
+        cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
+        try:
+            result = cur.fetchone()
+            print("FOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
+        except Exception as e:
+            pass
         cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
         conn.commit()
         cur.close()
@@ -168,7 +174,8 @@ class HarvesterDaemon:
         conn.close()
 
     def describeModules(self):
-        harvesterDifinitions = "{'harvester_methods':\n\t"
+        print("DESCRIBING HARVESTER MODULES:\n")
+        harvesterDifinitions = '{"harvester_config":{"harvester_methods":['
         notFirst = False
         for files in os.listdir(myconfig.run_dir + '/harvest_handlers'):
             if files.endswith(".py"):
@@ -179,9 +186,22 @@ class HarvesterDaemon:
                     harvesterDifinitions = harvesterDifinitions + ","
                 notFirst = True
                 harvesterDifinitions = harvesterDifinitions + class_.__doc__.strip()
+        harvesterDifinitions = harvesterDifinitions + "]}"
+        harvesterDifinitions = harvesterDifinitions + self.describeCrossWalks()
         harvesterDifinitions = harvesterDifinitions + "}"
+        print(harvesterDifinitions + "\n\n")
         self.saveHarvestDefinition(harvesterDifinitions)
 
+    def describeCrossWalks(self):
+        notFirst = False
+        xsltCrossWalks = ',\n"xsl_file":['
+        for files in os.listdir(myconfig.run_dir + '/xslt'):
+            if files.endswith(".xsl"):
+                xsltCrossWalks = xsltCrossWalks + '"%s"' %(files)
+                if notFirst:
+                    xsltCrossWalks = xsltCrossWalks + ','
+                    notFirst = True
+        return xsltCrossWalks + ']'
 
     def saveHarvestDefinition(self, harvesterDifinitions):
         #save definition to file
@@ -227,16 +247,16 @@ class HarvesterDaemon:
     def printLogs(self, hCounter):
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
-            self.__logger.logMessage('RUNNING: %s PENDING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))))
-            self.__logger.logMessage('###################################################')
+            self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))))
+            self.__logger.logMessage('R...')
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
                 self.__logger.logMessage(harvestReq.getInfo())
-            self.__logger.logMessage('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            self.__logger.logMessage('W...')
             for harvestID in list(self.__harvestRequests):
                 harvestReq = self.__harvestRequests[harvestID]
                 self.__logger.logMessage(harvestReq.getInfo())
-            self.__logger.logMessage('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+            self.__logger.logMessage('______________________________________________________________________________________________')
 
 
 

@@ -2,26 +2,28 @@ from Harvester import *
 
 class CKANHarvester(Harvester):
     """
-       {'harvester_method': {
-        'id': 'CKANHarvester',
-        'title': 'CKAN Harvester to fetch JSON metadata using the CKAN API',
-        'params': [
-            {'name': 'url', 'required': 'true'},
-            {'name': 'crosswalk', 'required': 'false'}
-        ]
+       {
+            "id": "CKANHarvester",
+            "title": "CKAN Harvester",
+            "description": "CKAN Harvester to fetch JSON metadata using the CKAN API",
+            "params": [
+                {"name": "uri", "required": "true"},
+                {"name": "crosswalk", "required": "false"},
+                {"name": "xsl_file", "required": "false"}
+            ]
       }
     """
     __packageList = {}
     __listQuery = "api/action/package_list"
     __itemQuery = "api/action/package_show"
     __xml = False
-    __xsl = myconfig.run_dir + '/xslt/data.gov.au_json_to_rif-cs.xsl'
+#    __xsl = myconfig.run_dir + '/xslt/data.gov.au_json_to_rif-cs.xsl'
     def harvest(self):
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()
         self.storeHarvestData("ckan")
-        self.transformToRifcs()
+        self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
@@ -50,7 +52,7 @@ class CKANHarvester(Harvester):
         self.recordCount = 0
         try:
             for itemId in self.__packageList:
-                #time.sleep(1)
+                self.recordCount = self.recordCount + 1
                 if self.stopped:
                     break
                 data_string = urllib2.quote(json.dumps({'id': itemId}))
@@ -62,7 +64,9 @@ class CKANHarvester(Harvester):
                         ePackage.setAttribute('id', itemId)
                         self.parse_element(ePackage, package['result'])
                         ePackages.appendChild(ePackage)
-                    self.recordCount = self.recordCount + 1
+                    if self.recordCount == 2:
+                        break
+
                 except Exception as e:
                     self.errored = True
                     self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s" %itemId
@@ -80,16 +84,6 @@ class CKANHarvester(Harvester):
         #    self.handleExceptions(e)
         #    return
         #del getRequest
-
-    def transformToRifcs(self):
-        if self.stopped:
-            return
-        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + ".xml"
-        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
-        transformerConfig = {'xsl': self.__xsl, 'outFile' : outFile, 'inFile' : self.outputFilePath}
-        tr = XSLT2Transformer(transformerConfig)
-        tr.transform()
-
 
 
     def parse_element(self, root, j):

@@ -52,8 +52,6 @@ class XSLT2Transformer:
 
     #XSLT 2.0 transformer run in java
 
-    __xsl = "data.gov.au_json_to_rif-cs.xsl"
-
     def __init__(self, transformerConfig):
         self.__xsl = transformerConfig['xsl']
         self.__outfile = transformerConfig['outFile']
@@ -70,21 +68,21 @@ class XSLT2Transformer:
 
 class Harvester():
     startUpTime = 0
-    harvestInfo = False
-    data = False
-    logger = False
+    pageCount = 0
+    recordCount = 0
+    harvestInfo = None
+    data = None
+    logger = None
+    database = None
+    outputFilePath = None
+    outputDir = None
     __status = 'WAITING'
-    database = False
+    listSize = 'unknown'
+    message = ''
+    errorLog = ""
     errored = False
     stopped = False
     completed = False
-    errorLog = ""
-    outputFilePath = False
-    outputDir = False
-    pageCount = 0
-    recordCount = 0
-    listSize = 'unknown'
-    message = ''
     def __init__(self, harvestInfo, logger, database):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
@@ -95,6 +93,7 @@ class Harvester():
 
     def harvest(self):
         self.getHarvestData()
+        self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
@@ -138,6 +137,20 @@ class Harvester():
         except Exception as e:
             self.handleExceptions(e)
 
+    def runCrossWalk(self):
+        if self.stopped or self.harvestInfo['xsl_file'] == None:
+            return
+        xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
+        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + ".xml"
+        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
+        try:
+            transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : self.outputFilePath}
+            tr = XSLT2Transformer(transformerConfig)
+            tr.transform()
+        except Exception as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.handleExceptions(e)
+
     def postHarvestData(self):
         if self.stopped:
             return
@@ -154,6 +167,8 @@ class Harvester():
         cur = conn.cursor()
         upTime = int(time.time()) - self.startUpTime
         statusDict = {'status':self.__status,
+                      'batch_number':self.harvestInfo['batch_number'],
+                      'mode' : self.harvestInfo['mode'],
                       'message':self.message,
                       'error':{'log':str.strip(self.errorLog), 'errored': self.errored},
                       'completed':str(self.completed),
