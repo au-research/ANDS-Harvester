@@ -8,7 +8,7 @@ class PMHHarvester(Harvester):
             "description": "OAI-PMH Harvester to fetch metadata using OAI PMH protocol",
             "params": [
                 {"name": "uri", "required": "true"},
-                {"name": "metadataPrefix", "required": "true"},
+                {"name": "provider_type", "required": "true"},
                 {"name": "oai_set", "required": "false"},
                 {"name": "crosswalk", "required": "false"},
                 {"name": "xsl_file", "required": "false"}
@@ -70,6 +70,10 @@ class PMHHarvester(Harvester):
                 self.__resumptionToken = dom.getElementsByTagName('resumptionToken')[0].firstChild.nodeValue
             else:
                 self.__resumptionToken = False
+
+            if self.pageCount == myconfig.test_limit:
+                self.__resumptionToken = False
+
         except Exception:
             self.__resumptionToken = False
             pass

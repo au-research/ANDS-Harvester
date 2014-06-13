@@ -6,7 +6,6 @@ import os
 import json
 from xml.dom.minidom import parseString
 from datetime import datetime
-from dateutil import parser
 import time
 from xml.dom.minidom import Document
 import numbers
@@ -196,6 +195,11 @@ class Harvester():
                 self.__status = cur.fetchone()[0]
                 self.stopped = True
                 self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED")
+            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+            if(cur.rowcount > 0):
+                self.__status = cur.fetchone()[0]
+                self.stopped = True
+                self.logger.logMessage("REGISTRY IS IMPORTING")
         cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
         if(cur.rowcount > 0):
             self.__status = cur.fetchone()[0]
@@ -279,11 +283,11 @@ class Harvester():
         if terminate:
             self.__status= 'STOPPED'
             self.message= repr(exception).replace("'", "").replace('"', "")
-            self.errorLog = self.errorLog + str(exception).replace("'", "").replace('"', "")
+            self.errorLog = self.errorLog + ', error:' + str(exception).replace("'", "").replace('"', "")
             self.updateHarvestRequest()
             self.stopped = True
         else:
-            self.errorLog = self.errorLog + str(exception).replace("'", "").replace('"', "")
+            self.errorLog = self.errorLog + ', error:' + str(exception).replace("'", "").replace('"', "")
 
 
 

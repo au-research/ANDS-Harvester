@@ -12,6 +12,7 @@ import myconfig
 import time
 import Harvester
 import string
+import json
 import threading
 from harvest_handlers import *
 
@@ -27,7 +28,13 @@ class HarvesterDaemon:
     __maxSimHarvestRun = 3
     __lastLogCounter = 999
     __harvesterDefinitionFile = False
+    __startUpTime = None
+    __harvestStarted = 0
+    __harvestCompleted = 0
+    __harvestErrored = 0
+    __harvestStopped = 0
     def __init__(self):
+        self.__startUpTime = time.time()
         self.__lastLogCount = 99
         self.__database = self.__DataBase()
         self.__logger = self.__Logger()
@@ -80,6 +87,7 @@ class HarvesterDaemon:
 
     def handleException(self, harvestId, exception):
         harvesterStatus = 'STOPPED'
+        self.__harvestErrored = self.__harvestErrored + 1
         eMessage = repr(exception).replace("'", "").replace('"', "")
         conn = self.__database.getConnection()
         cur = conn.cursor()
@@ -118,17 +126,25 @@ class HarvesterDaemon:
 
     def manageHarvests(self):
         self.checkForHarvestRequests()
+        self.reportToRegistry()
         self.printLogs(int(len(self.__runningHarvests)) + int(len(self.__harvestRequests)))
         #clean up completed harvests
         if len(self.__runningHarvests) > 0:
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
-                if harvestReq.isCompleted() or harvestReq.isStopped() or harvestReq.getStatus() == "SCHEDULED" or harvestReq.getStatus() == "COMPLETED" or harvestReq.getStatus() == "STOPPED":
+                if harvestReq.isCompleted() or harvestReq.getStatus() == "SCHEDULED" or harvestReq.getStatus() == "COMPLETED":
+                    self.__harvestCompleted = self.__harvestCompleted + 1
                     del harvestReq
                     if self.__running_threads[harvestID].isAlive() == True:
                         del self.__running_threads[harvestID]
                     del self.__runningHarvests[harvestID]
-        #if max hasn't reached add more harvests are WAITING
+                elif harvestReq.isStopped() or harvestReq.getStatus() == "STOPPED":
+                    self.__harvestStopped = self.__harvestStopped + 1
+                    del harvestReq
+                    if self.__running_threads[harvestID].isAlive() == True:
+                        del self.__running_threads[harvestID]
+                    del self.__runningHarvests[harvestID]
+        #if max hasn't reached add more harvests that are WAITING
         if len(self.__harvestRequests) > 0 and len(self.__runningHarvests) < self.__maxSimHarvestRun:
             for harvestID in list(self.__harvestRequests):
                 try:
@@ -140,6 +156,7 @@ class HarvesterDaemon:
                         t = threading.Thread(target=harvestReq.harvest)
                         self.__running_threads[harvestID] = t
                         t.start()
+                        self.__harvestStarted = self.__harvestStarted + 1
                     if len(self.__runningHarvests) >= self.__maxSimHarvestRun:
                         break
                 except KeyError as e:
@@ -211,13 +228,37 @@ class HarvesterDaemon:
         #and add to the database
         conn = self.__database.getConnection()
         cur = conn.cursor()
-        cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDifinitions.replace("'", "\\\'")))
+        cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
+        if(cur.rowcount > 0):
+            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDifinitions.replace("'", "\\\'")))
+        else:
+            cur.execute("INSERT INTO configs (`value`, `key`) VALUES ('%s','%s');" %(harvesterDifinitions.replace("'", "\\\'"), 'harvester_methods'))
         conn.commit()
         cur.close()
         del cur
         conn.close()
 
-
+    def reportToRegistry(self):
+        statusDict = {'last_report_timestamp' : time.time(),
+                    'start_up_time' : self.__startUpTime,
+                    'harvests_running' : str(len(self.__runningHarvests)),
+                    'harvests_cued' : str(len(self.__harvestRequests)),
+                    'total_harvests_started' : str(self.__harvestStarted),
+                    'harvest_completed' : str(self.__harvestCompleted),
+                    'harvest_stopped' : str(self.__harvestStopped),
+                    'harvest_errored' : str(self.__harvestErrored),
+                    }
+        conn = self.__database.getConnection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM configs WHERE `key`='harvester_status';")
+        if(cur.rowcount > 0):
+            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_status';" %(json.dumps(statusDict).replace("'", "\\\'")))
+        else:
+            cur.execute("INSERT INTO configs (`value`, `type`, `key`) VALUES ('%s','%s','%s');" %(json.dumps(statusDict).replace("'", "\\\'"), 'json', 'harvester_status'))
+        conn.commit()
+        cur.close()
+        del cur
+        conn.close()
 
 
     def setupEnv(self):

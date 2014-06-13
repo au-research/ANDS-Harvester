@@ -17,12 +17,15 @@ class CKANHarvester(Harvester):
     __listQuery = "api/action/package_list"
     __itemQuery = "api/action/package_show"
     __xml = False
-#    __xsl = myconfig.run_dir + '/xslt/data.gov.au_json_to_rif-cs.xsl'
+
     def harvest(self):
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()
         self.storeHarvestData("ckan")
+        #set a default xslt for CKAN harvests
+        if(self.harvestInfo['xsl_file'] is None):
+            self.harvestInfo['xsl_file'] = myconfig.default_CKAN_xsl
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
@@ -64,12 +67,12 @@ class CKANHarvester(Harvester):
                         ePackage.setAttribute('id', itemId)
                         self.parse_element(ePackage, package['result'])
                         ePackages.appendChild(ePackage)
-                    if self.recordCount == 2:
+                    if self.recordCount == myconfig.test_limit:
                         break
 
                 except Exception as e:
                     self.errored = True
-                    self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s" %itemId
+                    self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s, " %itemId
                     self.handleExceptions(e, terminate=False)
                     self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId))
         except Exception as e:
