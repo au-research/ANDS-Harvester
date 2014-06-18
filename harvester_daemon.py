@@ -109,6 +109,7 @@ class HarvesterDaemon:
             harvestInfo['data_source_id'] = r[0]
             harvestInfo['data_source_slug'] = r[1]
             harvestInfo['data_source_slug'] = r[2]
+            harvestInfo['title'] = r[3]
         cur.execute("SELECT `attribute`, `value` FROM data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
         for r in cur:
             harvestInfo[r[0]] = r[1]

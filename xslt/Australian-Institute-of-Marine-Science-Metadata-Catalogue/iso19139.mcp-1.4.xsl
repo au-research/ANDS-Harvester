@@ -84,9 +84,9 @@
         </xsl:variable>
         
             
-        <xsl:message>scopeCode: <xsl:value-of select="$scopeCode"/></xsl:message>
-        <xsl:message>metadataURL: <xsl:value-of select="$metadataURL"/></xsl:message>
-        <xsl:message>dataSetURI: <xsl:value-of select="$dataSetURI"/></xsl:message>
+        <!--xsl:message>scopeCode: <xsl:value-of select="$scopeCode"/></xsl:message-->
+        <!--xsl:message>metadataURL: <xsl:value-of select="$metadataURL"/></xsl:message-->
+        <!--xsl:message>dataSetURI: <xsl:value-of select="$dataSetURI"/></xsl:message-->
         <xsl:variable name="originatingSource">
             <xsl:variable name="originatingSourceMetadataURL">
                 <xsl:call-template name="getOriginatingSource">
@@ -522,7 +522,7 @@
 
     <!-- RegistryObject - Related Object Element  -->
     <xsl:template match="mcp:childIdentifier" mode="registryObject_related_object">
-        <xsl:message>mcp:children</xsl:message>
+        <!--xsl:message>mcp:children</xsl:message-->
         <xsl:variable name="identifier" select="normalize-space(.)"/>
         <xsl:if test="string-length($identifier)">
             <relatedObject>
@@ -922,7 +922,7 @@
 
     <!-- Variable - Individual Name -->
     <xsl:template match="mcp:MD_DataIdentification" mode="variable_individual_name">
-        <xsl:message>Seeking owner...</xsl:message>
+        <!--xsl:message>Seeking owner...</xsl:message-->
         <xsl:call-template name="getChildValueForRole">
             <xsl:with-param name="roleSubstring">
                 <xsl:text>owner</xsl:text>
@@ -1317,7 +1317,7 @@
         
         <xsl:variable name="identifierType"
             select="normalize-space(gmd:identifier/gmd:MD_Identifier/gmd:code)"/>
-        <xsl:message>Metadata Creation Date: <xsl:value-of select="$metadataCreationDate"/></xsl:message>
+        <!--xsl:message>Metadata Creation Date: <xsl:value-of select="$metadataCreationDate"/></xsl:message-->
         
         <xsl:if test="count($allContributorName_sequence) or string-length($defaultContributorName)">
            <citationInfo>
@@ -1480,8 +1480,8 @@
                 </xsl:variable>
                 <xsl:choose>
                     <xsl:when test="boolean($isKnownOrganisation)">
-                        <xsl:message select="concat('Is known organisation ', $transformedName)"/>
-                        <xsl:value-of>group</xsl:value-of>
+                        <!--xsl:message select="concat('Is known organisation ', $transformedName)"/-->
+                        <xsl:text>group</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="$type"/>
@@ -1783,7 +1783,7 @@
         <xsl:param name="originatingSource"/>
         <xsl:choose>
             <xsl:when test="string-length($scopeCode) = 0">
-                <xsl:message>Error: empty scope code</xsl:message>
+                <!--xsl:message>Error: empty scope code</xsl:message-->
             </xsl:when>
             <xsl:when test="contains(lower-case($originatingSource), 'aims')">
                 <xsl:call-template name="getRegistryObjectTypeSubType_AIMS">
@@ -1796,7 +1796,7 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>Defaulting to 'collection' due to no specific processing being required for originatingSource<xsl:value-of select="$originatingSource"></xsl:value-of></xsl:message>
+                <!--xsl:message>Defaulting to 'collection' due to no specific processing being required for originatingSource<xsl:value-of select="$originatingSource"></xsl:value-of></xsl:message-->
                 <xsl:text>collection</xsl:text>
                 <xsl:text>dataset</xsl:text>
             </xsl:otherwise>
@@ -1807,7 +1807,7 @@
         <xsl:param name="scopeCode"/>
         <xsl:choose>
             <xsl:when test="string-length($scopeCode) = 0">
-                <xsl:message>Error: empty scope code</xsl:message>
+                <!--xsl:message>Error: empty scope code</xsl:message-->
             </xsl:when>
             <xsl:when test="contains($scopeCode, 'dataset')">
                 <xsl:text>activity</xsl:text>
@@ -1834,7 +1834,7 @@
                 <xsl:text>report</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>Defaulting due to unknown scope code <xsl:value-of select="$scopeCode"></xsl:value-of></xsl:message>
+                <!--xsl:message>Defaulting due to unknown scope code <xsl:value-of select="$scopeCode"></xsl:value-of></xsl:message-->
                 <xsl:text>collection</xsl:text>
                 <xsl:text>dataset</xsl:text>
             </xsl:otherwise>
@@ -1845,7 +1845,7 @@
         <xsl:param name="scopeCode"/>
         <xsl:choose>
             <xsl:when test="string-length($scopeCode) = 0">
-                <xsl:message>Error: empty scope code</xsl:message>
+                <!--xsl:message>Error: empty scope code</xsl:message-->
             </xsl:when>
            <xsl:when test="contains($scopeCode, 'dataset')">
                 <xsl:text>collection</xsl:text>
@@ -1868,7 +1868,7 @@
                 <xsl:text>report</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>Defaulting due to unknown scope code<xsl:value-of select="$scopeCode"></xsl:value-of></xsl:message>
+                <!--xsl:message>Defaulting due to unknown scope code<xsl:value-of select="$scopeCode"></xsl:value-of></xsl:message-->
                 <xsl:text>collection</xsl:text>
                 <xsl:text>dataset</xsl:text>
             </xsl:otherwise>
@@ -1889,7 +1889,7 @@
     <xsl:template name="getOrganisationNameSequence">
         <xsl:param name="parent" as="node()"/>
         <xsl:param name="role_sequence" as="xs:string*"/>  <!-- if role_sequence is empty: return every, regardless of role -->
-        <xsl:message>getOrganisationNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message>
+        <!--xsl:message>getOrganisationNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message-->
         
         <!-- Contributing organisations - note that we are ignoring those organisations where a role has not been specified -->
         <xsl:choose>
@@ -1919,21 +1919,21 @@
                                     </xsl:call-template>
                                 </xsl:variable>
                                 <xsl:if test="count($userIsRole)">
-                                    <xsl:message>getOrganisationNameSequence - Returning 
+                                    <!--xsl:message>getOrganisationNameSequence - Returning
                                         <xsl:value-of select="$transformedOrganisationName"/> 
                                         for role
                                         <xsl:value-of select="$role"/>
-                                    </xsl:message>
+                                    </xsl:message-->
                                     <xsl:value-of select="$transformedOrganisationName"/>
                                 </xsl:if>
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- No role specified, so return the name -->
-                                <xsl:message>Role is empty</xsl:message>
-                                <xsl:message>getOrganisationNameSequence - Returning 
+                                <!--xsl:message>Role is empty</xsl:message-->
+                                <!--xsl:message>getOrganisationNameSequence - Returning
                                     <xsl:value-of select="$transformedOrganisationName"/> 
                                     for no role
-                                </xsl:message>
+                                </xsl:message-->
                                 <xsl:if test="string-length($transformedOrganisationName)">
                                     <xsl:value-of select="$transformedOrganisationName"/>
                                 </xsl:if>
@@ -1943,7 +1943,7 @@
                 </xsl:for-each>     
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>Sequence is empty</xsl:message>
+                <!--xsl:message>Sequence is empty</xsl:message-->
                 <xsl:for-each-group
                     select="$parent/descendant::gmd:CI_ResponsibleParty[
                     (string-length(normalize-space(gmd:organisationName))) and 
@@ -1959,10 +1959,10 @@
                     </xsl:variable>
                     
                     <xsl:if test="string-length($transformedOrganisationName)">
-                        <xsl:message>getOrganisationNameSequence - Returning 
+                        <!--xsl:message>getOrganisationNameSequence - Returning
                             <xsl:value-of select="$transformedOrganisationName"/> 
                             for no role
-                        </xsl:message>
+                        </xsl:message-->
                         <xsl:value-of select="$transformedOrganisationName"/>
                     </xsl:if>
                 </xsl:for-each-group>
@@ -1974,7 +1974,7 @@
     <xsl:template name="getAllOrganisationNameSequence">
         <xsl:param name="parent" as="node()"/>
         <xsl:param name="role_sequence" as="xs:string*"/>  <!-- if role_sequence is empty: return every, regardless of role -->
-        <xsl:message>getAllOrganisationNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message>
+        <!--xsl:message>getAllOrganisationNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message-->
         
         
         <!-- Contributing organisations - note that we are ignoring those organisations where a role has not been specified -->
@@ -2004,20 +2004,20 @@
                                     </xsl:call-template>
                                 </xsl:variable>
                                 <xsl:if test="count($userIsRole)">
-                                    <xsl:message>getOrganisationNameSequence - Returning 
+                                    <!--xsl:message>getOrganisationNameSequence - Returning
                                         <xsl:value-of select="$transformedOrganisationName"/> 
                                         for role
                                         <xsl:value-of select="$role"/>
-                                    </xsl:message>
+                                    </xsl:message-->
                                     <xsl:value-of select="$transformedOrganisationName"/>
                                 </xsl:if>
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- No role specified, so return the name -->
-                                <xsl:message>getOrganisationNameSequence - Returning 
+                                <!--xsl:message>getOrganisationNameSequence - Returning
                                     <xsl:value-of select="$transformedOrganisationName"/> 
                                     for no role
-                                </xsl:message>
+                                </xsl:message-->
                                 <xsl:if test="string-length($transformedOrganisationName)">
                                     <xsl:value-of select="$transformedOrganisationName"/>
                                 </xsl:if>
@@ -2041,10 +2041,10 @@
                     </xsl:variable>
                     
                     <xsl:if test="string-length($transformedOrganisationName)">
-                        <xsl:message>getOrganisationNameSequence - Returning 
+                        <!--xsl:message>getOrganisationNameSequence - Returning
                             <xsl:value-of select="$transformedOrganisationName"/> 
                             for no role
-                        </xsl:message>
+                        </xsl:message-->
                         <xsl:value-of select="$transformedOrganisationName"/>
                     </xsl:if>
                 </xsl:for-each-group>
@@ -2055,7 +2055,7 @@
     <xsl:template name="getIndividualNameSequence">
         <xsl:param name="parent" as="node()"/>
         <xsl:param name="role_sequence" as="xs:string*" select="''"/>  <!-- if role_sequence is empty: return every, regardless of role -->
-        <xsl:message>getIndividualNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message>
+        <!--xsl:message>getIndividualNameSequence - Parent: <xsl:value-of select="name($parent)"/>, Num roles: <xsl:value-of select="count($role_sequence)"/></xsl:message-->
         
         
         <!-- Contributing individuals - note that we are ignoring those individuals where a role has not been specified -->
@@ -2078,21 +2078,21 @@
                                     </xsl:call-template>
                                 </xsl:variable>
                                 <xsl:if test="count($userIsRole)">
-                                    <xsl:message>getIndividualNameSequence - Returning 
+                                    <!--xsl:message>getIndividualNameSequence - Returning
                                         <xsl:value-of select="normalize-space(current-grouping-key())"/> 
                                         for role
                                         <xsl:value-of select="$role"/>
-                                    </xsl:message>
+                                    </xsl:message-->
                                     <xsl:value-of select="normalize-space(current-grouping-key())"/>
                                 </xsl:if>
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- No role specified, so return the name -->
                                 <xsl:if test="string-length(normalize-space(current-grouping-key()))">
-                                    <xsl:message>getIndividualNameSequence - Returning 
+                                    <!--xsl:message>getIndividualNameSequence - Returning
                                         <xsl:value-of select="normalize-space(current-grouping-key())"/> 
                                         for no role
-                                    </xsl:message>
+                                    </xsl:message-->
                                     <xsl:value-of select="normalize-space(current-grouping-key())"/>
                                 </xsl:if>
                             </xsl:otherwise>
@@ -2108,10 +2108,10 @@
                     group-by="gmd:individualName">
                     
                     <xsl:if test="string-length(normalize-space(current-grouping-key()))">
-                        <xsl:message>getIndividualNameSequence - Returning 
+                        <!--xsl:message>getIndividualNameSequence - Returning
                             <xsl:value-of select="normalize-space(current-grouping-key())"/> 
                             for no role
-                       </xsl:message>
+                       </xsl:message-->
                         <xsl:value-of select="normalize-space(current-grouping-key())"/>
                     </xsl:if>
                 </xsl:for-each-group>
@@ -2143,7 +2143,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <xsl:message>Country: <xsl:value-of select="$publishCountry"/></xsl:message>
+        <!--xsl:message>Country: <xsl:value-of select="$publishCountry"/></xsl:message-->
 
         <xsl:choose>
             <xsl:when test="string-length($publishCity)">
@@ -2216,9 +2216,9 @@
                         <xsl:if test="contains(lower-case($code), lower-case($roleSubstring))">
                             <xsl:sequence
                                 select="descendant::node()[local-name()=$childElementName]"/>
-                            <xsl:message>Child value: <xsl:value-of
+                            <!--xsl:message>Child value: <xsl:value-of
                                     select="descendant::node()[local-name()=$childElementName]"
-                                /></xsl:message>
+                                /></xsl:message-->
                         </xsl:if>
                     </xsl:when>
                 </xsl:choose>
@@ -2239,7 +2239,7 @@
                 <xsl:value-of select="."/>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:message>Formatted values: <xsl:value-of select="$formattedValues"/></xsl:message>
+        <!--xsl:message>Formatted values: <xsl:value-of select="$formattedValues"/></xsl:message-->
     </xsl:template>
 
     <xsl:template name="getSplitText_sequence" as="xs:string*">

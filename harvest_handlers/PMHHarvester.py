@@ -57,7 +57,7 @@ class PMHHarvester(Harvester):
             dom = parseString(self.data)
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
-        except Exception:
+        except Exception as e:
             self.logger.logMessage("ERROR RETREIVING IDENTIFY DOC, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
             self.handleExceptions(e)
 
@@ -98,9 +98,9 @@ class PMHHarvester(Harvester):
                 query += '&set='+ self.__set
         getRequest = Request(self.harvestInfo['uri'] +  query)
         try:
+            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.data = getRequest.getData()
             self.getResumptionToken()
-            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.firstCall = False
             self.retryCount = 0
         except Exception as e:
@@ -120,7 +120,7 @@ class PMHHarvester(Harvester):
             os.makedirs(directory)
         self.outputDir = directory
         dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
-        self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+        #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
         dataFile.write(self.data)
         dataFile.close()
 
@@ -131,7 +131,7 @@ class PMHHarvester(Harvester):
         xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
         outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
         inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
-        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
+        #self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
             transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : inFile}
             tr = XSLT2Transformer(transformerConfig)
