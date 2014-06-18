@@ -32,17 +32,19 @@ class PMHHarvester(Harvester):
             self.__set = self.harvestInfo['oai_set']
         except KeyError:
             pass
-        #self.setStatus('INIT')
-        if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-            self.identifyRequest()
-        while self.firstCall or (self.__resumptionToken != False and self.__resumptionToken != ""):
-            time.sleep(0.1)
-            self.getHarvestData()
-            self.storeHarvestData()
-            self.runCrossWalk()
-        self.postHarvestData()
-        self.finishHarvest()
-
+        try:
+            if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
+                self.identifyRequest()
+            while self.firstCall or (self.__resumptionToken != False and self.__resumptionToken != ""):
+                time.sleep(0.1)
+                self.getHarvestData()
+                self.storeHarvestData()
+                self.runCrossWalk()
+            self.postHarvestData()
+            self.finishHarvest()
+        except Exception as e:
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(str(self.retryCount), self.__resumptionToken))
+            self.handleExceptions(e)
 
     def identifyRequest(self):
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
@@ -56,7 +58,9 @@ class PMHHarvester(Harvester):
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception:
-            pass
+            self.logger.logMessage("ERROR RETREIVING IDENTIFY DOC, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
+            self.handleExceptions(e)
+
 
     def getResumptionToken(self):
         if self.stopped:
@@ -71,7 +75,7 @@ class PMHHarvester(Harvester):
             else:
                 self.__resumptionToken = False
 
-            if self.pageCount == myconfig.test_limit:
+            if self.pageCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
                 self.__resumptionToken = False
 
         except Exception:
@@ -97,8 +101,8 @@ class PMHHarvester(Harvester):
             self.data = getRequest.getData()
             self.getResumptionToken()
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
-            self.retryCount = 0
             self.firstCall = False
+            self.retryCount = 0
         except Exception as e:
             self.errored = True
             self.retryCount = self.retryCount + 1
@@ -108,14 +112,30 @@ class PMHHarvester(Harvester):
             self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
         del getRequest
 
-    def storeHarvestData(self, fileExt='xml'):
+    def storeHarvestData(self):
         if self.stopped or not(self.data):
             return
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
         self.outputDir = directory
-        dataFile = open(self.outputDir + str(self.pageCount) + "." + fileExt, 'wb', 0o777)
-        self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + fileExt))
+        dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
+        self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
         dataFile.write(self.data)
         dataFile.close()
+
+
+    def runCrossWalk(self):
+        if self.stopped or self.harvestInfo['xsl_file'] == None:
+            return
+        xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
+        outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
+        inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
+        try:
+            transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : inFile}
+            tr = XSLT2Transformer(transformerConfig)
+            tr.transform()
+        except Exception as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.handleExceptions(e)

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmx:CT_CodelistCatalogue xmlns:gmx="http://www.isotc211.org/2005/gmx"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://www.isotc211.org/2005/gmx/gmx.xsd 
+	http://www.isotc211.org/2005/gco http://www.isotc211.org/2005/gco/gco.xsd 
+	http://www.opengis.net/gml http://www.isotc211.org/2005/gml/gml.xsd 
+	http://www.w3.org/1999/xlink http://www.isotc211.org/2005/xlink/xlinks.xsd">
+	<gmx:name>
+		<gco:CharacterString>License Codelist</gco:CharacterString>
+	</gmx:name>
+	<gmx:scope>
+		<gco:CharacterString>Codelists for License codes/values</gco:CharacterString>
+	</gmx:scope>
+	<gmx:fieldOfApplication>
+		<gco:CharacterString>Licenses</gco:CharacterString>
+	</gmx:fieldOfApplication>
+	<gmx:versionNumber>
+		<gco:CharacterString>1.0</gco:CharacterString>
+	</gmx:versionNumber>
+	<gmx:versionDate>
+		<gco:Date>2008-03-31</gco:Date>
+	</gmx:versionDate>
+	<gmx:codelistItem>
+		<gmx:CodeListDictionary gml:id="LicenseCode">
+			<gml:identifier codeSpace="http://not.yet.defined">LicenseCode</gml:identifier>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY-ND">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY-ND</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution-NoDerivs</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by-nd/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY-NC-SA">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY-NC-SA</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution-NonCommercial-ShareAlike</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by-nc-sa/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY-SA">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY-SA</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution-ShareAlike</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by-sa/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY-NC">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY-NC</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution-NonCommercial</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by-nc/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_CC-BY-NC-ND">
+					<gml:identifier codeSpace="http://not.yet.defined">CC-BY-NC-ND</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">Creative Commons Attribution-NonCommercial-NoDerivs</gml:name>
+					<gml:remarks>http://creativecommons.org/licenses/by-nc-nd/</gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+				<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_GPL">
+					<gml:identifier codeSpace="http://not.yet.defined">GPL</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">General Public License</gml:name>
+					<gml:remarks></gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+				<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="LicenseCode_AusGoalRestrictive">
+					<gml:identifier codeSpace="http://not.yet.defined">AusGoalRestrictive License</gml:identifier>
+					<gml:name codeSpace="http://not.yet.defined">AusGoal Restrictive License</gml:name>
+					<gml:remarks></gml:remarks>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			</gmx:CodeListDictionary>
+	</gmx:codelistItem>
+</gmx:CT_CodelistCatalogue>

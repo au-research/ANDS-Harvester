@@ -22,10 +22,7 @@ class CKANHarvester(Harvester):
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()
-        self.storeHarvestData("ckan")
-        #set a default xslt for CKAN harvests
-        if(self.harvestInfo['xsl_file'] is None):
-            self.harvestInfo['xsl_file'] = myconfig.default_CKAN_xsl
+        self.storeHarvestData()
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
@@ -55,7 +52,7 @@ class CKANHarvester(Harvester):
         self.recordCount = 0
         try:
             for itemId in self.__packageList:
-                self.recordCount = self.recordCount + 1
+                self.recordCount += 1
                 if self.stopped:
                     break
                 data_string = urllib2.quote(json.dumps({'id': itemId}))
@@ -67,7 +64,7 @@ class CKANHarvester(Harvester):
                         ePackage.setAttribute('id', itemId)
                         self.parse_element(ePackage, package['result'])
                         ePackages.appendChild(ePackage)
-                    if self.recordCount == myconfig.test_limit:
+                    if self.recordCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
                         break
 
                 except Exception as e:

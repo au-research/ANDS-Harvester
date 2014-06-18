@@ -58,10 +58,10 @@ class XSLT2Transformer:
 
     def transform(self):
         shellCommand = myconfig.java_home + " "
-        shellCommand = shellCommand + " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
-        shellCommand = shellCommand + " -o " + self.__outfile
-        shellCommand = shellCommand + " " + self.__inputFile
-        shellCommand = shellCommand + " " + self.__xsl
+        shellCommand += " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
+        shellCommand += " -o " + self.__outfile
+        shellCommand += " " + self.__inputFile
+        shellCommand += " " + self.__xsl
         call(shellCommand, shell=True)
 
 
@@ -82,6 +82,8 @@ class Harvester():
     errored = False
     stopped = False
     completed = False
+    storeFileExtension = 'xml'
+    resultFileExtension = 'xml'
     def __init__(self, harvestInfo, logger, database):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
@@ -89,6 +91,8 @@ class Harvester():
         self.database = database
         self.cleanPreviousHarvestRecords()
         self.updateHarvestRequest()
+        self.setUpCrosswalk()
+
 
     def harvest(self):
         self.getHarvestData()
@@ -136,11 +140,27 @@ class Harvester():
         except Exception as e:
             self.handleExceptions(e)
 
+    def setUpCrosswalk(self):
+        if self.harvestInfo['xsl_file'] == None:
+            if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + '.xsl'):
+                self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + '.xsl'
+                self.storeFileExtension = 'tmp'
+            elif os.path.isdir(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug']):
+                for fileName in os.listdir(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug']):
+                    if fileName == self.harvestInfo['provider_type'] + ".xsl":
+                        self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + os.sep + self.harvestInfo['provider_type'] + ".xsl"
+                        self.storeFileExtension = 'tmp'
+                        return
+            elif os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['provider_type'] + '.xsl'):
+                self.harvestInfo['xsl_file'] = self.harvestInfo['provider_type'] + ".xsl"
+                self.storeFileExtension = 'tmp'
+
+
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] == None:
             return
-        xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
-        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + ".xml"
+        xslFilePath = myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['xsl_file']
+        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
         self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
             transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : self.outputFilePath}
@@ -209,14 +229,14 @@ class Harvester():
         del cur
         conn.close()
 
-    def storeHarvestData(self, fileExt='xml'):
+    def storeHarvestData(self):
         if self.stopped:
             return
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
         self.outputDir = directory
-        self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + fileExt
+        self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
         dataFile = open(self.outputFilePath, 'wb', 0o777)
         self.setStatus("HARVESTING", self.outputFilePath)
         dataFile.write(self.data)

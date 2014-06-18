@@ -87,7 +87,7 @@ class HarvesterDaemon:
 
     def handleException(self, harvestId, exception):
         harvesterStatus = 'STOPPED'
-        self.__harvestErrored = self.__harvestErrored + 1
+        self.__harvestErrored += 1
         eMessage = repr(exception).replace("'", "").replace('"', "")
         conn = self.__database.getConnection()
         cur = conn.cursor()
@@ -104,13 +104,17 @@ class HarvesterDaemon:
         cur = conn.cursor()
         harvestInfo['crosswalk'] = None
         harvestInfo['xsl_file'] = None
-        cur.execute("select `attribute`, `value` FROM dbs_registry.data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
+        cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
+        for r in cur:
+            harvestInfo['data_source_id'] = r[0]
+            harvestInfo['data_source_slug'] = r[1]
+            harvestInfo['data_source_slug'] = r[2]
+        cur.execute("SELECT `attribute`, `value` FROM data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
         for r in cur:
             harvestInfo[r[0]] = r[1]
         harvestInfo['mode'] = mode
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['data_source_id'] = dataSourceId
         harvestInfo['harvest_id'] = harvestID
         harvestInfo['batch_number'] = batchNumber
         harvestInfo['from_date'] = lastRun
@@ -192,7 +196,7 @@ class HarvesterDaemon:
 
     def describeModules(self):
         print("DESCRIBING HARVESTER MODULES:\n")
-        harvesterDifinitions = '{"harvester_config":{"harvester_methods":['
+        harvesterDefinitions = '{"harvester_config":{"harvester_methods":['
         notFirst = False
         for files in os.listdir(myconfig.run_dir + '/harvest_handlers'):
             if files.endswith(".py"):
@@ -200,39 +204,38 @@ class HarvesterDaemon:
                 harvester_module = __import__(modulename, globals={}, locals={}, fromlist=[], level=0)
                 class_ = getattr(harvester_module, modulename)
                 if notFirst:
-                    harvesterDifinitions = harvesterDifinitions + ","
+                    harvesterDefinitions += ","
                 notFirst = True
-                harvesterDifinitions = harvesterDifinitions + class_.__doc__.strip()
-        harvesterDifinitions = harvesterDifinitions + "]}"
-        harvesterDifinitions = harvesterDifinitions + self.describeCrossWalks()
-        harvesterDifinitions = harvesterDifinitions + "}"
-        print(harvesterDifinitions + "\n\n")
-        self.saveHarvestDefinition(harvesterDifinitions)
+                harvesterDefinitions += class_.__doc__.strip()
+        harvesterDefinitions +=  "]}"
+        harvesterDefinitions += self.describeCrossWalks()
+        harvesterDefinitions +=  "}"
+        self.saveHarvestDefinition(harvesterDefinitions)
 
     def describeCrossWalks(self):
         notFirst = False
         xsltCrossWalks = ',\n"xsl_file":['
         for files in os.listdir(myconfig.run_dir + '/xslt'):
             if files.endswith(".xsl"):
-                xsltCrossWalks = xsltCrossWalks + '"%s"' %(files)
                 if notFirst:
-                    xsltCrossWalks = xsltCrossWalks + ','
-                    notFirst = True
+                    xsltCrossWalks += ','
+                notFirst = True
+                xsltCrossWalks +=  '"%s"' %(files)
         return xsltCrossWalks + ']'
 
-    def saveHarvestDefinition(self, harvesterDifinitions):
+    def saveHarvestDefinition(self, harvesterDefinitions):
         #save definition to file
         file = open(self.__harvesterDefinitionFile, "w+")
-        file.write(harvesterDifinitions)
+        file.write(harvesterDefinitions)
         file.close()
         #and add to the database
         conn = self.__database.getConnection()
         cur = conn.cursor()
         cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
         if(cur.rowcount > 0):
-            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDifinitions.replace("'", "\\\'")))
+            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
         else:
-            cur.execute("INSERT INTO configs (`value`, `key`) VALUES ('%s','%s');" %(harvesterDifinitions.replace("'", "\\\'"), 'harvester_methods'))
+            cur.execute("INSERT INTO configs (`value`, `key`) VALUES ('%s','%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods'))
         conn.commit()
         cur.close()
         del cur
@@ -242,7 +245,7 @@ class HarvesterDaemon:
         statusDict = {'last_report_timestamp' : time.time(),
                     'start_up_time' : self.__startUpTime,
                     'harvests_running' : str(len(self.__runningHarvests)),
-                    'harvests_cued' : str(len(self.__harvestRequests)),
+                    'harvests_queued' : str(len(self.__harvestRequests)),
                     'total_harvests_started' : str(self.__harvestStarted),
                     'harvest_completed' : str(self.__harvestCompleted),
                     'harvest_stopped' : str(self.__harvestStopped),
