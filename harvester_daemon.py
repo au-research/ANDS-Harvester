@@ -101,7 +101,6 @@ class Daemon(object):
         os.remove(self.pidfile)
 
     def start(self):
-        self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...")
         """
         Start daemon.
         """
@@ -120,6 +119,7 @@ class Daemon(object):
             sys.exit(1)
 
         # Start daemon.
+        self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...")
         self.daemonize()
         try:
             self.run()
@@ -507,8 +507,6 @@ if __name__ == '__main__':
     sys.path.append(myconfig.run_dir + '/harvest_handlers')
     hd = HarvesterDaemon(myconfig.run_dir + '/daemon.pid')
     if len(sys.argv) == 2:
-        print('{} {}'.format(sys.argv[0],sys.argv[1]))
-
         if 'start' == sys.argv[1]:
             hd.start()
         elif 'stop' == sys.argv[1]:
