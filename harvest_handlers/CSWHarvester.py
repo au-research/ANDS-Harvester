@@ -8,7 +8,7 @@ class CSWHarvester(Harvester):
             "description": "CSW Harvester to fetch metadata using Catalog Service for the Web protocol",
             "params": [
                 {"name": "uri", "required": "true"},
-                {"name": "outputSchema", "required": "true"}
+                {"name": "provider_type", "required": "true"}
             ]
         }
     """
@@ -37,7 +37,7 @@ class CSWHarvester(Harvester):
         query += "&version=2.0.2"
         query += "&namespace=xmlns(csw=http://www.opengis.net/cat/csw)"
         query += "&resultType=results"
-        query += "&outputSchema=http://www.isotc211.org/2005/gmd"
+        query += "&outputSchema=" + self.harvestInfo['provider_type']
         query += "&outputFormat=application/xml"
         query += "&maxRecords=" + str(self.maxRecords)
         if self.startPosition > 0:

@@ -5,8 +5,8 @@
 #
 
 from datetime import datetime
-import os
-import sys
+import sys, os, time, atexit
+from signal import SIGTERM
 import pymysql
 import myconfig
 import time
@@ -17,8 +17,189 @@ import threading
 from harvest_handlers import *
 
 
+class Logger:
+    __fileName = False
+    __file = False
+    __current_log_time = False
+    def __init__(self):
+        self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
+        self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
 
-class HarvesterDaemon:
+    def logMessage(self, message):
+        self.rotateLogFile()
+        self.__file = open(self.__fileName, "a", 0o777)
+        self.__file.write(message + " %s"  % datetime.now() + "\n")
+        self.__file.close()
+
+    def rotateLogFile(self):
+        if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
+            self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
+            self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
+
+class Daemon(object):
+    """
+    Subclass Daemon class and override the run() method.
+    """
+    def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+        self.stdin = stdin
+        self.stdout = stdout
+        self.stderr = stderr
+        self.pidfile = pidfile
+        self.__logger = Logger()
+
+    def daemonize(self):
+        """
+        Deamonize, do double-fork magic.
+        """
+        try:
+            pid = os.fork()
+            if pid > 0:
+                # Exit first parent.
+                sys.exit(0)
+        except OSError as e:
+            message = "Fork #1 failed: {}\n".format(e)
+            sys.stderr.write(message)
+            sys.exit(1)
+
+        # Decouple from parent environment.
+        os.chdir("/")
+        os.setsid()
+        os.umask(0)
+
+        # Do second fork.
+        try:
+            pid = os.fork()
+            if pid > 0:
+                # Exit from second parent.
+                sys.exit(0)
+        except OSError as e:
+            message = "Fork #2 failed: {}\n".format(e)
+            sys.stderr.write(message)
+            sys.exit(1)
+
+        self.__logger.logMessage('deamon going to background, PID: {}'.format(os.getpid()))
+
+        # Redirect standard file descriptors.
+        sys.stdout.flush()
+        sys.stderr.flush()
+        si = open(self.stdin, 'r')
+        so = open(self.stdout, 'a+')
+        se = open(self.stderr, 'a+')
+        os.dup2(si.fileno(), sys.stdin.fileno())
+        os.dup2(so.fileno(), sys.stdout.fileno())
+        os.dup2(se.fileno(), sys.stderr.fileno())
+
+        # Write pidfile.
+        pid = str(os.getpid())
+        open(self.pidfile,'w+').write("{}\n".format(pid))
+
+        # Register a function to clean up.
+
+
+    def delpid(self):
+        self.__logger.logMessage("\n\nDELETING PID FILE...")
+        os.remove(self.pidfile)
+
+    def start(self):
+        self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...")
+        """
+        Start daemon.
+        """
+        # Check pidfile to see if the daemon already runs.
+        try:
+            pf = open(self.pidfile,'r')
+            pid = int(pf.read().strip())
+            pf.close()
+        except IOError:
+            pid = None
+
+        if pid:
+            message = "Pidfile {} already exist. Daemon already running?\n".format(self.pidfile)
+            message += "If you're sure that the harvester is not running delete the pid file and try again!\n"
+            sys.stderr.write(message)
+            sys.exit(1)
+
+        # Start daemon.
+        self.daemonize()
+        try:
+            self.run()
+        except (KeyboardInterrupt, SystemExit):
+            self.__logger.logMessage("\n\nSTOPPING...")
+            self.shutDown()
+
+
+    def status(self):
+        """
+        Get status of daemon.
+        """
+        try:
+            pf = open(self.pidfile,'r')
+            pid = int(pf.read().strip())
+            pf.close()
+        except IOError:
+            message = "There is no PID file. is the harvester running?\n"
+            sys.stderr.write(message)
+            sys.exit(1)
+
+        try:
+            procfile = open("/proc/{}/status".format(pid), 'r')
+            procfile.close()
+            message = "The Harvester is running with the PID {}\n".format(pid)
+            sys.stdout.write(message)
+        except IOError:
+            message = "There is not a process with the PID {}\n".format(self.pidfile)
+            sys.stdout.write(message)
+
+    def stop(self):
+        """
+        Stop the daemon.
+        """
+        # Get the pid from pidfile.
+        self.__logger.logMessage("\n\nSTOPPING HARVESTER_DAEMON...")
+        try:
+            pf = open(self.pidfile,'r')
+            pid = int(pf.read().strip())
+            pf.close()
+        except IOError as e:
+            message = str(e) + "\nHarvester Daemon is not running?\n"
+            sys.stderr.write(message)
+            sys.exit(1)
+
+        # Try killing daemon process.
+        try:
+            os.kill(pid, SIGTERM)
+            self.__logger.logMessage("\n\nKILLING %s..." %str(pid))
+            time.sleep(1)
+        except OSError as e:
+            print(str(e))
+            sys.exit(1)
+
+        try:
+            if os.path.exists(self.pidfile):
+                self.__logger.logMessage("\n\nDELETING PIDFILE %s..." %self.pidfile)
+                os.remove(self.pidfile)
+        except IOError as e:
+            message = str(e) + "\nCan not remove pid file {}".format(self.pidfile)
+            sys.stderr.write(message)
+            sys.exit(1)
+
+    def restart(self):
+        """
+        Restart daemon.
+        """
+        self.stop()
+        time.sleep(1)
+        self.start()
+
+    def run(self):
+
+        """You should override this method when you subclass Daemon.
+
+        It will be called after the process has been daemonized by
+        start() or restart()."""
+
+
+class HarvesterDaemon(Daemon):
     __scheduler = False
     __logger = False
     __database = False
@@ -33,15 +214,6 @@ class HarvesterDaemon:
     __harvestCompleted = 0
     __harvestErrored = 0
     __harvestStopped = 0
-    def __init__(self):
-        self.__startUpTime = time.time()
-        self.__lastLogCount = 99
-        self.__database = self.__DataBase()
-        self.__logger = self.__Logger()
-        self.__harvesterDefinitionFile = myconfig.run_dir + "harvester_definition.json"
-        self.setupEnv()
-        self.describeModules()
-        self.fixBrokenHarvestRequests()
 
     class __Logger:
         __fileName = False
@@ -186,7 +358,8 @@ class HarvesterDaemon:
         cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
         try:
             result = cur.fetchone()
-            print("FOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
+            if result[0] > 0:
+                self.__logger.logMessage("\nFOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
         except Exception as e:
             pass
         cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
@@ -196,7 +369,7 @@ class HarvesterDaemon:
         conn.close()
 
     def describeModules(self):
-        print("DESCRIBING HARVESTER MODULES:\n")
+        self.__logger.logMessage("\nDESCRIBING HARVESTER MODULES:\n")
         harvesterDefinitions = '{"harvester_config":{"harvester_methods":['
         notFirst = False
         for files in os.listdir(myconfig.run_dir + '/harvest_handlers'):
@@ -275,14 +448,22 @@ class HarvesterDaemon:
 
 
     def run(self):
+        self.__startUpTime = time.time()
+        self.__lastLogCount = 99
+        self.__database = self.__DataBase()
+        self.__logger = self.__Logger()
+        self.__harvesterDefinitionFile = myconfig.run_dir + "harvester_definition.json"
+        self.setupEnv()
+        self.describeModules()
+        self.fixBrokenHarvestRequests()
         self.__logger.logMessage("\n\nSTARTING HARVESTER...")
-        print("STARTING HARVESTER... %s" %(datetime.now().strftime("%Y-%m-%d-%H:%M")))
-        print('Press Ctrl+C to exit')
+        atexit.register(self.shutDown)
         try:
             while True:
                 self.manageHarvests()
                 time.sleep(myconfig.polling_frequency)
         except (KeyboardInterrupt, SystemExit):
+            self.__logger.logMessage("\n\nSTOPPING...")
             self.shutDown()
         except Exception as e:
             print("error %r" %(e))
@@ -317,15 +498,31 @@ class HarvesterDaemon:
                     del self.__runningHarvests[harvestID]
         except Exception as e:
             print("error %r" %(e))
-        sys.exit()
+
 
 
 
 
 if __name__ == '__main__':
     sys.path.append(myconfig.run_dir + '/harvest_handlers')
-    hd = HarvesterDaemon()
-    hd.run()
+    hd = HarvesterDaemon(myconfig.run_dir + '/daemon.pid')
+    if len(sys.argv) == 2:
+        print('{} {}'.format(sys.argv[0],sys.argv[1]))
 
+        if 'start' == sys.argv[1]:
+            hd.start()
+        elif 'stop' == sys.argv[1]:
+            hd.stop()
+        elif 'restart' == sys.argv[1]:
+            hd.restart()
+        elif 'status' == sys.argv[1]:
+            hd.status()
+        else:
+            print ("Unknown command")
+            sys.exit(2)
+        sys.exit(0)
+    else:
+        print ("Usage: {} start|stop|restart".format(sys.argv[0]))
+        sys.exit(2)
 
 
