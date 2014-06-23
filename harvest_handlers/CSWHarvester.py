@@ -21,7 +21,7 @@ class CSWHarvester(Harvester):
     nextRecord = 0
     startPosition = 0
     def harvest(self):
-        while self.firstCall or self.maxRecords == self.numberOfRecordsReturned or not(self.completed):
+        while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)
             self.getHarvestData()
             self.storeHarvestData()
@@ -46,7 +46,6 @@ class CSWHarvester(Harvester):
         query += "&elementSetName=full"
         query += "&constraintLanguage=CQL_TEXT"
         query += "&constraint_language_version=1.1.0v"
-
         getRequest = Request(self.harvestInfo['uri'] +  query)
         try:
             self.firstCall = False
@@ -70,6 +69,15 @@ class CSWHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
+            try:
+                nException = dom.getElementsByTagName('ows:Exception')[0]
+                eCode = nException.attributes["exceptionCode"].value
+                eLocator = nException.attributes["locator"].value
+                eText = nException.getElementsByTagName('ows:ExceptionText')[0].firstChild.nodeValue
+                self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, locator:%s, value:%s)"%(eCode, eLocator, eText))
+                return
+            except Exception as e:
+                pass
             nSearchResult = dom.getElementsByTagName('csw:SearchResults')[0]
             if self.listSize == 'unknown':
                 self.listSize = int(nSearchResult.attributes["numberOfRecordsMatched"].value)

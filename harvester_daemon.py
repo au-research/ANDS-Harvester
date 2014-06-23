@@ -508,7 +508,7 @@ if __name__ == '__main__':
     hd = HarvesterDaemon(myconfig.run_dir + '/daemon.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
-            hd.start()
+            hd.start() #hd.run() for running in front
         elif 'stop' == sys.argv[1]:
             hd.stop()
         elif 'restart' == sys.argv[1]:

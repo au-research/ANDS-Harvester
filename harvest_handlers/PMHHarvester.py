@@ -67,6 +67,15 @@ class PMHHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
+            try:
+                error = dom.getElementsByTagName('error')
+                if len(error) > 0:
+                    e = "ERROR RECEIVED FROM PROVIDER: "
+                    e += error[0].firstChild.nodeValue
+                    self.handleExceptions(e)
+                    return
+            except Exception as e:
+                pass
             metadataElList = dom.getElementsByTagName('metadata')
             self.recordCount = self.recordCount + len(metadataElList)
             self.pageCount = self.pageCount + 1

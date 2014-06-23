@@ -302,12 +302,12 @@ class Harvester():
         self.errored = True
         if terminate:
             self.__status= 'STOPPED'
-            self.message= repr(exception).replace("'", "").replace('"', "")
-            self.errorLog = self.errorLog + ', error:' + str(exception).replace("'", "").replace('"', "")
+            #self.message= repr(exception).replace("'", "").replace('"', "")
+            self.errorLog = self.errorLog  + str(exception).replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
             self.stopped = True
         else:
-            self.errorLog = self.errorLog + ', error:' + str(exception).replace("'", "").replace('"', "")
+            self.errorLog = self.errorLog + str(exception).replace("'", "").replace('"', "") + ", "
 
 
 
