@@ -174,7 +174,7 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
-        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id']) + "/?batch=" + self.harvestInfo['batch_number'])
+        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id']) + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
         del postRequest
 
@@ -305,6 +305,7 @@ class Harvester():
             #self.message= repr(exception).replace("'", "").replace('"', "")
             self.errorLog = self.errorLog  + str(exception).replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
+            self.postHarvestData()
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace("'", "").replace('"', "") + ", "
