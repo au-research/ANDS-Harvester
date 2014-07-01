@@ -141,7 +141,8 @@ class Harvester():
             self.handleExceptions(e)
 
     def setUpCrosswalk(self):
-        if self.harvestInfo['xsl_file'] == None:
+        #todo:map the datasource and provider type somehow to an XSLT crosswalk
+        if self.harvestInfo['xsl_file'] == None and self.harvestInfo['provider_type'] != 'rif':
             if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + '.xsl'):
                 self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + '.xsl'
                 self.storeFileExtension = 'tmp'
@@ -151,6 +152,9 @@ class Harvester():
                         self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + os.sep + self.harvestInfo['provider_type'] + ".xsl"
                         self.storeFileExtension = 'tmp'
                         return
+                if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + os.sep + 'default.xsl'):
+                    self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + os.sep + 'default.xsl'
+                    self.storeFileExtension = 'tmp'
             elif os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['provider_type'] + '.xsl'):
                 self.harvestInfo['xsl_file'] = self.harvestInfo['provider_type'] + ".xsl"
                 self.storeFileExtension = 'tmp'

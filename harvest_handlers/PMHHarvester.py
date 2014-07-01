@@ -129,6 +129,7 @@ class PMHHarvester(Harvester):
             os.makedirs(directory)
         self.outputDir = directory
         dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
+
         #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
         dataFile.write(self.data)
         dataFile.close()

@@ -3,6 +3,9 @@
 # Author u4187959
 
 import ssl
+test_limit = <if not testing keep it large :9999999999>
+polling_frequency = <seconds: 10>
+max_up_seconds_per_harvest = <seconds :3600 (1 hour= )>
 run_dir = ''
 context = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
 context.load_cert_chain(certfile="<pathto:cert.pem>")

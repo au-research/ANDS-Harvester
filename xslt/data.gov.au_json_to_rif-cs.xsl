@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" 
+<xsl:stylesheet version="2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
     <!-- stylesheet to convert data.gov.au xml (transformed from json with python script) to RIF-CS -->
@@ -13,46 +13,50 @@
     <xsl:param name="global_contributor" select="'data.gov.au'"/>
     <xsl:param name="global_publisherName" select="'data.gov.au'"/>
     <xsl:param name="global_publisherPlace" select="'Canberra'"/>
-    
+
     <xsl:template match="datasets/help"/>
     <xsl:template match="datasets/success"/>
-    
+
     <!-- =========================================== -->
     <!-- dataset (root) Template             -->
     <!-- =========================================== -->
-    
-    <xsl:template match="datasets/result">
+
+    <xsl:template match="datasets">
         <registryObjects>
             <xsl:attribute name="xsi:schemaLocation">
                 <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
             </xsl:attribute>
-            <xsl:apply-templates select="." mode="collection"/>
-            <xsl:apply-templates select="." mode="party"/>
-            <xsl:apply-templates select="." mode="service"/>
+            <xsl:apply-templates select="result"/>
         </registryObjects>
     </xsl:template>
-    
+
+    <xsl:template match="result">
+        <xsl:apply-templates select="." mode="collection"/>
+        <xsl:apply-templates select="." mode="party"/>
+        <xsl:apply-templates select="." mode="service"/>
+    </xsl:template>
+
     <xsl:template match="datasets/result" mode="collection">
-        
+
         <xsl:variable name="metadataURL">
             <xsl:variable name="name" select="normalize-space(name)"/>
             <xsl:if test="string-length($name)">
                 <xsl:value-of select="concat($global_baseURI, 'dataset/', $name)"/>
             </xsl:if>
         </xsl:variable>
-        
+
         <registryObject>
             <xsl:attribute name="group">
                 <xsl:value-of select="$global_group"/>
             </xsl:attribute>
             <xsl:apply-templates select="id" mode="collection_key"/>
-            
+
             <originatingSource>
                 <xsl:value-of select="$global_originatingSource"/>
             </originatingSource>
-            
+
             <collection>
-                
+
                 <xsl:variable name="collectionType" select="normalize-space(type)"/>
                 <xsl:attribute name="type">
                     <xsl:choose>
@@ -64,64 +68,64 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                
+
                 <xsl:if test="string-length(normalize-space(metadata_created))">
                     <xsl:attribute name="dateAccessioned">
                         <xsl:value-of select="normalize-space(metadata_created)"/>
                     </xsl:attribute>
                 </xsl:if>
-                
+
                 <xsl:if test="string-length(normalize-space(metadata_modified))">
                     <xsl:attribute name="dateModified">
                         <xsl:value-of select="normalize-space(metadata_modified)"/>
                     </xsl:attribute>
                 </xsl:if>
-                
-              <xsl:apply-templates select="id" 
+
+              <xsl:apply-templates select="id"
                     mode="collection_identifier"/>
-                
-                <xsl:apply-templates select="name" 
+
+                <xsl:apply-templates select="name"
                     mode="collection_identifier"/>
-                
-                <xsl:apply-templates select="title" 
+
+                <xsl:apply-templates select="title"
                     mode="collection_name"/>
-                
-                <xsl:apply-templates select="name" 
+
+                <xsl:apply-templates select="name"
                     mode="collection_location_name"/>
-                
-                <xsl:apply-templates select="url" 
+
+                <xsl:apply-templates select="url"
                     mode="collection_location_url"/>
-                
-                <xsl:apply-templates select="organization" 
+
+                <xsl:apply-templates select="organization"
                         mode="collection_related_object"/>
-                
-                <xsl:apply-templates select="author" 
+
+                <xsl:apply-templates select="author"
                     mode="collection_related_object"/>
-                
-                <xsl:apply-templates select="tags" 
+
+                <xsl:apply-templates select="tags"
                     mode="collection_subject"/>
-                
-               <xsl:apply-templates select="notes" 
+
+               <xsl:apply-templates select="notes"
                     mode="collection_description"/>
 
-                <xsl:apply-templates select="spatial_coverage" 
+                <xsl:apply-templates select="spatial_coverage"
                     mode="collection_coverage_spatial"/>
-                
-                <xsl:apply-templates select="resources" 
+
+                <xsl:apply-templates select="resources"
                     mode="collection_relatedInfo"/>
-                                
-                <xsl:apply-templates select="." 
+
+                <xsl:apply-templates select="."
                     mode="relatedInfo_services"/>
-                
+
                 <xsl:call-template name="collection_license">
                     <xsl:with-param name="title" select="license_title"/>
                     <xsl:with-param name="id" select="license_id"/>
                     <xsl:with-param name="url" select="license_url"/>
                 </xsl:call-template>
 
-                <!--xsl:apply-templates select="" 
+                <!--xsl:apply-templates select=""
                     mode="collection_relatedInfo"/-->
-                
+
                 <!--xsl:call-template name="collection_citation">
                     <xsl:with-param name="title" select="title"/>
                     <xsl:with-param name="id" select="id"/>
@@ -131,18 +135,18 @@
                     <xsl:with-param name="date" select="metadata_created"/>
                     </xsl:call-template-->
             </collection>
-           
+
         </registryObject>
-    </xsl:template>   
-    
+    </xsl:template>
+
     <!-- =========================================== -->
     <!-- Party RegistryObject Template          -->
     <!-- =========================================== -->
-    
+
     <xsl:template match="datasets/result" mode="party">
-        
+
         <xsl:apply-templates select="organization"/>
-        
+
         <!-- If the author differs from the organisation -->
         <xsl:variable name="authorName" select="author"/>
         <xsl:if test="not(contains(lower-case(organization/title), lower-case($authorName)))">
@@ -150,11 +154,11 @@
             <xsl:apply-templates select="." mode="party_author"/>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- =========================================== -->
     <!-- Collection RegistryObject - Child Templates -->
     <!-- =========================================== -->
-    
+
     <!-- Collection - Key Element  -->
     <xsl:template match="id" mode="collection_key">
         <xsl:if test="string-length(normalize-space(.))">
@@ -163,7 +167,7 @@
             </key>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Collection - Identifier Element  -->
     <xsl:template match="id" mode="collection_identifier">
          <xsl:if test="string-length(normalize-space(.))">
@@ -175,7 +179,7 @@
             </identifier>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="name" mode="collection_identifier">
         <xsl:if test="string-length(normalize-space(.))">
               <identifier>
@@ -186,7 +190,7 @@
             </identifier>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Collection - Name Element  -->
     <xsl:template match="title" mode="collection_name">
         <xsl:if test="string-length(normalize-space(.))">
@@ -200,7 +204,7 @@
             </name>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Collection - Location Element  -->
     <xsl:template match="name" mode="collection_location_name">
         <xsl:variable name="name" select="normalize-space(.)"/>
@@ -219,7 +223,7 @@
             </location>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="url" mode="collection_location_url">
         <xsl:variable name="url" select="normalize-space(.)"/>
         <xsl:if test="string-length($url)">
@@ -237,7 +241,7 @@
             </location>
         </xsl:if>
     </xsl:template>
-        
+
     <!-- Collection - Related Object (Organisation or Individual) Element -->
     <xsl:template match="organization" mode="collection_related_object">
         <xsl:if test="string-length(normalize-space(title))">
@@ -256,12 +260,12 @@
                     </xsl:attribute>
                 </relation>
             </relatedObject>
-            
-            <xsl:apply-templates select="../." 
+
+            <xsl:apply-templates select="../."
                 mode="relatedInfo_services"/>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="author" mode="collection_related_object">
         <xsl:if test="string-length(normalize-space(.))">
             <xsl:variable name="transformedName">
@@ -281,7 +285,7 @@
             </relatedObject>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Collection - Subject Element -->
     <xsl:template match="tags" mode="collection_subject">
         <xsl:if test="string-length(normalize-space(display_name))">
@@ -291,7 +295,7 @@
             </subject>
         </xsl:if>
     </xsl:template>
-    
+
    <!-- Collection - Decription (brief) Element -->
     <xsl:template match="notes" mode="collection_description">
         <xsl:if test="string-length(normalize-space(.))">
@@ -300,7 +304,7 @@
             </description>
         </xsl:if>
     </xsl:template>
-    
+
    <!-- Collection - Coverage Spatial Element -->
     <!--xsl:template match="spatial_coverage" mode="collection_coverage_spatial">
         <xsl:if test="string-length(normalize-space(.)) > 0">
@@ -324,7 +328,7 @@
             </xsl:for-each>
         </xsl:if>
     </xsl:template-->
-    
+
     <xsl:template match="spatial_coverage" mode="collection_coverage_spatial">
         <xsl:variable name="spatial" select='normalize-space(.)'/>
         <xsl:variable name="coordinate_sequence" as="xs:string*">
@@ -336,7 +340,7 @@
                 </xsl:analyze-string>
             </xsl:if>
         </xsl:variable>
-       
+
         <xsl:choose>
             <xsl:when test="count($coordinate_sequence) = 0">
                 <xsl:if test="string-length($spatial)">
@@ -369,7 +373,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
   <!-- Collection - Related Info Element - Services -->
     <xsl:template match="result" mode="relatedInfo_services">
         <!-- Related Services -->
@@ -386,7 +390,7 @@
             </relatedInfo>
         </xsl:for-each>
     </xsl:template>
-    
+
     <!-- Collection - Related Info Element -->
     <xsl:template match="resources" mode="collection_relatedInfo">
         <relatedInfo type="resource">
@@ -427,7 +431,7 @@
                 </notes>
             </xsl:if>
         </relatedInfo>
-       
+
         <xsl:if test="contains(lower-case(webstore_url), 'active')">
             <relatedInfo type="resource">
                  <xsl:variable name="id" select="normalize-space(id)"/>
@@ -455,7 +459,7 @@
             </relatedInfo>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Collection - CitationInfo Element -->
     <xsl:template name="collection_citation">
         <xsl:param name="title"/>
@@ -464,7 +468,7 @@
         <xsl:param name="author"/>
         <xsl:param name="organisation"/>
         <xsl:param name="date"/>
-    
+
         <xsl:variable name="identifier" select="normalize-space($id)"/>
         <citationInfo>
             <citationMetadata>
@@ -474,7 +478,7 @@
                             <xsl:attribute name="type">
                                 <xsl:text>doi</xsl:text>
                             </xsl:attribute>
-                            <xsl:value-of select="$identifier"/>   
+                            <xsl:value-of select="$identifier"/>
                         </identifier>
                     </xsl:when>
                     <xsl:otherwise>
@@ -486,7 +490,7 @@
                         </identifier>
                     </xsl:otherwise>
                </xsl:choose>
-                
+
                 <title>
                     <xsl:value-of select="$title"/>
                 </title>
@@ -496,13 +500,13 @@
                     </xsl:attribute>
                     <xsl:value-of select="$date"/>
                 </date>
-                
+
                 <contributor>
                     <namePart>
                         <xsl:value-of select="$author"/>
                     </namePart>
                 </contributor>
-                
+
                 <xsl:if test="$author != $organisation">
                     <contributor>
                         <namePart>
@@ -510,48 +514,48 @@
                         </namePart>
                     </contributor>
                 </xsl:if>
-                
+
                 <publisher>
                     <xsl:value-of select="$organisation"/>
                 </publisher>
-       
+
             </citationMetadata>
         </citationInfo>
     </xsl:template>
-    
-  
+
+
     <!-- ====================================== -->
     <!-- Party RegistryObject - Child Templates -->
     <!-- ====================================== -->
-    
+
     <!-- Party Registry Object (Individuals (person) and Organisations (group)) -->
     <xsl:template match="organization">
         <xsl:variable name="title" select="normalize-space(title)"/>
         <xsl:if test="string-length($title) > 0">
             <registryObject group="{$global_group}">
-                
+
                 <xsl:variable name="transformedName">
                     <xsl:call-template name="transform">
                         <xsl:with-param name="inputString" select="$title"/>
                     </xsl:call-template>
                 </xsl:variable>
-                
-                
+
+
                 <key>
                     <xsl:value-of select="concat($global_group, '/', translate(lower-case($transformedName),' ',''))"/>
                 </key>
-                
+
                 <originatingSource>
                     <xsl:value-of select="$global_originatingSource"/>
                 </originatingSource>
-                
+
                 <party type="group">
                     <name type="primary">
                         <namePart>
                             <xsl:value-of select="$transformedName"/>
                         </namePart>
                     </name>
-                    
+
                     <xsl:if test="string-length(normalize-space(image_url))">
                         <description>
                             <xsl:attribute name="type">
@@ -560,7 +564,7 @@
                             <xsl:value-of select="normalize-space(image_url)"/>
                         </description>
                     </xsl:if>
-                    
+
                     <xsl:if test="string-length(normalize-space(description))">
                         <description>
                             <xsl:attribute name="type">
@@ -569,42 +573,42 @@
                             <xsl:value-of select="normalize-space(description)"/>
                         </description>
                     </xsl:if>
-                    
-                    <xsl:apply-templates select="../." 
+
+                    <xsl:apply-templates select="../."
                         mode="relatedInfo_services"/>
-                  
+
                 </party>
             </registryObject>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- Party Registry Object (Individuals (person) and Organisations (group)) -->
     <xsl:template match="datasets/result" mode="party_author">
         <xsl:variable name="name" select="author"/>
         <xsl:if test="string-length($name) > 0">
             <registryObject group="{$global_group}">
-                
+
                 <xsl:variable name="transformedName">
                     <xsl:call-template name="transform">
                         <xsl:with-param name="inputString" select="$name"/>
                     </xsl:call-template>
                 </xsl:variable>
-                
+
                 <key>
                     <xsl:value-of select="concat($global_group, '/', translate(lower-case($transformedName),' ',''))"/>
                 </key>
-                
+
                 <originatingSource>
                     <xsl:value-of select="$global_originatingSource"/>
                 </originatingSource>
-                
+
                 <party type="group">
                     <name type="primary">
                         <namePart>
                             <xsl:value-of select="$transformedName"/>
                         </namePart>
                     </name>
-                    
+
                     <xsl:if test="string-length(normalize-space(author_email))">
                         <location>
                             <address>
@@ -616,7 +620,7 @@
                             </address>
                         </location>
                     </xsl:if>
-                    
+
                     <xsl:variable name="orgName" select="organization/title"/>
                     <xsl:if test="boolean(string-length($orgName))">
                         <xsl:variable name="transformedOrgName">
@@ -624,7 +628,7 @@
                                 <xsl:with-param name="inputString" select="$orgName"/>
                             </xsl:call-template>
                         </xsl:variable>
-                    
+
                         <relatedObject>
                             <key>
                                 <xsl:value-of select="concat($global_group,'/', translate(lower-case($transformedOrgName),' ',''))"/>
@@ -640,11 +644,11 @@
             </registryObject>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- ====================================== -->
     <!-- Service RegistryObject - Template -->
     <!-- ====================================== -->
-    
+
     <!-- Service Registry Object -->
     <xsl:template match="datasets/result" mode="service">
         <xsl:variable name="organizationTitle" select="normalize-space(organization/title)"/>
@@ -654,39 +658,39 @@
                 <xsl:with-param name="inputString" select="$organizationTitle"/>
             </xsl:call-template>
         </xsl:variable>
-        
+
         <xsl:variable name="serviceURI_sequence" as="xs:string*">
             <xsl:call-template name="getServiceURI_sequence">
                 <xsl:with-param name="parent" select="."/>
             </xsl:call-template>
         </xsl:variable>
-        
+
         <xsl:for-each select="distinct-values($serviceURI_sequence)">
             <xsl:variable name="serviceURI" select="normalize-space(.)"/>
             <xsl:if test="string-length($serviceURI)">
-                
+
                 <registryObject group="{$global_group}">
-                    
+
                     <key>
                         <xsl:value-of select="$serviceURI"/>
                     </key>
-                    
+
                     <originatingSource>
                         <xsl:value-of select="$global_originatingSource"/>
                     </originatingSource>
-                    
+
                     <service type="webservice">
-                        
+
                         <identifier type="uri">
                             <xsl:value-of select="$serviceURI"/>
                         </identifier>
-                        
+
                         <xsl:variable name="serviceName">
                             <xsl:call-template name="getServiceName">
                                 <xsl:with-param name="url" select="$serviceURI"/>
                             </xsl:call-template>
                         </xsl:variable>
-                        
+
                         <name type="primary">
                             <namePart>
                                 <xsl:choose>
@@ -699,7 +703,7 @@
                                 </xsl:choose>
                             </namePart>
                         </name>
-                        
+
                         <xsl:if test="string-length($organizationDescription)">
                             <description>
                                 <xsl:attribute name="type">
@@ -708,8 +712,8 @@
                                 <xsl:value-of select="concat('Description of organisation that provides this service: ',  $organizationDescription)"/>
                             </description>
                         </xsl:if>
-                        
-                        
+
+
                         <location>
                             <address>
                                 <electronic>
@@ -727,7 +731,7 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-        
+
     <!-- Modules -->
     <xsl:template name="getServiceURI_sequence" as="xs:string*">
         <xsl:param name="parent"/>
@@ -763,7 +767,7 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-    
+
     <xsl:template name="collection_license">
         <xsl:param name="title"/>
         <xsl:param name="id"/>
@@ -780,22 +784,22 @@
             </licence>
         </rights>
     </xsl:template>
-    
+
     <!-- This is a placeholder function for if you want to transform something, e.g. from ANU to Australian National University -->
     <xsl:template name="transform">
         <xsl:param name="inputString"/>
         <xsl:value-of select="normalize-space($inputString)"/>
     </xsl:template>
-    
-    
+
+
     <xsl:template name="getServiceName">
         <xsl:param name="url"/>
         <xsl:choose>
             <xsl:when test="contains($url, 'rest/services/')">
-                <xsl:value-of select="concat(substring-after($url, 'rest/services/'), ' service')"/>     
+                <xsl:value-of select="concat(substring-after($url, 'rest/services/'), ' service')"/>
             </xsl:when>
             <xsl:when test="contains($url, $global_baseURI)">
-                <xsl:value-of select="concat(substring-after($url, $global_baseURI), ' ', $global_group, ' service')"/>     
+                <xsl:value-of select="concat(substring-after($url, $global_baseURI), ' ', $global_group, ' service')"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:for-each select="tokenize($url, '/')">
@@ -806,7 +810,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="splitText" as="xs:string*">
         <xsl:param name="string"/>
         <xsl:param name="separator" select="','"/>

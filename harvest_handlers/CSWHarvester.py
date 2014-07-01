@@ -98,6 +98,23 @@ class CSWHarvester(Harvester):
             os.makedirs(directory)
         self.outputDir = directory
         dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension , 'wb', 0o777)
+        print("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
         self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
         dataFile.write(self.data)
         dataFile.close()
+
+
+    def runCrossWalk(self):
+        if self.stopped or self.harvestInfo['xsl_file'] == None:
+            return
+        xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
+        outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
+        inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+        #self.setStatus("HARVESTING", "RUNNING CROSSWALK")
+        try:
+            transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : inFile}
+            tr = XSLT2Transformer(transformerConfig)
+            tr.transform()
+        except Exception as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.handleExceptions(e)
