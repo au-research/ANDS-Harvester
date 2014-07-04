@@ -122,10 +122,11 @@ class Daemon(object):
         self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...")
         self.daemonize()
         try:
+            atexit.register(Daemon.shutDown)
             self.run()
         except (KeyboardInterrupt, SystemExit):
-            self.__logger.logMessage("\n\nSTOPPING...")
             self.shutDown()
+            self.__logger.logMessage("\n\nSTOPPING...")
 
 
     def status(self):
@@ -155,7 +156,8 @@ class Daemon(object):
         Stop the daemon.
         """
         # Get the pid from pidfile.
-        self.__logger.logMessage("\n\nSTOPPING HARVESTER_DAEMON...")
+        self.__logger.logMessage("\nSTOPPING HARVESTER_DAEMON...")
+
         try:
             pf = open(self.pidfile,'r')
             pid = int(pf.read().strip())
@@ -168,15 +170,15 @@ class Daemon(object):
         # Try killing daemon process.
         try:
             os.kill(pid, SIGTERM)
-            self.__logger.logMessage("\n\nKILLING %s..." %str(pid))
-            time.sleep(1)
+            self.__logger.logMessage("\nKILLING %s..." %str(pid))
+            time.sleep(3)
         except OSError as e:
             print(str(e))
             sys.exit(1)
 
         try:
             if os.path.exists(self.pidfile):
-                self.__logger.logMessage("\n\nDELETING PIDFILE %s..." %self.pidfile)
+                self.__logger.logMessage("\nDELETING PIDFILE %s..." %self.pidfile)
                 os.remove(self.pidfile)
         except IOError as e:
             message = str(e) + "\nCan not remove pid file {}".format(self.pidfile)
@@ -190,6 +192,9 @@ class Daemon(object):
         self.stop()
         time.sleep(1)
         self.start()
+
+    def shutDown(self):
+        self.__logger.logMessage("\nSHUTTING DOWN ...")
 
     def run(self):
 
@@ -254,14 +259,17 @@ class HarvesterDaemon(Daemon):
                 self.__connection = pymysql.connect(host=self.__host, unix_socket='/tmp/mysql.sock', user=self.__user, passwd = self.__passwd, db = self.__db)
             except:
                 e = sys.exc_info()[1]
-                print("Database Exception %s" %(e))
+                raise RuntimeError("Database Exception %s" %(e))
             return self.__connection
 
     def handleException(self, harvestId, exception):
         harvesterStatus = 'STOPPED'
         self.__harvestErrored += 1
         eMessage = repr(exception).replace("'", "").replace('"', "")
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
         conn.commit()
@@ -272,7 +280,10 @@ class HarvesterDaemon(Daemon):
     def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
         self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)))
         harvestInfo = {}
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         harvestInfo['crosswalk'] = None
         harvestInfo['xsl_file'] = None
@@ -341,7 +352,10 @@ class HarvesterDaemon(Daemon):
 
 
     def checkForHarvestRequests(self):
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("SELECT * FROM "+ myconfig.harvest_table +" where `status` like 'SCHEDULED%' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));" )
         if(cur.rowcount > 0):
@@ -353,7 +367,10 @@ class HarvesterDaemon(Daemon):
         conn.close()
 
     def fixBrokenHarvestRequests(self):
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
         try:
@@ -403,7 +420,10 @@ class HarvesterDaemon(Daemon):
         file.write(harvesterDefinitions)
         file.close()
         #and add to the database
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
         if(cur.rowcount > 0):
@@ -425,7 +445,10 @@ class HarvesterDaemon(Daemon):
                     'harvest_stopped' : str(self.__harvestStopped),
                     'harvest_errored' : str(self.__harvestErrored),
                     }
-        conn = self.__database.getConnection()
+        try:
+            conn = self.__database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("SELECT * FROM configs WHERE `key`='harvester_status';")
         if(cur.rowcount > 0):
@@ -464,9 +487,9 @@ class HarvesterDaemon(Daemon):
                 time.sleep(myconfig.polling_frequency)
         except (KeyboardInterrupt, SystemExit):
             self.__logger.logMessage("\n\nSTOPPING...")
-            self.shutDown()
+            #self.shutDown()
         except Exception as e:
-            print("error %r" %(e))
+            self.__logger.logMessage("error %r" %(e))
             pass
 
 
@@ -487,7 +510,9 @@ class HarvesterDaemon(Daemon):
 
 
     def shutDown(self):
-        self.__logger.logMessage("SHUTTING DOWN...")
+        #self.__logger.logMessage("SHUTTING DOWN...")
+        loggedUserMsg = os.popen('who').read()
+        self.__logger.logMessage("SHUTTING DOWN...\nLogged In Users:\n%s" %(loggedUserMsg))
         try:
             if len(self.__runningHarvests) > 0:
                 for harvestID in list(self.__runningHarvests):
@@ -496,8 +521,14 @@ class HarvesterDaemon(Daemon):
                     harvestReq.rescheduleHarvest()
                     del harvestReq
                     del self.__runningHarvests[harvestID]
+            if os.path.exists(self.pidfile):
+                self.__logger.logMessage("\n\nDELETING PIDFILE %s..." %self.pidfile)
+                os.remove(self.pidfile)
+        except IOError as e:
+            message = str(e) + "\nCan not remove pid file {}".format(self.pidfile)
+            self.__logger.logMessage(message)
         except Exception as e:
-            print("error %r" %(e))
+            self.__logger.logMessage("error %r" %(e))
 
 
 
@@ -508,7 +539,11 @@ if __name__ == '__main__':
     hd = HarvesterDaemon(myconfig.run_dir + '/daemon.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
-            hd.run() #hd.run() for running in front hd.start() for daemon
+            print ("Starting Harvester as Daemon")
+            hd.start()
+        elif 'run' == sys.argv[1]:
+            print ("Starting Harvester in the foreground")
+            hd.run()
         elif 'stop' == sys.argv[1]:
             hd.stop()
         elif 'restart' == sys.argv[1]:
@@ -520,7 +555,7 @@ if __name__ == '__main__':
             sys.exit(2)
         sys.exit(0)
     else:
-        print ("Usage: {} start|stop|restart".format(sys.argv[0]))
+        print ("Usage: {} run|start|stop|restart".format(sys.argv[0]))
         sys.exit(2)
 
 

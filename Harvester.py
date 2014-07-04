@@ -114,7 +114,7 @@ class Harvester():
                         self.deleteDirectory(file_path)
                         os.rmdir(file_path)
                 except Exception as e:
-                    print(repr(e))
+                    self.logger.logMessage(e)
 
     def deleteDirectory(self, directory):
         for the_file in os.listdir(directory):
@@ -126,7 +126,7 @@ class Harvester():
                     self.deleteDirectory(file_path)
                     os.rmdir(file_path)
             except Exception as e:
-                print(repr(e))
+                self.logger.logMessage(e)
 
 
     def getHarvestData(self):
@@ -186,7 +186,10 @@ class Harvester():
         self.checkHarvestStatus()
         if self.stopped:
             return
-        conn = self.database.getConnection()
+        try:
+            conn = self.database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         upTime = int(time.time()) - self.startUpTime
         statusDict = {'status':self.__status,
@@ -206,7 +209,10 @@ class Harvester():
     def checkHarvestStatus(self):
         if self.stopped:
             return
-        conn = self.database.getConnection()
+        try:
+            conn = self.database.getConnection()
+        except Exception as e:
+            return
         cur = conn.cursor()
         cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
         if(cur.rowcount > 0):
