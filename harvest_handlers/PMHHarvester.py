@@ -43,7 +43,7 @@ class PMHHarvester(Harvester):
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(str(self.retryCount), self.__resumptionToken))
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken))
             self.handleExceptions(e)
 
     def identifyRequest(self):
@@ -58,7 +58,7 @@ class PMHHarvester(Harvester):
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
-            self.logger.logMessage("ERROR RETREIVING IDENTIFY DOC, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
+            self.logger.logMessage("ERROR RETRIEVING IDENTIFY DOC, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
             self.handleExceptions(e)
 
 

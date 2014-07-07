@@ -142,7 +142,7 @@ class Harvester():
 
     def setUpCrosswalk(self):
         #todo:map the datasource and provider type somehow to an XSLT crosswalk
-        if self.harvestInfo['xsl_file'] == None and self.harvestInfo['provider_type'] != 'rif':
+        if (self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '') and self.harvestInfo['provider_type'] != 'rif':
             if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + '.xsl'):
                 self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + '.xsl'
                 self.storeFileExtension = 'tmp'
@@ -161,7 +161,7 @@ class Harvester():
 
 
     def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None:
+        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
             return
         xslFilePath = myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['xsl_file']
         outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
@@ -189,6 +189,7 @@ class Harvester():
         try:
             conn = self.database.getConnection()
         except Exception as e:
+            self.logger.logMessage("Database Connection Error: %s" %(str(repr(e))))
             return
         cur = conn.cursor()
         upTime = int(time.time()) - self.startUpTime
@@ -201,10 +202,13 @@ class Harvester():
                       'output':{'file': self.outputFilePath, 'dir': self.outputDir},
                       'progress':{'current':self.recordCount, 'total':self.listSize, 'time':str(upTime),'start':str(self.startUpTime), 'end':''}
                     }
-        cur.execute("UPDATE %s SET `status` ='%s', `message` ='%s' where `harvest_id` = %s" %(myconfig.harvest_table, self.__status, json.dumps(statusDict).replace("'", "\\\'"), str(self.harvestInfo['harvest_id'])))
-        conn.commit()
-        del cur
-        conn.close()
+        try:
+            cur.execute("UPDATE %s SET `status` ='%s', `message` ='%s' where `harvest_id` = %s" %(myconfig.harvest_table, self.__status, json.dumps(statusDict).replace("'", "\\\'"), str(self.harvestInfo['harvest_id'])))
+            conn.commit()
+            del cur
+            conn.close()
+        except Exception as e:
+            self.logger.logMessage("Database Error: (updateHarvestRequest) %s" %(str(repr(e))))
 
     def checkHarvestStatus(self):
         if self.stopped:
@@ -213,31 +217,34 @@ class Harvester():
             conn = self.database.getConnection()
         except Exception as e:
             return
-        cur = conn.cursor()
-        cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
-        if(cur.rowcount > 0):
-            self.__status = cur.fetchone()[0]
-            self.stopped = True
-            self.logger.logMessage("HARVEST STOPPED WHILE RUNNING")
-        if self.completed:
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+        try:
+            cur = conn.cursor()
+            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
             if(cur.rowcount > 0):
                 self.__status = cur.fetchone()[0]
                 self.stopped = True
-                self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED")
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                self.logger.logMessage("HARVEST STOPPED WHILE RUNNING")
+            if self.completed:
+                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+                if(cur.rowcount > 0):
+                    self.__status = cur.fetchone()[0]
+                    self.stopped = True
+                    self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED")
+                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                if(cur.rowcount > 0):
+                    self.__status = cur.fetchone()[0]
+                    self.stopped = True
+                    self.logger.logMessage("REGISTRY IS IMPORTING")
+            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
             if(cur.rowcount > 0):
                 self.__status = cur.fetchone()[0]
                 self.stopped = True
-                self.logger.logMessage("REGISTRY IS IMPORTING")
-        cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
-        if(cur.rowcount > 0):
-            self.__status = cur.fetchone()[0]
-            self.stopped = True
-            self.logger.logMessage("HARVEST COMPLETED")
-        cur.close()
-        del cur
-        conn.close()
+                self.logger.logMessage("HARVEST COMPLETED")
+            cur.close()
+            del cur
+            conn.close()
+        except Exception as e:
+            self.logger.logMessage("Database Error: (checkHarvestStatus) %s" %(str(repr(e))))
 
     def storeHarvestData(self):
         if self.stopped:
