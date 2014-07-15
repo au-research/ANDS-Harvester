@@ -475,7 +475,7 @@ class HarvesterDaemon(Daemon):
         self.__lastLogCount = 99
         self.__database = self.__DataBase()
         self.__logger = self.__Logger()
-        self.__harvesterDefinitionFile = myconfig.run_dir + "harvester_definition.json"
+        self.__harvesterDefinitionFile = myconfig.run_dir + os.sep + "harvester_definition.json"
         self.setupEnv()
         self.describeModules()
         self.fixBrokenHarvestRequests()
