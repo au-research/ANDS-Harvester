@@ -429,7 +429,7 @@ class HarvesterDaemon(Daemon):
         if(cur.rowcount > 0):
             cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
         else:
-            cur.execute("INSERT INTO configs (`value`, `key`) VALUES ('%s','%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods'))
+            cur.execute("INSERT INTO configs (`value`, `key`, `type`) VALUES ('%s','%s', '%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods', 'json'))
         conn.commit()
         cur.close()
         del cur
