@@ -177,7 +177,7 @@ class Harvester():
     def postHarvestData(self):
         if self.stopped:
             return
-        print(self.harvestInfo)
+        #print(self.harvestInfo)
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
         postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id']) + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
