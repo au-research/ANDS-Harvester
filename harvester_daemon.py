@@ -256,7 +256,7 @@ class HarvesterDaemon(Daemon):
         def getConnection(self):
             #if not(self.__connection):
             try:
-                self.__connection = pymysql.connect(host=self.__host, unix_socket='/tmp/mysql.sock', user=self.__user, passwd = self.__passwd, db = self.__db)
+                self.__connection = pymysql.connect(host=self.__host, user=self.__user, passwd = self.__passwd, db = self.__db)
             except:
                 e = sys.exc_info()[1]
                 raise RuntimeError("Database Exception %s" %(e))
