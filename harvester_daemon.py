@@ -6,7 +6,7 @@
 
 from datetime import datetime
 import sys, os, time, atexit
-from signal import SIGTERM
+from signal import SIGTERM, SIGINT
 import pymysql
 import myconfig
 import time
@@ -94,7 +94,7 @@ class Daemon(object):
         open(self.pidfile,'w+').write("{}\n".format(pid))
 
         # Register a function to clean up.
-
+        atexit.register(self.delpid)
 
     def delpid(self):
         self.__logger.logMessage("\n\nDELETING PID FILE...")
@@ -169,7 +169,7 @@ class Daemon(object):
 
         # Try killing daemon process.
         try:
-            os.kill(pid, SIGTERM)
+            os.kill(pid, SIGINT)
             self.__logger.logMessage("\nKILLING %s..." %str(pid))
             time.sleep(3)
         except OSError as e:
