@@ -3,6 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:custom="http://custom.nowhere.yet"
     xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
     <!-- stylesheet to convert data.gov.au xml (transformed from json with python script) to RIF-CS -->
     <xsl:output method="xml" version="1.0" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
@@ -18,19 +19,17 @@
     <xsl:template match="datasets/success"/>
 
     <!-- =========================================== -->
-    <!-- dataset (root) Template             -->
+    <!-- dataset (datasets) Template             -->
     <!-- =========================================== -->
 
-    <xsl:template match="datasets">
-        <registryObjects>
+    <xsl:template match="datasets/result">
+        <!--registryObjects>
             <xsl:attribute name="xsi:schemaLocation">
                 <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
             </xsl:attribute>
-            <xsl:apply-templates select="result"/>
-        </registryObjects>
-    </xsl:template>
-
-    <xsl:template match="result">
+            <xsl:apply-templates select="." mode="collection"/>
+            <xsl:apply-templates select="." mode="party"/>
+            </registryObjects-->
         <xsl:apply-templates select="." mode="collection"/>
         <xsl:apply-templates select="." mode="party"/>
         <xsl:apply-templates select="." mode="service"/>
@@ -52,7 +51,14 @@
             <xsl:apply-templates select="id" mode="collection_key"/>
 
             <originatingSource>
-                <xsl:value-of select="$global_originatingSource"/>
+                <xsl:choose>
+                    <xsl:when test="string-length(normalize-space(organization/title)) > 0">
+                        <xsl:value-of select="normalize-space(organization/title)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$global_originatingSource"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </originatingSource>
 
             <collection>
@@ -387,6 +393,7 @@
                 <identifier type="uri">
                     <xsl:value-of select="."/>
                 </identifier>
+                <relation type="isSupportedBy"/>
             </relatedInfo>
         </xsl:for-each>
     </xsl:template>
@@ -546,15 +553,45 @@
                 </key>
 
                 <originatingSource>
-                    <xsl:value-of select="$global_originatingSource"/>
+                    <xsl:choose>
+                        <xsl:when test="string-length(normalize-space(title)) > 0">
+                            <xsl:value-of select="normalize-space(title)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$global_originatingSource"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </originatingSource>
 
                 <party type="group">
+
+                    <xsl:variable name="name" select="normalize-space(name)"/>
+                    <xsl:if test="string-length($name)">
+                        <identifier type="uri">
+                            <xsl:value-of select="concat($global_baseURI,'organization/', $name)"/>
+                        </identifier>
+                    </xsl:if>
+
                     <name type="primary">
                         <namePart>
                             <xsl:value-of select="$transformedName"/>
                         </namePart>
                     </name>
+
+                    <xsl:if test="string-length($name)">
+                        <location>
+                            <address>
+                                <electronic>
+                                    <xsl:attribute name="type">
+                                        <xsl:text>url</xsl:text>
+                                    </xsl:attribute>
+                                    <value>
+                                        <xsl:value-of select="concat($global_baseURI, 'organization/', $name)"/>
+                                    </value>
+                                </electronic>
+                            </address>
+                        </location>
+                    </xsl:if>
 
                     <xsl:if test="string-length(normalize-space(image_url))">
                         <description>
@@ -573,10 +610,6 @@
                             <xsl:value-of select="normalize-space(description)"/>
                         </description>
                     </xsl:if>
-
-                    <xsl:apply-templates select="../."
-                        mode="relatedInfo_services"/>
-
                 </party>
             </registryObject>
         </xsl:if>
@@ -599,7 +632,14 @@
                 </key>
 
                 <originatingSource>
-                    <xsl:value-of select="$global_originatingSource"/>
+                    <xsl:choose>
+                        <xsl:when test="string-length(normalize-space($name)) > 0">
+                            <xsl:value-of select="normalize-space($name)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$global_originatingSource"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </originatingSource>
 
                 <party type="group">
@@ -652,6 +692,7 @@
     <!-- Service Registry Object -->
     <xsl:template match="datasets/result" mode="service">
         <xsl:variable name="organizationTitle" select="normalize-space(organization/title)"/>
+        <xsl:variable name="organizationName" select="normalize-space(organization/name)"/>
         <xsl:variable name="organizationDescription" select="normalize-space(organization/description)"/>
         <xsl:variable name="transformedTitle">
             <xsl:call-template name="transform">
@@ -726,6 +767,14 @@
                                 </electronic>
                             </address>
                         </location>
+
+                        <xsl:if test="string-length($organizationName)">
+                            <relatedInfo type="party">
+                                <identifier type="uri">
+                                    <xsl:value-of select="concat($global_baseURI,'organization/', $organizationName)"/>
+                                </identifier>
+                            </relatedInfo>
+                        </xsl:if>
                     </service>
                 </registryObject>
             </xsl:if>
@@ -737,7 +786,7 @@
         <xsl:param name="parent"/>
         <xsl:for-each select="$parent/resources">
             <xsl:variable name="url" select="normalize-space(url)"/>
-            <!--xsl:message>url: <xsl:value-of select="$url"/></xsl:message-->
+            <xsl:message>url: <xsl:value-of select="$url"/></xsl:message>
             <xsl:if test="string-length($url)">
                 <xsl:choose>
                     <xsl:when test="contains($url, '?')"> <!-- Indicates parameters -->
@@ -830,5 +879,4 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
 </xsl:stylesheet>
