@@ -19,17 +19,19 @@
     <xsl:template match="datasets/success"/>
 
     <!-- =========================================== -->
-    <!-- dataset (datasets) Template             -->
+    <!-- dataset (root) Template             -->
     <!-- =========================================== -->
 
-    <xsl:template match="datasets/result">
-        <!--registryObjects>
+    <xsl:template match="datasets">
+        <registryObjects>
             <xsl:attribute name="xsi:schemaLocation">
                 <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
             </xsl:attribute>
-            <xsl:apply-templates select="." mode="collection"/>
-            <xsl:apply-templates select="." mode="party"/>
-            </registryObjects-->
+            <xsl:apply-templates select="result"/>
+        </registryObjects>
+    </xsl:template>
+
+    <xsl:template match="result">
         <xsl:apply-templates select="." mode="collection"/>
         <xsl:apply-templates select="." mode="party"/>
         <xsl:apply-templates select="." mode="service"/>
