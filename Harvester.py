@@ -142,7 +142,9 @@ class Harvester():
 
     def setUpCrosswalk(self):
         #todo:map the datasource and provider type somehow to an XSLT crosswalk
-        if (self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '') and self.harvestInfo['provider_type'] != 'rif':
+        if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
+           self.storeFileExtension = 'tmp'
+        elif self.harvestInfo['provider_type'] != 'rif':
             if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + '.xsl'):
                 self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + '.xsl'
                 self.storeFileExtension = 'tmp'
@@ -161,7 +163,7 @@ class Harvester():
 
 
     def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
+        if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
         xslFilePath = myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['xsl_file']
         outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
