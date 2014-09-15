@@ -19,7 +19,7 @@
     <xsl:param name="global_acronym" select="'AuScope'"/>
     <xsl:param name="global_originatingSource" select="'AuScope'"/> <!-- Only used as originating source if organisation name cannot be determined from Point Of Contact -->
     <xsl:param name="global_group" select="'AuScope'"/> 
-    <xsl:param name="global_baseURI" select="'http://portal.auscope.org.au'"/>
+    <xsl:param name="global_baseURI" select="'portal.auscope.org.au'"/>
     <xsl:variable name="anzsrcCodelist" select="document('anzsrc-codelist.xml')"/>
     <xsl:variable name="licenseCodelist" select="document('license-codelist.xml')"/>
     <xsl:variable name="gmdCodelists" select="document('codelists.xml')"/>
