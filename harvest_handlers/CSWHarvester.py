@@ -72,9 +72,9 @@ class CSWHarvester(Harvester):
             try:
                 nException = dom.getElementsByTagName('ows:Exception')[0]
                 eCode = nException.attributes["exceptionCode"].value
-                eLocator = nException.attributes["locator"].value
+                #eLocator = nException.attributes["locator"].value
                 eText = nException.getElementsByTagName('ows:ExceptionText')[0].firstChild.nodeValue
-                self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, locator:%s, value:%s)"%(eCode, eLocator, eText))
+                self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
                 return
             except Exception as e:
                 pass
