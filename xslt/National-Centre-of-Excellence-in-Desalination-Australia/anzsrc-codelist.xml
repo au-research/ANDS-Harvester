@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmx:CT_CodelistCatalogue xmlns:gmx="http://www.isotc211.org/2005/gmx"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://www.isotc211.org/2005/gmx/gmx.xsd 
+	http://www.isotc211.org/2005/gco http://www.isotc211.org/2005/gco/gco.xsd 
+	http://www.opengis.net/gml http://www.isotc211.org/2005/gml/gml.xsd 
+	http://www.w3.org/1999/xlink http://www.isotc211.org/2005/xlink/xlinks.xsd">
+	<gmx:name>
+		<gco:CharacterString>ANZSRC Codelist</gco:CharacterString>
+	</gmx:name>
+	<gmx:scope>
+		<gco:CharacterString>Codelists for ANZSRC codes/values</gco:CharacterString>
+	</gmx:scope>
+	<gmx:fieldOfApplication>
+		<gco:CharacterString>Australian and New Zealand Standard Research Classification (ANZSRC)</gco:CharacterString>
+	</gmx:fieldOfApplication>
+	<gmx:versionNumber>
+		<gco:CharacterString>1.0</gco:CharacterString>
+	</gmx:versionNumber>
+	<gmx:versionDate>
+		<gco:Date>2008-03-31</gco:Date>
+	</gmx:versionDate>
+	<gmx:codelistItem>
+		<gmx:CodeListDictionary gml:id="ANZSRCCode">
+			<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">ANZSRCCode</gml:identifier>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_04">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">04</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Earth Sciences</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0401">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0401</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Atmospheric Sciences</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0402">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0402</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geochemistry</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0403">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0403</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0404">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0404</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geophysics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0405">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0405</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Oceanography</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0406">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0406</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Physical Geography and Environmental Geoscience</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_0499">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">0499</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Other Earth Sciences</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040101">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040101</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Atmospheric Aerosols</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040102">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040102</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Atmospheric Dynamics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040103">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040103</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Atmospheric Radiation</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040104">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040104</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Climate Change Processes</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040105">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040105</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Climatology (excl. Climate Change Processes)</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040106">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040106</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Cloud Physics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040107">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040107</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Meteorology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040108">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040108</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Tropospheric and Stratospheric Physics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040199">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040199</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Atmospheric Sciences not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040201">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040201</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Exploration Geochemistry</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040202">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040202</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Inorganic Geochemistry</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040203">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040203</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Isotope Geochemistry</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040204">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040204</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Organic Geochemistry</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040299">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040299</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geochemistry not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040301">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040301</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Basin Analysis</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040302">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040302</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Extraterrestrial Geology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040303">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040303</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geochronology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040304">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040304</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Igneous and Metamorphic Petrology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040305">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040305</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Marine Geoscience</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040306">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040306</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Mineralogy and Crystallography</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040307">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040307</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Ore Deposit Petrology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040308">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040308</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Palaeontology (incl. Palynology)</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040309">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040309</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Petroleum and Coal Geology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040310">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040310</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Sedimentology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040311">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040311</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Stratigraphy (incl. Biostratigraphy and Sequence Stratigraphy)</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040312">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040312</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Structural Geology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040313">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040313</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Tectonics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040314">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040314</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Volcanology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040399">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040399</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geology not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040401">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040401</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Electrical and Electromagnetic Methods in Geophysics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040402">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040402</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geodynamics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040403">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040403</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geophysical Fluid Dynamics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040404">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040404</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geothermics and Radiometrics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040405">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040405</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Gravimetrics</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040406">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040406</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Magnetism and Palaeomagnetism</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040407">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040407</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Seismology and Seismic Exploration</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040499">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040499</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geophysics not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040501">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040501</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Biological Oceanography</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040502">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040502</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Chemical Oceanography</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040503">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040503</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Physical Oceanography</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040599">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040599</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Oceanography not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040601">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040601</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Geomorphology and Regolith and Landscape Evolution</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040602">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040602</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Glaciology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040603">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040603</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Hydrogeology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040604">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040604</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Natural Hazards</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040605">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040605</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Palaeoclimatology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040606">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040606</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Quaternary Environments</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040607">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040607</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Surface Processes</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040608">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040608</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Surfacewater Hydrology</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_040699">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">040699</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Physical Geography and Environmental Geoscience not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+			<gmx:codeEntry>
+				<gmx:CodeDefinition gml:id="ANZSRCCode_049999">
+					<gml:identifier codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">049999</gml:identifier>
+					<gml:name codeSpace="http://www.ausstats.abs.gov.au/ausstats/ANZSRC">Earth Sciences not elsewhere classified</gml:name>
+				</gmx:CodeDefinition>
+			</gmx:codeEntry>
+		</gmx:CodeListDictionary>
+	</gmx:codelistItem>
+</gmx:CT_CodelistCatalogue>
