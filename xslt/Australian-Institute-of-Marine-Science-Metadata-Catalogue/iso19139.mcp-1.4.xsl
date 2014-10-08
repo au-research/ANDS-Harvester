@@ -15,6 +15,7 @@
     <xsl:param name="global_baseURI" select="'data.aims.gov.au'"/>
     <xsl:param name="global_group" select="'Australian Institute of Marine Science'"/>
     <xsl:param name="global_groupAcronym" select="'AIMS'"/>
+    <xsl:param name="global_path" select="'/metadataviewer/faces/view.xhtml?uuid='"/>
     <xsl:variable name="anzsrcCodelist" select="document('anzsrc-codelist.xml')"/>
     <xsl:variable name="licenseCodelist" select="document('license-codelist.xml')"/>
     <xsl:variable name="gmdCodelists" select="document('codelists.xml')"/>
@@ -48,24 +49,16 @@
 
     <xsl:template match="mcp:MD_Metadata">
 
-        <xsl:variable name="metadataURL">
-            <xsl:call-template name="getMetadataURL">
+        <xsl:variable name="metadataTruthURL">
+            <xsl:call-template name="getMetadataTruthURL">
                 <xsl:with-param name="transferOptions" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions"/>
             </xsl:call-template>
         </xsl:variable>
         
         <xsl:variable name="fileIdentifier"><xsl:value-of select="gmd:fileIdentifier"/></xsl:variable>
         
-        <xsl:variable name="locationURL">
-            <!--xsl:choose>
-                <xsl:when test="string-length($metadataURL)">
-                    <xsl:value-of select="$metadataURL"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="concat('http://', $global_baseURI, '/geonetwork/srv/en/metadata.show?uuid=', $fileIdentifier)"/>
-                </xsl:otherwise>
-                </xsl:choose-->
-            <xsl:value-of select="concat('http://', $global_baseURI, '/geonetwork/srv/en/metadata.show?uuid=', $fileIdentifier)"/>
+        <xsl:variable name="aimsDataCatalogueURL">
+              <xsl:value-of select="concat('http://', $global_baseURI, $global_path, $fileIdentifier)"/>
         </xsl:variable>
         
         <xsl:variable name="dataSetURI"><xsl:value-of select="gmd:dataSetURI"/></xsl:variable>
@@ -86,19 +79,19 @@
         
             
         <!--xsl:message>scopeCode: <xsl:value-of select="$scopeCode"/-->
-        <!--xsl:message>metadataURL: <xsl:value-of select="$metadataURL"/-->
+        <!--xsl:message>metadataTruthURL: <xsl:value-of select="$metadataTruthURL"/-->
         <!--xsl:message>dataSetURI: <xsl:value-of select="$dataSetURI"/-->
-        <!--xsl:message>locationURL: <xsl:value-of select="$locationURL"/-->
+        <!--xsl:message>splashPage: <xsl:value-of select="$splashPage"/-->
         <xsl:variable name="originatingSource">
-            <xsl:variable name="originatingSourceMetadataURL">
+            <xsl:variable name="originatingSourcemetadataTruthURL">
                 <xsl:call-template name="getOriginatingSource">
-                    <xsl:with-param name="inputString" select="$metadataURL"/>
+                    <xsl:with-param name="inputString" select="$metadataTruthURL"/>
                 </xsl:call-template>
             </xsl:variable>
             
             <xsl:choose>
-                <xsl:when test="string-length($originatingSourceMetadataURL)">
-                    <xsl:value-of select="$originatingSourceMetadataURL"/>
+                <xsl:when test="string-length($originatingSourcemetadataTruthURL)">
+                    <xsl:value-of select="$originatingSourcemetadataTruthURL"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="originatingSourceDataSetURI">
@@ -170,8 +163,8 @@
                             mode="registryObject_related_object"/>
     
                         <xsl:call-template name="set_registryObject_location_metadata">
-                            <xsl:with-param name="locationURL" select="$locationURL"/>
-                            <xsl:with-param name="fileIdentifier" select="$fileIdentifier"/>
+                            <xsl:with-param name="metadataTruthURL" select="$metadataTruthURL"/>
+                            <xsl:with-param name="aimsDataCatalogueURL" select="$aimsDataCatalogueURL"/>
                         </xsl:call-template>
                         
                         <xsl:for-each-group
@@ -308,7 +301,7 @@
                              <xsl:for-each
                                  select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">
                                  <xsl:call-template name="registryObject_citationMetadata_citationInfo">
-                                     <xsl:with-param name="locationURL" select="$locationURL"/>
+                                     <xsl:with-param name="aimsDataCatalogueURL" select="$aimsDataCatalogueURL"/>
                                      <xsl:with-param name="originatingSource" select="$originatingSource"/>
                                      <xsl:with-param name="citation" select="."/>
                                      <!--xsl:with-param name="pointOfContactNode_sequence" select="$pointOfContactNode_sequence" as="node()*"/-->
@@ -395,7 +388,7 @@
                     <xsl:text>uri</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of
-                    select="concat('http://', $global_baseURI, '/geonetwork/srv/en/metadata.show?uuid=', $identifier)"
+                    select="concat('http://', $global_baseURI, $global_path, $identifier)"
                 />
             </identifier>
            </xsl:if>
@@ -512,22 +505,40 @@
     
     <!-- RegistryObject - Location Element  -->
     <xsl:template name="set_registryObject_location_metadata">
-        <xsl:param name="locationURL"/>
-        <xsl:param name="fileIdentifier"/>
-        <xsl:if test="string-length($locationURL)">
-            <location>
-                <address>
-                    <electronic>
-                        <xsl:attribute name="type">
-                            <xsl:text>url</xsl:text>
-                        </xsl:attribute>
-                        <value>
-                            <xsl:value-of select="$locationURL"/>
-                        </value>
-                    </electronic>
-                </address>
-            </location>
-        </xsl:if>
+        <xsl:param name="metadataTruthURL"/>
+        <xsl:param name="aimsDataCatalogueURL"/>
+        <xsl:choose>
+            <xsl:when test="string-length($metadataTruthURL)">
+                <location>
+                    <address>
+                        <electronic>
+                            <xsl:attribute name="type">
+                                <xsl:text>url</xsl:text>
+                            </xsl:attribute>
+                            <value>
+                                <xsl:value-of select="$metadataTruthURL"/>
+                            </value>
+                        </electronic>
+                    </address>
+                </location>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="string-length($aimsDataCatalogueURL)">
+                    <location>
+                        <address>
+                        <electronic>
+                            <xsl:attribute name="type">
+                                <xsl:text>url</xsl:text>
+                            </xsl:attribute>
+                            <value>
+                                <xsl:value-of select="$aimsDataCatalogueURL"/>
+                            </value>
+                        </electronic>
+                    </address>
+                    </location>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <!-- RegistryObject - Related Object (Organisation or Individual) Element -->
@@ -958,7 +969,7 @@
             <relatedInfo type="collection">
                 <identifier type="uri">
                     <xsl:value-of
-                        select="concat('http://', $global_baseURI, '/geonetwork/srv/en/metadata.show?uuid=', $identifier)"
+                        select="concat('http://', $global_baseURI, $global_path, $identifier)"
                     />
                 </identifier>
                 <relation>
@@ -1008,7 +1019,7 @@
                         <xsl:value-of select="concat($global_groupAcronym,'/', $uuid)"/>
                     </identifier-->
                     
-                    <xsl:variable name="constructedUri" select="concat('http://', $global_baseURI, '/geonetwork/srv/en/metadata.show?uuid=', $uuid)"/>
+                    <xsl:variable name="constructedUri" select="concat('http://', $global_baseURI, $global_path, $uuid)"/>
             
                     <xsl:if test="$constructedUri != $uri">
                         <identifier type="uri">
@@ -1278,7 +1289,8 @@
 
     <!-- RegistryObject - CitationInfo Element -->
     <xsl:template name="registryObject_citationMetadata_citationInfo">
-        <xsl:param name="locationURL"/>
+        <xsl:param name="metadataTruthURL"/>
+        <xsl:param name="aimsDataCatalogueURL"/>
         <xsl:param name="dataSetURI"/>
         <xsl:param name="originatingSource"/>
         <xsl:param name="citation"/>
@@ -1424,7 +1436,7 @@
                 <citationMetadata>
                     <xsl:choose>
                         <xsl:when
-                            test="string-length(lower-case($identifierType)) and contains(lower-case($identifierType), 'doi')">
+                            test="string-length($identifierType) and contains(lower-case($identifierType), 'doi')">
                             <identifier>
                                 <xsl:attribute name="type">
                                     <xsl:text>doi</xsl:text>
@@ -1432,14 +1444,24 @@
                                 <xsl:value-of select="$identifierType"/>
                             </identifier>
                         </xsl:when>
-                        <xsl:otherwise>
+                        <xsl:when
+                            test="string-length($metadataTruthURL)">
                             <identifier>
                                 <xsl:attribute name="type">
                                     <xsl:text>uri</xsl:text>
                                 </xsl:attribute>
-                                <xsl:value-of select="$locationURL"/>
+                                <xsl:value-of select="$metadataTruthURL"/>
                             </identifier>
-                        </xsl:otherwise>
+                        </xsl:when>
+                        <xsl:when
+                            test="string-length($aimsDataCatalogueURL)">
+                            <identifier>
+                                <xsl:attribute name="type">
+                                    <xsl:text>uri</xsl:text>
+                                </xsl:attribute>
+                                <xsl:value-of select="$aimsDataCatalogueURL"/>
+                            </identifier>
+                        </xsl:when>
                     </xsl:choose>
     
                     <title>
@@ -2292,7 +2314,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template name="getMetadataURL">
+    <xsl:template name="getMetadataTruthURL">
         <xsl:param name="transferOptions"/>
         <xsl:for-each select="$transferOptions/gmd:onLine/gmd:CI_OnlineResource">
             <xsl:if test="contains(gmd:protocol, 'http--metadata-URL')">
@@ -2347,7 +2369,7 @@
                 <xsl:value-of select="."/>
             </xsl:for-each>
         </xsl:variable>
-        <!--xsl:message>Formatted values: <xsl:value-of select="$formattedValues"/></xsl:message-->
+        <xsl:message>Formatted values: <xsl:value-of select="$formattedValues"/></xsl:message>
     </xsl:template>
 
     <xsl:template name="getSplitText_sequence" as="xs:string*">
