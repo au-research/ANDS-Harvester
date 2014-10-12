@@ -195,7 +195,8 @@
                             mode="registryObject_related_object"/>
     
                         <xsl:copy-of select="custom:set_registryObject_location_metadata($locationURL_sequence)"/>
-                                               
+                           
+                        <!-- individuals - use the role provided for relation -->
                         <xsl:for-each-group
                             select="descendant::*:citation/*:CI_Citation/*:citedResponsibleParty/*:CI_ResponsibleParty[(ancestor::*[contains(local-name(), 'MD_DataIdentification') or contains(local-name(), 'ServiceIdentification')]) and (string-length(normalize-space(*:individualName))) > 0] |
                             *:distributionInfo/*:MD_Distribution/*:distributor/*:MD_Distributor/*:distributorContact/*:CI_ResponsibleParty[(string-length(normalize-space(*:individualName))) > 0] |
@@ -204,12 +205,22 @@
                             <xsl:apply-templates select="." mode="registryObject_related_object"/>
                         </xsl:for-each-group>
     
+                        <!-- organisations with no individual name - use the role provided for relation -->
                         <xsl:for-each-group
                             select="descendant::*:citation/*:CI_Citation/*:citedResponsibleParty/*:CI_ResponsibleParty[(ancestor::*[contains(local-name(), 'MD_DataIdentification') or contains(local-name(), 'ServiceIdentification')]) and ((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) = 0)] |
                             *:distributionInfo/*:MD_Distribution/*:distributor/*:MD_Distributor/*:distributorContact/*:CI_ResponsibleParty[((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) = 0)] |
                             descendant::*:pointOfContact/*:CI_ResponsibleParty[(ancestor::*[contains(local-name(), 'MD_DataIdentification') or contains(local-name(), 'ServiceIdentification')]) and ((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) = 0)]"
                             group-by="*:organisationName">
                             <xsl:apply-templates select="." mode="registryObject_related_object"/>
+                        </xsl:for-each-group>
+                        
+                        <!-- organisations *with* individual name - related indirectly, so use relation 'hasAssociationWith' -->
+                        <xsl:for-each-group
+                            select="descendant::*:citation/*:CI_Citation/*:citedResponsibleParty/*:CI_ResponsibleParty[(ancestor::*[contains(local-name(), 'MD_DataIdentification') or contains(local-name(), 'ServiceIdentification')]) and ((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) > 0)] |
+                            *:distributionInfo/*:MD_Distribution/*:distributor/*:MD_Distributor/*:distributorContact/*:CI_ResponsibleParty[((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) > 0)] |
+                            descendant::*:pointOfContact/*:CI_ResponsibleParty[(ancestor::*[contains(local-name(), 'MD_DataIdentification') or contains(local-name(), 'ServiceIdentification')]) and ((string-length(normalize-space(*:organisationName))) > 0) and ((string-length(normalize-space(*:individualName))) > 0)]"
+                            group-by="*:organisationName">
+                            <xsl:apply-templates select="." mode="registryObject_related_object_associated"/>
                         </xsl:for-each-group>
     
                         <xsl:apply-templates select="*:children/*:childIdentifier"
@@ -562,6 +573,28 @@
                 </xsl:choose>
                 
             </xsl:for-each-group>
+        </relatedObject>
+    </xsl:template>
+    
+    <!-- RegistryObject - Organisation which has an Individual name - relate indirectly, by association, only -->
+    <xsl:template match="*:CI_ResponsibleParty" mode="registryObject_related_object_associated">
+        <relatedObject>
+            <key>
+                <xsl:variable name="mappedKey" select="custom:getMappedKey(translate(normalize-space(current-grouping-key()),' ',''))"/>
+                <xsl:choose>
+                    <xsl:when test="string-length($mappedKey) > 0">
+                        <xsl:value-of select="$mappedKey"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($global_acronym,'/', translate(normalize-space(current-grouping-key()),' ',''))"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </key>
+            <relation>
+                <xsl:attribute name="type">
+                    <xsl:value-of select="hasAssociationWith"/>
+                </xsl:attribute>
+            </relation>
         </relatedObject>
     </xsl:template>
 
