@@ -141,35 +141,17 @@ class Harvester():
             self.handleExceptions(e)
 
     def setUpCrosswalk(self):
-        #todo:map the datasource and provider type somehow to an XSLT crosswalk
         if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
            self.storeFileExtension = 'tmp'
-        elif self.harvestInfo['provider_type'] != 'rif':
-            if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + '.xsl'):
-                self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + '.xsl'
-                self.storeFileExtension = 'tmp'
-            elif os.path.isdir(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug']):
-                for fileName in os.listdir(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug']):
-                    if fileName == self.harvestInfo['provider_type'] + ".xsl":
-                        self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + os.sep + self.harvestInfo['provider_type'] + ".xsl"
-                        self.storeFileExtension = 'tmp'
-                        return
-                if os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['data_source_slug'] + os.sep + 'default.xsl'):
-                    self.harvestInfo['xsl_file'] = self.harvestInfo['data_source_slug'] + os.sep + 'default.xsl'
-                    self.storeFileExtension = 'tmp'
-            elif os.path.isfile(myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['provider_type'] + '.xsl'):
-                self.harvestInfo['xsl_file'] = self.harvestInfo['provider_type'] + ".xsl"
-                self.storeFileExtension = 'tmp'
 
 
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        xslFilePath = myconfig.run_dir + os.sep + 'xslt' + os.sep + self.harvestInfo['xsl_file']
         outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
         self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
-            transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : self.outputFilePath}
+            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : self.outputFilePath}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except Exception as e:
@@ -274,7 +256,7 @@ class Harvester():
 
     def finishHarvest(self):
         self.completed = True
-        self.__status= 'COMPLETED'
+        self.__status= 'HARVEST COMPLETED'
         if(self.errorLog != ''):
             self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s" %(str(self.harvestInfo['harvest_id']),self.errorLog))
         self.updateHarvestRequest()

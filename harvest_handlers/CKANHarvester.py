@@ -8,7 +8,6 @@ class CKANHarvester(Harvester):
             "description": "CKAN Harvester to fetch JSON metadata using the CKAN API",
             "params": [
                 {"name": "uri", "required": "true"},
-                {"name": "crosswalk", "required": "false"},
                 {"name": "xsl_file", "required": "false"}
             ]
       }

@@ -398,21 +398,8 @@ class HarvesterDaemon(Daemon):
                     harvesterDefinitions += ","
                 notFirst = True
                 harvesterDefinitions += class_.__doc__.strip()
-        harvesterDefinitions +=  "]}"
-        harvesterDefinitions += self.describeCrossWalks()
-        harvesterDefinitions +=  "}"
+        harvesterDefinitions +=  "]}}"
         self.saveHarvestDefinition(harvesterDefinitions)
-
-    def describeCrossWalks(self):
-        notFirst = False
-        xsltCrossWalks = ',\n"xsl_file":['
-        for files in os.listdir(myconfig.run_dir + '/xslt'):
-            if files.endswith(".xsl"):
-                if notFirst:
-                    xsltCrossWalks += ','
-                notFirst = True
-                xsltCrossWalks +=  '"%s"' %(files)
-        return xsltCrossWalks + ']'
 
     def saveHarvestDefinition(self, harvesterDefinitions):
         #save definition to file

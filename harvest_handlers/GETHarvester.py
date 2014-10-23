@@ -8,7 +8,6 @@ class GETHarvester(Harvester):
             "description": "simple GET Harvester to fetch a single metadata document",
             "params": [
                 {"name": "uri", "required": "true"},
-                {"name": "crosswalk", "required": "false"},
                 {"name": "xsl_file", "required": "false"}
             ]
       }

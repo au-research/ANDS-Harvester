@@ -8,7 +8,8 @@ class CSWHarvester(Harvester):
             "description": "CSW Harvester to fetch metadata using Catalog Service for the Web protocol",
             "params": [
                 {"name": "uri", "required": "true"},
-                {"name": "provider_type", "required": "true"}
+                {"name": "provider_type", "required": "true"},
+                {"name": "xsl_file", "required": "false"}
             ]
         }
     """
@@ -106,12 +107,10 @@ class CSWHarvester(Harvester):
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] == None:
             return
-        xslFilePath = myconfig.run_dir + '/xslt/' + self.harvestInfo['xsl_file']
         outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
         inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
-        #self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
-            transformerConfig = {'xsl': xslFilePath, 'outFile' : outFile, 'inFile' : inFile}
+            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except Exception as e:
