@@ -263,13 +263,17 @@
                 <xsl:variable name="baseURI">
                     <xsl:choose>
                         <xsl:when test="string-length($metadataTruthURL) > 0">
+                            <!--xsl:message select="concat('metadataTruthURL: ', $metadataTruthURL)"/-->
                             <xsl:copy-of select="custom:getBaseURI($metadataTruthURL)"/>
                         </xsl:when>
                         <xsl:when test="string-length($dataSetURI) > 0">
+                            <!--xsl:message select="concat('dataSetURI: ', $dataSetURI)"/-->
                             <xsl:copy-of select="custom:getBaseURI($dataSetURI)"/> 
                         </xsl:when>
                     </xsl:choose>
                 </xsl:variable>
+                
+                <!--xsl:message select="concat('baseURI: ', $baseURI)"/-->                
                 
                 <xsl:variable name="orgNameFromURI">
                     <xsl:if test="string-length($baseURI) > 0">
@@ -1839,10 +1843,10 @@
             <xsl:when test="contains($inputString, 'imosmest')">
                 <xsl:text>Integrated Marine Observing System (IMOS)</xsl:text>
             </xsl:when>
-            <xsl:when test="contains($inputString, 'data.aad.gov.au')">
-                <xsl:text>Australian Antarctic Division (AAD)</xsl:text>
+            <xsl:when test="contains($inputString, 'aad.gov.au')">
+                <xsl:text>Australian Antarctic Data Centre (AADC)</xsl:text>
             </xsl:when>
-            <xsl:when test="contains($inputString, 'data.aims.gov.au')">
+            <xsl:when test="contains($inputString, 'aims.gov.au')">
                 <xsl:text>Australian Institute of Marine Science (AIMS)</xsl:text>
             </xsl:when>
             <xsl:when test="contains($inputString, 'csiro.au')">
@@ -2179,11 +2183,8 @@
             <xsl:when test="contains(lower-case($inputString), 'aims')">
                 <xsl:text>Australian Institute of Marine Science (AIMS)</xsl:text>
             </xsl:when>
-            <xsl:when test="contains(lower-case($inputString), 'aadc')">
-                <xsl:text>Australian Antarctic Data Centre (AADC)</xsl:text>
-            </xsl:when>
             <xsl:when test="contains(lower-case($inputString), 'aad')">
-                <xsl:text>Australian Antarctic Division (AAD)</xsl:text>
+                <xsl:text>Australian Antarctic Data Centre (AADC)</xsl:text>
             </xsl:when>
             <xsl:when test="contains(lower-case($inputString), 'cmar') or 
                 contains(lower-case($inputString), 'csiro')">
@@ -2204,11 +2205,8 @@
             <xsl:when test="contains(lower-case($inputString), 'aims')">
                 <xsl:text>Australian Institute of Marine Science (AIMS)</xsl:text>
             </xsl:when>
-            <xsl:when test="contains(lower-case($inputString), 'aadc')">
-                <xsl:text>Australian Antarctic Data Centre (AADC)</xsl:text>
-            </xsl:when>
             <xsl:when test="contains(lower-case($inputString), 'aad')">
-                <xsl:text>Australian Antarctic Division (AAD)</xsl:text>
+                <xsl:text>Australian Antarctic Data Centre (AADC)</xsl:text>
             </xsl:when>
             <xsl:when test="contains(lower-case($inputString), 'cmar') or 
                 contains(lower-case($inputString), 'csiro')">
