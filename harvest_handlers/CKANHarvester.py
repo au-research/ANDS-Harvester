@@ -93,7 +93,8 @@ class CKANHarvester(Harvester):
                 value = j[key]
                 if isinstance(value, list):
                     for e in value:
-                        elem = self.__xml.createElement(key)
+                        keyFormatted = key.replace(' ', '')
+                        elem = self.__xml.createElement(keyFormatted)
                         self.parse_element(elem, e)
                         root.appendChild(elem)
                 else:
@@ -101,7 +102,8 @@ class CKANHarvester(Harvester):
                         elem = self.__xml.createElement('item')
                         elem.setAttribute('value', key)
                     else:
-                        elem = self.__xml.createElement(key)
+                        keyFormatted = key.replace(' ', '')
+                        elem = self.__xml.createElement(keyFormatted)
                     self.parse_element(elem, value)
                     root.appendChild(elem)
         elif isinstance(j, str):
