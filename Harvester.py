@@ -9,7 +9,7 @@ from datetime import datetime
 import time
 from xml.dom.minidom import Document
 import numbers
-from subprocess import call
+import subprocess
 import myconfig
 
 class Request:
@@ -62,7 +62,8 @@ class XSLT2Transformer:
         shellCommand += " -o " + self.__outfile
         shellCommand += " " + self.__inputFile
         shellCommand += " " + self.__xsl
-        call(shellCommand, shell=True)
+        subprocess.check_output(shellCommand, stderr=subprocess.STDOUT, shell=True)
+        subprocess.call(shellCommand, shell=True)
 
 
 class Harvester():
@@ -154,8 +155,11 @@ class Harvester():
             transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : self.outputFilePath}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
+        except subprocess.CalledProcessError as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e))
             self.handleExceptions(e)
 
     def postHarvestData(self):
@@ -305,9 +309,9 @@ class Harvester():
         if terminate:
             self.__status= 'STOPPED'
             #self.message= repr(exception).replace("'", "").replace('"', "")
-            self.errorLog = self.errorLog  + str(exception).replace("'", "").replace('"', "") + ", "
+            self.errorLog = self.errorLog  + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
             self.postHarvestData()
             self.stopped = True
         else:
-            self.errorLog = self.errorLog + str(exception).replace("'", "").replace('"', "") + ", "
+            self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "

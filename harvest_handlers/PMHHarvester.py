@@ -144,6 +144,9 @@ class PMHHarvester(Harvester):
             transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
+        except subprocess.CalledProcessError as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
         except Exception as e:
             self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
             self.handleExceptions(e)

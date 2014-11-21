@@ -107,12 +107,16 @@ class CSWHarvester(Harvester):
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] == None:
             return
-        outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
-        inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+        outFile = self.outputDir  + str(self.pageCount) + "." + self.resultFileExtension
+        inFile = self.outputDir  + str(self.pageCount) + "." + self.storeFileExtension
         try:
             transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
+        except subprocess.CalledProcessError as e:
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode());
+            self.handleExceptions(msg)
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e))
             self.handleExceptions(e)
