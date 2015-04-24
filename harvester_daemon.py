@@ -357,7 +357,7 @@ class HarvesterDaemon(Daemon):
         except Exception as e:
             return
         cur = conn.cursor()
-        cur.execute("SELECT * FROM "+ myconfig.harvest_table +" where `status` like 'SCHEDULED%' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));" )
+        cur.execute("SELECT * FROM "+ myconfig.harvest_table +" where `status` = 'SCHEDULED' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));" )
         if(cur.rowcount > 0):
             self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount))
             for r in cur:
