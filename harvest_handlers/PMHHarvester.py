@@ -135,7 +135,7 @@ class PMHHarvester(Harvester):
 
 
     def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None:
+        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
             return
         outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
         inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
