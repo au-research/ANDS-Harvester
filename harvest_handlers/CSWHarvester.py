@@ -36,6 +36,8 @@ class CSWHarvester(Harvester):
     }
 
     def harvest(self):
+        self.urlParams = {}
+        self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)
             self.getHarvestData()
@@ -71,7 +73,7 @@ class CSWHarvester(Harvester):
             urlParams = json.loads(self.harvestInfo['user_defined_params'])
             for item in urlParams:
                 self.urlParams[item['name']] = item['value']
-            print(repr(self.urlParams))
+            #print(repr(self.urlParams))
             self.urlParams['outputSchema'] = self.harvestInfo['provider_type']
             self.urlParams['maxRecords'] = str(self.maxRecords)
             if self.urlParams['request'] is None:
