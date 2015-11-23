@@ -1,5 +1,5 @@
 from Harvester import *
-
+import urllib
 class CSWHarvester(Harvester):
     """
         {
@@ -21,7 +21,23 @@ class CSWHarvester(Harvester):
     numberOfRecordsReturned = 0
     nextRecord = 0
     startPosition = 0
+    urlParams = {};
+
+    defaultParams = {'request':'GetRecords',
+        'service':'CSW',
+        'version':'2.0.2',
+        'namespace':'xmlns(csw=http://www.opengis.net/cat/csw)',
+        'resultType':'results',
+        'outputFormat':'application/xml',
+        'typeNames':'csw:Record',
+        'elementSetName':'full',
+        'constraintLanguage':'CQL_TEXT',
+        'constraint_language_version':'1.1.0v'
+    }
+
     def harvest(self):
+        self.urlParams = {}
+        self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)
             self.getHarvestData()
@@ -33,21 +49,8 @@ class CSWHarvester(Harvester):
     def getHarvestData(self):
         if self.stopped:
             return
-        query = "?request=GetRecords"
-        query += "&service=CSW"
-        query += "&version=2.0.2"
-        query += "&namespace=xmlns(csw=http://www.opengis.net/cat/csw)"
-        query += "&resultType=results"
-        query += "&outputSchema=" + self.harvestInfo['provider_type']
-        query += "&outputFormat=application/xml"
-        query += "&maxRecords=" + str(self.maxRecords)
-        if self.startPosition > 0:
-            query += "&startPosition=" + str(self.startPosition)
-        query += "&typeNames=csw:Record"
-        query += "&elementSetName=full"
-        query += "&constraintLanguage=CQL_TEXT"
-        query += "&constraint_language_version=1.1.0v"
-        getRequest = Request(self.harvestInfo['uri'] +  query)
+        query = self.getParamString()
+        getRequest = Request(self.harvestInfo['uri'] + query)
         try:
             self.firstCall = False
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
@@ -65,18 +68,56 @@ class CSWHarvester(Harvester):
             self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
         del getRequest
 
+    def getParamString(self):
+        if len(self.urlParams) == 0:
+            urlParams = json.loads(self.harvestInfo['user_defined_params'])
+            for item in urlParams:
+                self.urlParams[item['name']] = item['value']
+            #print(repr(self.urlParams))
+            self.urlParams['outputSchema'] = self.harvestInfo['provider_type']
+            self.urlParams['maxRecords'] = str(self.maxRecords)
+            if self.urlParams['request'] is None:
+                self.urlParams['request'] = self.defaultParams['request']
+            if self.urlParams['service'] is None:
+                self.urlParams['service'] = self.defaultParams['service']
+            if self.urlParams['version'] is None:
+                self.urlParams['version'] = self.defaultParams['version']
+            if self.urlParams['namespace'] is None:
+                self.urlParams['namespace'] = self.defaultParams['namespace']
+            if self.urlParams['resultType'] is None:
+                self.urlParams['resultType'] = self.defaultParams['resultType']
+            if self.urlParams['outputFormat'] is None:
+                self.urlParams['outputFormat'] = self.defaultParams['outputFormat']
+            if self.urlParams['typeNames'] is None:
+                self.urlParams['typeNames'] = self.defaultParams['typeNames']
+            if self.urlParams['elementSetName'] is None:
+                self.urlParams['elementSetName'] = self.defaultParams['elementSetName']
+            if self.urlParams['constraintLanguage'] is None:
+                self.urlParams['constraintLanguage'] = self.defaultParams['constraintLanguage']
+            if self.urlParams['constraint_language_version'] is None:
+                self.urlParams['constraint_language_version'] = self.defaultParams['constraint_language_version']
+        else:
+            self.urlParams['startPosition'] = str(self.startPosition)
+        query = urllib.parse.urlencode(self.urlParams)
+        return '?' + query
+
     def checkNextRecord(self):
         if self.stopped:
             return
         try:
             dom = parseString(self.data)
             try:
-                nException = dom.getElementsByTagName('ows:Exception')[0]
-                eCode = nException.attributes["exceptionCode"].value
-                #eLocator = nException.attributes["locator"].value
-                eText = nException.getElementsByTagName('ows:ExceptionText')[0].firstChild.nodeValue
-                self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
-                return
+
+                nException = dom.getElementsByTagName('Exception')
+                if len(nException) > 0:
+                    eCode = nException[0].attributes["exceptionCode"].value
+                    #eLocator = nException.attributes["locator"].value
+                    eTexts = nException[0].getElementsByTagName('ExceptionText')
+                    eText = '';
+                    for i, elem in enumerate(eTexts):
+                        eText = eText + elem.firstChild.nodeValue
+                    self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
+                    return
             except Exception as e:
                 pass
             nSearchResult = dom.getElementsByTagName('csw:SearchResults')[0]
@@ -84,6 +125,8 @@ class CSWHarvester(Harvester):
                 self.listSize = int(nSearchResult.attributes["numberOfRecordsMatched"].value)
             self.numberOfRecordsReturned = int(nSearchResult.attributes["numberOfRecordsReturned"].value)
             self.startPosition = int(nSearchResult.attributes["nextRecord"].value)
+            if self.startPosition == 0:
+                self.completed = True
             self.recordCount = self.recordCount + self.numberOfRecordsReturned
             self.pageCount += 1
         except Exception as e:
