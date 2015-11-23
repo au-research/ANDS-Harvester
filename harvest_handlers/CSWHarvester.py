@@ -73,29 +73,18 @@ class CSWHarvester(Harvester):
             urlParams = json.loads(self.harvestInfo['user_defined_params'])
             for item in urlParams:
                 self.urlParams[item['name']] = item['value']
-            #print(repr(self.urlParams))
             self.urlParams['outputSchema'] = self.harvestInfo['provider_type']
             self.urlParams['maxRecords'] = str(self.maxRecords)
-            if self.urlParams['request'] is None:
-                self.urlParams['request'] = self.defaultParams['request']
-            if self.urlParams['service'] is None:
-                self.urlParams['service'] = self.defaultParams['service']
-            if self.urlParams['version'] is None:
-                self.urlParams['version'] = self.defaultParams['version']
-            if self.urlParams['namespace'] is None:
-                self.urlParams['namespace'] = self.defaultParams['namespace']
-            if self.urlParams['resultType'] is None:
-                self.urlParams['resultType'] = self.defaultParams['resultType']
-            if self.urlParams['outputFormat'] is None:
-                self.urlParams['outputFormat'] = self.defaultParams['outputFormat']
-            if self.urlParams['typeNames'] is None:
-                self.urlParams['typeNames'] = self.defaultParams['typeNames']
-            if self.urlParams['elementSetName'] is None:
-                self.urlParams['elementSetName'] = self.defaultParams['elementSetName']
-            if self.urlParams['constraintLanguage'] is None:
-                self.urlParams['constraintLanguage'] = self.defaultParams['constraintLanguage']
-            if self.urlParams['constraint_language_version'] is None:
-                self.urlParams['constraint_language_version'] = self.defaultParams['constraint_language_version']
+            self.urlParams['request'] = self.urlParams.get('request', self.defaultParams['request'])
+            self.urlParams['service'] = self.urlParams.get('service', self.defaultParams['service'])
+            self.urlParams['version'] = self.urlParams.get('version', self.defaultParams['version'])
+            self.urlParams['namespace'] = self.urlParams.get('namespace', self.defaultParams['namespace'])
+            self.urlParams['resultType'] = self.urlParams.get('resultType', self.defaultParams['resultType'])
+            self.urlParams['outputFormat'] = self.urlParams.get('outputFormat', self.defaultParams['outputFormat'])
+            self.urlParams['typeNames'] = self.urlParams.get('typeNames', self.defaultParams['typeNames'])
+            self.urlParams['elementSetName'] = self.urlParams.get('elementSetName', self.defaultParams['elementSetName'])
+            self.urlParams['constraintLanguage'] = self.urlParams.get('constraintLanguage', self.defaultParams['constraintLanguage'])
+            self.urlParams['constraint_language_version'] = self.urlParams.get('constraint_language_version', self.defaultParams['constraint_language_version'])
         else:
             self.urlParams['startPosition'] = str(self.startPosition)
         query = urllib.parse.urlencode(self.urlParams)
