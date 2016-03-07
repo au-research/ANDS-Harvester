@@ -70,9 +70,12 @@ class CSWHarvester(Harvester):
 
     def getParamString(self):
         if len(self.urlParams) == 0:
-            urlParams = json.loads(self.harvestInfo['user_defined_params'])
-            for item in urlParams:
-                self.urlParams[item['name']] = item['value']
+            try:
+                urlParams = json.loads(self.harvestInfo['user_defined_params'])
+                for item in urlParams:
+                    self.urlParams[item['name']] = item['value']
+            except KeyError as e:
+                self.logger.logMessage("CSW user_defined_params are not set, revert to defaults")
             self.urlParams['outputSchema'] = self.harvestInfo['provider_type']
             self.urlParams['maxRecords'] = str(self.maxRecords)
             self.urlParams['request'] = self.urlParams.get('request', self.defaultParams['request'])
