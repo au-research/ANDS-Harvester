@@ -21,9 +21,8 @@ class PMHHarvester(Harvester):
     __set = False
     retryCount = 0
     firstCall = True
+    noMatchingErrorStr = 'There are no matching records for request'
     def harvest(self):
-        if self.harvestInfo['from_date'] != None:
-            self.__from = self.harvestInfo['from_date'].isoformat() + 'Z'
         now = datetime.now().replace(microsecond=0)
         self.__until = now.isoformat() + 'Z'
         self.__metadataPrefix= self.harvestInfo['provider_type']
@@ -33,7 +32,10 @@ class PMHHarvester(Harvester):
             pass
         try:
             if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-                self.identifyRequest()
+                if self.harvestInfo['from_date'] != None:
+                    self.__from = self.harvestInfo['from_date'].isoformat() + 'Z'
+                else:
+                    self.identifyRequest()
             while self.firstCall or (self.__resumptionToken != False and self.__resumptionToken != ""):
                 time.sleep(0.1)
                 self.getHarvestData()
@@ -57,7 +59,7 @@ class PMHHarvester(Harvester):
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
-            self.logger.logMessage("ERROR RETRIEVING IDENTIFY DOC, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
+            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
             self.handleExceptions(e)
 
 
@@ -70,8 +72,12 @@ class PMHHarvester(Harvester):
                 error = dom.getElementsByTagName('error')
                 if len(error) > 0:
                     e = "ERROR RECEIVED FROM PROVIDER: "
-                    e += error[0].firstChild.nodeValue
-                    self.handleExceptions(e)
+                    errorMsg = error[0].firstChild.nodeValue
+                    e += errorMsg
+                    if(self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and  errorMsg.startswith(self.noMatchingErrorStr)):
+                        self.handleExceptions(e, False)
+                    else:
+                        self.handleExceptions(e, True)
                     return
             except Exception as e:
                 pass
@@ -106,6 +112,7 @@ class PMHHarvester(Harvester):
                 query += '&set='+ self.__set
         getRequest = Request(self.harvestInfo['uri'] +  query)
         try:
+            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.data = getRequest.getData()
             self.getResumptionToken()
