@@ -21,7 +21,7 @@ class PMHHarvester(Harvester):
     __set = False
     retryCount = 0
     firstCall = True
-    noMatchingErrorStr = 'There are no matching records for request'
+    noRecordsMatchCodeValue = 'noRecordsMatch'
     def harvest(self):
         now = datetime.now().replace(microsecond=0)
         self.__until = now.isoformat() + 'Z'
@@ -32,11 +32,11 @@ class PMHHarvester(Harvester):
             pass
         try:
             if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-                if self.harvestInfo['from_date'] != None:
+                if self.harvestInfo['from_date'] is not None:
                     self.__from = self.harvestInfo['from_date'].isoformat() + 'Z'
                 else:
                     self.identifyRequest()
-            while self.firstCall or (self.__resumptionToken != False and self.__resumptionToken != ""):
+            while self.firstCall or (self.__resumptionToken is not False and self.__resumptionToken != ""):
                 time.sleep(0.1)
                 self.getHarvestData()
                 self.storeHarvestData()
@@ -72,9 +72,9 @@ class PMHHarvester(Harvester):
                 error = dom.getElementsByTagName('error')
                 if len(error) > 0:
                     e = "ERROR RECEIVED FROM PROVIDER: "
-                    errorMsg = error[0].firstChild.nodeValue
-                    e += errorMsg
-                    if(self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and  errorMsg.startswith(self.noMatchingErrorStr)):
+                    e += error[0].firstChild.nodeValue
+                    errorCode = error[0].attributes["code"].value
+                    if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and errorCode == self.noRecordsMatchCodeValue:
                         self.handleExceptions(e, False)
                     else:
                         self.handleExceptions(e, True)
