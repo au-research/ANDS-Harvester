@@ -5,7 +5,7 @@ except:
 import os
 import json
 from xml.dom.minidom import parseString
-from datetime import datetime
+from datetime import datetime, timezone
 import time
 from xml.dom.minidom import Document
 import numbers
@@ -188,6 +188,7 @@ class Harvester():
                       'message':self.message,
                       'error':{'log':str.strip(self.errorLog), 'errored': self.errored},
                       'completed':str(self.completed),
+                      'start_utc' : str(datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
                       'output':{'file': self.outputFilePath, 'dir': self.outputDir},
                       'progress':{'current':self.recordCount, 'total':self.listSize, 'time':str(upTime),'start':str(self.startUpTime), 'end':''}
                     }

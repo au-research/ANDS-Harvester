@@ -24,7 +24,7 @@ class PMHHarvester(Harvester):
     noRecordsMatchCodeValue = 'noRecordsMatch'
     def harvest(self):
         now = datetime.now().replace(microsecond=0)
-        self.__until = now.isoformat() + 'Z'
+        self.__until = datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         self.__metadataPrefix= self.harvestInfo['provider_type']
         try:
             self.__set = self.harvestInfo['oai_set']
@@ -32,8 +32,8 @@ class PMHHarvester(Harvester):
             pass
         try:
             if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-                if self.harvestInfo['from_date'] is not None:
-                    self.__from = self.harvestInfo['from_date'].isoformat() + 'Z'
+                if self.harvestInfo['last_harvest_run_date'] is not None:
+                    self.__from = self.harvestInfo['last_harvest_run_date']
                 else:
                     self.identifyRequest()
             while self.firstCall or (self.__resumptionToken is not False and self.__resumptionToken != ""):
