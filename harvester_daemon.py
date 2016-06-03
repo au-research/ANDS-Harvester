@@ -287,7 +287,7 @@ class HarvesterDaemon(Daemon):
         cur = conn.cursor()
         harvestInfo['crosswalk'] = None
         harvestInfo['xsl_file'] = None
-        harvestInfo['last_harvest_run_date'] = None
+        harvestInfo['last_harvest_run_date'] = ''
         cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
         for r in cur:
             harvestInfo['data_source_id'] = r[0]
