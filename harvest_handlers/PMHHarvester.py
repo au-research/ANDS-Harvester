@@ -32,7 +32,7 @@ class PMHHarvester(Harvester):
             pass
         try:
             if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-                if self.harvestInfo['last_harvest_run_date'] is not None:
+                if self.harvestInfo['last_harvest_run_date'] != '':
                     self.__from = self.harvestInfo['last_harvest_run_date']
                 else:
                     self.identifyRequest()
