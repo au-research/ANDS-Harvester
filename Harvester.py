@@ -90,7 +90,7 @@ class Harvester():
         self.harvestInfo = harvestInfo
         self.logger = logger
         self.database = database
-        self.cleanPreviousHarvestRecords()
+        self.setUpOutputDirectory()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
 
@@ -101,33 +101,10 @@ class Harvester():
         self.postHarvestData()
         self.finishHarvest()
 
-    def cleanPreviousHarvestRecords(self):
+    def setUpOutputDirectory(self):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
         if not os.path.exists(directory):
             os.makedirs(directory)
-        else:
-            for the_file in os.listdir(directory):
-                file_path = os.path.join(directory, the_file)
-                try:
-                    if os.path.isfile(file_path):
-                        os.unlink(file_path)
-                    else:
-                        self.deleteDirectory(file_path)
-                        os.rmdir(file_path)
-                except Exception as e:
-                    self.logger.logMessage(e)
-
-    def deleteDirectory(self, directory):
-        for the_file in os.listdir(directory):
-            file_path = os.path.join(directory, the_file)
-            try:
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
-                else:
-                    self.deleteDirectory(file_path)
-                    os.rmdir(file_path)
-            except Exception as e:
-                self.logger.logMessage(e)
 
 
     def getHarvestData(self):
