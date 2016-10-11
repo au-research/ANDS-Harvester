@@ -256,7 +256,8 @@ class HarvesterDaemon(Daemon):
         def getConnection(self):
             #if not(self.__connection):
             try:
-                self.__connection = pymysql.connect(host=self.__host, user=self.__user, passwd = self.__passwd, db = self.__db)
+                self.__connection = pymysql.connect(host=self.__host, user=self.__user,
+                                                    passwd = self.__passwd, db = self.__db)
             except:
                 e = sys.exc_info()[1]
                 raise RuntimeError("Database Exception %s" %(e))
@@ -271,7 +272,8 @@ class HarvesterDaemon(Daemon):
         except Exception as e:
             return
         cur = conn.cursor()
-        cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
+        cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' "
+                    "where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
         conn.commit()
         cur.close()
         del cur
@@ -294,7 +296,9 @@ class HarvesterDaemon(Daemon):
             harvestInfo['data_source_slug'] = r[1]
             harvestInfo['data_source_slug'] = r[2]
             harvestInfo['title'] = r[3]
-        cur.execute("SELECT `attribute`, `value` FROM data_source_attributes where `attribute` in(%s) and `data_source_id` =%s;" %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
+        cur.execute("SELECT `attribute`, `value` FROM data_source_attributes "
+                    "where `attribute` in(%s) and `data_source_id` =%s;"
+                    %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
         for r in cur:
             harvestInfo[r[0]] = r[1]
         harvestInfo['mode'] = mode

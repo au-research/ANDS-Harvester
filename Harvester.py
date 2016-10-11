@@ -85,15 +85,15 @@ class Harvester():
     completed = False
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
+
     def __init__(self, harvestInfo, logger, database):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
         self.logger = logger
         self.database = database
-        self.setUpOutputDirectory()
+        self.cleanPreviousHarvestRecords()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
-
 
     def harvest(self):
         self.getHarvestData()
@@ -101,11 +101,36 @@ class Harvester():
         self.postHarvestData()
         self.finishHarvest()
 
-    def setUpOutputDirectory(self):
+    def cleanPreviousHarvestRecords(self):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
         if not os.path.exists(directory):
             os.makedirs(directory)
+        else:
+            for the_file in os.listdir(directory):
+                file_path = os.path.join(directory, the_file)
+                three_days = 3 * 86400
+                # might want to add  and not(the_file.startswith('MANUAL-'))
+                if os.stat(file_path).st_mtime < int(self.startUpTime - three_days):
+                    try:
+                        if os.path.isfile(file_path):
+                            os.unlink(file_path)
+                        else:
+                            self.deleteDirectory(file_path)
+                            os.rmdir(file_path)
+                    except Exception as e:
+                        self.logger.logMessage(e)
 
+    def deleteDirectory(self, directory):
+        for the_file in os.listdir(directory):
+            file_path = os.path.join(directory, the_file)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+                else:
+                    self.deleteDirectory(file_path)
+                    os.rmdir(file_path)
+            except Exception as e:
+                self.logger.logMessage(e)
 
     def getHarvestData(self):
         if self.stopped:
