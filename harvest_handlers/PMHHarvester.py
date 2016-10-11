@@ -133,6 +133,7 @@ class PMHHarvester(Harvester):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
+            os.chmod(directory, 0o777)
         self.outputDir = directory
         dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
 

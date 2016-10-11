@@ -103,22 +103,24 @@ class Harvester():
 
     def cleanPreviousHarvestRecords(self):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
+        number_to_keep = 3
         if not os.path.exists(directory):
             os.makedirs(directory)
-        else:
-            for the_file in os.listdir(directory):
-                file_path = os.path.join(directory, the_file)
-                three_days = 3 * 86400
-                # might want to add  and not(the_file.startswith('MANUAL-'))
-                if os.stat(file_path).st_mtime < int(self.startUpTime - three_days):
-                    try:
-                        if os.path.isfile(file_path):
-                            os.unlink(file_path)
-                        else:
-                            self.deleteDirectory(file_path)
-                            os.rmdir(file_path)
-                    except Exception as e:
-                        self.logger.logMessage(e)
+        elif len(os.listdir(directory)) > number_to_keep:
+            the_files = self.listdir_fullpath(directory)
+            the_files.sort(key=os.path.getmtime, reverse=True)
+            for i in range(number_to_keep, len(the_files)):
+                try:
+                    if os.path.isfile(the_files[i]):
+                        os.unlink(the_files[i])
+                    else:
+                        self.deleteDirectory(the_files[i])
+                        os.rmdir(the_files[i])
+                except Exception as e:
+                    self.logger.logMessage(e)
+
+    def listdir_fullpath(self, d):
+        return [os.path.join(d, f) for f in os.listdir(d)]
 
     def deleteDirectory(self, directory):
         for the_file in os.listdir(directory):
@@ -244,6 +246,7 @@ class Harvester():
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
+            os.chmod(directory, 0o777)
         self.outputDir = directory
         self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
         dataFile = open(self.outputFilePath, 'wb', 0o777)

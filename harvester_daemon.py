@@ -238,6 +238,35 @@ class HarvesterDaemon(Daemon):
             if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
                 self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
                 self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
+                number_to_keep = 14
+                if len(os.listdir(myconfig.log_dir)) > number_to_keep:
+                    the_files = self.listdir_fullpath(myconfig.log_dir)
+                    the_files.sort(key=os.path.getmtime, reverse=True)
+                    for i in range(number_to_keep, len(the_files)):
+                        try:
+                            if os.path.isfile(the_files[i]):
+                                os.unlink(the_files[i])
+                            else:
+                                self.deleteDirectory(the_files[i])
+                                os.rmdir(the_files[i])
+                        except Exception as e:
+                            self.logger.logMessage(e)
+
+
+        def listdir_fullpath(self, d):
+            return [os.path.join(d, f) for f in os.listdir(d)]
+
+        def deleteDirectory(self, directory):
+            for the_file in os.listdir(directory):
+                file_path = os.path.join(directory, the_file)
+                try:
+                    if os.path.isfile(file_path):
+                        os.unlink(file_path)
+                    else:
+                        self.deleteDirectory(file_path)
+                        os.rmdir(file_path)
+                except Exception as e:
+                    self.logMessage(e)
 
     class __DataBase:
         __connection = False
@@ -509,7 +538,6 @@ class HarvesterDaemon(Daemon):
             if len(self.__runningHarvests) > 0:
                 for harvestID in list(self.__runningHarvests):
                     harvestReq = self.__runningHarvests[harvestID]
-                    #if harvestReq.getStatus() != "COMPLETED" and not(harvestReq.getStatus().startswith("STOPPED")):
                     harvestReq.rescheduleHarvest()
                     del harvestReq
                     del self.__runningHarvests[harvestID]
