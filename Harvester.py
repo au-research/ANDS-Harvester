@@ -154,7 +154,9 @@ class Harvester():
             return
         try:
             self.setStatus('HARVESTING')
+            self.logger.logMessage("Getting data from: " + self.harvestInfo['uri'])
             getRequest = Request(self.harvestInfo['uri'])
+            self.logger.logMessage("Data received")
             self.data = getRequest.getData()
             del getRequest
         except Exception as e:
@@ -186,10 +188,9 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
-        postRequest = Request(self.harvestInfo['response_url']
-            + "?ds_id=" + str(self.harvestInfo['data_source_id'])
-            + "?batch_id=" + self.harvestInfo['batch_number']
-            + "&status=" + self.__status)
+        url = self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id']) + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status
+        self.logger.logMessage("Hitting: " + url)
+        postRequest = Request(url)
         self.data = postRequest.postCompleted()
         del postRequest
 
