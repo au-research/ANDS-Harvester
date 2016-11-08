@@ -51,17 +51,16 @@ class PMHHarvester(Harvester):
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
         try:
-            self.data = getRequest.getData()
+            data = getRequest.getData()
         except Exception as e:
             self.handleExceptions(e)
         try:
-            dom = parseString(self.data)
+            dom = parseString(data)
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
             self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
             self.handleExceptions(e)
-
 
     def getResumptionToken(self):
         if self.stopped:

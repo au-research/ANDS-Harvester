@@ -14,21 +14,24 @@ import subprocess
 import myconfig
 
 class Request:
-    data = False
-    url = False
+    data = None
+    url = None
 
     def __init__(self, url):
         self.url = url
 
     def getData(self):
+        self.data = None
         try:
             req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req,timeout=60)
-            self.data = f.read()
+            fs = urllib2.urlopen(req, timeout=60)
+            self.data = fs.read()
             return self.data
         except Exception as e:
             raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
 
+    def getURL(self):
+        return self.url
 
     def postData(self, data):
         try:
@@ -154,9 +157,7 @@ class Harvester():
             return
         try:
             self.setStatus('HARVESTING')
-            self.logger.logMessage("Getting data from: " + self.harvestInfo['uri'])
             getRequest = Request(self.harvestInfo['uri'])
-            self.logger.logMessage("Data received")
             self.data = getRequest.getData()
             del getRequest
         except Exception as e:
@@ -188,11 +189,21 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
-        url = self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id']) + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status
-        self.logger.logMessage("Hitting: " + url)
-        postRequest = Request(url)
+        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
+                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
         del postRequest
+
+    def postHarvestError(self):
+        if self.stopped:
+            return
+        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
+                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        self.logger.logMessage("ERROR URL:" + postRequest.getURL())
+        self.data = postRequest.postCompleted()
+        del postRequest
+
 
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
@@ -355,10 +366,10 @@ class Harvester():
     def handleExceptions(self, exception, terminate=True):
         self.errored = True
         if terminate:
-            self.__status= 'STOPPED'
+            self.__status= 'ERROR'
             self.errorLog = self.errorLog  + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
-            self.postHarvestData()
+            self.postHarvestError()
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
