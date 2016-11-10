@@ -189,8 +189,8 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
-        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
-                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
         del postRequest
 
@@ -198,8 +198,8 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
-        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
-                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.logger.logMessage("ERROR URL:" + postRequest.getURL())
         self.data = postRequest.postCompleted()
         del postRequest
@@ -208,8 +208,8 @@ class Harvester():
         if self.stopped:
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
-        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
-                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL())
         self.data = postRequest.postCompleted()
         del postRequest
