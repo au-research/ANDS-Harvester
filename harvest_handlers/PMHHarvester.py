@@ -74,7 +74,7 @@ class PMHHarvester(Harvester):
                     e += error[0].firstChild.nodeValue
                     errorCode = error[0].attributes["code"].value
                     if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and errorCode == self.noRecordsMatchCodeValue:
-                        self.handleExceptions(e, False)
+                        self.handleNoRecordsMatch(errorCode)
                     else:
                         self.handleExceptions(e, True)
                     return

@@ -204,6 +204,16 @@ class Harvester():
         self.data = postRequest.postCompleted()
         del postRequest
 
+    def postHarvestNoRecords(self):
+        if self.stopped:
+            return
+        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id'])
+                              + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL())
+        self.data = postRequest.postCompleted()
+        del postRequest
+
 
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
@@ -362,6 +372,12 @@ class Harvester():
             self.handleExceptions(exception={'message':'HARVEST TOOK LONGER THAN %s minutes'
                                                        %(str(myconfig.max_up_seconds_per_harvest/60))})
 
+    def handleNoRecordsMatch(self, errorCode):
+        self.__status = 'NORECORDS'
+        self.errorLog = self.errorLog + errorCode + ", "
+        self.updateHarvestRequest()
+        self.postHarvestNoRecords()
+        self.stopped = True
 
     def handleExceptions(self, exception, terminate=True):
         self.errored = True
