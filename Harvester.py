@@ -2,6 +2,7 @@ try:
     import urllib.request as urllib2
 except:
     import urllib2
+import redis
 import os
 import json
 from xml.dom.minidom import parseString
@@ -13,21 +14,24 @@ import subprocess
 import myconfig
 
 class Request:
-    data = False
-    url = False
+    data = None
+    url = None
 
     def __init__(self, url):
         self.url = url
 
     def getData(self):
+        self.data = None
         try:
             req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req,timeout=60)
-            self.data = f.read()
+            fs = urllib2.urlopen(req, timeout=60)
+            self.data = fs.read()
             return self.data
         except Exception as e:
             raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
 
+    def getURL(self):
+        return self.url
 
     def postData(self, data):
         try:
@@ -46,6 +50,18 @@ class Request:
             return self.data
         except Exception as e:
             pass
+
+
+class RedisPoster:
+
+    poster = False
+
+    def __init__(self):
+        self.poster = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+    def postMesage(self, chanel, message):
+        self.poster.publish(chanel, message)
+
 
 class XSLT2Transformer:
 
@@ -85,15 +101,17 @@ class Harvester():
     completed = False
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
+    redisPoster = False
+
     def __init__(self, harvestInfo, logger, database):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
+        self.redisPoster = RedisPoster()
         self.logger = logger
         self.database = database
         self.cleanPreviousHarvestRecords()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
-
 
     def harvest(self):
         self.getHarvestData()
@@ -103,19 +121,24 @@ class Harvester():
 
     def cleanPreviousHarvestRecords(self):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
+        number_to_keep = 3
         if not os.path.exists(directory):
             os.makedirs(directory)
-        else:
-            for the_file in os.listdir(directory):
-                file_path = os.path.join(directory, the_file)
+        elif len(os.listdir(directory)) > number_to_keep:
+            the_files = self.listdir_fullpath(directory)
+            the_files.sort(key=os.path.getmtime, reverse=True)
+            for i in range(number_to_keep, len(the_files)):
                 try:
-                    if os.path.isfile(file_path):
-                        os.unlink(file_path)
+                    if os.path.isfile(the_files[i]):
+                        os.unlink(the_files[i])
                     else:
-                        self.deleteDirectory(file_path)
-                        os.rmdir(file_path)
+                        self.deleteDirectory(the_files[i])
+                        os.rmdir(the_files[i])
                 except Exception as e:
                     self.logger.logMessage(e)
+
+    def listdir_fullpath(self, d):
+        return [os.path.join(d, f) for f in os.listdir(d)]
 
     def deleteDirectory(self, directory):
         for the_file in os.listdir(directory):
@@ -128,7 +151,6 @@ class Harvester():
                     os.rmdir(file_path)
             except Exception as e:
                 self.logger.logMessage(e)
-
 
     def getHarvestData(self):
         if self.stopped:
@@ -152,7 +174,8 @@ class Harvester():
         outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
         self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : self.outputFilePath}
+            transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
+                                 'outFile' : outFile, 'inFile' : self.outputFilePath}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
@@ -165,11 +188,32 @@ class Harvester():
     def postHarvestData(self):
         if self.stopped:
             return
-        #print(self.harvestInfo)
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
-        postRequest = Request(self.harvestInfo['response_url'] + str(self.harvestInfo['data_source_id']) + "/?batch=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
         del postRequest
+
+    def postHarvestError(self):
+        if self.stopped:
+            return
+        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        self.logger.logMessage("ERROR URL:" + postRequest.getURL())
+        self.data = postRequest.postCompleted()
+        del postRequest
+
+    def postHarvestNoRecords(self):
+        if self.stopped:
+            return
+        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
+                              + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
+        self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL())
+        self.data = postRequest.postCompleted()
+        del postRequest
+
 
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
@@ -185,16 +229,26 @@ class Harvester():
         statusDict = {'status':self.__status,
                       'batch_number':self.harvestInfo['batch_number'],
                       'mode' : self.harvestInfo['mode'],
-                      'message':self.message,
+                      'message': self.message,
+                      'importer_message': self.message,
                       'error':{'log':str.strip(self.errorLog), 'errored': self.errored},
                       'completed':str(self.completed),
-                      'start_utc' : str(datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
+                      'start_utc' : str(datetime.fromtimestamp(self.startUpTime,
+                                                               timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
                       'output':{'file': self.outputFilePath, 'dir': self.outputDir},
-                      'progress':{'current':self.recordCount, 'total':self.listSize, 'time':str(upTime),'start':str(self.startUpTime), 'end':''}
+                      'progress':{'current':self.recordCount, 'total':self.listSize,
+                                  'time':str(upTime),'start':str(self.startUpTime), 'end':''}
                     }
         try:
-            cur.execute("UPDATE %s SET `status` ='%s', `message` ='%s' where `harvest_id` = %s" %(myconfig.harvest_table, self.__status, json.dumps(statusDict).replace("'", "\\\'"), str(self.harvestInfo['harvest_id'])))
+            cur.execute("UPDATE %s SET `status` ='%s', `message` ='%s' where `harvest_id` = %s"
+                        %(myconfig.harvest_table,
+                          self.__status,
+                          json.dumps(statusDict).replace("'", "\\\'"),
+                          str(self.harvestInfo['harvest_id'])))
             conn.commit()
+            message = json.dumps(statusDict).replace("'", "\\\'")
+            self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest', message)
+
             del cur
             conn.close()
         except Exception as e:
@@ -209,23 +263,27 @@ class Harvester():
             return
         try:
             cur = conn.cursor()
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
+            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                        %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
             if(cur.rowcount > 0):
                 self.__status = cur.fetchone()[0]
                 self.stopped = True
                 self.logger.logMessage("HARVEST STOPPED WHILE RUNNING")
             if self.completed:
-                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
                 if(cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
                     self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED")
-                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
                 if(cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
                     self.logger.logMessage("REGISTRY IS IMPORTING")
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';" %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
+            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                        %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
             if(cur.rowcount > 0):
                 self.__status = cur.fetchone()[0]
                 self.stopped = True
@@ -242,6 +300,7 @@ class Harvester():
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
+            os.chmod(directory, 0o777)
         self.outputDir = directory
         self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
         dataFile = open(self.outputFilePath, 'wb', 0o777)
@@ -257,13 +316,17 @@ class Harvester():
         self.checkHarvestStatus()
         self.checkRunTime()
         upTime = int(time.time()) - self.startUpTime
-        return "STATUS: %s, UP TIME: %s, METHOD: %s, HARVEST ID: %s, DATA_SOURCE_TITLE %s SCHEDULED %s" %(self.__status, str(upTime), self.harvestInfo['harvest_method'], str(self.harvestInfo['harvest_id']),self.harvestInfo['title'],self.harvestInfo['until_date'])
+        return "STATUS: %s, UP TIME: %s, METHOD: %s, HARVEST ID: %s, DATA_SOURCE_TITLE %s SCHEDULED %s" \
+               %(self.__status, str(upTime), self.harvestInfo['harvest_method'],
+                 str(self.harvestInfo['harvest_id']),self.harvestInfo['title'],
+                 self.harvestInfo['until_date'])
 
     def finishHarvest(self):
         self.completed = True
         self.__status= 'HARVEST COMPLETED'
         if(self.errorLog != ''):
-            self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s" %(str(self.harvestInfo['harvest_id']),self.errorLog))
+            self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
+                                   %(str(self.harvestInfo['harvest_id']),self.errorLog))
         self.updateHarvestRequest()
         self.stopped = True
 
@@ -276,19 +339,22 @@ class Harvester():
     def stop(self):
         if self.stopped:
             return
-        self.logger.logMessage("STOPPING harvestID: %s WITH STATUS: %s" %(str(self.harvestInfo['harvest_id']), self.__status))
+        self.logger.logMessage("STOPPING harvestID: %s WITH STATUS: %s"
+                               %(str(self.harvestInfo['harvest_id']), self.__status))
         self.updateHarvestRequest()
         self.stopped = True
 
     def rescheduleHarvest(self):
         self.__status= 'SCHEDULED'
         self.message = "harvester shut down"
-        self.logger.logMessage("harvest_id: %s status: %s" %(str(self.harvestInfo['harvest_id']) ,self.__status))
+        self.logger.logMessage("harvest_id: %s status: %s"
+                               %(str(self.harvestInfo['harvest_id']) ,self.__status))
         try:
             self.updateHarvestRequest()
             self.stopped = True
         except Exception as e:
-            self.logger.logMessage("CAN NOT RESCHEDULE harvestid: %s ERROR: %s" %(str(self.harvestInfo['harvest_id']), str(repr(e))))
+            self.logger.logMessage("CAN NOT RESCHEDULE harvestid: %s ERROR: %s"
+                                   %(str(self.harvestInfo['harvest_id']), str(repr(e))))
 
 
     def setStatus(self, status, message="no message"):
@@ -301,18 +367,25 @@ class Harvester():
             return
         upTime = int(time.time()) - self.startUpTime
         if upTime > myconfig.max_up_seconds_per_harvest:
-            self.errorLog = 'HARVEST TOOK LONGER THAN %s minutes' %(str(myconfig.max_up_seconds_per_harvest/60)) + self.errorLog
-            self.handleExceptions(exception={'message':'HARVEST TOOK LONGER THAN %s minutes' %(str(myconfig.max_up_seconds_per_harvest/60))})
+            self.errorLog = 'HARVEST TOOK LONGER THAN %s minutes' \
+                            %(str(myconfig.max_up_seconds_per_harvest/60)) + self.errorLog
+            self.handleExceptions(exception={'message':'HARVEST TOOK LONGER THAN %s minutes'
+                                                       %(str(myconfig.max_up_seconds_per_harvest/60))})
 
+    def handleNoRecordsMatch(self, errorCode):
+        self.__status = 'NORECORDS'
+        self.errorLog = self.errorLog + errorCode + ", "
+        self.updateHarvestRequest()
+        self.postHarvestNoRecords()
+        self.stopped = True
 
     def handleExceptions(self, exception, terminate=True):
         self.errored = True
         if terminate:
-            self.__status= 'STOPPED'
-            #self.message= repr(exception).replace("'", "").replace('"', "")
+            self.__status= 'ERROR'
             self.errorLog = self.errorLog  + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
-            self.postHarvestData()
+            self.postHarvestError()
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "

@@ -51,17 +51,16 @@ class PMHHarvester(Harvester):
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
         try:
-            self.data = getRequest.getData()
+            data = getRequest.getData()
         except Exception as e:
             self.handleExceptions(e)
         try:
-            dom = parseString(self.data)
+            dom = parseString(data)
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
             self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
             self.handleExceptions(e)
-
 
     def getResumptionToken(self):
         if self.stopped:
@@ -74,8 +73,8 @@ class PMHHarvester(Harvester):
                     e = "ERROR RECEIVED FROM PROVIDER: "
                     e += error[0].firstChild.nodeValue
                     errorCode = error[0].attributes["code"].value
-                    if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and errorCode == self.noRecordsMatchCodeValue:
-                        self.handleExceptions(e, False)
+                    if errorCode == self.noRecordsMatchCodeValue:
+                        self.handleNoRecordsMatch(errorCode)
                     else:
                         self.handleExceptions(e, True)
                     return
@@ -133,6 +132,7 @@ class PMHHarvester(Harvester):
         directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
         if not os.path.exists(directory):
             os.makedirs(directory)
+            os.chmod(directory, 0o777)
         self.outputDir = directory
         dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
 

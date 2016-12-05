@@ -53,7 +53,7 @@ class CSWHarvester(Harvester):
         getRequest = Request(self.harvestInfo['uri'] + query)
         try:
             self.firstCall = False
-            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
+            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
             self.data = getRequest.getData()
             self.checkNextRecord()
             if self.recordCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
@@ -105,7 +105,7 @@ class CSWHarvester(Harvester):
                     eCode = nException[0].attributes["exceptionCode"].value
                     #eLocator = nException.attributes["locator"].value
                     eTexts = nException[0].getElementsByTagName('ExceptionText')
-                    eText = '';
+                    eText = ''
                     for i, elem in enumerate(eTexts):
                         eText = eText + elem.firstChild.nodeValue
                     self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
@@ -119,7 +119,7 @@ class CSWHarvester(Harvester):
             self.startPosition = int(nSearchResult.attributes["nextRecord"].value)
             if self.startPosition == 0:
                 self.completed = True
-            self.recordCount = self.recordCount + self.numberOfRecordsReturned
+            self.recordCount += self.numberOfRecordsReturned
             self.pageCount += 1
         except Exception as e:
             print(repr(e))
@@ -140,17 +140,17 @@ class CSWHarvester(Harvester):
 
 
     def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
+        if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        outFile = self.outputDir  + str(self.pageCount) + "." + self.resultFileExtension
-        inFile = self.outputDir  + str(self.pageCount) + "." + self.storeFileExtension
+        outFile = self.outputDir + str(self.pageCount) + "." + self.resultFileExtension
+        inFile = self.outputDir + str(self.pageCount) + "." + self.storeFileExtension
         try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
+            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
             self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
-            msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode());
+            msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
             self.handleExceptions(msg)
         except Exception as e:
             self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e))
