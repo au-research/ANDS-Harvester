@@ -20,10 +20,6 @@ class test_config(unittest.TestCase):
         self.assertIsInstance(myconfig.db, str)
         self.assertIsInstance(myconfig.harvest_table, str)
 
-    def test_log_writable(self):
-        self.assertTrue(os.path.isdir(myconfig.log_dir))
-        self.assertTrue(os.access(myconfig.log_dir, os.W_OK))
-
     def test_database_connection(self):
         self.assertTrue(self.helper_is_connected(myconfig.harvest_table))
 
