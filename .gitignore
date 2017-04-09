@@ -14,3 +14,10 @@ Thumbs.db
 .idea
 daemon.pid
 daemon_log.txt
+.DS_Store
+
+# Test reports and coverages
+.coverage
+coverage.xml
+junit.xml
+htmlcov
