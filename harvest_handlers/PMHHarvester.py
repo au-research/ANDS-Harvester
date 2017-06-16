@@ -15,7 +15,7 @@ class PMHHarvester(Harvester):
         }
     """
     __resumptionToken = False
-    __from = "1900-01-01T12:00:00Z"
+    __from = "1900-01-01T00:00:00Z"
     __until = False
     __metadataPrefix = False
     __set = False
@@ -44,7 +44,7 @@ class PMHHarvester(Harvester):
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken))
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken), "ERROR")
             self.handleExceptions(e)
 
     def identifyRequest(self):
@@ -59,7 +59,7 @@ class PMHHarvester(Harvester):
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
-            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
+            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')), "ERROR")
             self.handleExceptions(e)
 
     def getResumptionToken(self):
@@ -111,7 +111,7 @@ class PMHHarvester(Harvester):
                 query += '&set='+ self.__set
         getRequest = Request(self.harvestInfo['uri'] +  query)
         try:
-            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query), "DEBUG")
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.data = getRequest.getData()
             self.getResumptionToken()
@@ -123,7 +123,7 @@ class PMHHarvester(Harvester):
             if self.retryCount > 4:
                 self.errored = True
                 self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
         del getRequest
 
     def storeHarvestData(self):
@@ -152,8 +152,8 @@ class PMHHarvester(Harvester):
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
             self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK", "ERROR")
             self.handleExceptions(e)

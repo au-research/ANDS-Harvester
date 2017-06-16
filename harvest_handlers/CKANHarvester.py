@@ -70,10 +70,10 @@ class CKANHarvester(Harvester):
                     self.errored = True
                     self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s, " %itemId
                     self.handleExceptions(e, terminate=False)
-                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId))
+                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId), "ERROR")
         except Exception as e:
             self.errored = True
-            self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId))
+            self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId), "ERROR")
             self.handleExceptions(e)
         self.data = self.__xml.toprettyxml(encoding='utf-8', indent=' ')
         #self.setStatus("GETTING-PACKAGE", "url:" + self.harvestInfo['uri'] +  self.__listQuery)

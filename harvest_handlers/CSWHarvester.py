@@ -65,7 +65,7 @@ class CSWHarvester(Harvester):
             time.sleep(1)
             if self.retryCount > 4:
                 self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
         del getRequest
 
     def getParamString(self):
@@ -149,9 +149,9 @@ class CSWHarvester(Harvester):
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
             msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
             self.handleExceptions(msg)
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
             self.handleExceptions(e)
