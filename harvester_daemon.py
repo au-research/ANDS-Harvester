@@ -318,49 +318,64 @@ class HarvesterDaemon(Daemon):
                 cur.close()
                 del cur
                 conn.close()
+                break
             except Exception as e:
                 attempts += 1
                 time.sleep(5)
-                self.__logger.logMessage("Error reporting Error (%s) to the Registry the:%s time" %(exception, str(attempts)), "ERROR")
+                self.__logger.logMessage(
+                    '(handleException) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
         return
 
     def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
         self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)), "INFO")
         harvestInfo = {}
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        harvestInfo['crosswalk'] = None
-        harvestInfo['xsl_file'] = None
-        harvestInfo['last_harvest_run_date'] = ''
-        cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
-        for r in cur:
-            harvestInfo['data_source_id'] = r[0]
-            harvestInfo['data_source_slug'] = r[1]
-            harvestInfo['data_source_slug'] = r[2]
-            harvestInfo['title'] = r[3]
-        cur.execute("SELECT `attribute`, `value` FROM data_source_attributes "
-                    "where `attribute` in(%s) and `data_source_id` =%s;"
-                    %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
-        for r in cur:
-            harvestInfo[r[0]] = r[1]
-        harvestInfo['mode'] = mode
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['harvest_id'] = harvestID
-        harvestInfo['batch_number'] = batchNumber
-        harvestInfo['from_date'] = lastRun
-        harvestInfo['until_date'] = nextRun
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                harvestInfo['crosswalk'] = None
+                harvestInfo['xsl_file'] = None
+                harvestInfo['last_harvest_run_date'] = ''
+                cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
+                for r in cur:
+                    harvestInfo['data_source_id'] = r[0]
+                    harvestInfo['data_source_slug'] = r[1]
+                    harvestInfo['data_source_slug'] = r[2]
+                    harvestInfo['title'] = r[3]
+                cur.execute("SELECT `attribute`, `value` FROM data_source_attributes "
+                            "where `attribute` in(%s) and `data_source_id` =%s;"
+                            %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
+                for r in cur:
+                    harvestInfo[r[0]] = r[1]
+                harvestInfo['mode'] = mode
+                harvestInfo['response_url'] = myconfig.response_url
+                harvestInfo['data_store_path'] = myconfig.data_store_path
+                harvestInfo['harvest_id'] = harvestID
+                harvestInfo['batch_number'] = batchNumber
+                harvestInfo['from_date'] = lastRun
+                harvestInfo['until_date'] = nextRun
+                cur.close()
+
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(addHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+                if attempts == 3:
+                    return
+
         try:
             harvester_module = __import__(harvestInfo['harvest_method'], globals={}, locals={}, fromlist=[], level=0)
+
             class_ = getattr(harvester_module, harvestInfo['harvest_method'])
             myHarvester = class_(harvestInfo, self.__logger, self.__database)
             self.__harvestRequests[harvestID] = myHarvester
+
         except ImportError as e:
             self.handleException(harvestID, e)
-        cur.close()
+
 
     def manageHarvests(self):
         self.reportToRegistry()
@@ -403,37 +418,49 @@ class HarvesterDaemon(Daemon):
 
 
     def checkForHarvestRequests(self, limit):
-        try:
-            conn = self.__database.getConnection()
-            cur = conn.cursor()
-            cur.execute("SELECT * FROM "+ myconfig.harvest_table +" WHERE `status` = "
-                        "'SCHEDULED' AND ('next_run' is null OR `next_run` <=timestamp('" +
-                        str(datetime.now()) + "')) ORDER BY `next_run` LIMIT "+ limit +";" )
-            if(cur.rowcount > 0):
-                self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount), "DEBUG")
-                for r in cur:
-                    self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
-            cur.close()
-            del cur
-            conn.close()
-        except Exception as e:
-            return
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM "+ myconfig.harvest_table +" WHERE `status` = "
+                            "'SCHEDULED' AND ('next_run' is null OR `next_run` <=timestamp('" +
+                            str(datetime.now()) + "')) ORDER BY `next_run` LIMIT "+ str(limit) +";" )
+                if(cur.rowcount > 0):
+                    self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount), "DEBUG")
+                    for r in cur:
+                        self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(checkForHarvestRequests) %s, , limit %s, Retry: %d' % (str(repr(e)), str(limit), attempts), "ERROR")
 
     def fixBrokenHarvestRequests(self):
-        try:
-            conn = self.__database.getConnection()
-            cur = conn.cursor()
-            cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
-            result = cur.fetchone()
-            if result[0] > 0:
-                self.__logger.logMessage("\nFOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
-            cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
-            conn.commit()
-            cur.close()
-            del cur
-            conn.close()
-        except Exception as e:
-            pass
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
+                result = cur.fetchone()
+                if result[0] > 0:
+                    self.__logger.logMessage("\nFOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
+                cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(fixBrokenHarvestRequests) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def describeModules(self):
         self.__logger.logMessage("\nDESCRIBING HARVESTER MODULES:\n")
@@ -456,21 +483,27 @@ class HarvesterDaemon(Daemon):
         file = open(self.__harvesterDefinitionFile, "w+")
         file.write(harvesterDefinitions)
         file.close()
-        #and add to the database
-        try:
-            conn = self.__database.getConnection()
-            cur = conn.cursor()
-            cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
-            if(cur.rowcount > 0):
-                cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
-            else:
-                cur.execute("INSERT INTO configs (`value`, `key`, `type`) VALUES ('%s','%s', '%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods', 'json'))
-            conn.commit()
-            cur.close()
-            del cur
-            conn.close()
-        except Exception as e:
-            return
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
+                if(cur.rowcount > 0):
+                    cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
+                else:
+                    cur.execute("INSERT INTO configs (`value`, `key`, `type`) VALUES ('%s','%s', '%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods', 'json'))
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(saveHarvestDefinition) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+
 
     def reportToRegistry(self):
         statusDict = {'last_report_timestamp' : time.time(),
@@ -501,8 +534,7 @@ class HarvesterDaemon(Daemon):
             except Exception as e:
                 attempts += 1
                 time.sleep(5)
-                self.__logger.logMessage('ERROR WHILE TRYING TO REPORT %s' % (e), "ERROR")
-        return
+                self.__logger.logMessage('(reportToRegistry) %s, Retry: %d' %(str(repr(e)), attempts), "ERROR")
 
 
     def setupEnv(self):

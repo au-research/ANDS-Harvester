@@ -135,7 +135,7 @@ class Harvester():
                         self.deleteDirectory(the_files[i])
                         os.rmdir(the_files[i])
                 except Exception as e:
-                    self.logger.logMessage(e, "ERROR")
+                    self.logger.logMessage(str(repr(e)), "ERROR")
 
     def listdir_fullpath(self, d):
         return [os.path.join(d, f) for f in os.listdir(d)]
@@ -200,7 +200,7 @@ class Harvester():
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
-        self.logger.logMessage("ERROR URL:" + postRequest.getURL(), "DEBUG")
+        self.logger.logMessage("ERROR URL:" + postRequest.getURL(), "INFO")
         self.data = postRequest.postCompleted()
         del postRequest
 
@@ -210,7 +210,7 @@ class Harvester():
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
-        self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL(), "DEBUG")
+        self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL(), "INFO")
         self.data = postRequest.postCompleted()
         del postRequest
 
@@ -253,48 +253,52 @@ class Harvester():
             except Exception as e:
                 attempts += 1
                 time.sleep(5)
-                self.logger.logMessage("Database Error: (updateHarvestRequest) %s" % (str(repr(e))), "ERROR")
-        return
+                self.logger.logMessage(
+                    '(updateHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+
 
     def checkHarvestStatus(self):
         if self.stopped:
             return
-        try:
-            conn = self.database.getConnection()
-        except Exception as e:
-            return
-        try:
-            cur = conn.cursor()
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                        %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
-            if(cur.rowcount > 0):
-                self.__status = cur.fetchone()[0]
-                self.stopped = True
-                self.logger.logMessage("HARVEST STOPPED WHILE RUNNING", "DEBUG")
-            if self.completed:
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.database.getConnection()
+                cur = conn.cursor()
                 cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
                 if(cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
-                    self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED", "DEBUG")
+                    self.logger.logMessage("HARVEST STOPPED WHILE RUNNING", "DEBUG")
+                if self.completed:
+                    cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                                %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+                    if(cur.rowcount > 0):
+                        self.__status = cur.fetchone()[0]
+                        self.stopped = True
+                        self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED", "DEBUG")
+                    cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
+                                %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                    if(cur.rowcount > 0):
+                        self.__status = cur.fetchone()[0]
+                        self.stopped = True
+                        self.logger.logMessage("REGISTRY IS IMPORTING", "DEBUG")
                 cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
                 if(cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
-                    self.logger.logMessage("REGISTRY IS IMPORTING", "DEBUG")
-            cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                        %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
-            if(cur.rowcount > 0):
-                self.__status = cur.fetchone()[0]
-                self.stopped = True
-                self.logger.logMessage("HARVEST COMPLETED", "DEBUG")
-            cur.close()
-            del cur
-            conn.close()
-        except Exception as e:
-            self.logger.logMessage("Database Error: (checkHarvestStatus) %s" %(str(repr(e))), "ERROR")
+                    self.logger.logMessage("HARVEST COMPLETED", "DEBUG")
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.logger.logMessage(
+                    '(checkHarvestStatus) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def storeHarvestData(self):
         if self.stopped:
