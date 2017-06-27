@@ -54,9 +54,12 @@ class CSWHarvester(Harvester):
         try:
             self.firstCall = False
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
+            self.logger.logMessage(
+                "CSW (getHarvestData), getting data url:%s" %(self.harvestInfo['uri'] + query),
+                "DEBUG")
             self.data = getRequest.getData()
             self.checkNextRecord()
-            if self.recordCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
+            if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 self.completed = True
             self.retryCount = 0
         except Exception as e:
@@ -98,19 +101,31 @@ class CSWHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
+            self.logger.logMessage(
+                "CSW (checkNextRecord parse response) %s" % str(self.data),
+                "DEBUG")
             try:
 
-                nException = dom.getElementsByTagName('Exception')
+                nException = dom.getElementsByTagNameNS('http://www.opengis.net/ows', 'Exception')
+                self.logger.logMessage(
+                    "CSW (checkNextRecord parse response) %s" % str(repr(nException)),
+                    "DEBUG")
                 if len(nException) > 0:
                     eCode = nException[0].attributes["exceptionCode"].value
                     #eLocator = nException.attributes["locator"].value
-                    eTexts = nException[0].getElementsByTagName('ExceptionText')
+                    eTexts = nException[0].getElementsByTagNameNS('http://www.opengis.net/ows','ExceptionText')
                     eText = ''
                     for i, elem in enumerate(eTexts):
                         eText = eText + elem.firstChild.nodeValue
                     self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
+                    self.logger.logMessage(
+                        "ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText),
+                        "ERROR")
                     return
             except Exception as e:
+                self.logger.logMessage(
+                    "CSW (checkNextRecord parse response) %s" % str(repr(e)),
+                    "ERROR")
                 pass
             nSearchResult = dom.getElementsByTagName('csw:SearchResults')[0]
             if self.listSize == 'unknown':
@@ -122,7 +137,9 @@ class CSWHarvester(Harvester):
             self.recordCount += self.numberOfRecordsReturned
             self.pageCount += 1
         except Exception as e:
-            print(repr(e))
+            self.logger.logMessage(
+                "CSW (checkNextRecord) %s" % str(repr(e)),
+                "ERROR")
             self.startPosition = 0
 
 

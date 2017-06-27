@@ -74,7 +74,10 @@ class PMHHarvester(Harvester):
                     e += error[0].firstChild.nodeValue
                     errorCode = error[0].attributes["code"].value
                     if errorCode == self.noRecordsMatchCodeValue:
-                        self.handleNoRecordsMatch(errorCode)
+                        if not self.firstCall:
+                            self.__resumptionToken = False
+                        else:
+                            self.handleNoRecordsMatch(errorCode)
                     else:
                         self.handleExceptions(e, True)
                     return
@@ -88,7 +91,7 @@ class PMHHarvester(Harvester):
             else:
                 self.__resumptionToken = False
 
-            if self.pageCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
+            if self.pageCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 self.__resumptionToken = False
 
         except Exception:
@@ -118,7 +121,7 @@ class PMHHarvester(Harvester):
             self.firstCall = False
             self.retryCount = 0
         except Exception as e:
-            self.retryCount = self.retryCount + 1
+            self.retryCount += 1
             time.sleep(1)
             if self.retryCount > 4:
                 self.errored = True
@@ -129,16 +132,19 @@ class PMHHarvester(Harvester):
     def storeHarvestData(self):
         if self.stopped or not(self.data):
             return
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-            os.chmod(directory, 0o777)
-        self.outputDir = directory
-        dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
+        try:
+            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                os.chmod(directory, 0o777)
+            self.outputDir = directory
+            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
 
-        #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
-        dataFile.write(self.data)
-        dataFile.close()
+            #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile.write(self.data)
+            dataFile.close()
+        except Exception as e:
+            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
     def runCrossWalk(self):
