@@ -22,13 +22,17 @@ class Request:
 
     def getData(self):
         self.data = None
-        try:
-            req = urllib2.Request(self.url)
-            fs = urllib2.urlopen(req, timeout=60)
-            self.data = fs.read()
-            return self.data
-        except Exception as e:
-            raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
+        retryCount = 0
+        while retryCount < 5:
+            try:
+                req = urllib2.Request(self.url)
+                fs = urllib2.urlopen(req, timeout=60)
+                self.data = fs.read()
+                return self.data
+            except Exception as e:
+                retryCount += 1
+                if retryCount > 4:
+                    raise RuntimeError(str(e) + " Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
 
     def getURL(self):
         return self.url
@@ -303,16 +307,20 @@ class Harvester():
     def storeHarvestData(self):
         if self.stopped:
             return
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-            os.chmod(directory, 0o777)
-        self.outputDir = directory
-        self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
-        dataFile = open(self.outputFilePath, 'wb', 0o777)
-        self.setStatus("HARVESTING", self.outputFilePath)
-        dataFile.write(self.data)
-        dataFile.close()
+        try:
+            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                os.chmod(directory, 0o777)
+            self.outputDir = directory
+            self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
+            dataFile = open(self.outputFilePath, 'wb', 0o777)
+            self.setStatus("HARVESTING", self.outputFilePath)
+            dataFile.write(self.data)
+            dataFile.close()
+        except Exception as e:
+            self.handleExceptions(e)
+            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
     def getStatus(self):
         self.checkHarvestStatus()
