@@ -144,6 +144,7 @@ class PMHHarvester(Harvester):
             dataFile.write(self.data)
             dataFile.close()
         except Exception as e:
+            self.handleExceptions(e)
             self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
