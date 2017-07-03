@@ -15,7 +15,7 @@ class PMHHarvester(Harvester):
         }
     """
     __resumptionToken = False
-    __from = "1900-01-01T12:00:00Z"
+    __from = "1900-01-01T00:00:00Z"
     __until = False
     __metadataPrefix = False
     __set = False
@@ -44,7 +44,7 @@ class PMHHarvester(Harvester):
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken))
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken), "ERROR")
             self.handleExceptions(e)
 
     def identifyRequest(self):
@@ -59,7 +59,7 @@ class PMHHarvester(Harvester):
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
-            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')))
+            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')), "ERROR")
             self.handleExceptions(e)
 
     def getResumptionToken(self):
@@ -74,7 +74,10 @@ class PMHHarvester(Harvester):
                     e += error[0].firstChild.nodeValue
                     errorCode = error[0].attributes["code"].value
                     if errorCode == self.noRecordsMatchCodeValue:
-                        self.handleNoRecordsMatch(errorCode)
+                        if not self.firstCall:
+                            self.__resumptionToken = False
+                        else:
+                            self.handleNoRecordsMatch(errorCode)
                     else:
                         self.handleExceptions(e, True)
                     return
@@ -88,7 +91,7 @@ class PMHHarvester(Harvester):
             else:
                 self.__resumptionToken = False
 
-            if self.pageCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
+            if self.pageCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 self.__resumptionToken = False
 
         except Exception:
@@ -111,34 +114,38 @@ class PMHHarvester(Harvester):
                 query += '&set='+ self.__set
         getRequest = Request(self.harvestInfo['uri'] +  query)
         try:
-            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query), "DEBUG")
             self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
             self.data = getRequest.getData()
             self.getResumptionToken()
             self.firstCall = False
             self.retryCount = 0
         except Exception as e:
-            self.retryCount = self.retryCount + 1
+            self.retryCount += 1
             time.sleep(1)
             if self.retryCount > 4:
                 self.errored = True
                 self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
         del getRequest
 
     def storeHarvestData(self):
         if self.stopped or not(self.data):
             return
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-            os.chmod(directory, 0o777)
-        self.outputDir = directory
-        dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
+        try:
+            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                os.chmod(directory, 0o777)
+            self.outputDir = directory
+            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
 
-        #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
-        dataFile.write(self.data)
-        dataFile.close()
+            #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile.write(self.data)
+            dataFile.close()
+        except Exception as e:
+            self.handleExceptions(e)
+            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
     def runCrossWalk(self):
@@ -152,8 +159,8 @@ class PMHHarvester(Harvester):
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
             self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK")
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK", "ERROR")
             self.handleExceptions(e)

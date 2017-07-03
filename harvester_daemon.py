@@ -21,16 +21,21 @@ class Logger:
     __fileName = False
     __file = False
     __current_log_time = False
+    logLevels = {'ERROR':100,'INFO':50,'DEBUG':10}
+    __logLevel = 100
     def __init__(self):
         self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
         self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
+        self.__logLevel = self.logLevels[myconfig.log_level]
+        self.logMessage("loglevel set to %s:%s" %(str(self.__logLevel), myconfig.log_level), myconfig.log_level)
 
-    def logMessage(self, message):
-        self.rotateLogFile()
-        self.__file = open(self.__fileName, "a", 0o775)
-        os.chmod(self.__fileName, 0o775)
-        self.__file.write(message + " %s"  % datetime.now() + "\n")
-        self.__file.close()
+    def logMessage(self, message, logLevel='DEBUG'):
+        if (self.logLevels[logLevel] >= self.__logLevel):
+            self.rotateLogFile()
+            self.__file = open(self.__fileName, "a", 0o775)
+            os.chmod(self.__fileName, 0o775)
+            self.__file.write(message + " %s"  % datetime.now() + "\n")
+            self.__file.close()
 
     def rotateLogFile(self):
         if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
@@ -78,7 +83,7 @@ class Daemon(object):
             sys.stderr.write(message)
             sys.exit(1)
 
-        self.__logger.logMessage('deamon going to background, PID: {}'.format(os.getpid()))
+        self.__logger.logMessage('deamon going to background, PID: {}'.format(os.getpid()), "INFO")
 
         # Redirect standard file descriptors.
         sys.stdout.flush()
@@ -98,7 +103,7 @@ class Daemon(object):
         atexit.register(self.delpid)
 
     def delpid(self):
-        self.__logger.logMessage("\n\nDELETING PID FILE...")
+        self.__logger.logMessage("\n\nDELETING PID FILE...", "INFO")
         os.remove(self.pidfile)
 
     def start(self):
@@ -120,14 +125,14 @@ class Daemon(object):
             sys.exit(1)
 
         # Start daemon.
-        self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...")
+        self.__logger.logMessage("\n\nSTARTING HARVESTER_DAEMON...", "INFO")
         self.daemonize()
         try:
             atexit.register(Daemon.shutDown)
             self.run()
         except (KeyboardInterrupt, SystemExit):
             self.shutDown()
-            self.__logger.logMessage("\n\nSTOPPING...")
+            self.__logger.logMessage("\n\nSTOPPING...", "INFO")
 
 
     def status(self):
@@ -157,7 +162,7 @@ class Daemon(object):
         Stop the daemon.
         """
         # Get the pid from pidfile.
-        self.__logger.logMessage("\nSTOPPING HARVESTER_DAEMON...")
+        self.__logger.logMessage("\nSTOPPING HARVESTER_DAEMON...", "INFO")
 
         try:
             pf = open(self.pidfile,'r')
@@ -179,7 +184,7 @@ class Daemon(object):
 
         try:
             if os.path.exists(self.pidfile):
-                self.__logger.logMessage("\nDELETING PIDFILE %s..." %self.pidfile)
+                self.__logger.logMessage("\nDELETING PIDFILE %s..." %self.pidfile, "INFO")
                 os.remove(self.pidfile)
         except IOError as e:
             message = str(e) + "\nCan not remove pid file {}".format(self.pidfile)
@@ -195,7 +200,7 @@ class Daemon(object):
         self.start()
 
     def shutDown(self):
-        self.__logger.logMessage("\nSHUTTING DOWN ...")
+        self.__logger.logMessage("\nSHUTTING DOWN ...", "INFO")
 
     def run(self):
 
@@ -225,15 +230,20 @@ class HarvesterDaemon(Daemon):
         __fileName = False
         __file = False
         __current_log_time = False
+        logLevels = {'ERROR':100,'INFO':50,'DEBUG':10}
+        __logLevel = 100
         def __init__(self):
             self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
             self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
+            self.__logLevel = self.logLevels[myconfig.log_level]
+            self.logMessage("loglevel set to %s:%s" %(str(self.__logLevel), myconfig.log_level), myconfig.log_level)
 
-        def logMessage(self, message):
-            self.rotateLogFile()
-            self.__file = open(self.__fileName, "a", 0o777)
-            self.__file.write(message + " %s"  % datetime.now() + "\n")
-            self.__file.close()
+        def logMessage(self, message, logLevel='DEBUG'):
+            if(self.logLevels[logLevel] >= self.__logLevel):
+                self.rotateLogFile()
+                self.__file = open(self.__fileName, "a", 0o777)
+                self.__file.write(logLevel + ": " + message + " %s"  % datetime.now() + "\n")
+                self.__file.close()
 
         def rotateLogFile(self):
             if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
@@ -251,7 +261,7 @@ class HarvesterDaemon(Daemon):
                                 self.deleteDirectory(the_files[i])
                                 os.rmdir(the_files[i])
                         except Exception as e:
-                            self.logger.logMessage(e)
+                            self.logger.logMessage(e, "ERROR")
 
 
         def listdir_fullpath(self, d):
@@ -267,7 +277,7 @@ class HarvesterDaemon(Daemon):
                         self.deleteDirectory(file_path)
                         os.rmdir(file_path)
                 except Exception as e:
-                    self.logMessage(e)
+                    self.logMessage(e, "ERROR")
 
     class __DataBase:
         __connection = False
@@ -297,59 +307,80 @@ class HarvesterDaemon(Daemon):
         harvesterStatus = 'STOPPED'
         self.__harvestErrored += 1
         eMessage = repr(exception).replace("'", "").replace('"', "")
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' "
-                    "where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
-        conn.commit()
-        cur.close()
-        del cur
-        conn.close()
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("UPDATE %s SET `status` ='%s', `message` = '%s' "
+                            "where `harvest_id` = %s" %(myconfig.harvest_table, harvesterStatus, eMessage, str(harvestId)))
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(handleException) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+        return
 
     def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
-        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)))
+        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)), "INFO")
         harvestInfo = {}
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        harvestInfo['crosswalk'] = None
-        harvestInfo['xsl_file'] = None
-        harvestInfo['last_harvest_run_date'] = ''
-        cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
-        for r in cur:
-            harvestInfo['data_source_id'] = r[0]
-            harvestInfo['data_source_slug'] = r[1]
-            harvestInfo['data_source_slug'] = r[2]
-            harvestInfo['title'] = r[3]
-        cur.execute("SELECT `attribute`, `value` FROM data_source_attributes "
-                    "where `attribute` in(%s) and `data_source_id` =%s;"
-                    %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
-        for r in cur:
-            harvestInfo[r[0]] = r[1]
-        harvestInfo['mode'] = mode
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['harvest_id'] = harvestID
-        harvestInfo['batch_number'] = batchNumber
-        harvestInfo['from_date'] = lastRun
-        harvestInfo['until_date'] = nextRun
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                harvestInfo['crosswalk'] = None
+                harvestInfo['xsl_file'] = None
+                harvestInfo['last_harvest_run_date'] = ''
+                cur.execute("SELECT * FROM data_sources where `data_source_id` =%s;" %(str(dataSourceId)))
+                for r in cur:
+                    harvestInfo['data_source_id'] = r[0]
+                    harvestInfo['data_source_slug'] = r[1]
+                    harvestInfo['data_source_slug'] = r[2]
+                    harvestInfo['title'] = r[3]
+                cur.execute("SELECT `attribute`, `value` FROM data_source_attributes "
+                            "where `attribute` in(%s) and `data_source_id` =%s;"
+                            %(myconfig.harvester_specific_datasource_attributes, str(dataSourceId)))
+                for r in cur:
+                    harvestInfo[r[0]] = r[1]
+                harvestInfo['mode'] = mode
+                harvestInfo['response_url'] = myconfig.response_url
+                harvestInfo['data_store_path'] = myconfig.data_store_path
+                harvestInfo['harvest_id'] = harvestID
+                harvestInfo['batch_number'] = batchNumber
+                harvestInfo['from_date'] = lastRun
+                harvestInfo['until_date'] = nextRun
+                cur.close()
+
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(addHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+                if attempts == 3:
+                    return
+
         try:
             harvester_module = __import__(harvestInfo['harvest_method'], globals={}, locals={}, fromlist=[], level=0)
+
             class_ = getattr(harvester_module, harvestInfo['harvest_method'])
             myHarvester = class_(harvestInfo, self.__logger, self.__database)
             self.__harvestRequests[harvestID] = myHarvester
+
         except ImportError as e:
             self.handleException(harvestID, e)
-        cur.close()
+
 
     def manageHarvests(self):
-        self.checkForHarvestRequests()
         self.reportToRegistry()
+        if len(self.__runningHarvests) < self.__maxSimHarvestRun:
+            self.checkForHarvestRequests(self.__maxSimHarvestRun - len(self.__runningHarvests))
         self.printLogs(int(len(self.__runningHarvests)) + int(len(self.__harvestRequests)))
         #clean up completed harvests
         if len(self.__runningHarvests) > 0:
@@ -383,42 +414,53 @@ class HarvesterDaemon(Daemon):
                     if len(self.__runningHarvests) >= self.__maxSimHarvestRun:
                         break
                 except KeyError as e:
-                    self.__logger.logMessage("harvestID %s already scheduled" %str(harvestID))
+                    self.__logger.logMessage("harvestID %s already scheduled" % str(harvestID), "DEBUG")
 
 
-    def checkForHarvestRequests(self):
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM "+ myconfig.harvest_table +" where `status` = 'SCHEDULED' and ('next_run' is null or `next_run` <=timestamp('" + str(datetime.now()) + "'));" )
-        if(cur.rowcount > 0):
-            self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount))
-            for r in cur:
-                self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
-        cur.close()
-        del cur
-        conn.close()
+    def checkForHarvestRequests(self, limit):
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM "+ myconfig.harvest_table +" WHERE `status` = "
+                            "'SCHEDULED' AND ('next_run' is null OR `next_run` <=timestamp('" +
+                            str(datetime.now()) + "')) ORDER BY `next_run` LIMIT "+ str(limit) +";" )
+                if(cur.rowcount > 0):
+                    self.__logger.logMessage("Scheduling Harvest Count:%s" %str(cur.rowcount), "DEBUG")
+                    for r in cur:
+                        self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(checkForHarvestRequests) %s, , limit %s, Retry: %d' % (str(repr(e)), str(limit), attempts), "ERROR")
 
     def fixBrokenHarvestRequests(self):
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
-        try:
-            result = cur.fetchone()
-            if result[0] > 0:
-                self.__logger.logMessage("\nFOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
-        except Exception as e:
-            pass
-        cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
-        conn.commit()
-        cur.close()
-        del cur
-        conn.close()
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT count(*) FROM "+ myconfig.harvest_table +" WHERE `status`='HARVESTING' or `status`='WAITING'")
+                result = cur.fetchone()
+                if result[0] > 0:
+                    self.__logger.logMessage("\nFOUND %s BROKEN HARVESTS\nRESCHEDULING...\n" %(str(result[0])))
+                cur.execute("UPDATE "+ myconfig.harvest_table +" SET `status`='SCHEDULED' where `status`='HARVESTING' or `status`='WAITING'")
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(fixBrokenHarvestRequests) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def describeModules(self):
         self.__logger.logMessage("\nDESCRIBING HARVESTER MODULES:\n")
@@ -441,21 +483,27 @@ class HarvesterDaemon(Daemon):
         file = open(self.__harvesterDefinitionFile, "w+")
         file.write(harvesterDefinitions)
         file.close()
-        #and add to the database
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
-        if(cur.rowcount > 0):
-            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
-        else:
-            cur.execute("INSERT INTO configs (`value`, `key`, `type`) VALUES ('%s','%s', '%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods', 'json'))
-        conn.commit()
-        cur.close()
-        del cur
-        conn.close()
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM configs WHERE `key`='harvester_methods';")
+                if(cur.rowcount > 0):
+                    cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_methods';" %(harvesterDefinitions.replace("'", "\\\'")))
+                else:
+                    cur.execute("INSERT INTO configs (`value`, `key`, `type`) VALUES ('%s','%s', '%s');" %(harvesterDefinitions.replace("'", "\\\'"), 'harvester_methods', 'json'))
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(saveHarvestDefinition) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
+
 
     def reportToRegistry(self):
         statusDict = {'last_report_timestamp' : time.time(),
@@ -467,20 +515,26 @@ class HarvesterDaemon(Daemon):
                     'harvest_stopped' : str(self.__harvestStopped),
                     'harvest_errored' : str(self.__harvestErrored),
                     }
-        try:
-            conn = self.__database.getConnection()
-        except Exception as e:
-            return
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM configs WHERE `key`='harvester_status';")
-        if(cur.rowcount > 0):
-            cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_status';" %(json.dumps(statusDict).replace("'", "\\\'")))
-        else:
-            cur.execute("INSERT INTO configs (`value`, `type`, `key`) VALUES ('%s','%s','%s');" %(json.dumps(statusDict).replace("'", "\\\'"), 'json', 'harvester_status'))
-        conn.commit()
-        cur.close()
-        del cur
-        conn.close()
+        attempts = 0
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM configs WHERE `key`='harvester_status';")
+                if(cur.rowcount > 0):
+                    cur.execute("UPDATE configs set `value`='%s' where `key`='harvester_status';" %(json.dumps(statusDict).replace("'", "\\\'")))
+                else:
+                    cur.execute("INSERT INTO configs (`value`, `type`, `key`) VALUES ('%s','%s','%s');" %(json.dumps(statusDict).replace("'", "\\\'"), 'json', 'harvester_status'))
+                conn.commit()
+                cur.close()
+                del cur
+                conn.close()
+                self.__logger.logMessage('Reporting to Registry', "DEBUG")
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage('(reportToRegistry) %s, Retry: %d' %(str(repr(e)), attempts), "ERROR")
 
 
     def setupEnv(self):
@@ -501,7 +555,7 @@ class HarvesterDaemon(Daemon):
         self.setupEnv()
         self.describeModules()
         self.fixBrokenHarvestRequests()
-        self.__logger.logMessage("\n\nSTARTING HARVESTER...")
+        self.__logger.logMessage("\n\nSTARTING HARVESTER...", "INFO")
         atexit.register(self.shutDown)
         try:
             while True:
@@ -518,23 +572,23 @@ class HarvesterDaemon(Daemon):
     def printLogs(self, hCounter):
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
-            self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))))
-            self.__logger.logMessage('R...')
+            self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))), "DEBUG")
+            self.__logger.logMessage('RUNNING', "DEBUG")
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
-                self.__logger.logMessage(harvestReq.getInfo())
-            self.__logger.logMessage('W...')
+                self.__logger.logMessage(harvestReq.getInfo(), "DEBUG")
+            self.__logger.logMessage('WAITING', "DEBUG")
             for harvestID in list(self.__harvestRequests):
                 harvestReq = self.__harvestRequests[harvestID]
-                self.__logger.logMessage(harvestReq.getInfo())
-            self.__logger.logMessage('______________________________________________________________________________________________')
+                self.__logger.logMessage(harvestReq.getInfo(), "DEBUG")
+            self.__logger.logMessage('______________________________________________________________________________________________', "DEBUG")
 
 
 
     def shutDown(self):
         #self.__logger.logMessage("SHUTTING DOWN...")
         loggedUserMsg = os.popen('who').read()
-        self.__logger.logMessage("SHUTTING DOWN...\nLogged In Users:\n%s" %(loggedUserMsg))
+        self.__logger.logMessage("SHUTTING DOWN...\nLogged In Users:\n%s" %(loggedUserMsg), "DEBUG")
         try:
             if len(self.__runningHarvests) > 0:
                 for harvestID in list(self.__runningHarvests):
@@ -543,21 +597,21 @@ class HarvesterDaemon(Daemon):
                     del harvestReq
                     del self.__runningHarvests[harvestID]
             if os.path.exists(self.pidfile):
-                self.__logger.logMessage("\n\nDELETING PIDFILE %s..." %self.pidfile)
+                self.__logger.logMessage("\n\nDELETING PIDFILE %s..." %self.pidfile, "DEBUG")
                 os.remove(self.pidfile)
         except IOError as e:
             message = str(e) + "\nCan not remove pid file {}".format(self.pidfile)
             self.__logger.logMessage(message)
         except Exception as e:
-            self.__logger.logMessage("error %r" %(e))
+            self.__logger.logMessage("error %r" %(e), "ERROR")
 
 
 
 
 
 if __name__ == '__main__':
-    sys.path.append(myconfig.run_dir + '/harvest_handlers')
-    hd = HarvesterDaemon(myconfig.run_dir + '/daemon.pid')
+    sys.path.append(myconfig.run_dir + 'harvest_handlers')
+    hd = HarvesterDaemon(myconfig.run_dir + 'daemon.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             print ("Starting Harvester as Daemon")

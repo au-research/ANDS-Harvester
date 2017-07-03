@@ -51,21 +51,28 @@ class CSWHarvester(Harvester):
             return
         query = self.getParamString()
         getRequest = Request(self.harvestInfo['uri'] + query)
-        try:
-            self.firstCall = False
-            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
-            self.data = getRequest.getData()
-            self.checkNextRecord()
-            if self.recordCount >= myconfig.test_limit or self.harvestInfo['mode'] == 'TEST':
-                self.completed = True
-            self.retryCount = 0
-        except Exception as e:
-            self.errored = True
-            self.retryCount += 1
-            time.sleep(1)
-            if self.retryCount > 4:
-                self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query))
+        self.retryCount = 0
+        while self.retryCount < 5:
+            try:
+                self.firstCall = False
+                self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
+                self.logger.logMessage(
+                    "CSW (getHarvestData), getting data url:%s" %(self.harvestInfo['uri'] + query),
+                    "DEBUG")
+                self.data = getRequest.getData()
+                self.checkNextRecord()
+                if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                    self.completed = True
+                self.retryCount = 0
+                break
+            except Exception as e:
+                self.retryCount += 1
+                if self.retryCount > 4:
+                    self.errored = True
+                    self.handleExceptions("ERROR RECEIVING CSW DATA, retry:%s, error: %s, url:%s" %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query))
+                else:
+                    self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, error: %s, url:%s" %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query), "ERROR")
+                    time.sleep(1)
         del getRequest
 
     def getParamString(self):
@@ -98,19 +105,31 @@ class CSWHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
+            self.logger.logMessage(
+                "CSW (checkNextRecord parse response) %s" % str(self.data),
+                "DEBUG")
             try:
 
-                nException = dom.getElementsByTagName('Exception')
+                nException = dom.getElementsByTagNameNS('http://www.opengis.net/ows', 'Exception')
+                self.logger.logMessage(
+                    "CSW (checkNextRecord parse response) %s" % str(repr(nException)),
+                    "DEBUG")
                 if len(nException) > 0:
                     eCode = nException[0].attributes["exceptionCode"].value
                     #eLocator = nException.attributes["locator"].value
-                    eTexts = nException[0].getElementsByTagName('ExceptionText')
+                    eTexts = nException[0].getElementsByTagNameNS('http://www.opengis.net/ows','ExceptionText')
                     eText = ''
                     for i, elem in enumerate(eTexts):
                         eText = eText + elem.firstChild.nodeValue
                     self.handleExceptions("ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText))
+                    self.logger.logMessage(
+                        "ERROR RECEIVED FROM SERVER: (code: %s, value:%s)"%(eCode, eText),
+                        "ERROR")
                     return
             except Exception as e:
+                self.logger.logMessage(
+                    "CSW (checkNextRecord parse response) %s" % str(repr(e)),
+                    "ERROR")
                 pass
             nSearchResult = dom.getElementsByTagName('csw:SearchResults')[0]
             if self.listSize == 'unknown':
@@ -122,21 +141,27 @@ class CSWHarvester(Harvester):
             self.recordCount += self.numberOfRecordsReturned
             self.pageCount += 1
         except Exception as e:
-            print(repr(e))
+            self.logger.logMessage(
+                "CSW (checkNextRecord) %s" % str(repr(e)),
+                "ERROR")
             self.startPosition = 0
 
 
     def storeHarvestData(self):
         if self.stopped or not(self.data):
             return
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        self.outputDir = directory
-        dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension , 'wb', 0o777)
-        self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
-        dataFile.write(self.data)
-        dataFile.close()
+        try:
+            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            self.outputDir = directory
+            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension , 'wb', 0o777)
+            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile.write(self.data)
+            dataFile.close()
+        except Exception as e:
+            self.handleExceptions(e)
+            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
     def runCrossWalk(self):
@@ -149,9 +174,9 @@ class CSWHarvester(Harvester):
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
             msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
             self.handleExceptions(msg)
         except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e))
+            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
             self.handleExceptions(e)
