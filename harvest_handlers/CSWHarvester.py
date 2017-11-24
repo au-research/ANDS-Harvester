@@ -23,17 +23,6 @@ class CSWHarvester(Harvester):
     startPosition = 0
     urlParams = {};
 
-    defaultParams = {'request':'GetRecords',
-        'service':'CSW',
-        'version':'2.0.2',
-        'namespace':'xmlns(csw=http://www.opengis.net/cat/csw)',
-        'resultType':'results',
-        'outputFormat':'application/xml',
-        'typeNames':'csw:Record',
-        'elementSetName':'full',
-        'constraintLanguage':'CQL_TEXT',
-        'constraint_language_version':'1.1.0v'
-    }
 
     def harvest(self):
         self.urlParams = {}
@@ -85,16 +74,6 @@ class CSWHarvester(Harvester):
                 self.logger.logMessage("CSW user_defined_params are not set, revert to defaults")
             self.urlParams['outputSchema'] = self.harvestInfo['provider_type']
             self.urlParams['maxRecords'] = str(self.maxRecords)
-            self.urlParams['request'] = self.urlParams.get('request', self.defaultParams['request'])
-            self.urlParams['service'] = self.urlParams.get('service', self.defaultParams['service'])
-            self.urlParams['version'] = self.urlParams.get('version', self.defaultParams['version'])
-            self.urlParams['namespace'] = self.urlParams.get('namespace', self.defaultParams['namespace'])
-            self.urlParams['resultType'] = self.urlParams.get('resultType', self.defaultParams['resultType'])
-            self.urlParams['outputFormat'] = self.urlParams.get('outputFormat', self.defaultParams['outputFormat'])
-            self.urlParams['typeNames'] = self.urlParams.get('typeNames', self.defaultParams['typeNames'])
-            self.urlParams['elementSetName'] = self.urlParams.get('elementSetName', self.defaultParams['elementSetName'])
-            self.urlParams['constraintLanguage'] = self.urlParams.get('constraintLanguage', self.defaultParams['constraintLanguage'])
-            self.urlParams['constraint_language_version'] = self.urlParams.get('constraint_language_version', self.defaultParams['constraint_language_version'])
         else:
             self.urlParams['startPosition'] = str(self.startPosition)
         query = urllib.parse.urlencode(self.urlParams)
