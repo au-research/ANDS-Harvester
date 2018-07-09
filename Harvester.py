@@ -4,6 +4,7 @@ except:
     import urllib2
 import redis
 import os
+import ssl
 import json
 from xml.dom.minidom import parseString
 from datetime import datetime, timezone
@@ -18,6 +19,9 @@ class Request:
     url = None
 
     def __init__(self, url):
+        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+                getattr(ssl, '_create_unverified_context', None)):
+            ssl._create_default_https_context = ssl._create_unverified_context
         self.url = url
 
     def getData(self):
@@ -26,6 +30,8 @@ class Request:
         while retryCount < 5:
             try:
                 req = urllib2.Request(self.url)
+                req.add_header('User-Agent',
+                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36')
                 fs = urllib2.urlopen(req, timeout=60)
                 self.data = fs.read()
                 return self.data

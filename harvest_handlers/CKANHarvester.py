@@ -49,6 +49,7 @@ class CKANHarvester(Harvester):
         self.__xml.appendChild(ePackages)
         self.listSize = len(self.__packageList)
         self.recordCount = 0
+        storeeditemId = 0
         try:
             for itemId in self.__packageList:
                 self.recordCount += 1
@@ -56,6 +57,7 @@ class CKANHarvester(Harvester):
                     break
                 data_string = urllib2.quote(json.dumps({'id': itemId}))
                 self.setStatus("HARVESTING", 'getting ckan record: %s' %itemId)
+                storeeditemId = itemId
                 try:
                     package = json.loads(getRequest.postData(data_string.encode('UTF-8')).decode("UTF-8"))
                     if isinstance(package, dict):
@@ -70,10 +72,10 @@ class CKANHarvester(Harvester):
                     self.errored = True
                     self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s, " %itemId
                     self.handleExceptions(e, terminate=False)
-                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId), "ERROR")
+                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(self.recordCount, itemId), "ERROR")
         except Exception as e:
             self.errored = True
-            self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount,itemId), "ERROR")
+            self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount, storeeditemId), "ERROR")
             self.handleExceptions(e)
         self.data = self.__xml.toprettyxml(encoding='utf-8', indent=' ')
         #self.setStatus("GETTING-PACKAGE", "url:" + self.harvestInfo['uri'] +  self.__listQuery)

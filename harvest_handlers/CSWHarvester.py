@@ -21,8 +21,7 @@ class CSWHarvester(Harvester):
     numberOfRecordsReturned = 0
     nextRecord = 0
     startPosition = 0
-    urlParams = {};
-
+    urlParams = {}
 
     def harvest(self):
         self.urlParams = {}
