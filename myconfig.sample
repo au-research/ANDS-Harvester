@@ -13,6 +13,7 @@ admin_email_addr = "@anu.edu.au"
 response_url='http://localhost/'
 data_store_path= '/var/harvested_contents'
 log_dir= run_dir + '/log'
+redis_poster_host = 'localhost'
 log_level = "DEBUG"
 java_home='/usr/bin/java'
 saxon_jar=''
