@@ -30,8 +30,7 @@ class Request:
         while retryCount < 5:
             try:
                 req = urllib2.Request(self.url)
-                req.add_header('User-Agent',
-                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36')
+                req.add_header('User-Agent', 'ARDC Harvester')
                 fs = urllib2.urlopen(req, timeout=60)
                 self.data = fs.read()
                 return self.data

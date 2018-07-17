@@ -1,10 +1,12 @@
+from __future__ import absolute_import
+
 import unittest
-import pprint
 import myconfig
-from harvester_daemon import *
 import os
 import pymysql
 import sys
+from harvester_daemon import HarvesterDaemon
+from harvester_daemon import Logger
 
 class test_harvester_daemon(unittest.TestCase):
 
