@@ -369,7 +369,7 @@ class Harvester():
             output_count = 1
             output_size = self.get_size(self.outputFilePath)
         elif self.outputDir is not None:
-            output_count = len([name for name in os.listdir(self.outputDir) if os.path.isfile(name)])
+            output_count = len(self.get_files(self.outputDir, 'xml'))
             output_size = self.get_size(self.outputDir)
 
         summary = {
@@ -377,7 +377,6 @@ class Harvester():
             'batch': self.harvestInfo['batch_number'],
             'mode': self.harvestInfo['mode'],
             'url': self.harvestInfo['uri'],
-            # 'parameters': '',
             'error': {
                 'log': str.strip(self.errorLog),
                 'errored': self.errored
@@ -398,6 +397,19 @@ class Harvester():
         self.write_to_field(summary, 'summary')
 
     @staticmethod
+    def get_files(dir, extension="*"):
+        path, dirs, files = next(os.walk(dir))
+        result = []
+
+        if extension is "*":
+            return files
+
+        for file in files:
+            if file.endswith(extension):
+                result.append(file)
+        return result
+
+    @staticmethod
     def get_size(target):
         """
         get size of the target in MB
@@ -406,14 +418,14 @@ class Harvester():
         :return: integer
         """
         if os.path.isfile(target):
-            return os.path.getsize(target) / 1024*1024.0
+            return os.path.getsize(target) / (1024*1024.0)
         elif os.path.isdir(target):
             folder_size = 0
             for (path, dirs, files) in os.walk(target):
                 for file in files:
                     filename = os.path.join(path, file)
                     folder_size += os.path.getsize(filename)
-            return folder_size / 1024*1024.0
+            return folder_size / (1024*1024.0)
         else:
             return 0
 
