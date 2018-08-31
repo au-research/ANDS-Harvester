@@ -397,8 +397,18 @@ class Harvester():
         self.write_to_field(summary, 'summary')
 
     @staticmethod
-    def get_files(dir, extension="*"):
-        path, dirs, files = next(os.walk(dir))
+    def get_files(target, extension="*"):
+        """
+        Return a list of files from a directory
+        To use:
+            get_files('/var/harvested_contents/22/', 'xml')
+            get_files('/usr/lib')
+
+        :param target:
+        :param extension: (optional)
+        :return:
+        """
+        path, dirs, files = next(os.walk(target))
         result = []
 
         if extension is "*":
@@ -430,7 +440,8 @@ class Harvester():
             return 0
 
     def write_to_field(self, summary, field):
-        """ Writes into the harvests table
+        """
+        Writes into the harvests table
         Retries 3 times
 
         To use:
