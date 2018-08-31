@@ -21,3 +21,4 @@ daemon_log.txt
 coverage.xml
 junit.xml
 htmlcov
+venv

@@ -229,6 +229,7 @@ class Harvester():
 
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
+        self.write_summary()
         if self.stopped:
             return
         upTime = int(time.time()) - self.startUpTime
@@ -350,7 +351,79 @@ class Harvester():
             self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
                                    %(str(self.harvestInfo['harvest_id']),self.errorLog), "ERROR")
         self.updateHarvestRequest()
+        self.write_summary()
         self.stopped = True
+
+    def write_summary(self):
+        """Generates and writes the harvest summary into the `summary` db field."""
+        start = datetime.fromtimestamp(self.startUpTime)
+        end = datetime.now()
+        dtformat = '%Y-%m-%d %H:%M:%S'
+        utcformat = '%Y-%m-%dT%H:%M:%SZ'
+
+        if self.outputDir is not None:
+            output_count = len([name for name in os.listdir(self.outputDir) if os.path.isfile(name)])
+            output_size = os.path.getsize(self.outputDir)
+        else:
+            output_count = 1
+            output_size = os.path.getsize(self.outputFilePath)
+
+        summary = {
+            'id': self.harvestInfo['harvest_id'],
+            'batch': self.harvestInfo['batch_number'],
+            'mode': self.harvestInfo['mode'],
+            'url': self.harvestInfo['uri'],
+            # 'parameters': '',
+            'error': {
+                'log': str.strip(self.errorLog),
+                'errored': self.errored
+            },
+            'completed': self.completed,
+            'start_utc': datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime(utcformat),
+            'end_utc': datetime.now(timezone.utc).strftime(utcformat),
+            'start': start.strftime(dtformat),
+            'end': end.strftime(dtformat),
+            'duration': (end - start).seconds,
+            'output': {
+                'file': self.outputFilePath,
+                'dir': self.outputDir,
+                'count': output_count,
+                'size': output_size
+            }
+        }
+        self.write_to_field(summary, 'summary')
+
+    def write_to_field(self, summary, field):
+        """ Writes into the harvests table
+        Retries 3 times
+
+        To use:
+            self.write_to_field(summary, field)
+
+        :param summary: the content that will be json.dumps
+        :param field: the field where it will be written to
+        """
+        attempts = 0
+        while attempts < 3:
+            try:
+                self.logger.logMessage('(write_to_field) %s' % field)
+                conn = self.database.getConnection()
+                cur = conn.cursor()
+                cur.execute("UPDATE %s SET `%s` ='%s' where `harvest_id` = %s"
+                            % (
+                                myconfig.harvest_table,
+                                field,
+                                json.dumps(summary),
+                                str(self.harvestInfo['harvest_id']))
+                            )
+                conn.commit()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.logger.logMessage('(write_to_field) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def isCompleted(self):
         return self.completed
