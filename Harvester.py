@@ -65,9 +65,8 @@ class RedisPoster:
 
     poster = False
 
-
     def __init__(self):
-        if myconfig.redis_poster_host != "":
+        if hasattr(myconfig, 'redis_poster_host') and myconfig.redis_poster_host != "":
             self.poster = redis.StrictRedis(host=myconfig.redis_poster_host, port=6379, db=0)
 
     def postMesage(self, chanel, message):
@@ -355,18 +354,23 @@ class Harvester():
         self.stopped = True
 
     def write_summary(self):
-        """Generates and writes the harvest summary into the `summary` db field."""
+        """ Generates and writes the harvest summary into the `summary` db field.
+        All sizes are in MB
+        All durations are in seconds
+        """
         start = datetime.fromtimestamp(self.startUpTime)
         end = datetime.now()
         dtformat = '%Y-%m-%d %H:%M:%S'
         utcformat = '%Y-%m-%dT%H:%M:%SZ'
+        output_count = 0
+        output_size = 0
 
-        if self.outputDir is not None:
-            output_count = len([name for name in os.listdir(self.outputDir) if os.path.isfile(name)])
-            output_size = os.path.getsize(self.outputDir)
-        else:
+        if self.outputFilePath is not None:
             output_count = 1
-            output_size = os.path.getsize(self.outputFilePath)
+            output_size = self.get_size(self.outputFilePath)
+        elif self.outputDir is not None:
+            output_count = len([name for name in os.listdir(self.outputDir) if os.path.isfile(name)])
+            output_size = self.get_size(self.outputDir)
 
         summary = {
             'id': self.harvestInfo['harvest_id'],
@@ -392,6 +396,26 @@ class Harvester():
             }
         }
         self.write_to_field(summary, 'summary')
+
+    @staticmethod
+    def get_size(target):
+        """
+        get size of the target in MB
+
+        :param target:
+        :return: integer
+        """
+        if os.path.isfile(target):
+            return os.path.getsize(target) / 1024*1024.0
+        elif os.path.isdir(target):
+            folder_size = 0
+            for (path, dirs, files) in os.walk(target):
+                for file in files:
+                    filename = os.path.join(path, file)
+                    folder_size += os.path.getsize(filename)
+            return folder_size / 1024*1024.0
+        else:
+            return 0
 
     def write_to_field(self, summary, field):
         """ Writes into the harvests table
