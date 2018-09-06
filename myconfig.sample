@@ -22,4 +22,6 @@ db_user=''
 db_passwd=''
 db='dbs_registry_test'
 harvest_table = 'harvests
-harvester_specific_datasource_attributes = "'xsl_file','title','harvest_method','uri','provider_type','advanced_harvest_mode','oai_set', 'last_harvest_run_date', 'harvest_params','user_defined_params'"
+harvester_specific_datasource_attributes = "'xsl_file','title','harvest_method','uri','provider_type'," \
+                                           "'advanced_harvest_mode','oai_set', 'last_harvest_run_date', " \
+                                           "'harvest_params','user_defined_params', 'harvest_frequency'"

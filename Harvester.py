@@ -372,10 +372,18 @@ class Harvester():
             output_count = len(self.get_files(self.outputDir, 'xml'))
             output_size = self.get_size(self.outputDir)
 
+        harvest_frequency = 'once'
+        if 'harvest_frequency' in self.harvestInfo and self.harvestInfo['harvest_frequency'] != '':
+            harvest_frequency = self.harvestInfo
+
         summary = {
             'id': self.harvestInfo['harvest_id'],
             'batch': self.harvestInfo['batch_number'],
-            'mode': self.harvestInfo['mode'],
+            # 'mode': self.harvestInfo['mode'],
+            'method': self.harvestInfo['harvest_method'],
+            'advanced_harvest_mode': self.harvestInfo['advanced_harvest_mode'],
+            'crosswalk': 'xsl_file' in self.harvestInfo and self.harvestInfo['xsl_file'] != "",
+            'frequency': harvest_frequency,
             'url': self.harvestInfo['uri'],
             'error': {
                 'log': str.strip(self.errorLog),
