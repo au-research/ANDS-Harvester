@@ -15,7 +15,7 @@ import string
 import json
 import threading
 from harvest_handlers import *
-
+import web_server
 
 class Logger:
     __fileName = False
@@ -112,10 +112,10 @@ class Daemon(object):
         """
         # Check pidfile to see if the daemon already runs.
         try:
-            pf = open(self.pidfile,'r')
+            pf = open(self.pidfile, 'r')
             pid = int(pf.read().strip())
             pf.close()
-        except IOError:
+        except IOError as e:
             pid = None
 
         if pid:
@@ -177,7 +177,7 @@ class Daemon(object):
         try:
             os.kill(pid, SIGINT)
             self.__logger.logMessage("\nKILLING %s..." %str(pid))
-            time.sleep(3)
+            time.sleep(1)
         except OSError as e:
             print(str(e))
             sys.exit(1)
@@ -378,6 +378,7 @@ class HarvesterDaemon(Daemon):
 
 
     def manageHarvests(self):
+
         self.reportToRegistry()
         if len(self.__runningHarvests) < self.__maxSimHarvestRun:
             self.checkForHarvestRequests(self.__maxSimHarvestRun - len(self.__runningHarvests))
@@ -504,6 +505,30 @@ class HarvesterDaemon(Daemon):
                 self.__logger.logMessage(
                     '(saveHarvestDefinition) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
+    def info(self):
+        """
+        Returns the current information for the harvester daemon
+        Used for reporting current status to a web interface
+
+        :return: dict
+        """
+        start = datetime.fromtimestamp(self.__startUpTime)
+        now = datetime.now()
+        dtformat = '%Y-%m-%d %H:%M:%S'
+
+        return {
+            'running': True,
+            'running_since': start.strftime(dtformat),
+            'uptime': (now - start).seconds,
+            'harvests': {
+                'running': len(self.__runningHarvests),
+                'queued': len(self.__harvestRequests),
+                'started': self.__harvestStarted,
+                'completed': self.__harvestCompleted,
+                'stopped': self.__harvestStopped,
+                'errored': self.__harvestErrored
+            }
+        }
 
     def reportToRegistry(self):
         statusDict = {'last_report_timestamp' : time.time(),
@@ -540,11 +565,10 @@ class HarvesterDaemon(Daemon):
     def setupEnv(self):
         if not os.path.exists(myconfig.data_store_path):
             os.makedirs(myconfig.data_store_path)
-            os.chmod(myconfig.data_store_path, 0o777)
+            os.chmod(myconfig.data_store_path, 0o775)
         if not os.path.exists(myconfig.log_dir):
             os.makedirs(myconfig.log_dir)
-            os.chmod(myconfig.log_dir, 0o777)
-
+            os.chmod(myconfig.log_dir, 0o775)
 
     def run(self):
         self.__startUpTime = time.time()
@@ -557,6 +581,26 @@ class HarvesterDaemon(Daemon):
         self.fixBrokenHarvestRequests()
         self.__logger.logMessage("\n\nSTARTING HARVESTER...", "INFO")
         atexit.register(self.shutDown)
+
+        # Starting the web interface as a different thread
+        try:
+            web_port = getattr(myconfig, 'web_port', 7020)
+            web_host = getattr(myconfig, 'web_host', '0.0.0.0')
+            http = web_server.new(daemon=self)
+            threading.Thread(
+                target=http.run,
+                kwargs={
+                    'host': web_host,
+                    'port': web_port,
+                    'debug': False
+                },
+                daemon=True
+            ).start()
+            self.__logger.logMessage("\n\nWeb Thread started at port %s \n\n" % web_port)
+        except Exception as e:
+            self.__logger.logMessage("error %r" % e)
+            pass
+
         try:
             while True:
                 self.manageHarvests()
@@ -606,31 +650,29 @@ class HarvesterDaemon(Daemon):
             self.__logger.logMessage("error %r" %(e), "ERROR")
 
 
-
-
-
 if __name__ == '__main__':
     sys.path.append(myconfig.run_dir + 'harvest_handlers')
     hd = HarvesterDaemon(myconfig.run_dir + 'daemon.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
-            print ("Starting Harvester as Daemon")
+            print("Starting Harvester as Daemon")
             hd.start()
         elif 'run' == sys.argv[1]:
-            print ("Starting Harvester in the foreground")
+            print("Starting Harvester in the foreground")
             hd.run()
         elif 'stop' == sys.argv[1]:
+            print("Stopping the Harvester")
             hd.stop()
         elif 'restart' == sys.argv[1]:
             hd.restart()
         elif 'status' == sys.argv[1]:
             hd.status()
         else:
-            print ("Unknown command")
+            print("Unknown command")
             sys.exit(2)
         sys.exit(0)
     else:
-        print ("Usage: {} run|start|stop|restart".format(sys.argv[0]))
+        print("Usage: {} run|start|stop|restart".format(sys.argv[0]))
         sys.exit(2)
 
 
