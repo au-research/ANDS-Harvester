@@ -378,8 +378,7 @@ class HarvesterDaemon(Daemon):
 
 
     def manageHarvests(self):
-
-        self.reportToRegistry()
+        # self.reportToRegistry()
         if len(self.__runningHarvests) < self.__maxSimHarvestRun:
             self.checkForHarvestRequests(self.__maxSimHarvestRun - len(self.__runningHarvests))
         self.printLogs(int(len(self.__runningHarvests)) + int(len(self.__harvestRequests)))
@@ -531,6 +530,12 @@ class HarvesterDaemon(Daemon):
         }
 
     def reportToRegistry(self):
+        """
+        Report it's status to the registry in the form of writing to the database
+        R29 deprecates this functionality in favor of local http server
+
+        :return:
+        """
         statusDict = {'last_report_timestamp' : time.time(),
                     'start_up_time' : self.__startUpTime,
                     'harvests_running' : str(len(self.__runningHarvests)),
