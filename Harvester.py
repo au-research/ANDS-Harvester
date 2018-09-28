@@ -4,6 +4,7 @@ except:
     import urllib2
 import redis
 import os
+import ssl
 import json
 from xml.dom.minidom import parseString
 from datetime import datetime, timezone
@@ -18,6 +19,9 @@ class Request:
     url = None
 
     def __init__(self, url):
+        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+                getattr(ssl, '_create_unverified_context', None)):
+            ssl._create_default_https_context = ssl._create_unverified_context
         self.url = url
 
     def getData(self):
@@ -26,6 +30,7 @@ class Request:
         while retryCount < 5:
             try:
                 req = urllib2.Request(self.url)
+                req.add_header('User-Agent', 'ARDC Harvester')
                 fs = urllib2.urlopen(req, timeout=60)
                 self.data = fs.read()
                 return self.data
@@ -61,10 +66,12 @@ class RedisPoster:
     poster = False
 
     def __init__(self):
-        self.poster = redis.StrictRedis(host='localhost', port=6379, db=0)
+        if hasattr(myconfig, 'redis_poster_host') and myconfig.redis_poster_host != "":
+            self.poster = redis.StrictRedis(host=myconfig.redis_poster_host, port=6379, db=0)
 
     def postMesage(self, chanel, message):
-        self.poster.publish(chanel, message)
+        if self.poster:
+            self.poster.publish(chanel, message)
 
 
 class XSLT2Transformer:
@@ -221,6 +228,7 @@ class Harvester():
 
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
+        self.write_summary()
         if self.stopped:
             return
         upTime = int(time.time()) - self.startUpTime
@@ -342,7 +350,135 @@ class Harvester():
             self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
                                    %(str(self.harvestInfo['harvest_id']),self.errorLog), "ERROR")
         self.updateHarvestRequest()
+        self.write_summary()
         self.stopped = True
+
+    def write_summary(self):
+        """ Generates and writes the harvest summary into the `summary` db field.
+        All sizes are in MB
+        All durations are in seconds
+        """
+        start = datetime.fromtimestamp(self.startUpTime)
+        end = datetime.now()
+        dtformat = '%Y-%m-%d %H:%M:%S'
+        utcformat = '%Y-%m-%dT%H:%M:%SZ'
+        output_count = 0
+        output_size = 0
+
+        if self.outputFilePath is not None:
+            output_count = 1
+            output_size = self.get_size(self.outputFilePath)
+        elif self.outputDir is not None:
+            output_count = len(self.get_files(self.outputDir, 'xml'))
+            output_size = self.get_size(self.outputDir)
+
+        harvest_frequency = 'once'
+        if 'harvest_frequency' in self.harvestInfo and self.harvestInfo['harvest_frequency'] != '':
+            harvest_frequency = self.harvestInfo
+
+        summary = {
+            'id': self.harvestInfo['harvest_id'],
+            'batch': self.harvestInfo['batch_number'],
+            # 'mode': self.harvestInfo['mode'],
+            'method': self.harvestInfo['harvest_method'],
+            'advanced_harvest_mode': self.harvestInfo['advanced_harvest_mode'],
+            'crosswalk': 'xsl_file' in self.harvestInfo and self.harvestInfo['xsl_file'] != "",
+            'frequency': harvest_frequency,
+            'url': self.harvestInfo['uri'],
+            'error': {
+                'log': str.strip(self.errorLog),
+                'errored': self.errored
+            },
+            'completed': self.completed,
+            'start_utc': datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime(utcformat),
+            'end_utc': datetime.now(timezone.utc).strftime(utcformat),
+            'start': start.strftime(dtformat),
+            'end': end.strftime(dtformat),
+            'duration': (end - start).seconds,
+            'output': {
+                'file': self.outputFilePath,
+                'dir': self.outputDir,
+                'count': output_count,
+                'size': output_size
+            }
+        }
+        self.write_to_field(summary, 'summary')
+
+    @staticmethod
+    def get_files(target, extension="*"):
+        """
+        Return a list of files from a directory
+        To use:
+            get_files('/var/harvested_contents/22/', 'xml')
+            get_files('/usr/lib')
+
+        :param target:
+        :param extension: (optional)
+        :return:
+        """
+        path, dirs, files = next(os.walk(target))
+        result = []
+
+        if extension is "*":
+            return files
+
+        for file in files:
+            if file.endswith(extension):
+                result.append(file)
+        return result
+
+    @staticmethod
+    def get_size(target):
+        """
+        get size of the target in MB
+
+        :param target:
+        :return: integer
+        """
+        if os.path.isfile(target):
+            return os.path.getsize(target) / (1024*1024.0)
+        elif os.path.isdir(target):
+            folder_size = 0
+            for (path, dirs, files) in os.walk(target):
+                for file in files:
+                    filename = os.path.join(path, file)
+                    folder_size += os.path.getsize(filename)
+            return folder_size / (1024*1024.0)
+        else:
+            return 0
+
+    def write_to_field(self, summary, field):
+        """
+        Writes into the harvests table
+        Retries 3 times
+
+        To use:
+            self.write_to_field(summary, field)
+
+        :param summary: the content that will be json.dumps
+        :param field: the field where it will be written to
+        """
+        attempts = 0
+        while attempts < 3:
+            try:
+                self.logger.logMessage('(write_to_field) %s' % field)
+                conn = self.database.getConnection()
+                cur = conn.cursor()
+                cur.execute("UPDATE %s SET `%s` ='%s' where `harvest_id` = %s"
+                            % (
+                                myconfig.harvest_table,
+                                field,
+                                json.dumps(summary),
+                                str(self.harvestInfo['harvest_id']))
+                            )
+                conn.commit()
+                del cur
+                conn.close()
+                break
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.logger.logMessage('(write_to_field) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def isCompleted(self):
         return self.completed
