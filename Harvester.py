@@ -374,7 +374,7 @@ class Harvester():
 
         harvest_frequency = 'once'
         if 'harvest_frequency' in self.harvestInfo and self.harvestInfo['harvest_frequency'] != '':
-            harvest_frequency = self.harvestInfo
+            harvest_frequency = self.harvestInfo['harvest_frequency']
 
         summary = {
             'id': self.harvestInfo['harvest_id'],
