@@ -1,0 +1,13 @@
+[Unit]
+Description=Harvester Service
+After=multi-user.target syslog.target network.target
+
+[Service]
+Type=simple
+User=services-user
+WorkingDirectory=/opt/apps/harvester/current/
+ExecStart=/opt/apps/harvester/current/venv/bin/python3.6 harvester_daemon.py run
+StandardInput=tty-force
+
+[Install]
+WantedBy=multi-user.target
