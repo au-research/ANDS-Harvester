@@ -6,7 +6,7 @@ import os
 import pymysql
 import sys
 from harvester_daemon import HarvesterDaemon
-from harvester_daemon import Logger
+from utils.Logger import Logger
 
 class test_harvester_daemon(unittest.TestCase):
 
