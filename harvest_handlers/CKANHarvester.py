@@ -1,5 +1,10 @@
 from Harvester import *
-
+try:
+    import urllib.request as urllib2
+except:
+    import urllib2
+import numbers
+from xml.dom.minidom import Document
 class CKANHarvester(Harvester):
     """
        {

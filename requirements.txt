@@ -11,5 +11,6 @@ pycparser==2.18
 PyMySQL==0.9.3
 redis==2.10.6
 six==1.11.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 nose2==0.9.0
+grequests

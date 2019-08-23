@@ -1,5 +1,5 @@
 from Harvester import *
-
+from xml.dom.minidom import parseString
 class PMHHarvester(Harvester):
     """
         {

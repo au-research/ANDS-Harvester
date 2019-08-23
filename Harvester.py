@@ -1,96 +1,14 @@
-try:
-    import urllib.request as urllib2
-except:
-    import urllib2
-import redis
 import os
-import ssl
 import json
-from xml.dom.minidom import parseString
 from datetime import datetime, timezone
 import time
-from xml.dom.minidom import Document
-import numbers
+from utils.RedisPoster import RedisPoster
+from utils.Logger import Logger as MyLogger
+from utils.Database import DataBase as MyDataBase
+from utils.Request import Request
+from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
-
-class Request:
-    data = None
-    url = None
-
-    def __init__(self, url):
-        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
-                getattr(ssl, '_create_unverified_context', None)):
-            ssl._create_default_https_context = ssl._create_unverified_context
-        self.url = url
-
-    def getData(self):
-        self.data = None
-        retryCount = 0
-        while retryCount < 5:
-            try:
-                req = urllib2.Request(self.url)
-                req.add_header('User-Agent', 'ARDC Harvester')
-                fs = urllib2.urlopen(req, timeout=60)
-                self.data = fs.read()
-                return self.data
-            except Exception as e:
-                retryCount += 1
-                if retryCount > 4:
-                    raise RuntimeError(str(e) + " Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
-
-    def getURL(self):
-        return self.url
-
-    def postData(self, data):
-        try:
-            req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req, data, timeout=30)
-            self.data = f.read()
-            return self.data
-        except Exception as e:
-            raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
-
-    def postCompleted(self):
-        try:
-            req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req, timeout=30)
-            self.data = f.read()
-            return self.data
-        except Exception as e:
-            pass
-
-
-class RedisPoster:
-
-    poster = False
-
-    def __init__(self):
-        if hasattr(myconfig, 'redis_poster_host') and myconfig.redis_poster_host != "":
-            self.poster = redis.StrictRedis(host=myconfig.redis_poster_host, port=6379, db=0)
-
-    def postMesage(self, chanel, message):
-        if self.poster:
-            self.poster.publish(chanel, message)
-
-
-class XSLT2Transformer:
-
-    #XSLT 2.0 transformer run in java
-
-    def __init__(self, transformerConfig):
-        self.__xsl = transformerConfig['xsl']
-        self.__outfile = transformerConfig['outFile']
-        self.__inputFile = transformerConfig['inFile']
-
-    def transform(self):
-        shellCommand = myconfig.java_home + " "
-        shellCommand += " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
-        shellCommand += " -o " + self.__outfile
-        shellCommand += " " + self.__inputFile
-        shellCommand += " " + self.__xsl
-        subprocess.check_output(shellCommand, stderr=subprocess.STDOUT, shell=True)
-        subprocess.call(shellCommand, shell=True)
 
 
 class Harvester():
@@ -114,12 +32,12 @@ class Harvester():
     resultFileExtension = 'xml'
     redisPoster = False
 
-    def __init__(self, harvestInfo, logger, database):
+    def __init__(self, harvestInfo):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
         self.redisPoster = RedisPoster()
-        self.logger = logger
-        self.database = database
+        self.logger = MyLogger()
+        self.database = MyDataBase()
         self.cleanPreviousHarvestRecords()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
@@ -328,7 +246,7 @@ class Harvester():
             dataFile.close()
         except Exception as e:
             self.handleExceptions(e)
-            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("Harvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
     def getStatus(self):
         self.checkHarvestStatus()

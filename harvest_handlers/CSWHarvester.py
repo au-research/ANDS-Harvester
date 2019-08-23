@@ -1,5 +1,7 @@
 from Harvester import *
 import urllib
+from xml.dom.minidom import parseString
+
 class CSWHarvester(Harvester):
     """
         {
@@ -139,7 +141,7 @@ class CSWHarvester(Harvester):
             dataFile.close()
         except Exception as e:
             self.handleExceptions(e)
-            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("CSW (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
     def runCrossWalk(self):

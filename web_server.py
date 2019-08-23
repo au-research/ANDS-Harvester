@@ -15,4 +15,8 @@ def new(daemon):
     def info():
         return jsonify(daemon.info())
 
+    @app.route('/run_harvest/<harvest_id>', methods=['GET'])
+    def runHarvest(harvest_id):
+        return jsonify(daemon.runHarvestById(harvest_id))
+
     return app
