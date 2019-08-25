@@ -8,7 +8,7 @@ class test_pure_harvester(unittest.TestCase):
 
     def not_test_uwa_pure(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://api.research-repository.uwa.edu.au/ws/api/511/datasets?63cdba7a-e25e-4d2f-9692-2d4cc9bd9d97'
+        harvestInfo['uri'] = 'https://api.research-repository.uwa.edu.au/ws/api/511/datasets'
         harvestInfo['provider_type'] = 'PURE'
         harvestInfo['harvest_method'] = 'PURE'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -19,7 +19,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        # harvestInfo['api_key'] = "63cdba7a-e25e-4d2f-9692-2d4cc9bd9d97"  #UWA
+        # harvestInfo['api_key'] = ""  #UWA
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -28,7 +28,7 @@ class test_pure_harvester(unittest.TestCase):
 
     def not_test_bond_pure(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
+        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets'
         harvestInfo['provider_type'] = 'PURE'
         harvestInfo['harvest_method'] = 'PURE'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -39,7 +39,6 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        # harvestInfo['api_key'] = "00149b1a-1318-4994-85b7-a4de20105716"  # UWA
         # harvestReq =   PUREHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
