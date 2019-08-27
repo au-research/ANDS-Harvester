@@ -18,8 +18,8 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "BATCHNUMBER"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
-        harvestInfo['mode'] = "HARVEST"
-        # harvestInfo['api_key'] = ""  #UWA
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -28,7 +28,7 @@ class test_pure_harvester(unittest.TestCase):
 
     def not_test_bond_pure(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets'
+        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=sjdhgkjsdhgksjdghskdjghs'
         harvestInfo['provider_type'] = 'PURE'
         harvestInfo['harvest_method'] = 'PURE'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -38,7 +38,8 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "BOND-BATCH"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
-        harvestInfo['mode'] = "HARVEST"
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['api_key'] = myconfig.bond_api_key
         # harvestReq =   PUREHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()

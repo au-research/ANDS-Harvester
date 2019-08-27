@@ -6,7 +6,7 @@ import os, json
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
 from utils.RedisPoster import RedisPoster
-from datetime import datetime
+import myconfig
 
 
 class SiteMapCrawler:
@@ -52,16 +52,22 @@ class SiteMapCrawler:
 
     def parseTextSitemap(self, response):
         for url in str(response).splitlines():
+            if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                continue
             self.links_to_crawl.append(url)
 
     def parseXmlSitemap(self, response):
         xml = parseString(response)
         if xml.firstChild.tagName == 'sitemapindex':
             for loc in xml.getElementsByTagName('loc'):
+                if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                    continue
                 print(loc.firstChild.data)
                 self.parse_sitemap(loc.firstChild.data)
         elif xml.firstChild.tagName == 'urlset':
             for loc in xml.getElementsByTagName('loc'):
+                if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                    continue
                 print(loc.firstChild.data)
                 self.links_to_crawl.append(loc.firstChild.data)
 

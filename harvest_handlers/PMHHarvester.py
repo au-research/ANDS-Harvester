@@ -22,7 +22,16 @@ class PMHHarvester(Harvester):
     retryCount = 0
     firstCall = True
     noRecordsMatchCodeValue = 'noRecordsMatch'
+
+
+    def __init__(self, harvestInfo):
+        super().__init__(harvestInfo)
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+
     def harvest(self):
+        self.cleanPreviousHarvestRecords()
         now = datetime.now().replace(microsecond=0)
         self.__until = datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         self.__metadataPrefix= self.harvestInfo['provider_type']
@@ -138,9 +147,7 @@ class PMHHarvester(Harvester):
                 os.makedirs(directory)
                 os.chmod(directory, 0o777)
             self.outputDir = directory
-            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
-
-            #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'w', 0o777)
             dataFile.write(self.data)
             dataFile.close()
         except Exception as e:

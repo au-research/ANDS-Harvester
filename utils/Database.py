@@ -1,9 +1,10 @@
 import pymysql
+import pymysql.cursors
 import myconfig
-
+import sys
 
 class DataBase:
-    __connection = False
+    __connection = None
     __db_host = ''
     __unix_socket = '/tmp/mysql.sock'
     __db_user = ''
@@ -16,14 +17,16 @@ class DataBase:
         self.__passwd = myconfig.db_passwd
         self.__db = myconfig.db
         self.__port = myconfig.db_port
-        print("DATABASE INITIALISED")
 
     def getConnection(self):
-        # if not(self.__connection):
-
+        #if self.__connection is None:
+        #print("getConnection")
         try:
-            self.__connection = pymysql.connect(host=self.__host, user=self.__user,
-                                                passwd=self.__passwd, db=self.__db, port=self.__port)
+            self.__connection = pymysql.connect(host=self.__host,
+                                                user=self.__user,
+                                                passwd=self.__passwd,
+                                                db=self.__db,
+                                                port=self.__port)
         except:
             e = sys.exc_info()[1]
             raise RuntimeError("Database Exception %s" % (e))

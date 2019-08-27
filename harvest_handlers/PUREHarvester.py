@@ -1,7 +1,7 @@
 from Harvester import *
 import urllib
 from xml.dom.minidom import parseString
-
+import urllib.parse as urlparse
 class PUREHarvester(Harvester):
     """
        {
@@ -25,13 +25,12 @@ class PUREHarvester(Harvester):
     numberOfRecordsReturned = 0
 
     def harvest(self):
-        self.urlParams = {}
         self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)
             self.getHarvestData()
             self.storeHarvestData()
-            self.runCrossWalk()
+        self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
@@ -39,15 +38,15 @@ class PUREHarvester(Harvester):
     def getHarvestData(self):
         if self.stopped:
             return
-        query = self.getParamString()
-        getRequest = Request(self.harvestInfo['uri'] + query)
+        request_url = self.getRequestUrl()
+        getRequest = Request(request_url)
         self.retryCount = 0
         while self.retryCount < 5:
             try:
                 self.firstCall = False
-                self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
+                self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
                 self.logger.logMessage(
-                    "PURE (getHarvestData), getting data url:%s" %(self.harvestInfo['uri'] + query),
+                    "PURE (getHarvestData), getting data url:%s" %(request_url),
                     "DEBUG")
                 self.data = getRequest.getData()
                 self.getRecordCount()
@@ -60,19 +59,22 @@ class PUREHarvester(Harvester):
                 if self.retryCount > 4:
                     self.errored = True
                     self.handleExceptions("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
-                                %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query))
+                                %(str(self.retryCount), str(repr(e)), request_url))
                 else:
                     self.logger.logMessage("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
-                                %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query), "ERROR")
+                                %(str(self.retryCount), str(repr(e)), request_url), "ERROR")
                     time.sleep(1)
         del getRequest
 
-    def getParamString(self):
-            #self.urlParams['apiKey'] = self.harvestInfo['api_key']
-            self.urlParams['pageSize'] = str(self.maxRecords)
-            self.urlParams['page'] = str(self.pageCount)
-            query = urllib.parse.urlencode(self.urlParams)
-            return '&' + query
+    def getRequestUrl(self):
+        parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
+        urlParams = urlparse.parse_qs(parsed_url.query)
+        if(self.harvestInfo['api_key']):
+            urlParams['apiKey'] = self.harvestInfo['api_key']
+        urlParams['pageSize'] = str(self.maxRecords)
+        urlParams['page'] = str(self.pageCount)
+        query = urllib.parse.urlencode(urlParams)
+        return "%s://%s%s?%s" %(parsed_url.scheme, parsed_url.netloc, parsed_url.path, query)
 
     def storeHarvestData(self):
         if self.stopped or self.numberOfRecordsReturned == 0:
@@ -99,7 +101,7 @@ class PUREHarvester(Harvester):
         try:
             dom = parseString(self.data)
             self.numberOfRecordsReturned = int(len(dom.getElementsByTagName('dataSet')))
-            self.logger.logMessage("PURE (numberOfRecordsReturned) %s " % (self.numberOfRecordsReturned), "ERROR")
+            self.logger.logMessage("PURE (numberOfRecordsReturned) %s " % (self.numberOfRecordsReturned), "DEBUG")
         except Exception:
             self.numberOfRecordsReturned = 0
             pass
@@ -110,16 +112,19 @@ class PUREHarvester(Harvester):
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        outFile = self.outputDir + str(self.pageCount) + "." + self.resultFileExtension
-        inFile = self.outputDir + str(self.pageCount) + "." + self.storeFileExtension
-        try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
-            tr = XSLT2Transformer(transformerConfig)
-            tr.transform()
-        except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-            msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
-            self.handleExceptions(msg)
-        except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-            self.handleExceptions(e)
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                self.logger.logMessage("runCrossWalk %s" %file)
+                outFile = self.outputDir + str(self.pageCount) + "." + self.resultFileExtension
+                inFile = self.outputDir + str(self.pageCount) + "." + self.storeFileExtension
+                try:
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
+                    tr = XSLT2Transformer(transformerConfig)
+                    tr.transform()
+                except subprocess.CalledProcessError as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
+                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
+                    self.handleExceptions(msg)
+                except Exception as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
+                    self.handleExceptions(e)

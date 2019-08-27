@@ -22,32 +22,31 @@ class JSONLDHarvester(Harvester):
     combineFiles = True
     async_list = []
     jsonDict = []
-    directory = ""
+
+
+    def __init__(self, harvestInfo):
+        super().__init__(harvestInfo)
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+
+        if self.harvestInfo['xsl_file'] == "":
+            self.harvestInfo['xsl_file'] = "resources/schemadotorg2rif.xsl"
+
+
 
     def harvest(self):
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
-        self.directory = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) + os.sep + str(
-            self.harvestInfo['batch_number'])
-        if not os.path.exists(self.directory):
-            os.makedirs(self.directory)
-        for file in os.listdir(self.directory):
-            os.remove(self.directory + os.sep + file)
-        fileCount = 0
+        self.recordCount = 0
         self.getPageList()
         self.crawlPages()
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined')
             self.storeDataAsXML(self.jsonDict, 'combined')
-
+        self.setStatus("Generated %s File(s)" % str(self.recordCount))
+        self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
-
-        for file in os.listdir(self.directory):
-            if file.endswith(self.storeFileExtension):
-                fileCount += 1
-        self.setStatus("Generated %s File(s)" % str(fileCount))
-        self.logger.logMessage("Generated %s File(s)" % str(fileCount))
-
         self.postHarvestData()
         self.finishHarvest()
 
@@ -70,12 +69,14 @@ class JSONLDHarvester(Harvester):
         self.logger.logMessage("Request Failed for %s Exception: %s" % str(request.url), str(exception), "ERROR")
 
     def parse(self, response, **kwargs):
+        jsonld = None
         html_soup = BeautifulSoup(response.text, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         if len(jsonlds) > 0:
             jsonld = jsonlds[0].text
         if jsonld is not None:
-            self.logger.logMessage("JSONLD: %s" % str(jsonld), "DEBUG")
+            self.logger.logMessage("jsonlds: %s" % str(jsonld), "ERROR")
+            self.recordCount += 1
             data = json.loads(jsonld, strict=False)
             if self.combineFiles is True:
                 self.jsonDict.append(data)
@@ -90,7 +91,7 @@ class JSONLDHarvester(Harvester):
         if self.stopped:
            return
         try:
-            outputFilePath = self.directory + os.sep + fileName + ".json"
+            outputFilePath = self.outputDir + os.sep + fileName + ".json"
             dataFile = open(outputFilePath, 'w', 0o777)
             json.dump(data, dataFile)
             dataFile.close()
@@ -103,7 +104,7 @@ class JSONLDHarvester(Harvester):
     def storeDataAsXML(self, data, fileName):
         try:
             self.__xml = Document()
-            outputFilePath = self.directory + os.sep + fileName + "." + self.storeFileExtension
+            outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
             dataFile = open(outputFilePath, 'w', 0o777)
             if self.stopped:
                 return
@@ -118,6 +119,7 @@ class JSONLDHarvester(Harvester):
                 dataFile.close()
             else:
                 root = self.__xml.createElement('dataset')
+                self.__xml.appendChild(root)
                 self.parse_element(root, data)
                 self.__xml.writexml(dataFile)
                 dataFile.close()
@@ -128,11 +130,14 @@ class JSONLDHarvester(Harvester):
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        for file in os.listdir(self.directory):
+        self.logger.logMessage("runCrossWalk XSLT: %s" % self.harvestInfo['xsl_file'])
+        self.logger.logMessage("OutDir: %s" % self.outputDir)
+        for file in os.listdir(self.outputDir):
+            self.logger.logMessage("Files: %s" % file)
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.directory + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
-                inFile = self.directory + os.sep + file
+                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                inFile = self.outputDir + os.sep + file
                 try:
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)

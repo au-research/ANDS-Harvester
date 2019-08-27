@@ -1,5 +1,5 @@
 import os
-import json
+from xml.dom.minidom import Document
 from datetime import datetime, timezone
 import time
 from utils.RedisPoster import RedisPoster
@@ -9,6 +9,7 @@ from utils.Request import Request
 from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
+import json, numbers
 
 
 class Harvester():
@@ -17,6 +18,7 @@ class Harvester():
     recordCount = 0
     harvestInfo = None
     data = None
+    __xml = None
     logger = None
     database = None
     outputFilePath = None
@@ -38,23 +40,30 @@ class Harvester():
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
-        self.cleanPreviousHarvestRecords()
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
         self.updateHarvestRequest()
         self.setUpCrosswalk()
 
     def harvest(self):
+        self.cleanPreviousHarvestRecords()
         self.getHarvestData()
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
+    def crosswalk(self):
+        self.runCrossWalk()
+        self.postHarvestData()
+        self.finishHarvest()
+
     def cleanPreviousHarvestRecords(self):
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
         number_to_keep = 3
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        elif len(os.listdir(directory)) > number_to_keep:
-            the_files = self.listdir_fullpath(directory)
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+        elif len(os.listdir(self.outputDir)) > number_to_keep:
+            the_files = self.listdir_fullpath(self.outputDir)
             the_files.sort(key=os.path.getmtime, reverse=True)
             for i in range(number_to_keep, len(the_files)):
                 try:
@@ -233,20 +242,75 @@ class Harvester():
     def storeHarvestData(self):
         if self.stopped:
             return
+
+        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            os.chmod(directory, 0o777)
+        self.outputDir = directory
+
+
         try:
-            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-                os.chmod(directory, 0o777)
-            self.outputDir = directory
-            self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
-            dataFile = open(self.outputFilePath, 'wb', 0o777)
-            self.setStatus("HARVESTING", self.outputFilePath)
-            dataFile.write(self.data)
-            dataFile.close()
+            #if data is JSON then save the json as well as a XML serialised copy
+            if self.is_json(self.data):
+                jsonObj = json.loads(self.data, strict=False)
+                self.storeJsonData(jsonObj, str(self.harvestInfo['batch_number']))
+                self.storeDataAsXML(jsonObj, str(self.harvestInfo['batch_number']))
+            else:
+                self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
+                dataFile = open(self.outputFilePath, 'w', 0o777)
+                self.setStatus("HARVESTING", self.outputFilePath)
+                dataFile.write(self.data)
+                dataFile.close()
         except Exception as e:
             self.handleExceptions(e)
             self.logger.logMessage("Harvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+
+
+    def storeJsonData(self, data, fileName):
+        if self.stopped:
+           return
+        try:
+            outputFilePath = self.outputDir + os.sep + fileName + ".json"
+            dataFile = open(outputFilePath, 'w', 0o777)
+            json.dump(data, dataFile)
+            dataFile.close()
+        except Exception as e:
+            self.handleExceptions(e)
+            self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
+
+
+    def storeDataAsXML(self, data, fileName):
+        if self.stopped:
+           return
+        try:
+            self.__xml = Document()
+            root = self.__xml.createElement('datasets')
+            self.__xml.appendChild(root)
+            self.outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
+            dataFile = open(self.outputFilePath, 'w', 0o777)
+            if isinstance(data, list):
+                for j in data:
+                    ds = self.__xml.createElement('dataset')
+                    self.parse_element(ds, j)
+                    root.appendChild(ds)
+                self.__xml.writexml(dataFile)
+                dataFile.close()
+            else:
+                self.parse_element(root, data)
+                self.__xml.writexml(dataFile)
+                dataFile.close()
+        except Exception as e:
+            self.logger.logMessage("JSONLDHarvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+
+    # https://stackoverflow.com/questions/11294535/verify-if-a-string-is-json-in-python
+
+    def is_json(self, myjson):
+        try:
+            json_object = json.loads(myjson)
+        except ValueError as e:
+            return False
+        return True
 
     def getStatus(self):
         self.checkHarvestStatus()
@@ -379,7 +443,6 @@ class Harvester():
         attempts = 0
         while attempts < 3:
             try:
-                self.logger.logMessage('(write_to_field) %s' % field)
                 conn = self.database.getConnection()
                 cur = conn.cursor()
                 cur.execute("UPDATE %s SET `%s` ='%s' where `harvest_id` = %s"
@@ -457,3 +520,37 @@ class Harvester():
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
+
+
+
+    def parse_element(self, root, j):
+        if j is None:
+            return
+        if isinstance(j, dict):
+            for key in j.keys():
+                value = j[key]
+                if isinstance(value, list):
+                    for e in value:
+                        keyFormatted = key.replace(' ', '')
+                        keyFormatted = keyFormatted.replace('@', '')
+                        elem = self.__xml.createElement(keyFormatted)
+                        self.parse_element(elem, e)
+                        root.appendChild(elem)
+                else:
+                    if key.isdigit():
+                        elem = self.__xml.createElement('item')
+                        elem.setAttribute('value', key)
+                    else:
+                        keyFormatted = key.replace(' ', '')
+                        keyFormatted = keyFormatted.replace('@', '')
+                        elem = self.__xml.createElement(keyFormatted)
+                    self.parse_element(elem, value)
+                    root.appendChild(elem)
+        elif isinstance(j, str):
+            text = self.__xml.createTextNode(j)
+            root.appendChild(text)
+        elif isinstance(j, numbers.Number):
+            text = self.__xml.createTextNode(str(j))
+            root.appendChild(text)
+        else:
+            raise Exception("bad type %s for %s" % (type(j), j,))

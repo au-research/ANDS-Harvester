@@ -274,7 +274,8 @@ class HarvesterDaemon(Daemon):
             class_ = getattr(harvester_module, harvestInfo['harvest_method'])
             myHarvester = class_(harvestInfo)
             self.__harvestRequests[harvestID] = myHarvester
-
+            self.__logger.logMessage(
+            '(addHarvestRequest) %s, Retry:' % str(self.__harvestRequests), "DEBUG")
         except ImportError as e:
             self.handleException(harvestID, e)
         return harvestInfo
@@ -309,7 +310,6 @@ class HarvesterDaemon(Daemon):
                         self.__runningHarvests[harvestID] = harvestReq
                         del self.__harvestRequests[harvestID]
                         harvestReq = self.__runningHarvests[harvestID]
-                        self.__logger.logMessage("Adding Thread Harvest ID: %s" % str(harvestID), "DEBUG")
                         t = threading.Thread(target=harvestReq.harvest)
                         self.__running_threads[harvestID] = t
                         t.start()
@@ -350,6 +350,9 @@ class HarvesterDaemon(Daemon):
             try:
                 conn = self.__database.getConnection()
                 cur = conn.cursor()
+                cur.execute(
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `harvest_id` = " + harvest_id + ";")
+                conn.commit()
                 cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `harvest_id` = " + harvest_id + ";")
                 if cur.rowcount > 0:
                     self.__logger.logMessage("Adding Harvest by ID :%s" %harvest_id, "DEBUG")
@@ -367,6 +370,53 @@ class HarvesterDaemon(Daemon):
                 self.__logger.logMessage(
                     '(Adding Harvest by ID) %s, , harvest_id %s, Retry: %d' % (str(repr(e)), str(harvest_id), attempts), "ERROR")
 
+    def rerunHarvestFromCroswalk(self, harvest_id , batch_id):
+        attempts = 0
+        harvestInfo = {}
+        if(harvest_id is None):
+            harvestInfo["ERROR"] = "harvest_id must be provided"
+            return harvestInfo
+        if(batch_id is None):
+            harvestInfo["ERROR"] = "batch_id must be provided"
+            return harvestInfo
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute(
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='WAITING' WHERE `harvest_id` = " + str(harvest_id) + ";")
+                conn.commit()
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `harvest_id` = " + str(harvest_id) + ";")
+                if cur.rowcount > 0:
+                    self.__logger.logMessage("Adding Harvest by ID :%s" %str(harvest_id), "DEBUG")
+                    for r in cur:
+                        self.__logger.logMessage("HARVEST TABLE ROW :%s" %str(r), "DEBUG")
+                        self.__logger.logMessage("Crosswalk only %s" % str(cur.rowcount))
+                        harvestInfo = self.addHarvestRequest(r[0], r[1], r[4], r[5], r[6], batch_id)
+                        self.__logger.logMessage("harvestRequests %s " % str(self.__harvestRequests), "DEBUG")
+                        for harvestID in list(self.__harvestRequests):
+                            self.__logger.logMessage(str(harvest_id) + "::::" + str(harvestID))
+                        harvestReq = self.__harvestRequests.pop(harvest_id)
+                        self.__runningHarvests[harvest_id] = harvestReq
+                        self.__logger.logMessage("cur %s " % str(harvestReq), "DEBUG")
+                        self.__logger.logMessage("Adding Thread Harvest (Crosswalk only) ID: %s" % str(harvest_id),
+                                                 "DEBUG")
+                        t = threading.Thread(target=harvestReq.crosswalk)
+                        self.__running_threads[harvest_id] = t
+                        t.start()
+                        self.__harvestStarted = self.__harvestStarted + 1
+                else:
+                    self.__logger.logMessage("Unable to Add Harvest by ID :%s" %str(harvest_id), "DEBUG")
+                cur.close()
+                del cur
+                conn.close()
+                return harvestInfo
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(Adding Harvest (Crosswalk only) by ID) %s, , harvest_id %s, Retry: %d' % (str(repr(e)), str(harvest_id), attempts),
+                    "ERROR")
 
 
     def fixBrokenHarvestRequests(self):
@@ -519,7 +569,7 @@ class HarvesterDaemon(Daemon):
         # Starting the web interface as a different thread
         try:
             web_port = getattr(myconfig, 'web_port', 7020)
-            web_host = getattr(myconfig, 'web_host', '130.56.111.120')
+            web_host = getattr(myconfig, 'web_host', 'localhost')
             http = web_server.new(daemon=self)
             threading.Thread(
                 target=http.run,
