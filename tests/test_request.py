@@ -7,7 +7,7 @@ class test_request(unittest.TestCase):
 
 
     def test_get_local_file(self):
-        r = Request('file:///' + myconfig.abs_path + '/resources/test_source/get/get_json.json')
+        r = Request('file:///' + myconfig.abs_path + '/tests/resources/test_source/get/get_json.json')
         data = r.getData()
         self.assertIn("success", data)
 

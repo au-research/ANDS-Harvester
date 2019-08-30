@@ -8,7 +8,7 @@ from utils.Request import Request
 class test_oai_harvester(unittest.TestCase):
 
     def readfile(self, path):
-        f = io.open(myconfig.abs_path + '/resources/test_source/pmh/' + path, mode="r")
+        f = io.open(myconfig.abs_path + '/tests/resources/test_source/pmh/' + path, mode="r")
         data = f.read()
         f.close()
         return data

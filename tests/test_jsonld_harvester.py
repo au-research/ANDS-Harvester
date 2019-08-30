@@ -8,7 +8,7 @@ from utils.Request import Request
 class test_jsonld_harvester(unittest.TestCase):
 
     def readfile(self, path):
-        f = io.open(myconfig.abs_path + '/resources/test_source/jsonld/' + path, mode="r")
+        f = io.open(myconfig.abs_path + '/tests/resources/test_source/jsonld/' + path, mode="r")
         data = f.read()
         f.close()
         return data
@@ -75,7 +75,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "JSONLD_1"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -103,7 +103,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "JSONLD_2"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         # harvestReq = JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -122,7 +122,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "JSONLD_1"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -141,7 +141,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "JSONLD_2"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "HARVEST"
         # harvestReq = JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
