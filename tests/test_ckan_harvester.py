@@ -9,7 +9,7 @@ import threading
 class test_ckan_harvester(unittest.TestCase):
 
     def readfile(self, path):
-        f = io.open(myconfig.run_dir + 'tests/resources/test_source/ckan/' + path, mode="r")
+        f = io.open(myconfig.abs_path + '/resources/test_source/ckan/' + path, mode="r")
         data = f.read()
         f.close()
         return data

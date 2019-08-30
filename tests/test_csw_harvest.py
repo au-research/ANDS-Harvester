@@ -10,7 +10,7 @@ class test_csw_harvester(unittest.TestCase):
 
     @patch.object(Request, 'getData')
     def test_csw_harvest(self, mockGetData):
-        f = io.open(myconfig.run_dir + 'tests/resources/test_source/csw/tern_csw.xml', mode="r")
+        f = io.open(myconfig.abs_path + '/resources/test_source/csw/tern_csw.xml', mode="r")
         data = f.read()
         f.close()
         mockGetData.return_value = data
@@ -19,7 +19,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "CSW_TERN"
         harvestInfo['data_source_id'] = 7
         harvestInfo['data_source_slug'] = "TERN-Geonetwork"
-        harvestInfo['data_store_path'] = "/tmp/harvested_contents/"
+        harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
         harvestInfo['harvest_method'] = "CSWHarvester"
         harvestInfo['mode'] = "TEST"
@@ -28,7 +28,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['title'] = "TERN Geonetwork"
         harvestInfo['uri'] = ''
         harvestInfo['user_defined_params'] = '[{"name":"request","value":"GetRecords"},{"name":"service","value":"CSW"},{"name":"version","value":"2.0.2"},{"name":"namespace","value":"xmlns(csw=http://www.opengis.net/cat/csw)"},{"name":"resultType","value":"results"},{"name":"outputFormat","value":"application/xml"},{"name":"typeNames","value":"csw:Record"},{"name":"elementSetName","value":"full"},{"name":"constraintLanguage","value":"CQL_TEXT"},{"name":"constraint_language_version","value":"1.1.0v"}]'
-        harvestInfo['xsl_file'] = myconfig.run_dir + "tests/resources/xslt/TERN_ISO19139_rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/TERN_ISO19139_rif.xsl"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -42,7 +42,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "CSW_TERN_LIVE"
         harvestInfo['data_source_id'] = 7
         harvestInfo['data_source_slug'] = "TERN-Geonetwork"
-        harvestInfo['data_store_path'] = "/tmp/harvested_contents/"
+        harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
         harvestInfo['harvest_method'] = "CSWHarvester"
         harvestInfo['mode'] = "HARVEST"
@@ -51,7 +51,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['title'] = "TERN Geonetwork"
         harvestInfo['uri'] = "http://geonetwork.tern.org.au/geonetwork/srv/eng/csw"
         harvestInfo['user_defined_params'] = '[{"name":"request","value":"GetRecords"},{"name":"service","value":"CSW"},{"name":"version","value":"2.0.2"},{"name":"namespace","value":"xmlns(csw=http://www.opengis.net/cat/csw)"},{"name":"resultType","value":"results"},{"name":"outputFormat","value":"application/xml"},{"name":"typeNames","value":"csw:Record"},{"name":"elementSetName","value":"full"},{"name":"constraintLanguage","value":"CQL_TEXT"},{"name":"constraint_language_version","value":"1.1.0v"}]'
-        harvestInfo['xsl_file'] = myconfig.run_dir + "tests/resources/xslt/TERN_ISO19139_rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/TERN_ISO19139_rif.xsl"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()

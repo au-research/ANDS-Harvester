@@ -8,7 +8,7 @@ from utils.Request import Request
 class test_oai_harvester(unittest.TestCase):
 
     def readfile(self, path):
-        f = io.open(myconfig.run_dir + 'tests/resources/test_source/pmh/' + path, mode="r")
+        f = io.open(myconfig.abs_path + '/resources/test_source/pmh/' + path, mode="r")
         data = f.read()
         f.close()
         return data
@@ -26,7 +26,7 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "PMH_DEAKIN"
         harvestInfo['data_source_id'] = 7
         harvestInfo['data_source_slug'] = "TEST"
-        harvestInfo['data_store_path'] = "/tmp/harvested_contents/"
+        harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
         harvestInfo['harvest_method'] = "PMHHarvester"
         harvestInfo['mode'] = "TEST"
@@ -49,7 +49,7 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = "PMH_DEAKIN_LIVE"
         harvestInfo['data_source_id'] = 7
         harvestInfo['data_source_slug'] = "TEST"
-        harvestInfo['data_store_path'] = "/tmp/harvested_contents/"
+        harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
         harvestInfo['harvest_method'] = "PMHHarvester"
         harvestInfo['mode'] = "TEST"
