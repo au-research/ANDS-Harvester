@@ -41,6 +41,7 @@ class test_pure_harvester(unittest.TestCase):
         harvester = PUREHarvester(harvestInfo)
         harvester.harvest()
 
+    # API KEYS PROVIDED BY Melanie (for testing)
     def only_during_developement_test_uwa_pure_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://api.research-repository.uwa.edu.au/ws/api/511/datasets'
@@ -60,6 +61,7 @@ class test_pure_harvester(unittest.TestCase):
         harvester = PUREHarvester(harvestInfo)
         harvester.harvest()
 
+    # API KEYS PROVIDED BY Melanie (for testing)
     def only_during_developement_test_bond_pure_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=sjdhgkjsdhgksjdghskdjghs'
