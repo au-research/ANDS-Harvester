@@ -1,9 +1,6 @@
 from Harvester import *
-try:
-    import urllib.request as urllib2
-except:
-    import urllib2
 import numbers
+import urllib.parse as urlparse
 from xml.dom.minidom import Document
 class CKANHarvester(Harvester):
     """
@@ -56,7 +53,8 @@ class CKANHarvester(Harvester):
         if self.stopped:
             return
         time.sleep(0.1)
-        getRequest = Request(self.harvestInfo['uri'] +  self.__itemQuery)
+        baseUrl = self.harvestInfo['uri'] +  self.__itemQuery
+        getRequest = Request(baseUrl)
         ePackages = self.__xml.createElement('datasets')
         self.__xml.appendChild(ePackages)
         self.listSize = len(self.__packageList)
@@ -70,12 +68,13 @@ class CKANHarvester(Harvester):
                 if self.stopped:
                     break
                 data_string = json.dumps({'id': itemId})
-                self.logger.logMessage("RECEIVING ITEM (%s)" % (data_string), "ERROR")
                 self.setStatus("HARVESTING", 'getting ckan record: %s' %itemId)
                 storeeditemId = itemId
                 try:
                     params['id'] = itemId
-                    package = json.loads(getRequest.getDatabyQuery(params))
+                    query = urlparse.urlencode(params)
+                    getRequest.setURL(baseUrl + "?" + query)
+                    package = json.loads(getRequest.getData())
                     if isinstance(package, dict):
                         ePackage = self.__xml.createElement('result')
                         ePackage.setAttribute('id', itemId)
@@ -97,7 +96,6 @@ class CKANHarvester(Harvester):
         self.data = str(self.__xml.toprettyxml(encoding='utf-8', indent=' '), 'utf-8')
 
     def parse_element(self, root, j):
-        self.logger.logMessage("parse_element(%s)" % str(j), "DEBUG")
         if j is None:
             return
         if isinstance(j, dict):

@@ -23,7 +23,7 @@ class SiteMapCrawler:
         self.mLogger = MyLogger()
         self.mDatabase = MyDataBase()
         self.harvestInfo = harvestInfo
-        self.sitemap_urls = [harvestInfo.get("uri")]
+        self.sitemap_url = harvestInfo.get("uri")
         self.name = harvestInfo.get('data_source_slug')
         self.storeFileExtension = "tmp"
         directory = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) + os.sep + str(
@@ -42,13 +42,12 @@ class SiteMapCrawler:
             else:
                 self.parseTextSitemap(response)
         else:
-            for url in self.sitemap_urls:
-                r = Request(url)
-                response = r.getData()
-                if response[0] == '<':
-                    self.parseXmlSitemap(response)
-                else:
-                    self.parseTextSitemap(response)
+            r = Request(self.sitemap_url)
+            response = r.getData()
+            if response[0] == '<':
+                self.parseXmlSitemap(response)
+            else:
+                self.parseTextSitemap(response)
 
     def parseTextSitemap(self, response):
         for url in str(response).splitlines():
@@ -62,13 +61,11 @@ class SiteMapCrawler:
             for loc in xml.getElementsByTagName('loc'):
                 if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                     continue
-                print(loc.firstChild.data)
                 self.parse_sitemap(loc.firstChild.data)
         elif xml.firstChild.tagName == 'urlset':
             for loc in xml.getElementsByTagName('loc'):
                 if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                     continue
-                print(loc.firstChild.data)
                 self.links_to_crawl.append(loc.firstChild.data)
 
     def getLinksToCrawl(self):

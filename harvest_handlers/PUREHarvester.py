@@ -20,7 +20,7 @@ class PUREHarvester(Harvester):
 
     retryCount = 0
     pageCount = 1
-    maxRecords = 100
+    maxRecords = 10
     firstCall = True
     numberOfRecordsReturned = 0
 
@@ -85,8 +85,8 @@ class PUREHarvester(Harvester):
             if not os.path.exists(directory):
                 os.makedirs(directory)
             self.outputDir = directory
-            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
-            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
+            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
             dataFile.write(self.data)
             dataFile.close()
             self.pageCount = self.pageCount + 1
@@ -115,8 +115,8 @@ class PUREHarvester(Harvester):
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.outputDir + str(self.pageCount) + "." + self.resultFileExtension
-                inFile = self.outputDir + str(self.pageCount) + "." + self.storeFileExtension
+                outFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.resultFileExtension
+                inFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
                 try:
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)

@@ -359,7 +359,7 @@ class HarvesterDaemon(Daemon):
                     for r in cur:
                         harvestInfo = self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
                 else:
-                    self.__logger.logMessage("Unable to Add Harvest by ID :%s" %harvest_id, "DEBUG")
+                    self.__logger.logMessage("Harvest ID :%s doesn't exist" %harvest_id, "DEBUG")
                 cur.close()
                 del cur
                 conn.close()
@@ -390,23 +390,15 @@ class HarvesterDaemon(Daemon):
                 if cur.rowcount > 0:
                     self.__logger.logMessage("Adding Harvest by ID :%s" %str(harvest_id), "DEBUG")
                     for r in cur:
-                        self.__logger.logMessage("HARVEST TABLE ROW :%s" %str(r), "DEBUG")
-                        self.__logger.logMessage("Crosswalk only %s" % str(cur.rowcount))
                         harvestInfo = self.addHarvestRequest(r[0], r[1], r[4], r[5], r[6], batch_id)
-                        self.__logger.logMessage("harvestRequests %s " % str(self.__harvestRequests), "DEBUG")
-                        for harvestID in list(self.__harvestRequests):
-                            self.__logger.logMessage(str(harvest_id) + "::::" + str(harvestID))
                         harvestReq = self.__harvestRequests.pop(harvest_id)
                         self.__runningHarvests[harvest_id] = harvestReq
-                        self.__logger.logMessage("cur %s " % str(harvestReq), "DEBUG")
-                        self.__logger.logMessage("Adding Thread Harvest (Crosswalk only) ID: %s" % str(harvest_id),
-                                                 "DEBUG")
                         t = threading.Thread(target=harvestReq.crosswalk)
                         self.__running_threads[harvest_id] = t
                         t.start()
                         self.__harvestStarted = self.__harvestStarted + 1
                 else:
-                    self.__logger.logMessage("Unable to Add Harvest by ID :%s" %str(harvest_id), "DEBUG")
+                    self.__logger.logMessage("Harvest ID :%s doesn't exist" %str(harvest_id), "DEBUG")
                 cur.close()
                 del cur
                 conn.close()
@@ -547,6 +539,10 @@ class HarvesterDaemon(Daemon):
 
 
     def setupEnv(self):
+
+        if not os.path.exists(myconfig.data_dir):
+            os.makedirs(myconfig.data_dir)
+            os.chmod(myconfig.data_dir, 0o775)
         if not os.path.exists(myconfig.data_store_path):
             os.makedirs(myconfig.data_store_path)
             os.chmod(myconfig.data_store_path, 0o775)

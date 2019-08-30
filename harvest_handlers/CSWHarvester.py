@@ -39,7 +39,7 @@ class CSWHarvester(Harvester):
             time.sleep(0.1)
             self.getHarvestData()
             self.storeHarvestData()
-            self.runCrossWalk()
+        self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
@@ -92,19 +92,19 @@ class CSWHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
-            self.logger.logMessage(
-                "CSW (checkNextRecord parse response) %s" % str(self.data),
-                "DEBUG")
+            #self.logger.logMessage(
+            #    "CSW (checkNextRecord parse response) %s" % str(self.data),
+            #    "DEBUG")
             try:
 
                 nException = dom.getElementsByTagNameNS('http://www.opengis.net/ows', 'Exception')
                 self.logger.logMessage(
-                    "CSW (checkNextRecord parse response) %s" % str(repr(nException)),
+                    "CSW (response Exception) %s" % str(repr(nException)),
                     "DEBUG")
                 if len(nException) > 0:
                     eCode = nException[0].attributes["exceptionCode"].value
                     #eLocator = nException.attributes["locator"].value
-                    eTexts = nException[0].getElementsByTagNameNS('http://www.opengis.net/ows','ExceptionText')
+                    eTexts = nException[0].getElementsByTagNameNS('http://www.opengis.net/ows', 'ExceptionText')
                     eText = ''
                     for i, elem in enumerate(eTexts):
                         eText = eText + elem.firstChild.nodeValue
@@ -115,7 +115,7 @@ class CSWHarvester(Harvester):
                     return
             except Exception as e:
                 self.logger.logMessage(
-                    "CSW (checkNextRecord parse response) %s" % str(repr(e)),
+                    "CSW (checkNextRecord parse Exception) %s" % str(repr(e)),
                     "ERROR")
                 pass
             nSearchResult = dom.getElementsByTagName('csw:SearchResults')[0]
@@ -138,8 +138,9 @@ class CSWHarvester(Harvester):
         if self.stopped or not(self.data):
             return
         try:
-            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
-            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
+            dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
+            self.logger.logMessage("saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
+            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
             dataFile.write(self.data)
             dataFile.close()
         except Exception as e:
@@ -153,8 +154,8 @@ class CSWHarvester(Harvester):
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.outputDir + str(self.pageCount) + "." + self.resultFileExtension
-                inFile = self.outputDir + str(self.pageCount) + "." + self.storeFileExtension
+                outFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.resultFileExtension
+                inFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
                 try:
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)

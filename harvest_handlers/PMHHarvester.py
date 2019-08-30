@@ -49,7 +49,7 @@ class PMHHarvester(Harvester):
                 time.sleep(0.1)
                 self.getHarvestData()
                 self.storeHarvestData()
-                self.runCrossWalk()
+            self.runCrossWalk()
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
@@ -142,12 +142,7 @@ class PMHHarvester(Harvester):
         if self.stopped or not(self.data):
             return
         try:
-            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-                os.chmod(directory, 0o777)
-            self.outputDir = directory
-            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'w', 0o777)
+            dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension, 'w', 0o777)
             dataFile.write(self.data)
             dataFile.close()
         except Exception as e:

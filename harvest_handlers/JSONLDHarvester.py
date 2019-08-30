@@ -5,6 +5,10 @@ from crawler.SiteMapCrawler import SiteMapCrawler
 import json, numbers
 from xml.dom.minidom import Document
 import hashlib
+from requests.models import Response
+from utils.Request import Request as myRequest
+
+
 class JSONLDHarvester(Harvester):
     """
        {
@@ -17,21 +21,19 @@ class JSONLDHarvester(Harvester):
             ]
       }
     """
-    __packageList = {}
+    urlLinksList = {}
     __xml = None
     combineFiles = True
     async_list = []
     jsonDict = []
-
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
-
         if self.harvestInfo['xsl_file'] == "":
-            self.harvestInfo['xsl_file'] = "resources/schemadotorg2rif.xsl"
+            self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
 
 
@@ -39,6 +41,7 @@ class JSONLDHarvester(Harvester):
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
+        self.urlLinksList = {}
         self.getPageList()
         self.crawlPages()
         if self.combineFiles is True:
@@ -54,28 +57,56 @@ class JSONLDHarvester(Harvester):
         self.setStatus("Scanning Sitemap(s)")
         sc = SiteMapCrawler(self.harvestInfo)
         sc.parse_sitemap()
-        self.__packageList = sc.getLinksToCrawl()
-        self.setStatus("%s Pages found" %str(len(self.__packageList)))
-        self.logger.logMessage("%s Pages found" %str(len(self.__packageList)))
+        self.urlLinksList = sc.getLinksToCrawl()
+        self.setStatus("%s Pages found" %str(len(self.urlLinksList)))
+        self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
 
     def crawlPages(self):
-        for url in self.__packageList:
-            action_item = grequests.get(url, hooks={'response': self.parse})
-            self.async_list.append(action_item)
-        grequests.map(self.async_list, size=20)
+        if self.harvestInfo['mode'] == 'TEST':
+            for url in self.urlLinksList:
+                r = myRequest(url)
+                data = r.getData()
+                self.parseHtmlStr(data)
+        else:
+            for url in self.urlLinksList:
+                action_item = grequests.get(url, hooks={'response': self.parse})
+                self.async_list.append(action_item)
+            grequests.map(self.async_list, size=20)
 
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % str(request.url), str(exception), "ERROR")
 
-    def parse(self, response, **kwargs):
-        jsonld = None
-        html_soup = BeautifulSoup(response.text, 'html.parser')
+
+    def parseHtmlStr(self, htmlString):
+        html_soup = BeautifulSoup(htmlString, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
+        jsonld = None
         if len(jsonlds) > 0:
             jsonld = jsonlds[0].text
         if jsonld is not None:
-            self.logger.logMessage("jsonlds: %s" % str(jsonld), "ERROR")
+            #self.logger.logMessage("jsonlds: %s" % str(jsonld), "DEBUG")
+            self.recordCount += 1
+            data = json.loads(jsonld, strict=False)
+            if self.combineFiles is True:
+                self.jsonDict.append(data)
+            else:
+                fileName = getFileName(data)
+                message = "HARVESTING %s" %fileName
+                self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest', message)
+                self.storeJsonData(data, fileName)
+                self.storeDataAsXML(data, fileName)
+        else:
+            self.logger.logMessage("No JSONLD found", "DEBUG")
+
+    def parse(self, response, **kwargs):
+        html_soup = BeautifulSoup(response.text, 'html.parser')
+        jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
+        jsonld = None
+        if len(jsonlds) > 0:
+            jsonld = jsonlds[0].text
+        if jsonld is not None:
+            #self.logger.logMessage("jsonlds: %s" % str(jsonld), "DEBUG")
             self.recordCount += 1
             data = json.loads(jsonld, strict=False)
             if self.combineFiles is True:

@@ -29,6 +29,7 @@ class Harvester():
     errorLog = ""
     errored = False
     stopped = False
+    mode = 'HARVEST'
     completed = False
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
@@ -37,6 +38,7 @@ class Harvester():
     def __init__(self, harvestInfo):
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
+        self.mode = harvestInfo['mode']
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
@@ -124,7 +126,7 @@ class Harvester():
             self.handleExceptions(e)
 
     def postHarvestData(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -133,7 +135,7 @@ class Harvester():
         del postRequest
 
     def postHarvestError(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -143,7 +145,7 @@ class Harvester():
         del postRequest
 
     def postHarvestNoRecords(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -156,7 +158,7 @@ class Harvester():
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
         self.write_summary()
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         upTime = int(time.time()) - self.startUpTime
         statusDict = {'status':self.__status,
@@ -197,7 +199,7 @@ class Harvester():
 
 
     def checkHarvestStatus(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         attempts = 0
         while attempts < 3:
@@ -242,14 +244,6 @@ class Harvester():
     def storeHarvestData(self):
         if self.stopped:
             return
-
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-            os.chmod(directory, 0o777)
-        self.outputDir = directory
-
-
         try:
             #if data is JSON then save the json as well as a XML serialised copy
             if self.is_json(self.data):
@@ -257,7 +251,7 @@ class Harvester():
                 self.storeJsonData(jsonObj, str(self.harvestInfo['batch_number']))
                 self.storeDataAsXML(jsonObj, str(self.harvestInfo['batch_number']))
             else:
-                self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
+                self.outputFilePath = self.outputDir + os.sep + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
                 dataFile = open(self.outputFilePath, 'w', 0o777)
                 self.setStatus("HARVESTING", self.outputFilePath)
                 dataFile.write(self.data)
@@ -430,6 +424,7 @@ class Harvester():
             return 0
 
     def write_to_field(self, summary, field):
+
         """
         Writes into the harvests table
         Retries 3 times
@@ -440,6 +435,8 @@ class Harvester():
         :param summary: the content that will be json.dumps
         :param field: the field where it will be written to
         """
+        if self.stopped or self.mode == 'TEST':
+            return
         attempts = 0
         while attempts < 3:
             try:

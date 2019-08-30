@@ -1,0 +1,10 @@
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemap>
+        <loc>urlset.xml</loc>
+        <lastmod>2019-08-28</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>urlset_2.xml</loc>
+        <lastmod>2019-08-28</lastmod>
+    </sitemap>
+</sitemapindex>

@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='oai2.xsl' ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+<responseDate>2019-08-28T02:57:55Z</responseDate>
+ 
+  <request verb="ListRecords" metadataPrefix="rif" resumptionToken="100/Jm1ldGFkYXRhUHJlZml4PXJpZg==">http://dro.deakin.edu.au/oai.php</request>
+  <ListRecords>
+
+  	<record><header status="deleted"><identifier>oai:dro-dev.deakin.edu.au:DU:30061109</identifier></header></record>
+  
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30073513</identifier>
+      <datestamp></datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479834</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466911</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30073513</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="collection" dateAccessioned="2015-05-28T10:00:00Z" dateModified=""><identifier type="handle">hdl.handle.net/10536/DRO/DU:30073513</identifier><identifier type="doi">10.4225/16/557055D97ADC9</identifier><name type="primary"><namePart>Questionnaire data for &#039;Scholarships and Connections: Australia, Indonesia and Papua New Guinea, 1960-2010&#039;</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Jemma Purdey</addressPart></physical><electronic type="email"><value>jemma.purdey@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/557055D97ADC9</value></electronic></address></location><coverage><spatial type="text">Indonesia</spatial><spatial type="text">Australia</spatial><spatial type="text">Papua New Guinea</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/434</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528090</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3052</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1511247</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/434</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528090</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Scholarships</subject><subject type="local">Aid</subject><subject type="local">Regional engagement</subject><subject type="local">Australia</subject><subject type="local">Indonesia</subject><subject type="local">Papua New Guinea</subject><subject type="local">PNG</subject><subject type="local">Education</subject><subject type="local">Colombo Plan</subject><subject type="local">Australian Awards</subject><subject type="local">Development</subject><subject type="anzsrc-for">21</subject><subject type="anzsrc-seo">950503</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Restricted</rightsStatement><accessRights>Restricted to research group. Enquiries should be directed to the chief investigator, Professor David Lowe</accessRights><licence>Copyright owner</licence></rights><description type="full">For over fifty years Australia has welcomed students from Indonesia and Papua New Guinea to study at our tertiary institutions on government scholarships. An important premise behind the scholarship program has been the hope that the connections with Australia developed by these students will be long-lasting and mutually beneficial to Australia and partner governments. The research project ‘Scholarships and Connections’ investigates the life stories and experiences of students from Indonesia and Papua New Guinea who were sponsored for Australian-based tertiary study from 1950s-2010. By recording the personal experiences of scholarship recipients and investigating their networks of influence, this research deepens our understanding of scholarship programs and whether or not they produce outcomes that are consistent with the objective of building mutually beneficial linkages between Australia and partner countries. It examines whether the outcomes are enduring or change over time. The project is especially interested in the experiences of former scholarship-holders in positions of leadership and any networks and ongoing connections they have with Australia. This research provides a better understanding of the personal and professional networks of scholarship alumni, and encourages the sharing of experiences. The interviews will be permanently retained in appropriate repositories and drawn on for use in biographies, radio and television programs, internet applications and educational curricula for schools and leadership programs. This research promotes the values of historical research and scholarship among Indonesians and Papua New Guineans and points to the value of oral testimony from past and recent generations of mobile students for current generations facing important challenges and choices.</description><citationInfo><fullCitation style="Datacite">Lowe, David; Ritchie, Jonathan; Jemma, Purdey (2015): Questionnaire data for &#039;Scholarships and Connections: Australia, Indonesia and Papua New Guinea, 1960-2010&#039;. Deakin University. http://dx.doi.org/10.4225/16/557055D97ADC9</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30073518</identifier>
+      <datestamp>2016-02-26T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479834</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30073518</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="collection" dateAccessioned="2015-05-28T10:00:00Z" dateModified="2016-02-26T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30073518</identifier><identifier type="doi">10.4225/16/5570544408325</identifier><name type="primary"><namePart>Scholarships and Connections: Australia, Indonesia and Papua New Guinea, 1960-2010</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Purdey, Jemma</addressPart></physical><electronic type="email"><value>jemma.purdey@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5570544408325</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2013-05-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2015-06-30T00:00:00Z</date></temporal><spatial type="text">Indonesia</spatial><spatial type="text">Papua New Guinea</spatial><spatial type="text">Australia</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/434</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528090</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3052</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1511247</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/4914</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1447235</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/434</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528090</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Scholarships</subject><subject type="local">Australia</subject><subject type="local">Regional engagement</subject><subject type="local">Aid</subject><subject type="local">Development</subject><subject type="local">Australian Awards</subject><subject type="local">Colombo Plan</subject><subject type="local">Education</subject><subject type="local">Papua New Guinea</subject><subject type="local">Indonesia</subject><subject type="anzsrc-for">210303</subject><subject type="anzsrc-seo">950503</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Creative Commons Attribution noncommercial share alike</rightsStatement><accessRights>Creative Commons Attribution noncommercial share alike</accessRights><licence>Creative Commons Attribution noncommercial share alike</licence></rights><description type="full">For over fifty years Australia has welcomed students from Indonesia and Papua New Guinea to study at our tertiary institutions on government scholarships. An important premise behind the scholarship program has been the hope that the connections with Australia developed by these students will be long-lasting and mutually beneficial to Australia and partner governments. The research project ‘Scholarships and Connections’ investigates the life stories and experiences of students from Indonesia and Papua New Guinea who were sponsored for Australian-based tertiary study from 1950s-2010. By recording the personal experiences of scholarship recipients and investigating their networks of influence, this research deepens our understanding of scholarship programs and whether or not they produce outcomes that are consistent with the objective of building mutually beneficial linkages between Australia and partner countries. It examines whether the outcomes are enduring or change over time. The project is especially interested in the experiences of former scholarship-holders in positions of leadership and any networks and ongoing connections they have with Australia. This research provides a better understanding of the personal and professional networks of scholarship alumni, and encourages the sharing of experiences. The interviews will be permanently retained in appropriate repositories and drawn on for use in biographies, radio and television programs, internet applications and educational curricula for schools and leadership programs. This research promotes the values of historical research and scholarship among Indonesians and Papua New Guineans and points to the value of oral testimony from past and recent generations of mobile students for current generations facing important challenges and choices.</description><citationInfo><fullCitation style="Datacite">Lowe, David; Ritchie, Jonathan; Purdey, Jemma (2015): Scholarships and Connections: Australia, Indonesia and Papua New Guinea, 1960-2010. Deakin University. http://dx.doi.org/10.4225/16/5570544408325</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30067515</identifier>
+      <datestamp></datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479875</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465883</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465874</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30067515</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2015-06-24T10:00:00Z" dateModified=""><identifier type="handle">hdl.handle.net/10536/DRO/DU:30067515</identifier><identifier type="doi">10.4225/16/546A6A3161F5B</identifier><name type="primary"><namePart>The invasive Northern Pacific seastar, Asterias amurensis, transcriptome</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Mark Richardson</addressPart></physical><electronic type="email"><value>mfrichar@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/546A6A3161F5B</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2012-07-02T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2012-07-12T00:00:00Z</date></temporal><spatial type="text">Williamstown, VIC</spatial></coverage><relatedInfo type="website"><identifier type="uri">https://dataportal.deakin.edu.au/collection/3801</identifier><title>Dataportal</title></relatedInfo><relatedObject><key>deakin.edu.au/dro/author/4245</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1537888</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3009</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1537994</key><relation type="hasCollector"><description>author</description></relation></relatedObject><subject type="local">Asterias amurensis, transcriptome, de novo, invasive, seastar</subject><subject type="anzsrc-for">060408</subject><subject type="anzsrc-for">060399</subject><subject type="anzsrc-seo">960407</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Open Access</rightsStatement><accessRights>open</accessRights><licence>Creative Commons Attribution share alike</licence></rights><description type="full">Here we provide the supplementary data collection for the upcoming publication of the larval transcriptomic resource for the Northern Pacific Seastar, Asterias amurensis, an invasive marine predator in Australia. A. amurensis is ranked among the most potentially damaging invasive species in Australia and has recently expanded its range along the eastern mainland coast of Australia. As a first step to study the genetic basis of adaptive change and other important evolutionary processes during a contemporary invasive range expansion we de novo assembled and characterised the transcriptome.</description><citationInfo><fullCitation style="Datacite">Richardson, Mark; Sherman, Craig (2014): The invasive Northern Pacific seastar, Asterias amurensis, transcriptome. Deakin University. http://dx.doi.org/10.4225/16/546A6A3161F5B</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30079101</identifier>
+      <datestamp></datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:480011</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465886</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30079101</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2015-10-23T10:00:00Z" dateModified=""><identifier type="handle">hdl.handle.net/10536/DRO/DU:30079101</identifier><identifier type="doi">10.4225/16/56298CC03A59F</identifier><name type="primary"><namePart>Sturnus vulgaris, mitochondrial selection, MATLAB code and microsatellite data</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Lee Rollins</addressPart></physical><electronic type="email"><value>lee.rollins@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/56298CC03A59F</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2003-01-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2007-12-31T00:00:00Z</date></temporal><spatial type="text">Munglinup, Western Australia</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/4168</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1624794</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><subject type="local">mitochondrial</subject><subject type="local">selection</subject><subject type="local">heteroplasmy</subject><subject type="local">European starling</subject><subject type="anzsrc-for">060411</subject><subject type="anzsrc-seo">970106</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>to be determined</rightsStatement><accessRights>open</accessRights><licence>Creative Commons Attribution share alike</licence></rights><description type="full">Here we provide MATLAB code used to simulate drift and selection between and within individuals, which has been used to investigate mitochondrial haplotype frequency shifts in Sturnus vulgaris. Also provided is a microsatellite data set used to assess whether empirical allele frequency shifts were likely to be caused by admixture. These files support and upcoming publication, which concludes that within-individuals selection on mitochondrial DNA best explains empirical data.</description><description type="note">WEBSITE 1: Data will be stored at Deakin University</description><citationInfo><fullCitation style="Datacite">Rollins, Lee (2015): Sturnus vulgaris, mitochondrial selection, MATLAB code and microsatellite data. Deakin University. http://dx.doi.org/10.4225/16/56298CC03A59F</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30079231</identifier>
+      <datestamp></datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479730</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466047</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30079231</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2015-10-28T10:00:00Z" dateModified=""><identifier type="handle">hdl.handle.net/10536/DRO/DU:30079231</identifier><identifier type="doi">10.4225/16/5636E5C83861B</identifier><name type="primary"><namePart>Acceptance and use of MOODLE</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">North-Samardzic, Andrea</addressPart></physical><electronic type="email"><value>andreans@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5636E5C83861B</value></electronic></address></location><coverage></coverage><relatedObject><key>deakin.edu.au/dro/author/5389</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1625142</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><subject type="local">MOODLE</subject><subject type="local">learning management systems</subject><subject type="local">higher education</subject><subject type="anzsrc-for">080602</subject><subject type="anzsrc-seo">930599</subject><subject type="anzsrc-toa">Pure</subject><rights><accessRights>Data is open to all for private study and fair use only. Enquires should be addressed to Dr Andrea North-Samardzic.</accessRights><licence>Copyright owner</licence></rights><description type="full">Learning management systems such as Moodle have become an integral part of today’s universities. While commonly used throughout the world, there has been disproportionate attention to peoples’ acceptance and use of such technologies. What is worth specific attention is how students may perceive learning technologies differently to their professors. Using the Unified Theory of Acceptance and Use of Technology or UTAUT this dataset illustrates attitudes towards and usage behaviours of Moodle for both students and academics. The findings point to key similarities and differences, the latter of which departs from extant literature that suggests no difference between generations. However given the lack of support for the UTAUT model, it is suggested that theoretical models of technology acceptance and use need to evolve to appropriately capture the environment of higher education in which learning management systems such as Moodle are used.</description><citationInfo><fullCitation style="Datacite">North-Samardzic, Andrea (2015): Acceptance and use of MOODLE. Deakin University. http://dx.doi.org/10.4225/16/5636E5C83861B</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30083409</identifier>
+      <datestamp>2018-09-07T11:55:47Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479628</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466293</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30083409</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2016-05-11T10:00:00Z" dateModified="2018-09-07T11:55:47Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30083409</identifier><identifier type="doi">10.4225/16/5734FB751BB5B</identifier><name type="primary"><namePart>Dataset of specific variables from the Mums, Dads, Kids study</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Teychenne, Megan</addressPart></physical><electronic type="email"><value>megan.teychenne@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5734FB751BB5B</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2013-01-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2014-01-01T00:00:00Z</date></temporal><spatial type="text">Australia</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/3051</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1559182</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3352</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1683546</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><subject type="local">mothers</subject><subject type="local">mental health</subject><subject type="local">screen time</subject><subject type="local">anxiety</subject><subject type="local">Television</subject><subject type="anzsrc-for">11</subject><subject type="anzsrc-seo">92</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Deakin University</rightsStatement><licence>Copyright owner</licence></rights><description type="full">Dataset for MDK study including screen time and anxiety scores of participants. Also includes demographic characteristics</description><citationInfo><fullCitation style="Datacite">Hinkley, Trina; Teychenne, Megan (2016): Dataset of specific variables from the Mums, Dads, Kids study. Deakin University. http://dx.doi.org/10.4225/16/5734FB751BB5B</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30086177</identifier>
+      <datestamp>2016-09-19T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479740</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466501</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30086177</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2016-09-19T10:00:00Z" dateModified="2016-09-19T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30086177</identifier><identifier type="doi">10.4225/16/582e8de2573d4</identifier><name type="primary"><namePart>Database of Australian doctorates</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Macauley, Peter</addressPart></physical><electronic type="url"><value>http://doi.org/10.4225/16/582e8de2573d4</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">1948-01-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2006-01-01T00:00:00Z</date></temporal><spatial type="text">Australia</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/441</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-537996</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/212</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-551738</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-474618</key><relation type="hasCollector"><description>author</description></relation></relatedObject><subject type="local">Australian PhD theses</subject><subject type="local">bibliographic records of PhD theses</subject><subject type="local">PhD theses</subject><subject type="local">theses</subject><subject type="local">Doctoral completions</subject><subject type="anzsrc-for">130103</subject><subject type="anzsrc-seo">939999</subject><subject type="anzsrc-toa">Applied</subject><rights><rightsStatement>There is no access restriction currently applied to the research data.</rightsStatement><accessRights>Creative Commons Attribution CC BY 4.0</accessRights><licence>Open Access</licence></rights><description type="full">Lists PhD theses created by Australian researchers within the period 1948-2006. Does not include professional doctorates.</description><description type="note">WEBSITE 1: http://hdl.handle.net/10536/DRO/DU:30086177</description><citationInfo><fullCitation style="Datacite">Macauley, Peter (2012): Database of Australian doctorates. Deakin University. http://dx.doi.org/10.4225/16/582e8de2573d4</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30096924</identifier>
+      <datestamp>2017-05-31T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479888</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465815</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465803</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30096924</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="collection" dateAccessioned="2016-11-11T10:00:00Z" dateModified="2017-05-31T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30096924</identifier><identifier type="doi">10.4225/16/592b6154c81d5</identifier><name type="primary"><namePart>Victorian marine habitat collection</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Ierodiaconou, Daniel</addressPart></physical><electronic type="email"><value>daniel.ierodiaconou@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/592b6154c81d5</value></electronic></address></location><coverage><spatial type="text">Victoria</spatial></coverage><relatedInfo type="website"><identifier type="uri">https://vmdp.deakin.edu.au/</identifier><title>Victorian Marine Data Portal</title></relatedInfo><relatedObject><key>deakin.edu.au/dro/author/337</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1527499</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3422</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1706954</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Marine habitats</subject><subject type="local">GIS</subject><subject type="local">MBES</subject><subject type="local">LiDAR</subject><subject type="local">BRUVs</subject><subject type="local">Towed Video</subject><subject type="local">Benthic habitat mapping</subject><subject type="local">Marine Protected areas</subject><subject type="local">Seafloor morphology</subject><subject type="anzsrc-for">050202</subject><subject type="anzsrc-for">040699</subject><subject type="anzsrc-for">060205</subject><subject type="anzsrc-seo">960503</subject><subject type="anzsrc-toa">Applied</subject><rights><accessRights>Different access conditions may apply to some data. This will be specified on the appropriate VMH portal page.</accessRights></rights><description type="full">Observation data (towed video, BRUVs) collected in Victorian state waters. Geographic extent encompasses state waters from the South Australian border to Point Hicks.</description><citationInfo><fullCitation style="Datacite">Ierodiaconou, Daniel Adam; Howe, Steffan; Ferns, Lawrance (2016): Victorian marine habitat collection . Deakin University. http://dx.doi.org/10.4225/16/592b6154c81d5</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30089877</identifier>
+      <datestamp></datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479930</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465806</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30089877</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2016-12-01T10:00:00Z" dateModified=""><identifier type="handle">hdl.handle.net/10536/DRO/DU:30089877</identifier><identifier type="doi">10.4225/16/5848b8f8d273b</identifier><name type="primary"><namePart>Zostera nigricaulis seed germination experiment</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Smith, Timothy</addressPart></physical><electronic type="email"><value>tim.smith@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5848b8f8d273b</value></electronic></address></location><coverage><spatial type="text">Port Phillip Bay, AU (Australia/Melbourne)</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/6454</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1696790</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/4167</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1696789</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3009</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1537994</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Seagrass, Port Phillip Bay, Germination, Heterozostera,</subject><subject type="anzsrc-for">05</subject><subject type="anzsrc-seo">960808</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Open to the public</rightsStatement><accessRights>None</accessRights><licence>Open Access</licence></rights><description type="full">Data from seed germination experiment to determine the impact of temperature, salinity, sediment type and sediment depth on seed germination.</description><citationInfo><fullCitation style="Datacite">Cumming, Erin; Smith, Timothy (2016): Zostera nigricaulis seed germination experiment. Deakin University. http://dx.doi.org/10.4225/16/5848b8f8d273b</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30091025</identifier>
+      <datestamp>2018-09-07T17:47:35Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30091025</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-02-03T10:00:00Z" dateModified="2018-09-07T17:47:35Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30091025</identifier><identifier type="doi">10.4225/16/5893999965ac2</identifier><name type="primary"><namePart>Supporting data for “De novo assembly of the liver transcriptome of the European starling, Sturnus vulgaris”</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Richardson, Mark</addressPart></physical><electronic type="email"><value>m.richardson@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5893999965ac2</value></electronic></address></location><coverage></coverage><relatedObject><key>deakin.edu.au/dro/author/4245</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1537888</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><subject type="local">Sturnus vulgaris</subject><subject type="local">European starling</subject><subject type="local">de novo transcriptome assembly</subject><subject type="local">invasive species</subject><subject type="local">RNA-seq</subject><subject type="anzsrc-for">060405</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>This data is publicly available</rightsStatement><accessRights>This data is publicly available</accessRights><licence>Creative Commons Attribution share alike</licence></rights><description type="full">The European starling, Sturnus vulgaris, is a prolific and worldwide invasive species that also has served as an important model for avian ecological and invasion research. Although the genome sequence recently has become available, no transcriptome data have been published for this species. Here, we have sequenced and assembled S. vulgaris liver transcriptome. A de novo transcriptome assembly constructed 18,678 protein-coding genes of high confidence that yield 23,945 non-redundant transcripts, of which we functionally annotated 82%. The transcriptome is similar to other passerine transcriptomes in terms of size and completeness. Further, our transcriptome assembly covers 87% of the predicted transcriptome of the draft genome currently available on NCBI. The data are publicly available on NCBI and DRO as a resource to other researchers.</description><citationInfo><fullCitation style="Datacite">Richardson, Mark (2017): Supporting data for “De novo assembly of the liver transcriptome of the European starling, Sturnus vulgaris”. Deakin University. http://dx.doi.org/10.4225/16/5893999965ac2</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30093405</identifier>
+      <datestamp>2017-04-13T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479857</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465827</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30093405</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-04-05T10:00:00Z" dateModified="2017-04-13T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30093405</identifier><identifier type="doi">10.4225/16/58e567377aa04</identifier><name type="primary"><namePart>Variability and vulnerability of coastal &#039;blue carbon&#039; stocks: A case study from southeast Australia</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Ewers Lewis, Carolyn Jane</addressPart></physical><electronic type="email"><value>cewers@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/58e567377aa04</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2014-07-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2014-10-30T00:00:00Z</date></temporal><spatial type="text">Victoria, Australia</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/6613</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1704239</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/6611</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1287295</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1704374</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1704240</key><relation type="hasCollector"><description>author</description></relation></relatedObject>      <relatedObject><key>http://purl.org/au-research/grants/arc/LP160100242</key><relation type="isOutputOf"></relation></relatedObject><subject type="local">blue carbon</subject><subject type="local">soil carbon</subject><subject type="local">carbon stocks</subject><subject type="local">climate change</subject><subject type="local">tidal marsh</subject><subject type="local">saltmarsh</subject><subject type="local">mangrove</subject><subject type="local">seagrass</subject><subject type="local">greenhouse gas emissions</subject><subject type="anzsrc-for">050301</subject><subject type="anzsrc-seo">960302</subject><subject type="anzsrc-toa">Applied</subject><rights><rightsStatement>This dataset is IP of the primary investigator, data manager, and collaborators.</rightsStatement><accessRights>Please contact the Chief Investigator or Data Manager to negotiate access to the data collection</accessRights></rights><description type="full">This dataset contains dry bulk density and percent carbon data for sediments sampled from 96 blue carbon ecosystems (saltmarshes, mangrove forests, and seagrass meadows) across Victoria, Australia.</description><description type="note">WEBSITE 1: https://intranet-apps.deakin.edu.au/rds/activity/detail/id/15704</description><citationInfo><fullCitation style="Datacite">Ewers Lewis, Carolyn Jane; Carnell, Paul; Sanderman, Jonathan; Baldock, Jeffrey; Macreadie, Peter (2014): Variability and vulnerability of coastal &#039;blue carbon&#039; stocks: A case study from southeast Australia. Deakin University. http://dx.doi.org/10.4225/16</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30097742</identifier>
+      <datestamp>2018-09-17T08:07:42Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30051971</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479926</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465810</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30097742</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-07-12T10:00:00Z" dateModified="2018-09-17T08:07:42Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30097742</identifier><identifier type="doi">10.4225/16/5977065641b15</identifier><name type="primary"><namePart>The Pinnacle grassy box woodland nutrient and weed management experiment 2010-2013</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Driscoll, Don</addressPart></physical><electronic type="email"><value>d.driscoll@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5977065641b15</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2010-11-13T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2013-12-15T00:00:00Z</date></temporal><spatial type="text">The Pinnacle Nature Reserve and nearby paddocks, Australian Capital Territory</spatial></coverage><relatedInfo type="website"><identifier type="uri">https://dx.doi.org/10.1111/jvs.12513</identifier><title>Disturbance maintains native and exotic plant species richness in invaded grassy woodlands</title></relatedInfo><relatedObject><key>deakin.edu.au/dro/author/5735</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1708070</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><subject type="local">Avena fatua, Bromus diandrus, plant competition, invasive exotic weed species, herbivore grazing, plant niche partitioning, nitrogen and phosphorus nutrient enrichment, plant-herbivore interactions, grassy ecosystem restoration, woodland biodiversity cons</subject><subject type="anzsrc-for">050103</subject><subject type="anzsrc-seo">960804</subject><subject type="anzsrc-toa">Applied</subject><rights><rightsStatement>Creative Commons Attribution share alike</rightsStatement><accessRights>Where these data form a major component of a new work, co-authorship may be required. Please contact the Chief Investigator/Data Manager to negotiate conditions of re-use</accessRights><licence>Creative Commons Attribution share alike</licence></rights><description type="full">These data were used in two publications: DRISCOLL D. A. (2017). Disturbance maintains native and exotic plant species richness in invaded grassy woodlands. Journal of vegetation science 28, 573&amp;ndash;584. DRISCOLL D. A. &amp;amp; STRONG, C. (in press 29 June 2017). Covariation of soil nutrients drives occurrence of exotic and native plant species. Journal of Applied Ecology. The data include plant surveys from 100 plots at 10 sites in csv files for 2010 and 2011-2013 soil nutrient data (NO3, available P, org C) from April 2015 in a csv file Site location coordinates.</description><description type="note">WEBSITE 1: https://dro.deakin.edu.au/view/DU:30097742</description><citationInfo><fullCitation style="Datacite">Driscoll, Don (2010): The Pinnacle grassy box woodland nutrient and weed management experiment 2010-2013. Deakin University. http://dx.doi.org/10.4225/16/5977065641b15</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30100905</identifier>
+      <datestamp>2017-07-28T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479764</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466690</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30100905</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-07-28T10:00:00Z" dateModified="2017-07-28T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30100905</identifier><identifier type="doi">10.4225/16/597eb6626596a</identifier><name type="primary"><namePart>Tracking federalism, power-sharing and constitutional change in Nepal, Myanmar and Sri Lanka</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Breen, Michael</addressPart></physical><electronic type="email"><value>michael.breen@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/597eb6626596a</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2014-07-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2017-06-30T00:00:00Z</date></temporal><spatial type="text">Nepal</spatial><spatial type="text">Myanmar</spatial><spatial type="text">Sri Lanka</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/6838</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1708203</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/310</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1708204</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Federalism</subject><subject type="local">Constitutions</subject><subject type="local">Nepal</subject><subject type="local">Myanmar</subject><subject type="local">Sri Lanka</subject><subject type="local">Electoral systems</subject><subject type="local">Ethnic accommodation</subject><subject type="anzsrc-for">160603</subject><subject type="anzsrc-seo">940203</subject><subject type="anzsrc-toa">Strategic</subject><rights><rightsStatement>Creative Commons Attribution share alike</rightsStatement><accessRights>This data may be accessed and used by any researcher to support their research provided appropriate acknowledgement is provided</accessRights><licence>Creative Commons Attribution share alike</licence></rights><description type="full">This dataset supports historical comparative analysis of institutions for the accommodation, integration and assimilation of ethnic diversity in Nepal, Myanmar and Sri Lanka. It incorporates formal institutions, like constitutions and electoral systems, as well as their practice, and is based on a scoring system detailed under the concept of an Asian federal system. The dataset also incorporates interacting and exogenous variables, namely economic reforms, regime changes, international intervention and other contingent events, democratization and conflict. Different institutional configurations can be related to these variables and success factors to assist in the identification of suitable institutions for the management of ethnic diversity.</description><citationInfo><fullCitation style="Datacite">Breen, Michael (2017): Tracking federalism, power-sharing and constitutional change in Nepal, Myanmar and Sri Lanka. Deakin University. http://dx.doi.org/10.4225/16/597eb6626596a</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30102751</identifier>
+      <datestamp>2017-09-25T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30057380</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479882</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:465883</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30102751</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-09-25T10:00:00Z" dateModified="2017-09-25T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30102751</identifier><identifier type="doi">10.4225/16/59d15a6917a5e</identifier><name type="primary"><namePart>Supporting data for &#039;Draft Genomes of two Australian strains of the plant pathogen, Phytophthora cinnamomi&#039;</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Richardson, Mark (Mr)</addressPart></physical><electronic type="url"><value>http://doi.org/10.4225/16/59d15a6917a5e</value></electronic></address></location><coverage></coverage><relatedInfo type="website"><identifier type="uri">https://dataportal.deakin.edu.au/collection/23003</identifier><title>Dataportal</title></relatedInfo><relatedObject><key>http://nla.gov.au/nla.party-1709271</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/51</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1709222</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/4245</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1537888</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/51</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1709222</key><relation type="hasAssociationWith"><description>supervisor</description></relation></relatedObject><subject type="local">Phytophthora genome, plant pathogen, Phytophthora cinnamomi</subject><subject type="anzsrc-for">060408</subject><subject type="anzsrc-seo">960414</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Amy Longmuir, Peter Beech &amp; Mark Richardson. CC-BY 4.0.</rightsStatement><accessRights>Creative Commons Attribution licence</accessRights><licence>Creative Commons Attribution</licence></rights><description type="full">Here we provide the supporting data for a project conducting the genome sequencing, draft assembly, and preliminary annotation of two geographically separated Australian strains of P. cinnamomi.</description><citationInfo><fullCitation style="Datacite">Longmuir, Amy; Beech, Peter; Richardson, Mark (2017): Supporting data for &quot;Draft Genomes of two Australian strains of the plant pathogen, Phytophthora cinnamomi&quot;. Deakin University. http://dx.doi.org/10.4225/16/59d15a6917a5e</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30104687</identifier>
+      <datestamp>2017-11-08T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:480026</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30104687</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="collection" dateAccessioned="2017-11-08T10:00:00Z" dateModified="2017-11-08T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30104687</identifier><identifier type="doi">10.4225/16/5a0ccca7b4864</identifier><name type="primary"><namePart>Papua New Guinea World War II: voices from the war</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Jonathan Ritchie</addressPart></physical><electronic type="email"><value>jonathan.ritchie@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5a0ccca7b4864</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2013-01-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2017-01-01T00:00:00Z</date></temporal><spatial type="text">Papua New Guinea</spatial></coverage><relatedObject><key>deakin.edu.au/dro/author/3052</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1511247</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/4787</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1710086</key><relation type="hasCollector"><description>author</description></relation></relatedObject><subject type="local">Papua New Guinea</subject><subject type="local">World War II</subject><subject type="local">oral history</subject><subject type="local">Australia</subject><subject type="local">Japan</subject><subject type="local">USA</subject><subject type="anzsrc-for">210303</subject><subject type="anzsrc-seo">970121</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Deakin University</rightsStatement><accessRights>Creative Commons Attribution Non-Commercial Share Alike licence</accessRights><licence>Creative Commons Attribution noncommercial share alike</licence></rights><description type="full">The Papua New Guinean Voices from the War collection has arisen from an oral history research project that has been under way since 2013. This project has aimed to record the memories of Papua New Guineans about what happened and what they experienced when World War II came to their land.</description><citationInfo><fullCitation style="Datacite">Ritchie, Jonathan; Stead, Victoria; Pump, Wendy (2017): Papua New Guinea World War II: voices from the war. Deakin University. http://dx.doi.org/10.4225/16/5a0ccca7b4864</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30044514</identifier>
+      <datestamp>2019-07-16T09:12:11Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30000288</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30000293</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30016444</setSpec>
+				      <setSpec>oai:dro.deakin.edu.au:DU:30000279</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:480020</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466608</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30044514</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2017-12-05T06:08:26Z" dateModified="2019-07-16T09:12:11Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30044514</identifier><name type="primary"><namePart>Visy interviews data</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Faculty of Business and Law, Deakin University, 45 Mahoneys Road, Warrnambool, Victoria 3280 Australia</addressPart></physical><electronic type="email"><value>andrew.creed@deakin.edu.au</value></electronic><electronic type="url"><value>http://hdl.handle.net/10536/DRO/DU:30044514</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2005-03-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2006-01-01T00:00:00Z</date></temporal></coverage><relatedObject><key>deakin.edu.au/dro/author/155</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528397</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/898</key><relation type="hasCollector"><description>investigator</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1528398</key><relation type="hasCollector"><description>investigator</description></relation></relatedObject><relatedInfo type="publication"><identifier type="uri">http://hdl.handle.net/10536/DRO/DU:30017209</identifier><title>Related work</title></relatedInfo><relatedInfo type="publication"><identifier type="uri">http://hdl.handle.net/10536/DRO/DU:30031424</identifier><title>Related work</title></relatedInfo><subject type="local">graduate attributes</subject><subject type="local">teamwork</subject><subject type="local">communication</subject><subject type="local">VISY</subject><subject type="local">Deakin graduate Attributes</subject><subject type="local">Visy Industrial Packaging</subject><subject type="anzsrc-for">150311</subject><subject type="anzsrc-seo">970115</subject><rights><rightsStatement>Deakin University</rightsStatement><accessRights>Restricted to research group. Enquires should be emailed to Mr Andrew Creed.</accessRights><licence>Copyright owner</licence></rights><description type="full">This data collection consists of:&lt;br /&gt;&amp;bull; Raw interview data from semi-structured interviews&lt;br /&gt;&amp;bull; Transcriptions of interviews&lt;br /&gt;&amp;bull; Photographs&lt;br /&gt;&amp;bull; Sound files&lt;br /&gt;&amp;bull; Diary data from the learning object development process&lt;br /&gt;&lt;br /&gt;Data is drawn from respondents in the Visy Industrial Packaging factory site. The data is themed according to the Deakin graduate attributes.&lt;br /&gt;</description><description type="note">The data was collected via interviews and observation sessions. It is organised chronologically and thematically.</description></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+  <record>
+    <header>
+      <identifier>oai:dro.deakin.edu.au:DU:30106962</identifier>
+      <datestamp>2018-03-16T10:00:00Z</datestamp>
+							      <setSpec>oai:dro.deakin.edu.au:DU:30033866</setSpec>
+		   
+										      <setSpec>dro.deakin.edu.au:DU:cvo_id:479628</setSpec>
+								      <setSpec>dro.deakin.edu.au:DU:cvo_id:466352</setSpec>
+				            
+	    </header>
+    <metadata>
+			<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+	    	
+	
+
+
+
+
+	   
+		<registryObject group="Deakin University"><key>http://hdl.handle.net/10536/DRO/DU:30106962</key><originatingSource>www.deakin.edu.au/dro/</originatingSource><collection type="dataset" dateAccessioned="2018-03-16T10:00:00Z" dateModified="2018-03-16T10:00:00Z"><identifier type="handle">hdl.handle.net/10536/DRO/DU:30106962</identifier><identifier type="doi">10.4225/16/5ab8883e9a5d2</identifier><name type="primary"><namePart>Cross sectional associations of screen time and outdoor play with social skills in preschool children</namePart></name><location><address><physical type="postalAddress"><addressPart type="text">Teychenne, Megan</addressPart></physical><electronic type="email"><value>megan.teychenne@deakin.edu.au</value></electronic><electronic type="url"><value>http://doi.org/10.4225/16/5ab8883e9a5d2</value></electronic></address></location><coverage><temporal><date type="dateFrom" dateFormat="W3CDTF">2013-09-01T00:00:00Z</date><date type="dateTo" dateFormat="W3CDTF">2014-03-31T00:00:00Z</date></temporal><spatial type="text">Australia</spatial><spatial type="iso19139dcmiBox">northlimit=-10.371209783268; southlimit=-44.631201930759; westlimit=111.43157958985; eastLimit=154.49798583985; projection=WGS84</spatial></coverage><relatedInfo type="website"><identifier type="uri">https://doi.org/10.1371/journal.pone.0193700</identifier><title>Cross sectional associations of screen time and outdoor play with social skills in preschool children</title></relatedInfo><relatedInfo type="website"><identifier type="uri">https://doi.org/10.1371/journal.pone.0155696</identifier><title>Associations between screen-based sedentary behaviour and anxiety symptoms in mothers with young children</title></relatedInfo><relatedObject><key>deakin.edu.au/dro/author/3051</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1559182</key><relation type="hasCollector"><description>supervisor</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/3352</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1683546</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>deakin.edu.au/dro/author/2912</key><relation type="hasCollector"><description>author</description></relation></relatedObject><relatedObject><key>http://nla.gov.au/nla.party-1714805</key><relation type="hasCollector"><description>author</description></relation></relatedObject><subject type="local">children</subject><subject type="local">screen-time</subject><subject type="local">sedentary behaviour</subject><subject type="local">social skills</subject><subject type="anzsrc-for">1106</subject><subject type="anzsrc-seo">92</subject><subject type="anzsrc-toa">Pure</subject><rights><rightsStatement>Deakin University</rightsStatement><accessRights>Reuse for private research or study is permitted under Fair Dealing in the Copyright Act 1968. For all other uses, please contact the lead author</accessRights><licence>Open Access</licence></rights><description type="full">Dataset used from the Mums, Dads and Kids study assessing the cross sectional associations of screen time and outdoor play with social skills in preschool children</description><citationInfo><fullCitation style="Datacite">Hinkley, Trina; Teychenne, Megan; Brown, Helen (2014): Cross sectional associations of screen time and outdoor play with social skills in preschool children. Deakin University. http://dx.doi.org/10.4225/16/5ab8883e9a5d2</fullCitation></citationInfo></collection></registryObject>
+	
+
+
+
+	  
+		  </registryObjects>
+	
+
+
+
+
+    </metadata>
+  </record>
+
+
+
+
+
+
+
+</ListRecords>
+</OAI-PMH>
