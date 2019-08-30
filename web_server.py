@@ -1,6 +1,4 @@
 from flask import Flask, jsonify, request
-from gevent import monkey
-monkey.patch_all()
 
 def new(daemon):
     """
