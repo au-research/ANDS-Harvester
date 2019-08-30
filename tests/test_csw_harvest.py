@@ -8,12 +8,15 @@ from utils.Request import Request
 
 class test_csw_harvester(unittest.TestCase):
 
-    @patch.object(Request, 'getData')
-    def test_csw_harvest(self, mockGetData):
-        f = io.open(myconfig.abs_path + '/tests/resources/test_source/csw/tern_csw.xml', mode="r")
+    def readfile(self, path):
+        f = io.open(myconfig.abs_path + '/tests/resources/test_source/csw/' + path, mode="r")
         data = f.read()
         f.close()
-        mockGetData.return_value = data
+        return data
+
+    @patch.object(Request, 'getData')
+    def test_csw_harvest(self, mockGetData):
+        mockGetData.return_value = self.readfile('tern_csw.xml')
         harvestInfo = {}
         harvestInfo['advanced_harvest_mode'] = "REFRESH"
         harvestInfo['batch_number'] = "CSW_TERN"

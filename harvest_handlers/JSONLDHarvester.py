@@ -5,7 +5,6 @@ from crawler.SiteMapCrawler import SiteMapCrawler
 import json, numbers
 from xml.dom.minidom import Document
 import hashlib
-from requests.models import Response
 from utils.Request import Request as myRequest
 
 

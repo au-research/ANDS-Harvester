@@ -7,12 +7,15 @@ import threading, io
 
 class test_get_harvester(unittest.TestCase):
 
-    @patch.object(Request, 'getData')
-    def test_XML_get(self, mockGetData):
-        f = io.open(myconfig.abs_path + '/tests/resources/test_source/get/get_xml.xml', mode="r")
+    def readfile(self, path):
+        f = io.open(myconfig.abs_path + '/tests/resources/test_source/get/' + path, mode="r")
         data = f.read()
         f.close()
-        mockGetData.return_value = data
+        return data
+
+    @patch.object(Request, 'getData')
+    def test_XML_get(self, mockGetData):
+        mockGetData.return_value = self.readfile('get_xml.xml')
         harvestInfo = {}
         harvestInfo['uri'] = ''
         harvestInfo['provider_type'] = 'GET'
@@ -25,7 +28,6 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
         #harvestReq = GETHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
@@ -34,10 +36,7 @@ class test_get_harvester(unittest.TestCase):
 
     @patch.object(Request, 'getData')
     def test_JSON_get(self, mockGetData):
-        f = io.open(myconfig.abs_path + '/tests/resources/test_source/get/get_json.json', mode="r")
-        data = f.read()
-        f.close()
-        mockGetData.return_value = data
+        mockGetData.return_value = self.readfile('get_json.json')
         harvestInfo = {}
         harvestInfo['uri'] = ''
         harvestInfo['provider_type'] = 'GET'
@@ -48,9 +47,8 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "GET_JSON"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -71,7 +69,6 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -91,7 +88,6 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "HARVEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
