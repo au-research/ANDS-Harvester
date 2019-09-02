@@ -154,8 +154,8 @@ class CSWHarvester(Harvester):
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.resultFileExtension
-                inFile = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                inFile = self.outputDir + os.sep + file
                 try:
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)

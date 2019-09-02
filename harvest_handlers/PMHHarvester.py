@@ -151,18 +151,21 @@ class PMHHarvester(Harvester):
 
 
     def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
+        if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
-        inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
-        #self.setStatus("HARVESTING", "RUNNING CROSSWALK")
-        try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
-            tr = XSLT2Transformer(transformerConfig)
-            tr.transform()
-        except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
-        except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK", "ERROR")
-            self.handleExceptions(e)
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                self.logger.logMessage("runCrossWalk %s" %file)
+                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                inFile = self.outputDir + os.sep + file
+                try:
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
+                    tr = XSLT2Transformer(transformerConfig)
+                    tr.transform()
+                except subprocess.CalledProcessError as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
+                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
+                    self.handleExceptions(msg)
+                except Exception as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
+                    self.handleExceptions(e)
