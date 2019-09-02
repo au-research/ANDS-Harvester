@@ -69,8 +69,17 @@ class PUREHarvester(Harvester):
     def getRequestUrl(self):
         parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
         urlParams = urlparse.parse_qs(parsed_url.query)
-        if(self.harvestInfo['api_key']):
-            urlParams['apiKey'] = self.harvestInfo['api_key']
+        try:
+            if isinstance(urlParams['apiKey'], list):
+                urlParams['apiKey'] = urlParams['apiKey'][0]
+        except KeyError:
+            pass
+        try:
+            if self.harvestInfo['api_key'] :
+                urlParams['apiKey'] = self.harvestInfo['api_key']
+        except KeyError:
+            pass
+        print(urlParams)
         urlParams['pageSize'] = str(self.maxRecords)
         urlParams['page'] = str(self.pageCount)
         query = urllib.parse.urlencode(urlParams)

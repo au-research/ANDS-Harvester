@@ -62,9 +62,9 @@ class test_pure_harvester(unittest.TestCase):
         harvester.harvest()
 
     # API KEYS PROVIDED BY Melanie (for testing)
-    def only_during_developement_test_bond_pure_external(self):
+    def test_only_during_developement_test_bond_pure_external(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=sjdhgkjsdhgksjdghskdjghs'
+        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
         harvestInfo['harvest_method'] = 'PUREHarvester'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
@@ -74,7 +74,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "TEST"
-        harvestInfo['api_key'] = myconfig.bond_api_key
+        # harvestInfo['api_key'] = myconfig.bond_api_key
         # harvestReq =   PUREHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
