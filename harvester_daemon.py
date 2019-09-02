@@ -18,6 +18,8 @@ import threading
 from harvest_handlers import *
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
+from gevent import monkey
+monkey.patch_thread()
 import web_server
 
 
@@ -565,7 +567,7 @@ class HarvesterDaemon(Daemon):
         # Starting the web interface as a different thread
         try:
             web_port = getattr(myconfig, 'web_port', 7020)
-            web_host = getattr(myconfig, 'web_host', 'localhost')
+            web_host = getattr(myconfig, 'web_host', '0.0.0.0')
             http = web_server.new(daemon=self)
             threading.Thread(
                 target=http.run,
