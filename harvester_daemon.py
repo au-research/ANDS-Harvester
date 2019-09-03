@@ -19,7 +19,7 @@ from harvest_handlers import *
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
 from gevent import monkey
-monkey.patch_thread()
+monkey.patch_all()
 import web_server
 
 

@@ -1,0 +1,1263 @@
+<?xml version="1.0" ?>
+<datasets>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> vegetation, features,
+            association:http://capdf.csiro.au/resource/feature/capdf/vegetation,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>115.5591 -28.95816 118.82393 -25.94681</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Vegetation Field Samping Data</name>
+        <description>Vegetation field sampling data that also includes analytically and laboratory
+            derived data sets.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>07017a9e-3084-4125-8f38-206acb9c2fbc</value>
+        </identifier>
+        <url>https://demo.ands.org.au/vegetation-field-samping/817238</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, vw_public_measurement_mineralsaturationindex,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.06762 115.45924 -24.71488 122.62305</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Mineral Saturation Index</name>
+        <description>Mineral Saturation Index</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>c3a075c5-4b01-4bd5-9160-23402706678f</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mineral-saturation-index/817236</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://geology.information.qld.gov.au/resource/feature/gsq/gsmlp/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.5 138 -9 155</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View</name>
+        <description>GeoSciML Portrayal Borehole View for NVCL Borehole</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>71708813-7868-4753-ba20-4967150b7af0</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view/817244</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, vw_public_measurement_index, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.06762 115.45924 -24.71488 122.62305</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Index</name>
+        <description>Index</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>65af1a52-936b-4262-a216-d0110dd6e3c2</value>
+        </identifier>
+        <url>https://demo.ands.org.au/index/817234</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, MV_BOREHOLE_HEADER, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-40.53263369 112.96818636 -9.50909692 174.3169417</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>MV_BOREHOLE_HEADER</name>
+        <description>MV_BOREHOLE_HEADER</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>84bd8b50-a888-4831-adfa-0c3d587cb61b</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mvboreholeheader/817260</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, vw_public_measurement_general, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-25.5082 117.77361 -23.366095 120.27382</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>General measurement</name>
+        <description>General measurement</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>98dfe019-1753-4e91-8582-ab3a21dd8d0b</value>
+        </identifier>
+        <url>https://demo.ands.org.au/general-measurement/817233</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29 138 -9 155</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Boreholes</name>
+        <description>This feature describes the existence, location and associated metadata of drill
+            holes contained within the data provider catalogues.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>798d88b5-417e-4835-871a-97e5faad0524</value>
+        </identifier>
+        <url>https://demo.ands.org.au/boreholes/817248</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://geology.data.nt.gov.au/resource/feature/ntgs/gsmlp/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-26.5 129 -8 138.1</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View</name>
+        <description>GeoSciML Portrayal Borehole View for NVCL Borehole</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>986077f9-75de-43b7-bbc4-e8d15c46ebc8</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view/817247</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> vw_public_measurement_ionratio, features, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.06762 115.45924 -24.71488 122.62305</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Ion Ratio</name>
+        <description>Ion Ratio</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>2c3e1916-07e9-4318-8b34-badffa417b83</value>
+        </identifier>
+        <url>https://demo.ands.org.au/ion-ratio/817235</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> view_geosample_and_mineral_count, features, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-34.00004 114.66419 -16.11942 128.88962</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Geosample and Mineralogy</name>
+        <description>Geosample and Mineralogy</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>2dc0cf99-850a-43ea-9301-6588bebda086</value>
+        </identifier>
+        <url>https://demo.ands.org.au/geosample-mineralogy/817252</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-25 129 -12 138.1</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Boreholes</name>
+        <description>This feature describes the existence, location and associated metadata of drill
+            holes contained within the data provider catalogues.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>77397d45-e742-4eb8-8edc-851b5e031b2b</value>
+        </identifier>
+        <url>https://demo.ands.org.au/boreholes/817246</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, MV_PW_TEMPERATURE, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-1 -1 1 1</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>MV_PW_TEMPERATURE</name>
+        <description>MV_PW_TEMPERATURE</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>dc431c48-4940-4107-9f41-743dd605bb28</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mvpwtemperature/817245</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> Geosciences, Geophysics, Seismic Lines, Seismic Traverses, Seismic Reflection,
+            Seismic Refraction, Mineral Exploration, Petroleum Exploration,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-42.429997352 114.383912127 -16.102402292 153.339989998</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>GA Onshore Seismic Surveys</name>
+        <description>The Onshore Seismic Data of Australia is a collection of all land seismic
+            traverses cross the Australian continent and its margins. The data includes raw and
+            processed data in SEGY format. The metadata includes acquisition reports, processing
+            reports, processed images, logs, and so on. The data acquisition was carried out in
+            Australia from 1949-2012 by Geoscience Australia and various partners. The set of
+            reflection and refraction data comprises over 12,000 km of coverage, and provides an
+            insight into the variations in crustal architecture in the varied geological domains.
+            The complete processed dataset was first available for public access in Oct 2013
+            (http://www.ga.gov.au/minerals/projects/current-projects/seismic-acquisition-processing.html
+            ). The location of seismic traverses is shown by the Gallery link on the webpage. The
+            new survey data will be updated on the webpage by the official data release date. The
+            attribute structure of the dataset has also been revised to be more compatible with the
+            GeoSciML data standard, published by the IUGS Commission for Geoscience Information. The
+            onshore seismic data were collected with partner organizations: Australian Geodynamics
+            Cooperative Research Centre, National Research Facility for Earth Sounding, Australian
+            Nuclear Science and Technology Organisation, Cooperative Research Centre for Greenhouse
+            Gas Technologies, Curtin University of Technology, Geological Survey of New South Wales,
+            NSW Department of Mineral Resources, NSW Department of Primary Industries Mineral
+            Resources, An organisation for a National Earth Science Infrastructure Program,
+            Geological Survey Western Australia, Northern Territory Geological Survey, Primary
+            Industries and Resources South Australia, Predictive Mineral Discovery Cooperative
+            Research Centre, Queensland Geological Survey, GeoScience Victoria Department of Primary
+            Industries, Tasmania Development and Resources, University of Western
+            Australia.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>5f0b620f-84a7-41c9-bb32-96660d65cb8d</value>
+        </identifier>
+        <url>https://demo.ands.org.au/ga-onshore-seismic-surveys/817256</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-39.2 140 -33.9 150</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>GSV Geological Unit (250K)</name>
+        <description>Geological units represented as two dimensional polygons, designed for
+            portrayal at 1:250 000 scale. The polygon edges are constructed from the corresponding
+            geological contacts and faults layer. Default theme based on GSV geological
+            units.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>450118a9-7941-4fdf-bbf1-f1f30f0d7758</value>
+        </identifier>
+        <url>https://demo.ands.org.au/gsv-geological-unit-250k/817257</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://services-test.auscope.org/resource/feature/gsnsw/gsml/MappedFeature,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-40.92208 140.52922 -25.33852 156.11278</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>GeoSciML mapped features Mineral Occurrences of NSW of Australia</name>
+        <description>GeoSciML mapped features of NSW of Australia provided by Geological Survey of
+            NSW</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>bc4799bc-70d3-454f-a879-bc5bcbc56429</value>
+        </identifier>
+        <url>https://demo.ands.org.au/geosciml-mapped-features-nsw-australia/817255</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, vw_public_measurement_watersampling,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.06762 115.45924 -23.366095 122.62305</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Water Sampling</name>
+        <description>Water Sampling</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>1cf4edfe-dd0c-41b4-84e4-b8204b9b6b91</value>
+        </identifier>
+        <url>https://demo.ands.org.au/water-sampling/817237</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://services.auscope.org/resource/feature/pressuredb/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-44 112.8 -8.9 154.1</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View</name>
+        <description>GeoSciML Portrayal Borehole View for pressuredb Borehole</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>763fe377-5edf-4f0c-91b2-736a0a87d9be</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view/817259</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://remanentanomalies.csiro.au/resource/feature/csiro/remanom/EMAG2anomaly/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-45 110 -10 160</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>EMAG2 - Anomalies</name>
+        <description>This feature describes the existence, location and associated metadata of
+            anomalies identified from the EMAG2
+            datasource.http://www.geomag.org/models/emag2.html</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>4fc2a2c0-cda7-4d1f-9d2d-5a82235120d9</value>
+        </identifier>
+        <url>https://demo.ands.org.au/emag2-anomalies/817251</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://www.ntgs.org.au/resource/feature/ntgs/gsml/MappedFeature,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-26 129 -10 138</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>GeoSciML mapped features occurrences of Northern Territory of Australia</name>
+        <description>GeoSciML mapped features of Northern Territory of Australia provided by
+            Department of Mines and Energy Northern Territory</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>183e58f5-5dde-4927-9302-81ba2c9393a3</value>
+        </identifier>
+        <url>https://demo.ands.org.au/geosciml-mapped-features-territory-australia/817261</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:https://sarigdata.pir.sa.gov.au/resource/feature/pirsa/gsmlp/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38.5 129 -26 141</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View</name>
+        <description>GeoSciML Portrayal Borehole View for NVCL Borehole</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>ebacae1c-bd67-4b75-ac68-ab4f676811e6</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view/817243</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://geology.data.nt.gov.au/resource/feature/ntgs/mo/mo_MinOccView,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-26 129 -10 138</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Mineral Occurrence Portrayal View of Northern Territory</name>
+        <description>Eath Resource Mineral Occurrence Portrayal View provided by Department of Mines
+            and Energy Northern Territory</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>2b0be50b-23ef-43b7-a6d3-73fe308c7c17</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mineral-occurrence-portrayal-northern-territory/817262</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://www.ntgs.org.au/resource/feature/ntgs/er/MiningFeatureOccurrence,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-26 129 -10 138</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>EarthResourceML mining feature occurrences of Northern Territory of Australia</name>
+        <description>Mining feature occurrences of Northern Territory of Australia provided by
+            Northern Territory Geological Survey (NTGS).</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>27a476bc-46d6-474c-9ac3-fd11f86c7d62</value>
+        </identifier>
+        <url>https://demo.ands.org.au/earthresourceml-mining-feature-territory-australia/817264</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://geology.data.nt.gov.au/resource/feature/ntgs/mineraltenement/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-26 129 -10 138</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Mineral Tenement of Northern Territory</name>
+        <description>This is a simple web service to deliver mineral tenements (permits, licences,
+            leases) using MineralTenementML provided by Department of Mines and Energy Northern
+            Territory. More information on
+            http://schemas.geoscience.gov.au/MineralTenementML/1.0/.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>d4006711-66ec-4cfa-aeaa-9064caf2f14f</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mineral-tenement-northern-territory/817263</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-90 -180 90 180</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>NVCL TSA Results</name>
+        <description>This feature contains a series of observations and measurements made at regular
+            intervals along a drill core or spatially associated drill chips. The observations
+            comprise suggested mineralogical interpretations generated with �The Spectral Assistant
+            (TSA)� algorithm on visible and shortwave-infrared reflectance spectra and filtered by
+            experienced analysts. The observations are represented as mineral species and mineral
+            group predictions by name with associated weights (proportions). Proportions are only
+            relative to the sum of the SWIR or VNIR spectral-active minerals sensed and are NOT
+            modal abundances. This feature is provided as a guide only and should be validated by
+            the user using other methods.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>68908386-7b8c-4722-b9b0-3339b0f673fa</value>
+        </identifier>
+        <url>https://demo.ands.org.au/nvcl-tsa-results/817265</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:https://sarigdata.pir.sa.gov.au/ergrid/resource/feature/pirsa/er/mineraloccurrence/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38.0578316 127.79578964184 -26.0034136 142.38344490287</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Mineral Occurrence Portrayal View of South Australia (1.0)</name>
+        <description>Eath Resource Mineral Occurrence Portrayal View provided by Primary Industries
+            and Resources SA (PIRSA) from the MINEDEX database.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>51395ed6-6d79-4a2e-9c63-5e0a5fb34e8f</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mineral-occurrence-portrayal-australia-10/817266</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> association:http://auscope.dpi.nsw.gov.au/resource/feature/nsw/gsmlp/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38 140.5 -28 154</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View</name>
+        <description>GeoSciML Portrayal Borehole View for NVCL Borehole</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>1c835237-f794-45d2-a860-7c6ba9dd81f6</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view/817270</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-1 -1 0 0</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Simple NVCL TSA Results</name>
+        <description>This feature contains a series of observations and measurements made at regular
+            intervals along a drill core or spatially associated drill chips. The observations
+            comprise suggested mineralogical interpretations generated with The Spectral
+            Assistant(TSA) algorithm on visible and shortwave-infrared reflectance spectra and
+            filtered by experienced analysts. The observations are represented as mineral species
+            and mineral group predictions by name with associated weights(proportions). Proportions
+            are only relative to the sum of the SWIR or VNIR spectral-active minerals sensed and are
+            NOT modal abundances. This feature is provided as a guide only and should be validated
+            by the user using other methods. It is provided as a WFS simple feature type and can be
+            download in csv format.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>2bdb836e-6271-418d-8968-ed37f39afe0e</value>
+        </identifier>
+        <url>https://demo.ands.org.au/simple-nvcl-tsa-results/817267</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-90 -180 90 180</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>ScannedBoreholeCollection</name>
+        <description>Scanned Borehole Collection</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>a794785b-3683-4ac8-8a8a-6d9d5775e8c1</value>
+        </identifier>
+        <url>https://demo.ands.org.au/scannedboreholecollection/817268</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://geology.data.nsw.gov.au/resource/feature/gsnsw/mineraltenement/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38 140.5 -28 154</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Granted and Application Mineral Tenements of New South Wales</name>
+        <description>This is a simple web service to deliver mineral tenements (licences and leases)
+            using MineralTenementML provided by Department of Industry New South Wales. More
+            information on http://schemas.geoscience.gov.au/MineralTenementML/1.0/.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>947d1694-55f9-4233-ac6d-c2f0d7510aab</value>
+        </identifier>
+        <url>https://demo.ands.org.au/granted-application-mineral-south-wales/817271</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38 140.5 -28 154</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Boreholes</name>
+        <description>This feature describes the existence, location and associated metadata of drill
+            holes contained within the data provider catalogues.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>92e23b74-6014-496e-8295-e1849af42032</value>
+        </identifier>
+        <url>https://demo.ands.org.au/boreholes/817269</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://services-test.auscope.org/resource/feature/gsnsw/er/mineraloccurrence/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-40.92208 140.52922 -25.33852 156.11278</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Mineral Occurrence Portrayal View of NSW</name>
+        <description>Eath Resource Mineral Occurrence Portrayal View provided by NSW</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>6bd7f329-aa65-4c4f-a06b-dd915a60d40b</value>
+        </identifier>
+        <url>https://demo.ands.org.au/mineral-occurrence-portrayal-view-nsw/817273</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://services-test.auscope.org/resource/feature/gsnsw/er/MiningFeatureOccurrence,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-40.92208 140.52922 -25.33852 156.11278</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Geological Survey of NSW EarthResourceML (1.1) Mining Feature Occurrences</name>
+        <description>The locations of Mines and Mining Activities of NSW provided by Geological
+            Survey of NSW from the MetIndEx database. Data presented using the EarthResourceML
+            (version 1.1) data model.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>cccd9a21-cae2-4950-95f9-ee11162f6204</value>
+        </identifier>
+        <url>https://demo.ands.org.au/geological-survey-nsw-feature-occurrences/817274</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://services-test.auscope.org/resource/feature/gsnsw/gsml/MappedFeature,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-40.92208 140.52922 -25.33852 156.11278</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>GeoSciML mapped features Mineral Occurrences of NSW of Australia</name>
+        <description>GeoSciML mapped features of NSW of Australia provided by Geological Survey of
+            NSW</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>56a6ac3b-9133-45ec-9256-9d280bbf7691</value>
+        </identifier>
+        <url>https://demo.ands.org.au/geosciml-mapped-features-nsw-australia/817272</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> features, rs_sample, geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-38 -179.83865639097 -7 179.17283590305</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>rs_sample</name>
+        <description>rs_sample</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>f5d8445b-40c1-4d25-80a1-cf0d7fcbc299</value>
+        </identifier>
+        <url>https://demo.ands.org.au/rssample/817275</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords>
+            association:http://geology.information.qld.gov.au/resource/feature/gsq/gsmlp/borehole/,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29.5 138 -9 155</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Borehole Portrayal View 1`</name>
+        <description>&amp;lt;p&amp;gt;GeoSciML Portrayal Borehole View for NVCL
+            Borehole&amp;lt;/p&amp;gt;</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>2c2ceb71-5421-4690-afdc-3734d9e2b99a</value>
+        </identifier>
+        <url>https://demo.ands.org.au/borehole-portrayal-view-1/817276</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>-29 138 -9 155</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Boreholes</name>
+        <description>This feature describes the existence, location and associated metadata of drill
+            holes contained within the data provider catalogues.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>bdd324a8-68f5-4336-be31-c95884ce63d0</value>
+        </identifier>
+        <url>https://demo.ands.org.au/boreholes/817277</url>
+    </dataset>
+    <dataset>
+        <context>http://schema.org/</context>
+        <codeRepository>http://www.iearth.org.au/codes/REDBACK/download</codeRepository>
+        <codeRepository>giia@ign.ku.dk</codeRepository>
+        <codeRepository>iearth@anu.edu.au</codeRepository>
+        <codeRepository>http://www.iearth.org.au/codes/REDBACK/</codeRepository>
+        <codeRepository>http://www.iearth.org.au/codes/REDBACK/REDBACK_User_Manual.pdf</codeRepository>
+        <codeRepository>http://www.iearth.org.au/codes/REDBACK/download</codeRepository>
+        <type>SoftwareSourceCode</type>
+        <accountablePerson>
+            <type>Person</type>
+            <name>Giampiero Iaffaldano</name>
+            <identifier>
+                <type>PropertyValue</type>
+                <propertyID>orcid</propertyID>
+                <value>https://orcid.org/0000-0003-1750-1576</value>
+            </identifier>
+        </accountablePerson>
+        <creator>
+            <type>Person</type>
+            <name>Iaffaldano Giampiero</name>
+        </creator>
+        <citation>
+            <type>CreativeWork</type>
+            <name>Reconstructing plate-motion changes in the presence of finite-rotations
+                noise</name>
+            <identifier>
+                <type>PropertyValue</type>
+                <propertyID>doi</propertyID>
+                <value>doi:10.1038/ncomms2051</value>
+            </identifier>
+        </citation>
+        <citation>
+            <type>CreativeWork</type>
+            <name>REDBACK: open-source software for efficient noise-reduction in plate kinematic
+                reconstructions</name>
+            <identifier>
+                <type>PropertyValue</type>
+                <propertyID>doi</propertyID>
+                <value>doi:10.1002/2014GC005309</value>
+            </identifier>
+        </citation>
+        <datePublished>2019-03-05</datePublished>
+        <version/>
+        <encodingFormat/>
+        <encodingFormat/>
+        <encodingFormat/>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> EARTH SCIENCES, PHYSICAL GEOGRAPHY AND ENVIRONMENTAL GEOSCIENCE</keywords>
+        <license> GNU General Public License</license>
+        <license>http://www.gnu.org/licenses/gpl.html</license>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <inLanguage>en</inLanguage>
+        <name>REDBACK</name>
+        <description>&amp;lt;p&amp;gt;REDBACK is a software package for efficient reduction of noise
+            in finite-rotation datasets for plate kinematic reconstructions. It has been developed
+            at the Research School of Earth Sciences of the Australian National University, as part
+            of the AuScope–AGOS Inversion Laboratory.&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;
+            &amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;REDBACK is deliberately designed to perform
+            efficiently on personal computers, and is available for Unix (Linux and Mac OS) as well
+            as for Windows. Its strengths are easiness of use and computational efficiency. Users
+            include plate kinematicists, geodynamicists and, more in general, anyone making use of
+            tectonic plate motions and their changes through geological
+            time.&amp;lt;/p&amp;gt;</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>URL</propertyID>
+            <value>http://dx.doi.org/(DoI to be minted)</value>
+        </identifier>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>URL</propertyID>
+            <value>http://dx.doi.org/to be minted</value>
+        </identifier>
+        <url>https://demo.ands.org.au/redback/1274023</url>
+    </dataset>
+</datasets>

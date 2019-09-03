@@ -1,0 +1,1826 @@
+<?xml version="1.0" ?>
+<datasets>
+        <results>
+            <license_title>Creative Commons Attribution 3.0 Australia</license_title>
+            <maintainer>cogb_gis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>4</num_tags>
+            <geospatial_topic>Transportation</geospatial_topic>
+            <id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</id>
+            <metadata_created>2016-05-10T07:28:16.599934</metadata_created>
+            <spatial_coverage>http://services.land.vic.gov.au/catalogue/publicproxy/guest/dv_geoserver/datavic/wfs?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetFeature&amp;TYPENAME=datavic:VMADMIN_LGA_POLYGON&amp;SRSNAME=EPSG:4283&amp;cql_filter=LGA_CODE=325</spatial_coverage>
+            <metadata_modified>2019-09-03T01:00:02.414248</metadata_modified>
+            <author>City of Greater Bendigo</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[144.268592904838,-36.7758771971451],[144.268592904838,-36.4629791857738],[144.53049457945,-36.4629791857738],[144.53049457945,-36.7758771971451],[144.268592904838,-36.7758771971451]]]}</spatial>
+            <license_id>cc-by</license_id>
+            <contact_point>gis@bendigo.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>Road Closure within the City of Greater Bendigo ESRI SHP
+                    File</description>
+                <name>City of Greater Bendigo Road Closures SHP</name>
+                <format>SHP</format>
+                <url>https://data.gov.au/data/dataset/a0f2aa22-512d-4c08-9b7d-bb8a51163f4c/resource/79e98368-c763-4df5-b596-0ab7cf9312ba/download/cogb-road-closures.shz</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2016-05-10T17:48:52.567041</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T01:00:02.367516</last_modified>
+                <position>0</position>
+                <revision_id>d06589e1-03b6-4648-957b-89fd83f78f16</revision_id>
+                <url_type>upload</url_type>
+                <id>79e98368-c763-4df5-b596-0ab7cf9312ba</id>
+                <resource_type/>
+                <size>1912</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>Road Closure within the City of Greater Bendigo SLD (Styled Layer
+                    Descriptor) </description>
+                <name>City of Greater Bendigo Road Closures SLD</name>
+                <format>SLD</format>
+                <url>https://data.gov.au/data/dataset/a0f2aa22-512d-4c08-9b7d-bb8a51163f4c/resource/ddd2471e-30dd-4a0d-9d5e-e5acdb4cd4b8/download/cogb-road-closures.sld</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2016-05-18T14:47:20.358988</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2017-07-24T00:40:39.516748</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>4159ceb7-382e-4f71-9f48-562d522e03b2</revision_id>
+                <url_type>upload</url_type>
+                <id>ddd2471e-30dd-4a0d-9d5e-e5acdb4cd4b8</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>View the data in this dataset online via an online map</description>
+                <name>City of Greater Bendigo : Road Closures - Preview this Dataset (WMS)</name>
+                <format>WMS</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wms?request=GetCapabilities</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-09-02T17:19:22.601136</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T03:19:22.103122</last_modified>
+                <position>2</position>
+                <wms_layer>ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c</wms_layer>
+                <revision_id>fd6f5006-506f-453e-a132-dfd14e934492</revision_id>
+                <url_type/>
+                <id>c3b094da-3838-4a85-a075-62ebf8ec75fc</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>WFS API Link for use in Desktop GIS tools</description>
+                <name>City of Greater Bendigo : Road Closures Web Feature Service API Link</name>
+                <format>WFS</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wfs</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-09-02T17:19:25.570468</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T03:19:24.994989</last_modified>
+                <id>9991d95e-9c82-48fe-83d5-cd70c0474994</id>
+                <position>3</position>
+                <revision_id>fd6f5006-506f-453e-a132-dfd14e934492</revision_id>
+                <url_type/>
+                <wfs_layer>ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c</wfs_layer>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>For use in web-based data visualisation of this
+                    collection</description>
+                <name>City of Greater Bendigo : Road Closures GeoJSON</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wfs?request=GetFeature&amp;typeName=ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c&amp;outputFormat=json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-09-02T17:19:28.544975</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T03:19:28.043941</last_modified>
+                <position>4</position>
+                <revision_id>fd6f5006-506f-453e-a132-dfd14e934492</revision_id>
+                <url_type/>
+                <id>5b48ad20-a073-403f-8c71-99ba564b6d20</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <num_resources>5</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Bendigo</display_name>
+                <id>7e6e8c07-d68c-4d9a-9619-a88db9a66c57</id>
+                <name>Bendigo</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>closure</display_name>
+                <id>7ac46cc8-4e2a-4904-8d09-d30353f6fd72</id>
+                <name>closure</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>road</display_name>
+                <id>3c06e670-f520-40ae-8c21-0c3ca21f7874</id>
+                <name>road</name>
+            </tags>
+            <temporal_coverage_from>2016-05-10</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>09d77289-89aa-49ae-b265-479ee97a0bcc</creator_user_id>
+            <organization>
+                <description>The City of Greater Bendigo is situated in the geographic centre of
+                    Victoria, covering almost 3,000 square kilometres. We enjoy many features of a
+                    thriving regional town with a strong community spirit. </description>
+                <created>2016-04-26T14:53:56.152975</created>
+                <title>City of Greater Bendigo</title>
+                <name>city-of-greater-bendigo</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2016-04-27-232837.816371COGBlogo.jpg</image_url>
+                <revision_id>69554a17-04b2-481d-95de-6a4718d4abf5</revision_id>
+                <type>organization</type>
+                <id>a56f8067-b250-4c32-9609-f2191dc88a3a</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>greater-bendigo-road-closures</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Road closures within the City of Greater Bendigo</notes>
+            <owner_org>a56f8067-b250-4c32-9609-f2191dc88a3a</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/3.0/au/</license_url>
+            <data_state>active</data_state>
+            <title>City of Greater Bendigo : Road Closures</title>
+            <revision_id>3ec4cedf-3950-48f4-839f-0cddffd80d63</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>wyndhamgis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>2</num_tags>
+            <id>dd7d4020-7558-4e88-b9bc-001ff5fc8c3f</id>
+            <metadata_created>2018-08-27T05:57:29.447005</metadata_created>
+            <spatial_coverage>GA83: WYNDHAM</spatial_coverage>
+            <metadata_modified>2019-09-03T00:50:56.697043</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [128.12429,-15.4869]}</spatial>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@wyndham.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Wyndham Air Quality</name>
+                <format>JSON</format>
+                <url>https://data.gov.au/data/dataset/dd7d4020-7558-4e88-b9bc-001ff5fc8c3f/resource/bc5f476c-af21-49a7-8ca0-187425e2473b/download/wyndham-air-qulaity.json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>dd7d4020-7558-4e88-b9bc-001ff5fc8c3f</package_id>
+                <created>2018-08-27T05:58:35.950730</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T00:50:56.661665</last_modified>
+                <position>0</position>
+                <revision_id>4f3980f5-29c8-4d43-ba94-a4e687927f6b</revision_id>
+                <url_type>upload</url_type>
+                <id>bc5f476c-af21-49a7-8ca0-187425e2473b</id>
+                <resource_type/>
+                <size>625</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>air quality</display_name>
+                <id>be5d6d30-0ef9-49e0-be9e-d30baf29ca49</id>
+                <name>air quality</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>smart city</display_name>
+                <id>9d33e0f0-7794-44d2-b6bd-06b3d585a37d</id>
+                <name>smart city</name>
+            </tags>
+            <temporal_coverage_from>2018-08-27</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>f9073dab-7727-4675-99ff-759a63420043</creator_user_id>
+            <organization>
+                <description>Wyndham City, located in the outer west of Melbourne is one of seven
+                    designated Victorian growth areas. Comprising the predominantly residential
+                    suburbs of Werribee, Hoppers Crossing, Point Cook, Sanctuary Lakes, Tarneit,
+                    Truganina and Wyndham Vale and the small rural township of Little River the city
+                    also boasts one of Melbourne’s largest industrial precincts at Laverton
+                    North.</description>
+                <created>2015-02-25T21:47:37.561050</created>
+                <title>Wyndham City Council</title>
+                <name>wyndham-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>3c0b90ab-9dbb-4d3c-8850-31558e441bf0</revision_id>
+                <type>organization</type>
+                <id>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wyndham-air-quality</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Near real time air quality data-test</notes>
+            <owner_org>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>Wyndham Air Quality</title>
+            <revision_id>919f4487-e192-47fa-b18a-90a18c5241bc</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>ben-seddon-181</maintainer>
+            <jurisdiction>Murray-Darling Basin juristictions joint program</jurisdiction>
+            <temporal_coverage_to>2019-08-23</temporal_coverage_to>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>9</num_tags>
+            <geospatial_topic>Biota</geospatial_topic>
+            <geospatial_topic>Environment</geospatial_topic>
+            <geospatial_topic>Inland waters</geospatial_topic>
+            <id>cde1b241-608d-421d-82dd-b612ef85043b</id>
+            <metadata_created>2016-12-06T04:13:21.139317</metadata_created>
+            <spatial_coverage>min-long-west 138.568467, max-long-east 152.488546, min-lat-south
+                -37.682084,max-lat-north -24.585618</spatial_coverage>
+            <metadata_modified>2019-09-03T00:49:21.183397</metadata_modified>
+            <author>Murray-Darling Basin Authority</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [140.6564789,-22.91653824]}</spatial>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>emonitoring@mdba.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>The Phytoplankton Monitoring Program (PMP) was established in 1978 as a
+                    key part of the water quality monitoring program for the Murray-Darling Basin,
+                    and is funded jointly by the basin governments. The program currently monitors
+                    12 sites along the Murray and some of its tributaries. For further details
+                    please refer to accompanying PDF titled Description of Phytoplankton monitoring
+                    Program.</description>
+                <name>River Murray Phytoplankton Monitoring Data 1978-2019</name>
+                <format>accdb</format>
+                <url>https://data.gov.au/data/dataset/cde1b241-608d-421d-82dd-b612ef85043b/resource/33d4a85c-a3a1-4654-aed6-f23918da279b/download/zsysdatarmwqmp-phytoplankton-databasermwqmp_phytoplanktondata_1978_onwards.accdb</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>cde1b241-608d-421d-82dd-b612ef85043b</package_id>
+                <created>2016-12-06T15:17:07.237950</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T00:49:21.114535</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>4fb45e5a-27e7-444c-b0ca-878c3fb1cd62</revision_id>
+                <url_type>upload</url_type>
+                <id>33d4a85c-a3a1-4654-aed6-f23918da279b</id>
+                <resource_type/>
+                <size>46796800</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Description of Phytoplankton Monitoring Program</name>
+                <format>.pdf</format>
+                <url>https://data.gov.au/data/dataset/cde1b241-608d-421d-82dd-b612ef85043b/resource/7efc90d6-da92-4a0f-aa39-32372d0a9587/download/description-of-phytoplankton-monitoring-programupdate1sep17.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>cde1b241-608d-421d-82dd-b612ef85043b</package_id>
+                <created>2017-06-02T12:14:45.682994</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2017-09-01T05:57:53.656783</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>2f5faeef-d602-4b47-aca3-e78d0802ddec</revision_id>
+                <url_type>upload</url_type>
+                <id>7efc90d6-da92-4a0f-aa39-32372d0a9587</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <num_resources>2</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Murray-Darling Basin Authority</display_name>
+                <id>d3302def-dc4e-48db-b075-4f7bcd3f041f</id>
+                <name>Murray-Darling Basin Authority</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Water Quality Monitoring</display_name>
+                <id>c459a987-6a66-4504-a981-bd72640f0dfa</id>
+                <name>Water Quality Monitoring</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>phytoplankton</display_name>
+                <id>6cdc9e4f-9531-4ac9-a044-b4ee02e07871</id>
+                <name>phytoplankton</name>
+            </tags>
+            <temporal_coverage_from>1997-11-25</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage concerns.
+                    Involves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>316c0947-4daa-4e22-982e-8db0d070d518</creator_user_id>
+            <field_of_research>Freshwater Ecology</field_of_research>
+            <field_of_research>Environmental Monitoring</field_of_research>
+            <field_of_research>Aquatic Ecosystem Studies and Stock Assessment</field_of_research>
+            <organization>
+                <description>Murray-Darling Basin Authority</description>
+                <created>2013-05-12T07:35:44.080998</created>
+                <title>Murray-Darling Basin Authority</title>
+                <name>murray-darlingbasinauthority</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2018-08-16-045016.548015MDBAAGcreststackedbw.png</image_url>
+                <revision_id>cb4f26fb-4c35-4295-9f3a-013eafcd0c74</revision_id>
+                <type>organization</type>
+                <id>719af507-ba42-41b2-af0b-14402901e694</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>river-murray-phytoplankton-monitoring-program</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>The Phytoplankton Monitoring Program (PMP) was established in 1978 as a key part
+                of the water quality monitoring program for the Murray-Darling Basin, and is funded
+                jointly by the Basin governments. The program currently monitors 12 sites along the
+                Murray and its tributaries. For further details refer to accompanying PDF titled
+                Description of Phytoplankton Monitoring Program.</notes>
+            <owner_org>719af507-ba42-41b2-af0b-14402901e694</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>River Murray Phytoplankton Monitoring Program</title>
+            <revision_id>e64662b1-131e-47dc-bdeb-0a4416ee39f5</revision_id>
+            <update_freq>monthly</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>wyndhamgis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>2</num_tags>
+            <id>08531201-ac9f-4f5f-bb7e-ac16b1da28b4</id>
+            <metadata_created>2018-06-28T22:50:46.691984</metadata_created>
+            <spatial_coverage>VIC5474</spatial_coverage>
+            <metadata_modified>2019-09-03T00:39:15.511193</metadata_modified>
+            <author>Wyndham City Council</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [144.6523611,-37.9043056]}</spatial>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@wyndham.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Wyndham Smart Bin Latest Fullness Information</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/data/dataset/08531201-ac9f-4f5f-bb7e-ac16b1da28b4/resource/15732b49-3e50-40ce-8dfd-0efed18661f4/download/sb_fill_lvel.json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>08531201-ac9f-4f5f-bb7e-ac16b1da28b4</package_id>
+                <created>2018-06-28T23:06:27.249110</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T00:39:15.476433</last_modified>
+                <position>0</position>
+                <revision_id>c355fb96-78a6-4b68-865b-d3f5fdb74681</revision_id>
+                <url_type>upload</url_type>
+                <id>15732b49-3e50-40ce-8dfd-0efed18661f4</id>
+                <resource_type/>
+                <size>16140</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>rubbish bin</display_name>
+                <id>5f7b7af3-a7f0-424d-beac-4a9ecb5e05b6</id>
+                <name>rubbish bin</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>smart city</display_name>
+                <id>9d33e0f0-7794-44d2-b6bd-06b3d585a37d</id>
+                <name>smart city</name>
+            </tags>
+            <temporal_coverage_from>2018-06-29</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Civic Infrastructure</display_name>
+                <description>Developing policy to support the growth of towns and cities.
+                    Implementing programs to manage urban development and maintain essential
+                    services. Installing buildings and services to meet the administrative, social
+                    and recreational needs of local residents. Includes components listed at
+                    http://agift.naa.gov.au/000424.htm</description>
+                <image_display_url/>
+                <title>Civic Infrastructure</title>
+                <id>7d67a152-2ac6-4f5f-b1e5-f6a2791067cc</id>
+                <name>civic</name>
+            </groups>
+            <creator_user_id>f9073dab-7727-4675-99ff-759a63420043</creator_user_id>
+            <organization>
+                <description>Wyndham City, located in the outer west of Melbourne is one of seven
+                    designated Victorian growth areas. Comprising the predominantly residential
+                    suburbs of Werribee, Hoppers Crossing, Point Cook, Sanctuary Lakes, Tarneit,
+                    Truganina and Wyndham Vale and the small rural township of Little River the city
+                    also boasts one of Melbourne’s largest industrial precincts at Laverton
+                    North.</description>
+                <created>2015-02-25T21:47:37.561050</created>
+                <title>Wyndham City Council</title>
+                <name>wyndham-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>3c0b90ab-9dbb-4d3c-8850-31558e441bf0</revision_id>
+                <type>organization</type>
+                <id>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wyndham-smart-bin-fill-level</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Latest fill level of smart bins installed in Werribee and Point Cook areas. The
+                dataset updated every hour to provide the latest fullness information.</notes>
+            <owner_org>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>Wyndham Smart Bin Fill level</title>
+            <revision_id>4f1add6f-39e8-4f24-b058-5c1412eacd78</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution Share Alike 4.0
+                International</license_title>
+            <maintainer>shanti</maintainer>
+            <jurisdiction>Commonwealth of Australia</jurisdiction>
+            <temporal_coverage_to>2018</temporal_coverage_to>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>6</num_tags>
+            <geospatial_topic>Environment</geospatial_topic>
+            <id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</id>
+            <metadata_created>2019-04-03T00:25:28.256833</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=GA1</spatial_coverage>
+            <metadata_modified>2019-09-03T00:32:03.385466</metadata_modified>
+            <author>National GHG Inventory, Department of the Environment and Energy</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-nc</license_id>
+            <contact_point>ncas-gis-rs@environment.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>National Forest and Sparse woody vegetation data metadata (Version 3.0
+                    - 2018 supply)</description>
+                <name>Woody vegetation extent v3_0 metadata_2018.pdf</name>
+                <format>.pdf</format>
+                <url>https://data.gov.au/data/dataset/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/resource/bf7420cc-2ec7-470d-87ba-f0a2c0ea1b60/download/woody-vegetation-extent-v3_0-metadata_2018.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-09-03T00:30:26.573938</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-03T00:30:26.375618</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type>upload</url_type>
+                <id>bf7420cc-2ec7-470d-87ba-f0a2c0ea1b60</id>
+                <resource_type/>
+                <size>466616</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>View the 2018 data in this dataset online via an online map or connect
+                    to WMS in your own viewer.</description>
+                <name>Forest cover - Preview dataset (WMS)</name>
+                <format>WMS</format>
+                <url>https://data.gov.au/geoserver/national-forest-and-sparse-woody-vegetation-data-version-3-2018-release/wms</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-04T02:03:59.909041</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>1</position>
+                <wms_layer>woodyv3</wms_layer>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>3d277ed3-314d-4b8b-8e60-5317823806a1</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>5f95d7bf-048b-4029-9b93-ee6e8cbcea14</id>
+                <size/>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>National Inventory tile SI56 (ACT region) woody vegetation data for the
+                    period from 1988 to 2013</description>
+                <format>ZIP</format>
+                <last_modified/>
+                <url_type/>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>ACT_Woody_Vegetation_1988_2013</name>
+                <created>2019-04-03T00:50:45.661249</created>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/ACT_woody_8813.zip</url>
+                <mimetype_inner/>
+                <position>2</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Zip file contains National Inventory woody vegetation data for NSW for
+                    the years from 2014 to 2018</description>
+                <name>NSW_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/NSW_woody_1418.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T00:56:33.175809</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>3</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>7b6aa702-b5ab-4be3-af72-bf1c33175853</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for NSW for the
+                    periods from 1988 to 2013</description>
+                <name>NSW_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/NSW_woody_8813.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T01:11:46.252659</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>4</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>3246153e-ab33-4ba6-b42e-3b60a8d10363</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for NT for the period
+                    from 2014 to 2018</description>
+                <name>NT_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/NT_woody_1418.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T01:20:24.123930</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>5</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>f0ab5051-4475-4555-898e-7e8d114ef337</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Qld (southern
+                    tiles) for the period from 2014 to 2018</description>
+                <name>Qld_South_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/QLD_woody_1418_sth.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T01:34:36.715941</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>6</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>d2012272-ed16-47ba-954a-4a6ec35a919b</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Qld (southern
+                    tiles) for the period from 1988 to 2013</description>
+                <name>Qld_South_Woody_vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/QLD_woody_8813_sth.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T01:50:18.766134</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>7</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>18946234-dcb1-4cb1-acb1-1a05a2b4d35d</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>4a8d8e3a-25a3-4475-a866-b0f806ea7485</id>
+                <size/>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for South Australia
+                    for the period from 2014 to 2018</description>
+                <format>ZIP</format>
+                <last_modified/>
+                <url_type/>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>SA_Woody_Vegetation_2014_2018</name>
+                <created>2019-04-03T02:15:28.579346</created>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/SA_woody_1418.zip</url>
+                <mimetype_inner/>
+                <position>8</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for South Australia
+                    for the period from 1988 to 2013</description>
+                <name>SA_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/SA_woody_8813.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:25:08.815073</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>9</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>b1f75031-510d-4f62-a119-dc0b3a908a5c</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Tasmania for the
+                    period from 2014 to 2018</description>
+                <name>Tas_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/TAS_woody_1418.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:25:53.459686</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>10</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>8fac2a2e-2c1b-43b6-a606-3935c9350aed</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Tasmania for the
+                    period from 1988 to 2013</description>
+                <name>Tas_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/TAS_woody_8813.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:26:30.875684</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>11</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>fcbf4434-d5e6-4f60-8ed0-ab9dcff35176</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Victoria for the
+                    period from 2014 to 2018</description>
+                <name>VIC_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/VIC_woody_1418.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:27:49.635979</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>12</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>88ecfe3f-49ee-4943-9020-e677c39ab53d</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Victoria for the
+                    period from 1988 to 2013</description>
+                <name>VIC_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/VIC_woody_8813.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:35:24.545926</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>13</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>b95933f1-531b-4250-9740-3edca58a416f</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (rangeland tiles) for the period from 2014 to 2018</description>
+                <name>WA_Rangelands_Woody_Vegtation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/WA_woody_1418_rangeland.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:38:09.791996</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>14</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>dda3fe05-4b1d-4d7a-9fb1-61a0f157bc9a</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (southern tiles) for the period from 2014 to 2018</description>
+                <name>WA_South_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/WA_woody_1418_sth.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:39:55.529193</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>15</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>40126397-92ca-484c-9932-b3b052a988f2</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (rangelands) for the period from 1988 to 2013</description>
+                <name>WA_Rangelands_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/WA_woody_8813_rangeland.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T02:45:35.155110</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>16</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>c858f8cb-2237-4c07-9ffe-5a5bfc146d63</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (southern tile) for the period from 1988 to 2013</description>
+                <name>WA_South_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/WA_woody_8813_sth.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T03:02:51.314915</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>17</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>781445fc-9e33-4b81-ba1d-e2ee076437a1</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for tiles - SF53 and
+                    SG53 covering parts of NT and SA for the period from 1989 to 2006</description>
+                <name>NT_Central_Australia_Woody_Vegetation_1989_2006</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/sf53_sg53_8906_rangeland.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-03T03:07:15.490890</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>18</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>df8be9af-37b9-435b-8583-8e89f37f9973</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Qld (northern
+                    tiles) for the period from 2014 to 2018</description>
+                <name>Qld_North_Woody_Vegetation_2014_2018</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/a9ca7d9b-ff1d-4fa6-829b-00a0d3ad0482/QLD_woody_1418-North.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-08T05:18:20.571449</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>19</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>a20a19c7-cbb7-45f2-8397-349ca2d06929</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Qld (northern
+                    tiles) for the period from 1988 to 2013</description>
+                <name>Qld_North_Woody_Vegetation_1988_2013</name>
+                <format>ZIP</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/a9ca7d9b-ff1d-4fa6-829b-00a0d3ad0482/QLD_woody_8813-North.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-08T05:33:39.422729</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>20</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>a5583977-d462-462c-8d35-7688466ff716</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Vegetation Data (GeoTIFF)</name>
+                <format>geotiff</format>
+                <url>https://datagovau.s3.ap-southeast-2.amazonaws.com/7575ccb3-ce6b-4aa2-a69b-8b620fe55b55/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/woodyv3_geotiff.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <created>2019-04-04T02:01:03.443038</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>21</position>
+                <wms_layer/>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <url_type/>
+                <id>ad53f319-5715-4ec1-af95-b5633c36e2b0</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>34a2da5c-8131-4d2c-afb8-370eaf9cea2b</id>
+                <size>293806346</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (northern tiles) for the period from 2014 to 2018</description>
+                <format>ZIP</format>
+                <last_modified>2019-06-11T02:07:40.156008</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>WA_North_Woody_Vegetation_2014_2018</name>
+                <created>2019-06-11T01:54:33.891333</created>
+                <url>https://data.gov.au/data/dataset/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/resource/34a2da5c-8131-4d2c-afb8-370eaf9cea2b/download/wa_woody_1418_nth.zip</url>
+                <mimetype_inner/>
+                <position>22</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>147d86d8-5b4b-4006-a4cc-b171a8b96b5f</id>
+                <size>921336367</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for Western Australia
+                    (northern tiles) for the period 1999 to 2013</description>
+                <format>ZIP</format>
+                <last_modified>2019-06-11T04:30:37.441659</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>WA_North_Woody_Vegetation_1988_2013</name>
+                <created>2019-06-11T04:30:37.622547</created>
+                <url>https://data.gov.au/data/dataset/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/resource/147d86d8-5b4b-4006-a4cc-b171a8b96b5f/download/wa_woody_8813_nth.zip</url>
+                <mimetype_inner/>
+                <position>23</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>c9b81bc2-ba84-411c-9fdb-2fe8ffec200a</id>
+                <size>79186384</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>National Inventory tile SI56 (ACT region) woody vegetation data for the
+                    period from 2014 to 2018</description>
+                <format>ZIP</format>
+                <last_modified>2019-06-11T05:28:52.068414</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>ACT_Woody_Vegetation_2014_2018</name>
+                <created>2019-06-11T05:28:52.232668</created>
+                <url>https://data.gov.au/data/dataset/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/resource/c9b81bc2-ba84-411c-9fdb-2fe8ffec200a/download/act_woody_1418.zip</url>
+                <mimetype_inner/>
+                <position>24</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <resources>
+                <cache_last_updated/>
+                <package_id>d734c65e-0e7b-4190-9aa5-ddbb5844e86d</package_id>
+                <datastore_active>False</datastore_active>
+                <id>cfbd5815-f25c-45e1-ac23-d1eba4227609</id>
+                <size>1542892812</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Contains National Inventory woody vegetation data for NT for the period
+                    from 1988 to 2013</description>
+                <format>ZIP</format>
+                <last_modified>2019-06-11T07:47:05.452883</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>NT_Woody_Vegetation_1988_2013</name>
+                <created>2019-06-11T06:25:42.021699</created>
+                <url>https://data.gov.au/data/dataset/d734c65e-0e7b-4190-9aa5-ddbb5844e86d/resource/cfbd5815-f25c-45e1-ac23-d1eba4227609/download/nt_woody_8813_orig.zip</url>
+                <mimetype_inner/>
+                <position>25</position>
+                <revision_id>7d991ead-0338-42bf-92f7-5a7b529fa511</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>26</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Forest cover</display_name>
+                <id>33fb98de-ebe0-4d73-ae5b-191688946e6a</id>
+                <name>Forest cover</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Land cover</display_name>
+                <id>116dbe3d-2954-44b1-9025-8c9c4fe3ee3c</id>
+                <name>Land cover</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>National GHG Inventory</display_name>
+                <id>fa0eb6d7-2486-4d0e-923a-3a9dc07ecbe6</id>
+                <name>National GHG Inventory</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Remote Sensing</display_name>
+                <id>cab47c30-9409-4727-a99a-827471f64bac</id>
+                <name>Remote Sensing</name>
+            </tags>
+            <temporal_coverage_from>1988</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage concerns.
+                    Involves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>b01166c5-dff8-4808-bc99-408d2bbf7c2e</creator_user_id>
+            <field_of_research>Environmental Monitoring</field_of_research>
+            <organization>
+                <description>Australian Government Department of the Environment and
+                    Energy</description>
+                <created>2013-05-12T07:41:45.287023</created>
+                <title>Department of the Environment and Energy</title>
+                <name>doee</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2016-09-22-063533.542577DotEnE-stacked-Black.jpg</image_url>
+                <revision_id>6e4d44d4-a32a-40e7-8f38-84bb6bb70dcb</revision_id>
+                <type>organization</type>
+                <id>7575ccb3-ce6b-4aa2-a69b-8b620fe55b55</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>national-forest-and-sparse-woody-vegetation-data-version-3-2018-release</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Landsat satellite imagery is used to derive woody vegetation extent products that
+                discriminate between forest, sparse woody and non-woody land cover across a time
+                series from 1988 to 2018. A forest is defined as woody vegetation with a minimum 20
+                per cent canopy cover, potentially reaching 2 metres high and a minimum area of 0.2
+                hectares. Sparse woody is defined as woody vegetation with a canopy cover between
+                5-19 per cent. The three-class classification (forest, sparse woody and non-woody)
+                supersedes the two class classification (forest and non-forest) from 2016. The new
+                classification is produced using the same approach in terms of time series
+                processing (conditional probability networks) as the two-class method, to detect
+                woody vegetation cover. The three-class algorithm better encompasses the different
+                types of woody vegetation across the Australian landscape. </notes>
+            <owner_org>7575ccb3-ce6b-4aa2-a69b-8b620fe55b55</owner_org>
+            <license_url>https://creativecommons.org/licenses/by-sa/4.0/legalcode</license_url>
+            <data_state>active</data_state>
+            <title>National Forest and Sparse Woody Vegetation Data (Version 3, 2018
+                Release)</title>
+            <revision_id>fb196bfb-6fc1-4461-b55f-f8a248266b9b</revision_id>
+            <update_freq>annually</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>ngsc</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>3</num_tags>
+            <id>ac15d146-ff03-42c3-86a4-71bfee841a26</id>
+            <metadata_created>2019-09-02T23:33:44.883728</metadata_created>
+            <spatial_coverage>VIC20076</spatial_coverage>
+            <metadata_modified>2019-09-02T23:55:14.257880</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@ngshire.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>NGSCCarparks</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/data/dataset/ac15d146-ff03-42c3-86a4-71bfee841a26/resource/0e3ac458-2865-4edb-abdf-e226f9075d6a/download/carparks.geojson</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>ac15d146-ff03-42c3-86a4-71bfee841a26</package_id>
+                <created>2019-09-02T23:34:57.744994</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:55:14.224454</last_modified>
+                <position>0</position>
+                <revision_id>b2fdf5db-702f-4af4-840d-066e40a2ad29</revision_id>
+                <url_type>upload</url_type>
+                <id>0e3ac458-2865-4edb-abdf-e226f9075d6a</id>
+                <resource_type/>
+                <size>54694</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>assets</display_name>
+                <id>de33d263-0178-4759-9991-a66f43c82588</id>
+                <name>assets</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>carpark</display_name>
+                <id>bdbd8d9b-f39f-4317-a96a-56b42c4c6e93</id>
+                <name>carpark</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>council</display_name>
+                <id>12d32454-c607-48f0-8c42-5d82224339d1</id>
+                <name>council</name>
+            </tags>
+            <temporal_coverage_from>2019-09-01</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Governance</display_name>
+                <description>Executing legislative processes in Houses of Parliament, assemblies or
+                    councils, where officers are elected to represent citizens. Administering
+                    committees that report to legislative bodies. Managing elections of government
+                    representatives and sponsoring major community celebrations. Includes official
+                    duties carried out by the titular head of the government or municipality.
+                    Includes managing the machinery of government processes at all levels of
+                    government. Involves components from AGIFT at
+                    http://agift.naa.gov.au/000002.htm</description>
+                <image_display_url/>
+                <title>Governance</title>
+                <id>757e2041-51f1-45ce-871d-9b292d617601</id>
+                <name>governance</name>
+            </groups>
+            <creator_user_id>768a934f-56e5-49e0-bf13-8378c0a6cfe2</creator_user_id>
+            <organization>
+                <description>Northern Grampians Shire Council undertakes significant activities to
+                    ensure that residents and visitors enjoy a secure and high standard of living.
+                    Council's activities are diverse and extensive. We are responsible for
+                    maintaining significant infrastructure, including roads, bridges, drains,
+                    libraries, recreation facilities and parks and gardens, providing a range of
+                    services, and enforcing various state and local laws for our communities.
+                    Council regularly consults with business and community groups to provide best
+                    value to its communities. &gt;Although all due care has been taken to ensure
+                    that this data is correct, no warranty is expressed or implied by Northern
+                    Grampians Shire Council in its use.</description>
+                <created>2016-02-24T14:19:50.153986</created>
+                <title>Northern Grampians Shire Council</title>
+                <name>northern-grampians-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2016-02-24-224423.422638logo.gif</image_url>
+                <revision_id>62ed7368-cf5f-49c6-8fae-0781926c720e</revision_id>
+                <type>organization</type>
+                <id>81f7a15f-e5b6-4a9a-8abe-a31f08a1f980</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>ngsc-car-parks</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes/>
+            <owner_org>81f7a15f-e5b6-4a9a-8abe-a31f08a1f980</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>NGSC Car Parks</title>
+            <revision_id>72cb5fcb-6901-4007-9b79-72e70dfa67c3</revision_id>
+            <update_freq>monthly</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>kenneth_melchert</maintainer>
+            <jurisdiction>Queensland Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>1</num_tags>
+            <id>7578729b-0bd6-4a8e-97fc-2ca3450b8507</id>
+            <metadata_created>2018-11-19T01:09:16.537108</metadata_created>
+            <spatial_coverage>Townsville</spatial_coverage>
+            <metadata_modified>2019-09-02T23:53:49.777127</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>opendata@townsville.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Material Change of Use received by
+                    Townsville City Council from 2009 to 2019. Can be aggregated by month, suburb
+                    and local government electoral division.</description>
+                <name>Townsville City Council Development Applications - Material Change of
+                    Use</name>
+                <format>XLSX</format>
+                <url>https://data.gov.au/data/dataset/7578729b-0bd6-4a8e-97fc-2ca3450b8507/resource/8fe1d410-271d-4352-8061-b4ddd4190879/download/development-applications-material-change-of-use.xlsx</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>7578729b-0bd6-4a8e-97fc-2ca3450b8507</package_id>
+                <created>2018-11-19T01:09:55.160128</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:53:22.340820</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>09ff929d-8f5c-4147-9b1d-3f58984278e9</revision_id>
+                <url_type>upload</url_type>
+                <id>8fe1d410-271d-4352-8061-b4ddd4190879</id>
+                <resource_type/>
+                <size>152775</size>
+            </resources>
+            <resources>
+                <mimetype>text/csv</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Material Change of Use received by
+                    Townsville City Council from 2009 to 2019. Can be aggregated by month, suburb
+                    and local government electoral division.</description>
+                <name>Townsville City Council Development Applications - Material Change of
+                    Use</name>
+                <format>CSV</format>
+                <url>https://data.gov.au/data/dataset/7578729b-0bd6-4a8e-97fc-2ca3450b8507/resource/f4b5c7b4-9108-43be-9a5d-77d9f7d5fc5d/download/da-material-change-of-use.csv</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>7578729b-0bd6-4a8e-97fc-2ca3450b8507</package_id>
+                <created>2018-12-06T03:40:03.948824</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:53:49.744856</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>09ff929d-8f5c-4147-9b1d-3f58984278e9</revision_id>
+                <url_type>upload</url_type>
+                <id>f4b5c7b4-9108-43be-9a5d-77d9f7d5fc5d</id>
+                <resource_type/>
+                <size>323539</size>
+            </resources>
+            <num_resources>2</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Development Applications</display_name>
+                <id>2c478555-fa53-454e-86da-8ba9e9bab9ff</id>
+                <name>Development Applications</name>
+            </tags>
+            <temporal_coverage_from>2018-09</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>c62d44c8-0fc0-49a6-be27-00d1e4a8c122</creator_user_id>
+            <organization>
+                <description>Townsville is located about halfway between the tip of Cape York and
+                    Brisbane. Providing a laid back tropical lifestyle that is complemented by
+                    capital city comforts, no other Australian city boasts the resilience,
+                    diversity, lifestyle and economic potential that the Townsville North Queensland
+                    Region enjoys. Known as the Second Capital of Queensland and with a population
+                    of approximately 193,601 people, Townsville offers a dynamic lifestyle coupled
+                    with strong economic prosperity. Townsville is a thriving precinct with access
+                    to a variety of world class education facilities, leading edge health care,
+                    affordable housing, unique retailing, spectacular events and entertainment,
+                    dining precincts and a wide range of outdoor recreation options. With over 300
+                    days of sunshine each year, Townsville’s lifestyle is second to none. The
+                    Townsville City Council Open Data Portal provides access to Council datasets
+                    which will enable academia, community and industry to utilise these datasets to
+                    create value-add opportunities.</description>
+                <created>2018-11-15T13:48:19.648526</created>
+                <title>Townsville City Council</title>
+                <name>townsville-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2018-11-19-003954.215718TCCLogo.png</image_url>
+                <revision_id>4d1b6b14-c0a6-4633-b728-51acad75aec4</revision_id>
+                <type>organization</type>
+                <id>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>tcc-development-applications-material-change-of-use</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Development Applications - Material Change of Use received by Townsville City
+                Council from 2009 to 2019. Can be aggregated by month, suburb and local government
+                electoral division.</notes>
+            <owner_org>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>Townsville City Council Development Applications - Material Change of Use</title>
+            <revision_id>235f74c9-fd96-4df6-b3e2-f4112fc8a6f6</revision_id>
+            <update_freq>quarterly</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>kenneth_melchert</maintainer>
+            <jurisdiction>Queensland Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>1</num_tags>
+            <id>b1fef40c-9674-404c-92c4-2b16a54ecfd3</id>
+            <metadata_created>2018-11-19T01:11:32.046068</metadata_created>
+            <spatial_coverage>Townsville</spatial_coverage>
+            <metadata_modified>2019-09-02T23:52:08.205075</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>opendata@townsville.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Operational Works received by Townsville
+                    City Council from 2009 to 2019. Can be aggregated by month, suburb and local
+                    government electoral division.</description>
+                <name>Townsville City Council Development Applications - Operational Works</name>
+                <format>XLSX</format>
+                <url>https://data.gov.au/data/dataset/b1fef40c-9674-404c-92c4-2b16a54ecfd3/resource/5f15b7b9-ddf7-42e7-aa25-f1faf46027bc/download/development-applications-operational-works.xlsx</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>b1fef40c-9674-404c-92c4-2b16a54ecfd3</package_id>
+                <created>2018-11-19T01:11:58.604116</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-04-08T05:17:58.515494</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>d5c31f64-3552-470d-8ec1-82a0608deaae</revision_id>
+                <url_type>upload</url_type>
+                <id>5f15b7b9-ddf7-42e7-aa25-f1faf46027bc</id>
+                <resource_type/>
+                <size>125276</size>
+            </resources>
+            <resources>
+                <mimetype>text/csv</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Operational Works received by Townsville
+                    City Council from 2009 to 2019. Can be aggregated by month, suburb and local
+                    government electoral division.</description>
+                <name>Townsville City Council Development Applications - Operational Works</name>
+                <format>CSV</format>
+                <url>https://data.gov.au/data/dataset/b1fef40c-9674-404c-92c4-2b16a54ecfd3/resource/c97a7966-e9da-410f-ba8e-8e9719747803/download/da-operational-works.csv</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>b1fef40c-9674-404c-92c4-2b16a54ecfd3</package_id>
+                <created>2018-12-06T03:37:28.523173</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:52:08.179772</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>d5c31f64-3552-470d-8ec1-82a0608deaae</revision_id>
+                <url_type>upload</url_type>
+                <id>c97a7966-e9da-410f-ba8e-8e9719747803</id>
+                <resource_type/>
+                <size>280071</size>
+            </resources>
+            <num_resources>2</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Development Applications</display_name>
+                <id>2c478555-fa53-454e-86da-8ba9e9bab9ff</id>
+                <name>Development Applications</name>
+            </tags>
+            <temporal_coverage_from>2018-09</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>c62d44c8-0fc0-49a6-be27-00d1e4a8c122</creator_user_id>
+            <organization>
+                <description>Townsville is located about halfway between the tip of Cape York and
+                    Brisbane. Providing a laid back tropical lifestyle that is complemented by
+                    capital city comforts, no other Australian city boasts the resilience,
+                    diversity, lifestyle and economic potential that the Townsville North Queensland
+                    Region enjoys. Known as the Second Capital of Queensland and with a population
+                    of approximately 193,601 people, Townsville offers a dynamic lifestyle coupled
+                    with strong economic prosperity. Townsville is a thriving precinct with access
+                    to a variety of world class education facilities, leading edge health care,
+                    affordable housing, unique retailing, spectacular events and entertainment,
+                    dining precincts and a wide range of outdoor recreation options. With over 300
+                    days of sunshine each year, Townsville’s lifestyle is second to none. The
+                    Townsville City Council Open Data Portal provides access to Council datasets
+                    which will enable academia, community and industry to utilise these datasets to
+                    create value-add opportunities.</description>
+                <created>2018-11-15T13:48:19.648526</created>
+                <title>Townsville City Council</title>
+                <name>townsville-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2018-11-19-003954.215718TCCLogo.png</image_url>
+                <revision_id>4d1b6b14-c0a6-4633-b728-51acad75aec4</revision_id>
+                <type>organization</type>
+                <id>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>tcc-development-applications-operational-works</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Development Applications - Operational Works received by Townsville City Council
+                from 2009 to 2019. Can be aggregated by month, suburb and local government electoral
+                division.</notes>
+            <owner_org>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>Townsville City Council Development Applications - Operational Works</title>
+            <revision_id>a8240ebf-3f2e-44b0-a3f3-37f3a0726883</revision_id>
+            <update_freq>quarterly</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>kenneth_melchert</maintainer>
+            <jurisdiction>Queensland Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>1</num_tags>
+            <id>3f1d5ee5-8cf2-4783-b816-ef0d245f0b87</id>
+            <metadata_created>2018-11-19T01:13:28.800283</metadata_created>
+            <spatial_coverage>Townsville</spatial_coverage>
+            <metadata_modified>2019-09-02T23:50:33.036945</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>opendata@townsville.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Reconfiguring a Lot received by Townsville
+                    City Council from 2009 to 2019. Can be aggregated by month, suburb and local
+                    government electoral division.</description>
+                <name>Townsville City Council Development Applications Reconfiguring a Lot</name>
+                <format>XLSX</format>
+                <url>https://data.gov.au/data/dataset/3f1d5ee5-8cf2-4783-b816-ef0d245f0b87/resource/a73a670b-517d-4668-8171-840e466904d3/download/development-applications-reconfiguring-a-lot.xlsx</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>3f1d5ee5-8cf2-4783-b816-ef0d245f0b87</package_id>
+                <created>2018-11-19T01:13:50.627661</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:50:01.985548</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>9bb78a9b-6ebb-4759-a5df-c22f30b0aaae</revision_id>
+                <url_type>upload</url_type>
+                <id>a73a670b-517d-4668-8171-840e466904d3</id>
+                <resource_type/>
+                <size>91030</size>
+            </resources>
+            <resources>
+                <mimetype>text/csv</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Development Applications - Reconfiguring a Lot received by Townsville
+                    City Council from 2009 to 2019. Can be aggregated by month, suburb and local
+                    government electoral division.</description>
+                <name>Townsville City Council Development Applications Reconfiguring a Lot</name>
+                <format>CSV</format>
+                <url>https://data.gov.au/data/dataset/3f1d5ee5-8cf2-4783-b816-ef0d245f0b87/resource/00cb7248-d07d-4045-8db6-6df98f22402d/download/da-reconfiguring-a-lot.csv</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>3f1d5ee5-8cf2-4783-b816-ef0d245f0b87</package_id>
+                <created>2018-12-06T03:35:00.487870</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T23:50:33.010579</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>9bb78a9b-6ebb-4759-a5df-c22f30b0aaae</revision_id>
+                <url_type>upload</url_type>
+                <id>00cb7248-d07d-4045-8db6-6df98f22402d</id>
+                <resource_type/>
+                <size>203025</size>
+            </resources>
+            <num_resources>2</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Development Applications</display_name>
+                <id>2c478555-fa53-454e-86da-8ba9e9bab9ff</id>
+                <name>Development Applications</name>
+            </tags>
+            <temporal_coverage_from>2018-09</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>c62d44c8-0fc0-49a6-be27-00d1e4a8c122</creator_user_id>
+            <organization>
+                <description>Townsville is located about halfway between the tip of Cape York and
+                    Brisbane. Providing a laid back tropical lifestyle that is complemented by
+                    capital city comforts, no other Australian city boasts the resilience,
+                    diversity, lifestyle and economic potential that the Townsville North Queensland
+                    Region enjoys. Known as the Second Capital of Queensland and with a population
+                    of approximately 193,601 people, Townsville offers a dynamic lifestyle coupled
+                    with strong economic prosperity. Townsville is a thriving precinct with access
+                    to a variety of world class education facilities, leading edge health care,
+                    affordable housing, unique retailing, spectacular events and entertainment,
+                    dining precincts and a wide range of outdoor recreation options. With over 300
+                    days of sunshine each year, Townsville’s lifestyle is second to none. The
+                    Townsville City Council Open Data Portal provides access to Council datasets
+                    which will enable academia, community and industry to utilise these datasets to
+                    create value-add opportunities.</description>
+                <created>2018-11-15T13:48:19.648526</created>
+                <title>Townsville City Council</title>
+                <name>townsville-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2018-11-19-003954.215718TCCLogo.png</image_url>
+                <revision_id>4d1b6b14-c0a6-4633-b728-51acad75aec4</revision_id>
+                <type>organization</type>
+                <id>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>tcc-development-applications-reconfiguring-a-lot</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Development Applications - Reconfiguring a Lot received by Townsville City
+                Council from 2009 to 2019. Can be aggregated by month, suburb and local government
+                electoral division.</notes>
+            <owner_org>e3c1a20c-6dcb-40fe-8cc9-d56378747a56</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>Townsville City Council Development Applications - Reconfiguring a Lot</title>
+            <revision_id>1cc6b51d-7641-41f4-9485-c3f46e27704a</revision_id>
+            <update_freq>quarterly</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>wyndhamgis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>2</num_tags>
+            <id>aa75879c-1d3e-4ad2-b331-826032c6b84b</id>
+            <metadata_created>2018-08-01T03:58:58.393712</metadata_created>
+            <spatial_coverage>VIC5474</spatial_coverage>
+            <metadata_modified>2019-09-02T22:10:16.201191</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [144.6523611,-37.9043056]}</spatial>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@wyndham.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>wyndham_solarenergy_production</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/data/dataset/aa75879c-1d3e-4ad2-b331-826032c6b84b/resource/6e309687-023b-436b-9079-582b7e2fb074/download/wyndham-solar-energy-production.json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>aa75879c-1d3e-4ad2-b331-826032c6b84b</package_id>
+                <created>2018-08-01T04:01:05.857916</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-09-02T22:10:16.170068</last_modified>
+                <position>0</position>
+                <revision_id>ecf12f2a-c8b5-4ebb-9a30-3ecb8f190199</revision_id>
+                <url_type>upload</url_type>
+                <id>6e309687-023b-436b-9079-582b7e2fb074</id>
+                <resource_type/>
+                <size>4629948</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>community infrastructure</display_name>
+                <id>5aa14df2-204f-412a-bb33-4f7e5b087f1e</id>
+                <name>community infrastructure</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>smart city</display_name>
+                <id>9d33e0f0-7794-44d2-b6bd-06b3d585a37d</id>
+                <name>smart city</name>
+            </tags>
+            <temporal_coverage_from>2018-07-24</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>f9073dab-7727-4675-99ff-759a63420043</creator_user_id>
+            <organization>
+                <description>Wyndham City, located in the outer west of Melbourne is one of seven
+                    designated Victorian growth areas. Comprising the predominantly residential
+                    suburbs of Werribee, Hoppers Crossing, Point Cook, Sanctuary Lakes, Tarneit,
+                    Truganina and Wyndham Vale and the small rural township of Little River the city
+                    also boasts one of Melbourne’s largest industrial precincts at Laverton
+                    North.</description>
+                <created>2015-02-25T21:47:37.561050</created>
+                <title>Wyndham City Council</title>
+                <name>wyndham-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>3c0b90ab-9dbb-4d3c-8850-31558e441bf0</revision_id>
+                <type>organization</type>
+                <id>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wyndham-solar-energy-production-daily</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Energy produced (daily) by the solar plants installed in Wyndham area.</notes>
+            <owner_org>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>Wyndham Solar Energy Production daily</title>
+            <revision_id>68508c7a-d472-4025-97ed-04c0482dca57</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+</datasets>
