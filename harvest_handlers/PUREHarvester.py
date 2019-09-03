@@ -24,6 +24,12 @@ class PUREHarvester(Harvester):
     firstCall = True
     numberOfRecordsReturned = 0
 
+    def __init__(self, harvestInfo):
+        super().__init__(harvestInfo)
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+
     def harvest(self):
         self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
@@ -88,11 +94,6 @@ class PUREHarvester(Harvester):
         if self.stopped or self.numberOfRecordsReturned == 0:
             return
         try:
-
-            directory = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-            self.outputDir = directory
             dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
             self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
             dataFile.write(self.data)

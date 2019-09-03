@@ -112,10 +112,11 @@ class Harvester():
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
         outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
+        inFile = self.outputDir + os.sep + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
         self.setStatus("HARVESTING", "RUNNING CROSSWALK")
         try:
             transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
-                                 'outFile' : outFile, 'inFile' : self.outputFilePath}
+                                 'outFile' : outFile, 'inFile' : inFile}
             tr = XSLT2Transformer(transformerConfig)
             tr.transform()
         except subprocess.CalledProcessError as e:
