@@ -79,7 +79,6 @@ class PUREHarvester(Harvester):
                 urlParams['apiKey'] = self.harvestInfo['api_key']
         except KeyError:
             pass
-        print(urlParams)
         urlParams['pageSize'] = str(self.maxRecords)
         urlParams['page'] = str(self.pageCount)
         query = urllib.parse.urlencode(urlParams)
@@ -90,7 +89,7 @@ class PUREHarvester(Harvester):
             return
         try:
 
-            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
+            directory = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
             if not os.path.exists(directory):
                 os.makedirs(directory)
             self.outputDir = directory
