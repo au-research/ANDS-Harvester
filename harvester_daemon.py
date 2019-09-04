@@ -345,7 +345,7 @@ class HarvesterDaemon(Daemon):
                 self.__logger.logMessage(
                     '(checkForHarvestRequests) %s, , limit %s, Retry: %d' % (str(repr(e)), str(limit), attempts), "ERROR")
 
-    def runHarvestById(self, harvest_id):
+    def runHarvestById(self, ds_id):
         attempts = 0
         harvestInfo = {}
         while attempts < 3:
@@ -353,15 +353,15 @@ class HarvesterDaemon(Daemon):
                 conn = self.__database.getConnection()
                 cur = conn.cursor()
                 cur.execute(
-                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `harvest_id` = " + harvest_id + ";")
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `data_source_id` = " + ds_id + ";")
                 conn.commit()
-                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `harvest_id` = " + harvest_id + ";")
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + ds_id + ";")
                 if cur.rowcount > 0:
-                    self.__logger.logMessage("Adding Harvest by ID :%s" %harvest_id, "DEBUG")
+                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" %ds_id, "DEBUG")
                     for r in cur:
                         harvestInfo = self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
                 else:
-                    self.__logger.logMessage("Harvest ID :%s doesn't exist" %harvest_id, "DEBUG")
+                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %ds_id, "DEBUG")
                 cur.close()
                 del cur
                 conn.close()
@@ -370,15 +370,15 @@ class HarvesterDaemon(Daemon):
                 attempts += 1
                 time.sleep(5)
                 self.__logger.logMessage(
-                    '(Adding Harvest by ID) %s, , harvest_id %s, Retry: %d' % (str(repr(e)), str(harvest_id), attempts), "ERROR")
+                    '(Adding Harvest by DS_ID) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts), "ERROR")
 
-    def rerunHarvestFromCroswalk(self, harvest_id , batch_id):
+    def rerunHarvestFromCroswalk(self, ds_id, batch_id):
         attempts = 0
         harvestInfo = {}
-        if(harvest_id is None):
+        if ds_id is None:
             harvestInfo["ERROR"] = "harvest_id must be provided"
             return harvestInfo
-        if(batch_id is None):
+        if batch_id is None:
             harvestInfo["ERROR"] = "batch_id must be provided"
             return harvestInfo
         while attempts < 3:
@@ -386,12 +386,13 @@ class HarvesterDaemon(Daemon):
                 conn = self.__database.getConnection()
                 cur = conn.cursor()
                 cur.execute(
-                    "UPDATE " + myconfig.harvest_table + " SET `status`='WAITING' WHERE `harvest_id` = " + str(harvest_id) + ";")
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='WAITING' WHERE `data_source_id` = " + str(ds_id) + ";")
                 conn.commit()
-                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `harvest_id` = " + str(harvest_id) + ";")
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + str(ds_id) + ";")
                 if cur.rowcount > 0:
-                    self.__logger.logMessage("Adding Harvest by ID :%s" %str(harvest_id), "DEBUG")
+                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" %str(ds_id), "DEBUG")
                     for r in cur:
+                        harvest_id = r[0]
                         harvestInfo = self.addHarvestRequest(r[0], r[1], r[4], r[5], r[6], batch_id)
                         harvestReq = self.__harvestRequests.pop(harvest_id)
                         self.__runningHarvests[harvest_id] = harvestReq
@@ -400,7 +401,7 @@ class HarvesterDaemon(Daemon):
                         t.start()
                         self.__harvestStarted = self.__harvestStarted + 1
                 else:
-                    self.__logger.logMessage("Harvest ID :%s doesn't exist" %str(harvest_id), "DEBUG")
+                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %str(ds_id), "DEBUG")
                 cur.close()
                 del cur
                 conn.close()
@@ -409,7 +410,7 @@ class HarvesterDaemon(Daemon):
                 attempts += 1
                 time.sleep(5)
                 self.__logger.logMessage(
-                    '(Adding Harvest (Crosswalk only) by ID) %s, , harvest_id %s, Retry: %d' % (str(repr(e)), str(harvest_id), attempts),
+                    '(Adding Harvest (Crosswalk only) by data_source_id) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts),
                     "ERROR")
 
 

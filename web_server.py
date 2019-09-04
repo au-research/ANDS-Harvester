@@ -17,17 +17,18 @@ def new(daemon):
     @app.route('/run_harvest', methods=['GET'])
     def runHarvest():
         try:
-            harvest_id = request.args.get('harvest_id')
-            return jsonify(daemon.runHarvestById(harvest_id))
+            ds_id = request.args.get('ds_id')
+            return jsonify(daemon.runHarvestById(ds_id))
         except Exception as e:
+            print(e)
             pass
 
-    @app.route('/run_crosswalk', methods=['GET'])
+    @app.route('/run_batch', methods=['GET'])
     def rerunHarvestFromCroswalk():
         try:
-            harvest_id = int(request.args.get('harvest_id'))
+            ds_id = int(request.args.get('ds_id'))
             batch_id = request.args.get('batch_id')
-            return jsonify(daemon.rerunHarvestFromCroswalk(harvest_id, batch_id))
+            return jsonify(daemon.rerunHarvestFromCroswalk(ds_id, batch_id))
         except Exception as e:
             print(e)
             pass
