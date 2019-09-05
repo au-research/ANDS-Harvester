@@ -15,7 +15,7 @@ class SiteMapCrawler:
     redisPoster = None
     stopped = False
     name = "SiteMapCrawler"
-    sitemap_urls = []
+    sitemap_urls = ""
     links_to_crawl = []
 
     def __init__(self, harvestInfo):
@@ -24,6 +24,7 @@ class SiteMapCrawler:
         self.mDatabase = MyDataBase()
         self.harvestInfo = harvestInfo
         self.sitemap_url = harvestInfo.get("uri")
+        self.links_to_crawl = []
         self.name = harvestInfo.get('data_source_slug')
         self.storeFileExtension = "tmp"
         directory = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) + os.sep + str(
@@ -53,6 +54,7 @@ class SiteMapCrawler:
         for url in str(response).splitlines():
             if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 continue
+
             self.links_to_crawl.append(url)
 
     def parseXmlSitemap(self, response):

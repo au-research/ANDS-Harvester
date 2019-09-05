@@ -28,6 +28,7 @@ class JSONLDHarvester(Harvester):
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
+        self.urlLinksList = {}
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
@@ -41,12 +42,15 @@ class JSONLDHarvester(Harvester):
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
-        self.urlLinksList = {}
+        self.urlLinksList.clear()
         self.getPageList()
+        self.logger.logMessage("pages %s" %str(self.urlLinksList), "DEBUG")
         self.crawlPages()
+
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined')
             self.storeDataAsXML(self.jsonDict, 'combined')
+        self.clearUrls()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -60,6 +64,10 @@ class JSONLDHarvester(Harvester):
         self.urlLinksList = sc.getLinksToCrawl()
         self.setStatus("%s Pages found" %str(len(self.urlLinksList)))
         self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
+
+    def clearUrls(self):
+        for url in self.urlLinksList:
+            grequests.delete(url)
 
     def crawlPages(self):
         if self.harvestInfo['mode'] == 'TEST':
@@ -75,7 +83,7 @@ class JSONLDHarvester(Harvester):
 
 
     def exception_handler(self, request, exception):
-        self.logger.logMessage("Request Failed for %s Exception: %s" % str(request.url), str(exception), "ERROR")
+        self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
 
 
     def parseHtmlStr(self, htmlString):
