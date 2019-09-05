@@ -11,7 +11,6 @@ import subprocess
 import myconfig
 import json, numbers
 
-
 class Harvester():
     startUpTime = 0
     pageCount = 0
@@ -545,8 +544,7 @@ class Harvester():
                     self.parse_element(elem, value)
                     root.appendChild(elem)
         elif isinstance(j, str):
-            j = j.encode('unicode-escape')
-            text = self.__xml.createTextNode(j.decode("utf-8"))
+            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
             root.appendChild(text)
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
