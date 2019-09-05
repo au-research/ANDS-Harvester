@@ -545,7 +545,8 @@ class Harvester():
                     self.parse_element(elem, value)
                     root.appendChild(elem)
         elif isinstance(j, str):
-            text = self.__xml.createTextNode(j)
+            j = j.encode('unicode-escape')
+            text = self.__xml.createTextNode(j.decode("utf-8"))
             root.appendChild(text)
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
