@@ -62,7 +62,7 @@ class test_pure_harvester(unittest.TestCase):
         harvester.harvest()
 
     # API KEYS PROVIDED BY Melanie (for testing)
-    def test_only_during_developement_test_bond_pure_external(self):
+    def only_during_developement_test_bond_pure_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
         harvestInfo['harvest_method'] = 'PUREHarvester'

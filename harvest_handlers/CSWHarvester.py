@@ -25,12 +25,6 @@ class CSWHarvester(Harvester):
     startPosition = 0
     urlParams = {}
 
-    def __init__(self, harvestInfo):
-        super().__init__(harvestInfo)
-        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
-
     def harvest(self):
         self.cleanPreviousHarvestRecords()
         self.urlParams = {}
@@ -42,6 +36,7 @@ class CSWHarvester(Harvester):
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
+
 
     def getHarvestData(self):
         if self.stopped:
@@ -72,6 +67,7 @@ class CSWHarvester(Harvester):
                     time.sleep(1)
         del getRequest
 
+
     def getParamString(self):
         if len(self.urlParams) == 0:
             try:
@@ -86,6 +82,7 @@ class CSWHarvester(Harvester):
             self.urlParams['startPosition'] = str(self.startPosition)
         query = urllib.parse.urlencode(self.urlParams)
         return '?' + query
+
 
     def checkNextRecord(self):
         if self.stopped:
@@ -134,39 +131,6 @@ class CSWHarvester(Harvester):
             self.startPosition = 0
 
 
-    def storeHarvestData(self):
-        if self.stopped or not(self.data):
-            return
-        try:
-            dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
-            self.logger.logMessage("saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
-            self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
-            dataFile.write(self.data)
-            dataFile.close()
-        except Exception as e:
-            self.handleExceptions(e)
-            self.logger.logMessage("CSW (storeHarvestData) %s " % (str(repr(e))), "ERROR")
-
-
-    def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
-            return
-        for file in os.listdir(self.outputDir):
-            if file.endswith(self.storeFileExtension):
-                self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
-                inFile = self.outputDir + os.sep + file
-                try:
-                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
-                    tr = XSLT2Transformer(transformerConfig)
-                    tr.transform()
-                except subprocess.CalledProcessError as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
-                    self.handleExceptions(msg)
-                except Exception as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-                    self.handleExceptions(e)
 
 
 

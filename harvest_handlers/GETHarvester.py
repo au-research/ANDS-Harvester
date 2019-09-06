@@ -15,6 +15,7 @@ class GETHarvester(Harvester):
     def harvest(self):
         self.cleanPreviousHarvestRecords()
         self.getHarvestData()
+        self.pageCount = 1
         self.storeHarvestData()
         self.runCrossWalk()
         self.postHarvestData()

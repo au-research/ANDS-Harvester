@@ -15,7 +15,7 @@ class test_get_harvester(unittest.TestCase):
 
     @patch.object(Request, 'getData')
     def test_XML_get(self, mockGetData):
-        mockGetData.return_value = self.readfile('get_xml.xml')
+        mockGetData.return_value = self.readfile('data_act_gov.xml')
         harvestInfo = {}
         harvestInfo['uri'] = ''
         harvestInfo['provider_type'] = 'GET'
@@ -26,7 +26,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "GET_XML"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
+        harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
         harvestInfo['mode'] = "HARVEST"
         #harvestReq = GETHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -47,7 +47,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "GET_JSON"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
+        harvestInfo['xsl_file'] = "resources/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "HARVEST"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)

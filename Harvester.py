@@ -35,13 +35,15 @@ class Harvester():
     redisPoster = False
 
     def __init__(self, harvestInfo):
+        self.__xml = Document()
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
         self.mode = harvestInfo['mode']
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
-        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) +\
+                         os.sep + str(self.harvestInfo['batch_number'])
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
         self.updateHarvestRequest()
@@ -107,23 +109,27 @@ class Harvester():
            self.storeFileExtension = 'tmp'
 
 
+
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
-        inFile = self.outputDir + os.sep + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
-        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
-        try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
-                                 'outFile' : outFile, 'inFile' : inFile}
-            tr = XSLT2Transformer(transformerConfig)
-            tr.transform()
-        except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
-        except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-            self.handleExceptions(e)
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                self.logger.logMessage("runCrossWalk %s" %file)
+                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                inFile = self.outputDir + os.sep + file
+                try:
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
+                    tr = XSLT2Transformer(transformerConfig)
+                    tr.transform()
+                except subprocess.CalledProcessError as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
+                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
+                    self.handleExceptions(msg)
+                except Exception as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
+                    self.handleExceptions(e)
+
 
     def postHarvestData(self):
         if self.stopped or self.mode == 'TEST':
@@ -248,10 +254,10 @@ class Harvester():
             #if data is JSON then save the json as well as a XML serialised copy
             if self.is_json(self.data):
                 jsonObj = json.loads(self.data, strict=False)
-                self.storeJsonData(jsonObj, str(self.harvestInfo['batch_number']))
-                self.storeDataAsXML(jsonObj, str(self.harvestInfo['batch_number']))
+                self.storeJsonData(jsonObj, str(self.pageCount))
+                self.storeDataAsXML(jsonObj, str(self.pageCount))
             else:
-                self.outputFilePath = self.outputDir + os.sep + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
+                self.outputFilePath = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
                 dataFile = open(self.outputFilePath, 'w', 0o777)
                 self.setStatus("HARVESTING", self.outputFilePath)
                 dataFile.write(self.data)
@@ -517,8 +523,6 @@ class Harvester():
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
-
-
 
     def parse_element(self, root, j):
         if j is None:

@@ -17,13 +17,7 @@ class CKANHarvester(Harvester):
     __packageList = {}
     __listQuery = "api/3/action/package_list"
     __itemQuery = "api/3/action/package_show"
-    __xml = False
 
-    def __init__(self, harvestInfo):
-        super().__init__(harvestInfo)
-        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
 
     def harvest(self):
         self.cleanPreviousHarvestRecords()
@@ -94,35 +88,3 @@ class CKANHarvester(Harvester):
             self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount, storeeditemId), "ERROR")
             self.handleExceptions(e)
         self.data = str(self.__xml.toprettyxml(encoding='utf-8', indent=' '), 'utf-8')
-
-    def parse_element(self, root, j):
-        if j is None:
-            return
-        if isinstance(j, dict):
-            for key in j.keys():
-                value = j[key]
-                if isinstance(value, list):
-                    for e in value:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
-                        self.parse_element(elem, e)
-                        root.appendChild(elem)
-                else:
-                    if key.isdigit():
-                        elem = self.__xml.createElement('item')
-                        elem.setAttribute('value', key)
-                    else:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
-                    self.parse_element(elem, value)
-                    root.appendChild(elem)
-        elif isinstance(j, str):
-            text = self.__xml.createTextNode(j)
-            root.appendChild(text)
-        elif isinstance(j, numbers.Number):
-            text = self.__xml.createTextNode(str(j))
-            root.appendChild(text)
-        else:
-            raise Exception("bad type %s for %s" % (type(j), j,))

@@ -21,36 +21,27 @@ class JSONLDHarvester(Harvester):
       }
     """
     urlLinksList = {}
-    __xml = None
     combineFiles = True
     async_list = []
     jsonDict = []
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
-        self.urlLinksList = {}
-        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
-
-
 
     def harvest(self):
         self.cleanPreviousHarvestRecords()
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
-        self.urlLinksList.clear()
         self.getPageList()
         self.logger.logMessage("pages %s" %str(self.urlLinksList), "DEBUG")
         self.crawlPages()
-
+        self.__xml = Document()
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined')
             self.storeDataAsXML(self.jsonDict, 'combined')
-        self.clearUrls()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -65,9 +56,6 @@ class JSONLDHarvester(Harvester):
         self.setStatus("%s Pages found" %str(len(self.urlLinksList)))
         self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
 
-    def clearUrls(self):
-        for url in self.urlLinksList:
-            grequests.delete(url)
 
     def crawlPages(self):
         if self.harvestInfo['mode'] == 'TEST':
@@ -142,7 +130,6 @@ class JSONLDHarvester(Harvester):
 
     def storeDataAsXML(self, data, fileName):
         try:
-            self.__xml = Document()
             outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
             dataFile = open(outputFilePath, 'w', 0o777)
             if self.stopped:
@@ -188,40 +175,6 @@ class JSONLDHarvester(Harvester):
                 except Exception as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
                     self.handleExceptions(e)
-
-
-    def parse_element(self, root, j):
-        if j is None:
-            return
-        if isinstance(j, dict):
-            for key in j.keys():
-                value = j[key]
-                if isinstance(value, list):
-                    for e in value:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
-                        self.parse_element(elem, e)
-                        root.appendChild(elem)
-                else:
-                    if key.isdigit():
-                        elem = self.__xml.createElement('item')
-                        elem.setAttribute('value', key)
-                    else:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
-                    self.parse_element(elem, value)
-                    root.appendChild(elem)
-        elif isinstance(j, str):
-            text = self.__xml.createTextNode(j)
-            root.appendChild(text)
-        elif isinstance(j, numbers.Number):
-            text = self.__xml.createTextNode(str(j))
-            root.appendChild(text)
-        else:
-            raise Exception("bad type %s for %s" % (type(j), j,))
-
 
 
 def getFileName(data):

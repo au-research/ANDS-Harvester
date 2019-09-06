@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<datasets>
+    <dataset>
+        <context>http://schema.org/</context>
+        <type>Dataset</type>
+        <datePublished>2016-05-18</datePublished>
+        <sourceOrganization>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </sourceOrganization>
+        <keywords> vegetation, features,
+            association:http://capdf.csiro.au/resource/feature/capdf/vegetation,
+            geoscientificInformation</keywords>
+        <publisher>
+            <type>Organization</type>
+            <name>AuScope</name>
+        </publisher>
+        <spatialCoverage>
+            <type>Place</type>
+            <geo>
+                <type>GeoShape</type>
+                <box>115.5591 -28.95816 118.82393 -25.94681</box>
+            </geo>
+        </spatialCoverage>
+        <inLanguage>en</inLanguage>
+        <name>Vegetation Field Samping Data</name>
+        <description>Vegetation field sampling data that also includes analytically and laboratory
+            derived data sets.</description>
+        <identifier>
+            <type>PropertyValue</type>
+            <propertyID>local</propertyID>
+            <value>07017a9e-3084-4125-8f38-206acb9c2fbc</value>
+        </identifier>
+        <url>https://demo.ands.org.au/vegetation-field-samping/817238</url>
+    </dataset>
+</datasets>

@@ -14,27 +14,20 @@ class PMHHarvester(Harvester):
             ]
         }
     """
-    __resumptionToken = False
+    __resumptionToken = ""
     __from = "1900-01-01T00:00:00Z"
-    __until = False
-    __metadataPrefix = False
-    __set = False
+    __until = None
+    __metadataPrefix = ""
+    __set = None
     retryCount = 0
     firstCall = True
     noRecordsMatchCodeValue = 'noRecordsMatch'
 
 
-    def __init__(self, harvestInfo):
-        super().__init__(harvestInfo)
-        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
-
     def harvest(self):
         self.cleanPreviousHarvestRecords()
-        now = datetime.now().replace(microsecond=0)
         self.__until = datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-        self.__metadataPrefix= self.harvestInfo['provider_type']
+        self.__metadataPrefix = self.harvestInfo['provider_type']
         try:
             self.__set = self.harvestInfo['oai_set']
         except KeyError:
@@ -59,6 +52,7 @@ class PMHHarvester(Harvester):
     def identifyRequest(self):
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
+        data = ""
         try:
             data = getRequest.getData()
         except Exception as e:
@@ -150,22 +144,4 @@ class PMHHarvester(Harvester):
             self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
-    def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
-            return
-        for file in os.listdir(self.outputDir):
-            if file.endswith(self.storeFileExtension):
-                self.logger.logMessage("runCrossWalk %s" %file)
-                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
-                inFile = self.outputDir + os.sep + file
-                try:
-                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
-                    tr = XSLT2Transformer(transformerConfig)
-                    tr.transform()
-                except subprocess.CalledProcessError as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
-                    self.handleExceptions(msg)
-                except Exception as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-                    self.handleExceptions(e)
+
