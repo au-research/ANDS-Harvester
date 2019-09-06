@@ -56,14 +56,15 @@ class Harvester():
             the_files = self.listdir_fullpath(self.outputDir)
             the_files.sort(key=os.path.getmtime, reverse=True)
             for i in range(number_to_keep, len(the_files)):
+                fileName = the_files[i]
                 try:
                     if os.path.isfile(the_files[i]):
                         os.unlink(the_files[i])
                     else:
                         self.emptyDirectory(the_files[i])
                         os.rmdir(the_files[i])
-                except Exception as e:
-                    self.logger.logMessage(str(repr(e)), "ERROR")
+                except PermissionError as e:
+                    self.logger.logMessage("Unable to remove %s" % fileName, "ERROR")
         #set up the batch path
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if not os.path.exists(self.outputDir):

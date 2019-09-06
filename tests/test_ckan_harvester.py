@@ -8,7 +8,7 @@ import threading
 
 class test_ckan_harvester(unittest.TestCase):
 
-    def readfile(self, path):
+    def readTestfile(self, path):
         f = io.open(myconfig.abs_path + '/tests/resources/test_source/ckan/' + path, mode="r")
         data = f.read()
         f.close()
@@ -17,12 +17,12 @@ class test_ckan_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_ckan_package_list(self, mockGetData):
         mockGetData.side_effect = [
-            self.readfile('package_list.json'),
-            self.readfile('package_show_1.json'),
-            self.readfile('package_show_2.json'),
-            self.readfile('package_show_3.json'),
-            self.readfile('package_show_4.json'),
-            self.readfile('package_show_5.json'),
+            self.readTestfile('package_list.json'),
+            self.readTestfile('package_show_1.json'),
+            self.readTestfile('package_show_2.json'),
+            self.readTestfile('package_show_3.json'),
+            self.readTestfile('package_show_4.json'),
+            self.readTestfile('package_show_5.json'),
         ]
         harvestInfo = {}
         harvestInfo['uri'] = ''

@@ -9,7 +9,7 @@ class test_request(unittest.TestCase):
     def test_get_local_file(self):
         r = Request('file:///' + myconfig.abs_path + '/tests/resources/test_source/get/get_json.json')
         data = r.getData()
-        self.assertIn("success", data)
+        self.assertIn('"@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld', data)
 
     def test_get_webpage(self):
         r = Request('https://www.google.com/')

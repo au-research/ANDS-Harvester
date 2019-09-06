@@ -232,7 +232,7 @@ class HarvesterDaemon(Daemon):
         return
 
     def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
-        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)), "INFO")
+
         harvestInfo = {}
         attempts = 0
         while attempts < 3:
@@ -269,15 +269,14 @@ class HarvesterDaemon(Daemon):
                     '(addHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
                 if attempts == 3:
                     return
-
+        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s HarvestMethod:%s" %
+                                 (str(dataSourceId), str(harvestID), harvestInfo['harvest_method']), "INFO")
         try:
             harvester_module = __import__(harvestInfo['harvest_method'], globals={}, locals={}, fromlist=[], level=0)
 
             class_ = getattr(harvester_module, harvestInfo['harvest_method'])
             myHarvester = class_(harvestInfo)
             self.__harvestRequests[harvestID] = myHarvester
-            self.__logger.logMessage(
-            '(addHarvestRequest) %s, Retry:' % str(self.__harvestRequests), "DEBUG")
         except ImportError as e:
             self.handleException(harvestID, e)
         return harvestInfo

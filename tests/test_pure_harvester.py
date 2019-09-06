@@ -8,7 +8,7 @@ from utils.Request import Request
 class test_pure_harvester(unittest.TestCase):
 
 
-    def readfile(self, path):
+    def readTestfile(self, path):
         f = io.open(myconfig.abs_path + '/tests/resources/test_source/pure/' + path, mode="r")
         data = f.read()
         f.close()
@@ -17,11 +17,11 @@ class test_pure_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_uwa_pure(self, mockGetData):
         mockGetData.side_effect = [
-            self.readfile('page_1.xml'),
-            self.readfile('page_2.xml'),
-            self.readfile('page_3.xml'),
-            self.readfile('page_4.xml'),
-            self.readfile('page_5.xml')
+            self.readTestfile('page_1.xml'),
+            self.readTestfile('page_2.xml'),
+            self.readTestfile('page_3.xml'),
+            self.readTestfile('page_4.xml'),
+            self.readTestfile('page_5.xml')
         ]
         harvestInfo = {}
         harvestInfo['uri'] = ''

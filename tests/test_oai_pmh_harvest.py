@@ -7,7 +7,7 @@ from utils.Request import Request
 
 class test_oai_harvester(unittest.TestCase):
 
-    def readfile(self, path):
+    def readTestfile(self, path):
         f = io.open(myconfig.abs_path + '/tests/resources/test_source/pmh/' + path, mode="r")
         data = f.read()
         f.close()
@@ -16,9 +16,9 @@ class test_oai_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_oai_pmh_harvest(self, mockGetData):
         mockGetData.side_effect = [
-            self.readfile('Identify.xml'),
-            self.readfile('1.xml'),
-            self.readfile('2.xml')
+            self.readTestfile('Identify.xml'),
+            self.readTestfile('1.xml'),
+            self.readTestfile('2.xml')
         ]
         harvestInfo = {}
         harvestInfo['advanced_harvest_mode'] = "INCREMENTAL"

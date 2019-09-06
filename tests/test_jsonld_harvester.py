@@ -7,7 +7,7 @@ from utils.Request import Request
 
 class test_jsonld_harvester(unittest.TestCase):
 
-    def readfile(self, path):
+    def readTestfile(self, path):
         f = io.open(myconfig.abs_path + '/tests/resources/test_source/jsonld/' + path, mode="r")
         data = f.read()
         f.close()
@@ -17,19 +17,19 @@ class test_jsonld_harvester(unittest.TestCase):
     # def test_xml_site_map(self, mockGetData):
     #     mockGetData.side_effect = []
     #     mockGetData.side_effect = [
-    #         self.readfile('sitemap.xml'),
-    #         self.readfile('urlset.xml'),
-    #         self.readfile('urlset_2.xml'),
-    #         self.readfile('page_1.html'),
-    #         self.readfile('page_2.html'),
-    #         self.readfile('page_3.html'),
-    #         self.readfile('page_4.html'),
-    #         self.readfile('page_5.html'),
-    #         self.readfile('page_6.html'),
-    #         self.readfile('page_7.html'),
-    #         self.readfile('page_8.html'),
-    #         self.readfile('page_9.html'),
-    #         self.readfile('page_10.html')
+    #         self.readTestfile('sitemap.xml'),
+    #         self.readTestfile('urlset.xml'),
+    #         self.readTestfile('urlset_2.xml'),
+    #         self.readTestfile('page_1.html'),
+    #         self.readTestfile('page_2.html'),
+    #         self.readTestfile('page_3.html'),
+    #         self.readTestfile('page_4.html'),
+    #         self.readTestfile('page_5.html'),
+    #         self.readTestfile('page_6.html'),
+    #         self.readTestfile('page_7.html'),
+    #         self.readTestfile('page_8.html'),
+    #         self.readTestfile('page_9.html'),
+    #         self.readTestfile('page_10.html')
     #     ]
     #     harvestInfo = {}
     #     harvestInfo['uri'] = ''
@@ -53,17 +53,17 @@ class test_jsonld_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_text_site_map(self, mockGetData):
         mockGetData.side_effect = [
-            self.readfile('sitemap.txt'),
-            self.readfile('page_1.html'),
-            self.readfile('page_2.html'),
-            self.readfile('page_3.html'),
-            self.readfile('page_4.html'),
-            self.readfile('page_5.html'),
-            self.readfile('page_6.html'),
-            self.readfile('page_7.html'),
-            self.readfile('page_8.html'),
-            self.readfile('page_9.html'),
-            self.readfile('page_10.html')
+            self.readTestfile('sitemap.txt'),
+            self.readTestfile('page_1.html'),
+            self.readTestfile('page_2.html'),
+            self.readTestfile('page_3.html'),
+            self.readTestfile('page_4.html'),
+            self.readTestfile('page_5.html'),
+            self.readTestfile('page_6.html'),
+            self.readTestfile('page_7.html'),
+            self.readTestfile('page_8.html'),
+            self.readTestfile('page_9.html'),
+            self.readTestfile('page_10.html')
         ]
         harvestInfo = {}
         harvestInfo['uri'] = ''
@@ -86,12 +86,12 @@ class test_jsonld_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def only_during_developement_test_urlset_map(self, mockGetData):
         mockGetData.side_effect = [
-            self.readfile('urlset.xml'),
-            self.readfile('page_1.html'),
-            self.readfile('page_2.html'),
-            self.readfile('page_3.html'),
-            self.readfile('page_4.html'),
-            self.readfile('page_5.html')
+            self.readTestfile('urlset.xml'),
+            self.readTestfile('page_1.html'),
+            self.readTestfile('page_2.html'),
+            self.readTestfile('page_3.html'),
+            self.readTestfile('page_4.html'),
+            self.readTestfile('page_5.html')
         ]
         harvestInfo = {}
         harvestInfo['uri'] = ''
