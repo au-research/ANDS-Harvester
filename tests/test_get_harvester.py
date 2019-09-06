@@ -22,7 +22,7 @@ class test_get_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_XML_get(self, mockGetData):
         batch_id = "GET_XML"
-        ds_id = 7
+        ds_id = 6
         mockGetData.return_value = self.readTestfile('data_act_gov.xml')
         harvestInfo = {}
         harvestInfo['uri'] = ''
@@ -30,8 +30,8 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['harvest_method'] = 'GET'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['harvest_id'] = 2
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
@@ -55,7 +55,7 @@ class test_get_harvester(unittest.TestCase):
     @patch.object(Request, 'getData')
     def test_JSON_get(self, mockGetData):
         batch_id = "GET_JSON"
-        ds_id = 7
+        ds_id = 6
         mockGetData.return_value = self.readTestfile('get_json.json')
         harvestInfo = {}
         harvestInfo['uri'] = ''
@@ -63,9 +63,9 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['harvest_method'] = 'GET'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "GET_JSON"
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['harvest_id'] = 2
+        harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
         harvestInfo['mode'] = "HARVEST"
