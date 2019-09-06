@@ -20,7 +20,6 @@ class CKANHarvester(Harvester):
 
 
     def harvest(self):
-        self.cleanPreviousHarvestRecords()
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()

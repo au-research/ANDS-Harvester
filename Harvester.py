@@ -42,27 +42,14 @@ class Harvester():
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
-        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id']) +\
-                         os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
+        self.setupdirs()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
 
-    def harvest(self):
-        self.cleanPreviousHarvestRecords()
-        self.getHarvestData()
-        self.runCrossWalk()
-        self.postHarvestData()
-        self.finishHarvest()
-
-    def crosswalk(self):
-        self.runCrossWalk()
-        self.postHarvestData()
-        self.finishHarvest()
-
-    def cleanPreviousHarvestRecords(self):
+    def setupdirs(self):
         number_to_keep = 3
+        # set up the data source path
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
         elif len(os.listdir(self.outputDir)) > number_to_keep:
@@ -73,22 +60,42 @@ class Harvester():
                     if os.path.isfile(the_files[i]):
                         os.unlink(the_files[i])
                     else:
-                        self.deleteDirectory(the_files[i])
+                        self.emptyDirectory(the_files[i])
                         os.rmdir(the_files[i])
                 except Exception as e:
                     self.logger.logMessage(str(repr(e)), "ERROR")
+        #set up the batch path
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+        else:
+            self.emptyDirectory(self.outputDir)
+
+
+    def harvest(self):
+
+        self.getHarvestData()
+        self.runCrossWalk()
+        self.postHarvestData()
+        self.finishHarvest()
+
+    def crosswalk(self):
+        self.runCrossWalk()
+        self.postHarvestData()
+        self.finishHarvest()
+
 
     def listdir_fullpath(self, d):
         return [os.path.join(d, f) for f in os.listdir(d)]
 
-    def deleteDirectory(self, directory):
+    def emptyDirectory(self, directory):
         for the_file in os.listdir(directory):
             file_path = os.path.join(directory, the_file)
             try:
                 if os.path.isfile(file_path):
                     os.unlink(file_path)
                 else:
-                    self.deleteDirectory(file_path)
+                    self.emptyDirectory(file_path)
                     os.rmdir(file_path)
             except Exception as e:
                 self.logger.logMessage(e, "ERROR")

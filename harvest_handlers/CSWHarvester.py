@@ -26,7 +26,6 @@ class CSWHarvester(Harvester):
     urlParams = {}
 
     def harvest(self):
-        self.cleanPreviousHarvestRecords()
         self.urlParams = {}
         self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
