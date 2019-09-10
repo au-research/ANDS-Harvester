@@ -138,23 +138,27 @@ class Harvester():
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
+        transformCount = 0
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                transformCount += 1
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
                 inFile = self.outputDir + os.sep + file
                 try:
-                    self.setStatus('RUNNING CROSSWALK', "Generating %s:" % outFile)
+                    self.setStatus('RUNNING %s CROSSWALK ' %str(transformCount), "Generating %s:" % outFile)
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
                 except subprocess.CalledProcessError as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
                     msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
-                    self.handleExceptions(msg)
+                    self.handleExceptions(msg, transformCount == 1)
                 except Exception as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-                    self.handleExceptions(e)
+                    self.handleExceptions(e, transformCount == 1)
 
 
     def postHarvestData(self):

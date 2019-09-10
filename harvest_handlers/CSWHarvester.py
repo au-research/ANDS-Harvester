@@ -1,6 +1,7 @@
 from Harvester import *
 import urllib
 from xml.dom.minidom import parseString
+import urllib.parse as urlparse
 
 class CSWHarvester(Harvester):
     """
@@ -91,18 +92,10 @@ class CSWHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
-            #self.logger.logMessage(
-            #    "CSW (checkNextRecord parse response) %s" % str(self.data),
-            #    "DEBUG")
             try:
-
                 nException = dom.getElementsByTagNameNS('http://www.opengis.net/ows', 'Exception')
-                self.logger.logMessage(
-                    "CSW (response Exception) %s" % str(repr(nException)),
-                    "DEBUG")
                 if len(nException) > 0:
                     eCode = nException[0].attributes["exceptionCode"].value
-                    #eLocator = nException.attributes["locator"].value
                     eTexts = nException[0].getElementsByTagNameNS('http://www.opengis.net/ows', 'ExceptionText')
                     eText = ''
                     for i, elem in enumerate(eTexts):
