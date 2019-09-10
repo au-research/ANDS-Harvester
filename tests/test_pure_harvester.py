@@ -32,7 +32,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "PURE_UWA"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
@@ -40,6 +40,33 @@ class test_pure_harvester(unittest.TestCase):
         # t.start()
         harvester = PUREHarvester(harvestInfo)
         harvester.harvest()
+
+    @patch.object(Request, 'getData')
+    def test_uwa_pure_crosswalk_only(self, mockGetData):
+        mockGetData.side_effect = [
+            self.readTestfile('page_1.xml'),
+            self.readTestfile('page_2.xml'),
+            self.readTestfile('page_3.xml'),
+            self.readTestfile('page_4.xml'),
+            self.readTestfile('page_5.xml')
+        ]
+        harvestInfo = {}
+        harvestInfo['uri'] = ''
+        harvestInfo['harvest_method'] = 'PUREHarvester'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = 7
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['batch_number'] = "PURE_UWA"
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/schemadotorg2rif.xsl"
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['api_key'] = myconfig.uwa_api_key
+        # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
+        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
+        # t.start()
+        harvester = PUREHarvester(harvestInfo)
+        harvester.crosswalk()
 
     # API KEYS PROVIDED BY Melanie (for testing)
     def only_during_developement_test_uwa_pure_external(self):

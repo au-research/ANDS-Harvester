@@ -43,7 +43,6 @@ class test_get_harvester(unittest.TestCase):
         harvester = GETHarvester(harvestInfo)
         harvester.harvest()
         # tests
-        print(myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp")
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
         self.assertTrue(os.path.exists(tempFile))
@@ -80,7 +79,6 @@ class test_get_harvester(unittest.TestCase):
         jsonFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.json"
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
-        print(jsonFile)
         self.assertTrue(os.path.exists(jsonFile))
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))

@@ -99,8 +99,8 @@ class Harvester():
                 else:
                     self.emptyDirectory(file_path)
                     os.rmdir(file_path)
-            except Exception as e:
-                self.logger.logMessage(e, "ERROR")
+            except PermissionError as e:
+                self.logger.logMessage("Unable to emptyDirectory %s" % file_path, "ERROR")
 
     def getHarvestData(self):
         if self.stopped:
@@ -116,6 +116,21 @@ class Harvester():
     def setUpCrosswalk(self):
         if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
            self.storeFileExtension = 'tmp'
+        #clean up previous crosswalk and import content
+           self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+           self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+           for file in os.listdir(self.outputDir):
+               if file.endswith(self.resultFileExtension) or \
+                       file.endswith(self.resultFileExtension + ".validated") or\
+                       file.endswith(self.resultFileExtension + ".processed"):
+                   try:
+                       if os.path.isfile(self.outputDir + os.sep + file):
+                           os.unlink(self.outputDir + os.sep + file)
+                       else:
+                           self.emptyDirectory(self.outputDir + os.sep + file)
+                           os.rmdir(self.outputDir + os.sep + file)
+                   except PermissionError as e:
+                       self.logger.logMessage("Unable to remove %s" % (self.outputDir + os.sep + file), "ERROR")
 
 
 
