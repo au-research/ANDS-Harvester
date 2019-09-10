@@ -352,15 +352,15 @@ class HarvesterDaemon(Daemon):
                 conn = self.__database.getConnection()
                 cur = conn.cursor()
                 cur.execute(
-                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `data_source_id` = " + ds_id + ";")
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `data_source_id` = " + str(ds_id) + ";")
                 conn.commit()
-                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + ds_id + ";")
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + str(ds_id) + ";")
                 if cur.rowcount > 0:
-                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" %ds_id, "DEBUG")
+                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" % str(ds_id), "DEBUG")
                     for r in cur:
                         harvestInfo = self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
                 else:
-                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %ds_id, "DEBUG")
+                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %str(ds_id), "DEBUG")
                 cur.close()
                 del cur
                 conn.close()
@@ -371,14 +371,11 @@ class HarvesterDaemon(Daemon):
                 self.__logger.logMessage(
                     '(Adding Harvest by DS_ID) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts), "ERROR")
 
-    def rerunHarvestFromCroswalk(self, ds_id, batch_id):
+    def runBatch(self, ds_id, batch_id):
         attempts = 0
         harvestInfo = {}
-        if ds_id is None:
-            harvestInfo["ERROR"] = "harvest_id must be provided"
-            return harvestInfo
-        if batch_id is None:
-            harvestInfo["ERROR"] = "batch_id must be provided"
+        if not os.path.exists(myconfig.data_store_path + str(ds_id) + os.sep + batch_id):
+            harvestInfo["ERROR"] = "content belonging to the given batch_id can not be located"
             return harvestInfo
         while attempts < 3:
             try:
