@@ -27,6 +27,7 @@ class PMHHarvester(Harvester):
     def harvest(self):
         self.setupdirs()
         self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.__until = datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         self.__metadataPrefix = self.harvestInfo['provider_type']
         try:

@@ -22,6 +22,7 @@ class CKANHarvester(Harvester):
     def harvest(self):
         self.setupdirs()
         self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()

@@ -15,6 +15,7 @@ class GETHarvester(Harvester):
     def harvest(self):
         self.setupdirs()
         self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.getHarvestData()
         self.pageCount = 1
         self.storeHarvestData()

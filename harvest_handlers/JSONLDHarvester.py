@@ -33,6 +33,7 @@ class JSONLDHarvester(Harvester):
     def harvest(self):
         self.setupdirs()
         self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0

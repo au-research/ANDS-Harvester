@@ -35,7 +35,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
-        harvestInfo['mode'] = "HARVEST"
+        harvestInfo['mode'] = "TEST"
         #harvestReq = GETHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
@@ -43,6 +43,7 @@ class test_get_harvester(unittest.TestCase):
         harvester = GETHarvester(harvestInfo)
         harvester.harvest()
         # tests
+        print(myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp")
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
         self.assertTrue(os.path.exists(tempFile))
@@ -68,7 +69,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
-        harvestInfo['mode'] = "HARVEST"
+        harvestInfo['mode'] = "TEST"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
