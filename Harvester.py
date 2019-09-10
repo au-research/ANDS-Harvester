@@ -81,6 +81,7 @@ class Harvester():
         self.finishHarvest()
 
     def crosswalk(self):
+        self.setStatus('REGENERATING CONTENT')
         self.setUpCrosswalk()
         self.runCrossWalk()
         self.postHarvestData()
@@ -143,6 +144,7 @@ class Harvester():
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
                 inFile = self.outputDir + os.sep + file
                 try:
+                    self.setStatus('RUNNING CROSSWALK', "Generating %s:" % outFile)
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
