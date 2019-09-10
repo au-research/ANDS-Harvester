@@ -42,9 +42,7 @@ class Harvester():
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
-        self.setupdirs()
-        self.updateHarvestRequest()
-        self.setUpCrosswalk()
+
 
     def setupdirs(self):
         number_to_keep = 3
@@ -74,13 +72,16 @@ class Harvester():
 
 
     def harvest(self):
-
+        self.setupdirs()
+        self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.getHarvestData()
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
     def crosswalk(self):
+        self.setUpCrosswalk()
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()

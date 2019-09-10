@@ -25,6 +25,8 @@ class PUREHarvester(Harvester):
     numberOfRecordsReturned = 0
 
     def harvest(self):
+        self.setupdirs()
+        self.updateHarvestRequest()
         self.startPosition = 0
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)

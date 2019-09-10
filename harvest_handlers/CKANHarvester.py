@@ -20,6 +20,8 @@ class CKANHarvester(Harvester):
 
 
     def harvest(self):
+        self.setupdirs()
+        self.updateHarvestRequest()
         self.__xml = Document()
         self.getPackageList()
         self.getPackageItems()

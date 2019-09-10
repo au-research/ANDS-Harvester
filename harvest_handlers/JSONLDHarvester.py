@@ -31,6 +31,8 @@ class JSONLDHarvester(Harvester):
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
     def harvest(self):
+        self.setupdirs()
+        self.updateHarvestRequest()
         self.stopped = False
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
