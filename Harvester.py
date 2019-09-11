@@ -288,6 +288,7 @@ class Harvester():
                 self.storeDataAsXML(jsonObj, str(self.pageCount))
             else:
                 self.outputFilePath = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+                self.logger.logMessage("Harvester (storeHarvestData) %s " % (self.outputFilePath), "DEBUG")
                 dataFile = open(self.outputFilePath, 'w', 0o777)
                 self.setStatus("HARVESTING", self.outputFilePath)
                 dataFile.write(self.data)
@@ -302,12 +303,13 @@ class Harvester():
            return
         try:
             outputFilePath = self.outputDir + os.sep + fileName + ".json"
+            self.logger.logMessage("Harvester (storeJsonData) %s " % (outputFilePath), "DEBUG")
             dataFile = open(outputFilePath, 'w', 0o777)
             json.dump(data, dataFile)
             dataFile.close()
         except Exception as e:
             self.handleExceptions(e)
-            self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("Harvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
 
 
     def storeDataAsXML(self, data, fileName):
@@ -330,8 +332,9 @@ class Harvester():
                 self.parse_element(root, data)
                 self.__xml.writexml(dataFile)
                 dataFile.close()
+            self.logger.logMessage("Harvester (storeDataAsXML) %s " % (self.outputFilePath), "DEBUG")
         except Exception as e:
-            self.logger.logMessage("JSONLDHarvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("Harvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
 
     # https://stackoverflow.com/questions/11294535/verify-if-a-string-is-json-in-python
 

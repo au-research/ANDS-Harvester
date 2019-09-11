@@ -21,6 +21,7 @@ class CKANHarvester(Harvester):
 
     def harvest(self):
         self.setupdirs()
+        self.pageCount = 1
         self.updateHarvestRequest()
         self.setUpCrosswalk()
         self.__xml = Document()
@@ -75,7 +76,7 @@ class CKANHarvester(Harvester):
                         ePackage = self.__xml.createElement('result')
                         ePackage.setAttribute('id', itemId)
                         self.parse_element(ePackage, package['result'])
-                        self.logger.logMessage("DATA (%s)" % str(package['result']), "DEBUG")
+                        #self.logger.logMessage("DATA (%s)" % str(package['result']), "DEBUG")
                         ePackages.appendChild(ePackage)
                     if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                         break

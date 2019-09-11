@@ -13,11 +13,11 @@
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
-            <xsl:apply-templates select="dataset"/>
+            <xsl:apply-templates select="dataset | result"/>
         </registryObjects>
     </xsl:template>
     
-    <xsl:template match="dataset">
+    <xsl:template match="dataset | result">
         <xsl:element name="registryObject"
             xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="group">
@@ -42,7 +42,7 @@
     
     <xsl:template match="type">
         <xsl:attribute name="type">
-            <xsl:value-of select="substring-after(text(), 'dcat:')"/>
+            <xsl:value-of select="text()"/>
         </xsl:attribute>
     </xsl:template>
     

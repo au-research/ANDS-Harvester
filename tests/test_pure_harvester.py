@@ -1,7 +1,7 @@
 import unittest
 import myconfig
 from harvest_handlers.PUREHarvester import PUREHarvester
-import io
+import io, os
 from mock import patch
 from utils.Request import Request
 
@@ -14,8 +14,16 @@ class test_pure_harvester(unittest.TestCase):
         f.close()
         return data
 
+    def readFile(self, path):
+        f = io.open(path, mode="r")
+        data = f.read()
+        f.close()
+        return data
+
     @patch.object(Request, 'getData')
     def test_uwa_pure(self, mockGetData):
+        batch_id = "PURE_UWA"
+        ds_id = 1
         mockGetData.side_effect = [
             self.readTestfile('page_1.xml'),
             self.readTestfile('page_2.xml'),
@@ -28,11 +36,11 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['harvest_method'] = 'PUREHarvester'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
+        harvestInfo['data_source_id'] = ds_id
         harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "PURE_UWA"
+        harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/ELSEVIER_PURE_Params.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
@@ -40,6 +48,15 @@ class test_pure_harvester(unittest.TestCase):
         # t.start()
         harvester = PUREHarvester(harvestInfo)
         harvester.harvest()
+
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
+        self.assertTrue(os.path.exists(tempFile))
+        self.assertTrue(os.path.exists(resultFile))
+        content = self.readFile(tempFile)
+        self.assertIn('<doi>10.4225/57/5b29e9c09280e</doi>', content)
+        content = self.readFile(resultFile)
+        self.assertIn('<identifier type="doi">http://doi.org/10.4225/57/5b29e9c09280e</identifier>', content)
 
     @patch.object(Request, 'getData')
     def test_uwa_pure_crosswalk_only(self, mockGetData):

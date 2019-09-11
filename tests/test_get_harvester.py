@@ -48,7 +48,7 @@ class test_get_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         content = self.readFile(resultFile)
-        self.assertIn('<collection type="Dataset">', content)
+        self.assertIn('<collection type="dcat:Dataset">', content)
         content = self.readFile(tempFile)
         self.assertIn('<distribution>', content)
 
@@ -87,7 +87,7 @@ class test_get_harvester(unittest.TestCase):
         self.assertIn('"@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld"', content)
 
         content = self.readFile(resultFile)
-        self.assertIn('<collection type="Dataset">', content)
+        self.assertIn('<collection type="dcat:Dataset">', content)
 
         content = self.readFile(tempFile)
         self.assertIn('<distribution>', content)

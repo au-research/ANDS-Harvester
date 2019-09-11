@@ -1,7 +1,7 @@
 import unittest
 import myconfig
 from harvest_handlers.CSWHarvester import CSWHarvester
-import io
+import io, os
 from mock import patch
 from utils.Request import Request
 
@@ -14,13 +14,21 @@ class test_csw_harvester(unittest.TestCase):
         f.close()
         return data
 
+    def readFile(self, path):
+        f = io.open(path, mode="r")
+        data = f.read()
+        f.close()
+        return data
+
     @patch.object(Request, 'getData')
     def test_csw_harvest(self, mockGetData):
+        batch_id = "CSW_TERN"
+        ds_id = 4
         mockGetData.return_value = self.readTestfile('tern_csw.xml')
         harvestInfo = {}
         harvestInfo['advanced_harvest_mode'] = "REFRESH"
-        harvestInfo['batch_number'] = "CSW_TERN"
-        harvestInfo['data_source_id'] = 7
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['data_source_id'] = ds_id
         harvestInfo['data_source_slug'] = "TERN-Geonetwork"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
@@ -38,6 +46,14 @@ class test_csw_harvester(unittest.TestCase):
         harvester = CSWHarvester(harvestInfo)
         harvester.harvest()
 
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
+        self.assertTrue(os.path.exists(tempFile))
+        self.assertTrue(os.path.exists(resultFile))
+        content = self.readFile(resultFile)
+        self.assertIn('<addressPart type="stateOrTerritory">QLD</addressPart>', content)
+        content = self.readFile(tempFile)
+        self.assertIn('<gco:CharacterString>ISO 19115.1:2015 Geographic information - Metadata – Fundamentals</gco:CharacterString>', content)
 
     def only_during_developement_test_csw_harvest_external(self):
         harvestInfo = {}

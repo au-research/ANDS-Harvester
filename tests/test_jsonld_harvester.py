@@ -1,7 +1,7 @@
 import unittest
 import myconfig
 from harvest_handlers.JSONLDHarvester import JSONLDHarvester
-import io
+import io, os
 from mock import patch
 from utils.Request import Request
 
@@ -12,6 +12,14 @@ class test_jsonld_harvester(unittest.TestCase):
         data = f.read()
         f.close()
         return data
+
+
+    def readFile(self, path):
+        f = io.open(path, mode="r")
+        data = f.read()
+        f.close()
+        return data
+
 
     # @patch.object(Request, 'getData')
     # def test_xml_site_map(self, mockGetData):
@@ -52,6 +60,8 @@ class test_jsonld_harvester(unittest.TestCase):
 
     @patch.object(Request, 'getData')
     def test_text_site_map(self, mockGetData):
+        batch_id = "JSONLD_1"
+        ds_id = 3
         mockGetData.side_effect = [
             self.readTestfile('sitemap.txt'),
             self.readTestfile('page_1.html'),
@@ -71,9 +81,9 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
+        harvestInfo['data_source_id'] = ds_id
         harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_1"
+        harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
@@ -82,6 +92,15 @@ class test_jsonld_harvester(unittest.TestCase):
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
+
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
+        self.assertTrue(os.path.exists(tempFile))
+        self.assertTrue(os.path.exists(resultFile))
+        content = self.readFile(resultFile)
+        self.assertIn('<description type="brief">Mineral Saturation Index</description>', content)
+        content = self.readFile(tempFile)
+        self.assertIn('<datasets><dataset><context>http://schema.org/</context>', content)
 
     @patch.object(Request, 'getData')
     def only_during_developement_test_urlset_map(self, mockGetData):
