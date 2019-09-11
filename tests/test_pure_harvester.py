@@ -40,7 +40,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/ELSEVIER_PURE_Params.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/Elsevier_PURE_Params.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['api_key'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
