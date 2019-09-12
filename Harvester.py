@@ -33,6 +33,7 @@ class Harvester():
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
     redisPoster = False
+    combineFiles = False
 
     def __init__(self, harvestInfo):
         self.__xml = Document()
@@ -90,6 +91,9 @@ class Harvester():
 
     def listdir_fullpath(self, d):
         return [os.path.join(d, f) for f in os.listdir(d)]
+
+    def setCombineFiles(self, tf):
+        self.combineFiles = tf
 
     def emptyDirectory(self, directory):
         for the_file in os.listdir(directory):

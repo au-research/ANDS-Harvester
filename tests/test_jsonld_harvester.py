@@ -91,16 +91,70 @@ class test_jsonld_harvester(unittest.TestCase):
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
+        harvester.setCombineFiles(False)
+        harvester.harvest()
+
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.xml"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.rdf"
+        self.assertTrue(os.path.exists(tempFile))
+        self.assertTrue(os.path.exists(resultFile))
+        self.assertTrue(os.path.exists(rdfFile))
+        content = self.readFile(resultFile)
+        self.assertIn('<description type="brief">Water Sampling</description>', content)
+        content = self.readFile(tempFile)
+        self.assertIn('<spatialCoverage><type>Place</type><geo><type>GeoShape</type><box>-29.06762 115.45924 -23.366095 122.62305</box></geo></spatialCoverage>', content)
+        content = self.readFile(rdfFile)
+        self.assertIn('<schema:box>-29.06762 115.45924 -23.366095 122.62305</schema:box>', content)
+
+    @patch.object(Request, 'getData')
+    def test_text_site_map_combined_files(self, mockGetData):
+        batch_id = "JSONLD_2"
+        ds_id = 3
+        mockGetData.side_effect = [
+            self.readTestfile('sitemap.txt'),
+            self.readTestfile('page_1.html'),
+            self.readTestfile('page_2.html'),
+            self.readTestfile('page_3.html'),
+            self.readTestfile('page_4.html'),
+            self.readTestfile('page_5.html'),
+            self.readTestfile('page_6.html'),
+            self.readTestfile('page_7.html'),
+            self.readTestfile('page_8.html'),
+            self.readTestfile('page_9.html'),
+            self.readTestfile('page_10.html')
+        ]
+        harvestInfo = {}
+        harvestInfo['uri'] = ''
+        harvestInfo['provider_type'] = 'JSONLD'
+        harvestInfo['harvest_method'] = 'JSONLD'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['mode'] = "TEST"
+        # harvestReq = JSONLDHarvester(harvestInfo)
+        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
+        # t.start()
+        harvester = JSONLDHarvester(harvestInfo)
+        harvester.setCombineFiles(True)
         harvester.harvest()
 
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
+        self.assertTrue(os.path.exists(rdfFile))
         content = self.readFile(resultFile)
-        self.assertIn('<description type="brief">Mineral Saturation Index</description>', content)
+        self.assertIn('<key>https://demo.ands.org.au/mineral-occurrence-portrayal-australia-10/817266</key>', content)
         content = self.readFile(tempFile)
-        self.assertIn('<datasets><dataset><context>http://schema.org/</context>', content)
+        self.assertIn('<name>EarthResourceML mining feature occurrences of Northern Territory of Australia</name>', content)
+        content = self.readFile(rdfFile)
+        self.assertIn('<schema:box>-29.06762 115.45924 -23.366095 122.62305</schema:box>', content)
 
     @patch.object(Request, 'getData')
     def only_during_developement_test_urlset_map(self, mockGetData):

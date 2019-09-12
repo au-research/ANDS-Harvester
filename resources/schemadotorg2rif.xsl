@@ -22,9 +22,7 @@
             <xsl:call-template name="getKey"/>
             <xsl:call-template name="getOriginatingSource"/>
             <xsl:element name="collection">
-                <xsl:attribute name="type">
-                    <xsl:text>dataset</xsl:text>
-                </xsl:attribute>
+                <xsl:apply-templates select="type"/>
                 <xsl:apply-templates select="name"/>
                 <xsl:apply-templates select="description"/>
 
@@ -85,6 +83,12 @@
         </xsl:element>
     </xsl:template>
 
+    <xsl:template match="type">
+        <xsl:attribute name="type">
+            <xsl:text>dataset</xsl:text>
+        </xsl:attribute>
+    </xsl:template>
+    
     <xsl:template match="description">
         <xsl:element name="description" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">brief</xsl:attribute>

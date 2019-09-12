@@ -6,6 +6,9 @@ import json, numbers
 from xml.dom.minidom import Document
 import hashlib
 from utils.Request import Request as myRequest
+from rdflib import Graph
+from rdflib.plugin import register, Serializer
+register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
 
 
 class JSONLDHarvester(Harvester):
@@ -31,18 +34,18 @@ class JSONLDHarvester(Harvester):
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
     def harvest(self):
-        self.setupdirs()
-        self.updateHarvestRequest()
-        self.setUpCrosswalk()
         self.stopped = False
+        self.setupdirs()
+        self.setUpCrosswalk()
+        self.updateHarvestRequest()
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
         self.getPageList()
         self.logger.logMessage("pages %s" %str(self.urlLinksList), "DEBUG")
         self.crawlPages()
-        self.__xml = Document()
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined')
+            self.storeDataAsRDF(self.jsonDict, 'combined')
             self.storeDataAsXML(self.jsonDict, 'combined')
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
@@ -58,6 +61,9 @@ class JSONLDHarvester(Harvester):
         self.setStatus("%s Pages found" %str(len(self.urlLinksList)))
         self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
 
+
+    def setCombineFiles(self, tf):
+        self.combineFiles = tf
 
     def crawlPages(self):
         if self.harvestInfo['mode'] == 'TEST':
@@ -93,6 +99,7 @@ class JSONLDHarvester(Harvester):
                 message = "HARVESTING %s" %fileName
                 self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest', message)
                 self.storeJsonData(data, fileName)
+                self.storeDataAsRDF(jsonld, fileName)
                 self.storeDataAsXML(data, fileName)
         else:
             self.logger.logMessage("No JSONLD found", "DEBUG")
@@ -114,6 +121,7 @@ class JSONLDHarvester(Harvester):
                 message = "HARVESTING %s" %fileName
                 self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest', message)
                 self.storeJsonData(data, fileName)
+                self.storeDataAsRDF(jsonld, fileName)
                 self.storeDataAsXML(data, fileName)
 
     def storeJsonData(self, data, fileName):
@@ -129,8 +137,21 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
 
 
+    def storeDataAsRDF(self, jsonld, fileName):
+        outputFilePath = self.outputDir + os.sep + fileName + ".rdf"
+        try:
+            if(isinstance(jsonld, list)):
+                g = Graph()
+                for j in jsonld:
+                    g.parse(data=json.dumps(j), format='application/ld+json')
+            elif(isinstance(jsonld, str)):
+                g = Graph().parse(data=jsonld, format='application/ld+json')
+            g.serialize(outputFilePath, "xml")
+        except Exception as e:
+            self.logger.logMessage("JSONLDHarvester (storeDataAsRDF) %s " % (str(repr(e))), "ERROR")
 
     def storeDataAsXML(self, data, fileName):
+        self.__xml = Document()
         try:
             outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
             dataFile = open(outputFilePath, 'w', 0o777)
