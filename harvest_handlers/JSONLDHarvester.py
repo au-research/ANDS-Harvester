@@ -24,9 +24,11 @@ class JSONLDHarvester(Harvester):
       }
     """
     urlLinksList = {}
-    combineFiles = True
+    combineFiles = False
+    batchSize = 400
     async_list = []
     jsonDict = []
+    batchCount = 0
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
@@ -41,7 +43,10 @@ class JSONLDHarvester(Harvester):
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
         self.getPageList()
-        self.logger.logMessage("pages %s" %str(self.urlLinksList), "DEBUG")
+
+        if len(self.urlLinksList) > self.batchSize:
+            self.combineFiles = True
+
         self.crawlPages()
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined')
@@ -58,7 +63,7 @@ class JSONLDHarvester(Harvester):
         sc = SiteMapCrawler(self.harvestInfo)
         sc.parse_sitemap()
         self.urlLinksList = sc.getLinksToCrawl()
-        self.setStatus("%s Pages found" %str(len(self.urlLinksList)))
+        self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
         self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
 
 
@@ -92,6 +97,7 @@ class JSONLDHarvester(Harvester):
             #self.logger.logMessage("jsonlds: %s" % str(jsonld), "DEBUG")
             self.recordCount += 1
             data = json.loads(jsonld, strict=False)
+            self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
             if self.combineFiles is True:
                 self.jsonDict.append(data)
             else:
@@ -103,6 +109,7 @@ class JSONLDHarvester(Harvester):
                 self.storeDataAsXML(data, fileName)
         else:
             self.logger.logMessage("No JSONLD found", "DEBUG")
+        self.saveBatch()
 
     def parse(self, response, **kwargs):
         html_soup = BeautifulSoup(response.text, 'html.parser')
@@ -123,15 +130,26 @@ class JSONLDHarvester(Harvester):
                 self.storeJsonData(data, fileName)
                 self.storeDataAsRDF(jsonld, fileName)
                 self.storeDataAsXML(data, fileName)
+        self.saveBatch()
+
+    def saveBatch(self):
+        if self.combineFiles is True and len(self.jsonDict) > self.batchSize:
+            self.batchCount += 1
+            self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "saving batch %d:" % (self.batchCount))
+            self.storeJsonData(self.jsonDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsRDF(self.jsonDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsXML(self.jsonDict, 'combined_%d' %self.batchCount)
+            self.jsonDict.clear()
 
     def storeJsonData(self, data, fileName):
         if self.stopped:
            return
         try:
             outputFilePath = self.outputDir + os.sep + fileName + ".json"
-            dataFile = open(outputFilePath, 'w', 0o777)
+            dataFile = open(outputFilePath, 'w')
             json.dump(data, dataFile)
             dataFile.close()
+            os.chmod(outputFilePath, 0o775)
         except Exception as e:
             self.handleExceptions(e)
             self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
@@ -139,14 +157,17 @@ class JSONLDHarvester(Harvester):
 
     def storeDataAsRDF(self, jsonld, fileName):
         outputFilePath = self.outputDir + os.sep + fileName + ".rdf"
+        dataFile = open(outputFilePath, 'w')
+        g = Graph()
         try:
             if(isinstance(jsonld, list)):
-                g = Graph()
                 for j in jsonld:
                     g.parse(data=json.dumps(j), format='application/ld+json')
             elif(isinstance(jsonld, str)):
                 g = Graph().parse(data=jsonld, format='application/ld+json')
             g.serialize(outputFilePath, "xml")
+            dataFile.close()
+            os.chmod(outputFilePath, 0o775)
         except Exception as e:
             self.logger.logMessage("JSONLDHarvester (storeDataAsRDF) %s " % (str(repr(e))), "ERROR")
 
@@ -154,7 +175,8 @@ class JSONLDHarvester(Harvester):
         self.__xml = Document()
         try:
             outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
-            dataFile = open(outputFilePath, 'w', 0o777)
+            dataFile = open(outputFilePath, 'w')
+
             if self.stopped:
                 return
             elif isinstance(data, list):
@@ -171,9 +193,10 @@ class JSONLDHarvester(Harvester):
                 self.__xml.appendChild(root)
                 self.parse_element(root, data)
                 self.__xml.writexml(dataFile)
-                dataFile.close()
+            dataFile.close()
+            os.chmod(outputFilePath, 0o775)
         except Exception as e:
-            self.logger.logMessage("JSONLDHarvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("JSONLDHarvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
 
 
     def runCrossWalk(self):

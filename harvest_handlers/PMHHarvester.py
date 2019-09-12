@@ -134,16 +134,6 @@ class PMHHarvester(Harvester):
             self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
         del getRequest
 
-    def storeHarvestData(self):
-        if self.stopped or not(self.data):
-            return
-        try:
-            dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension, 'w', 0o777)
-            dataFile.write(self.data)
-            dataFile.close()
-        except Exception as e:
-            self.handleExceptions(e)
-            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
 

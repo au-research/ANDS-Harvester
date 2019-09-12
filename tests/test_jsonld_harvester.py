@@ -156,44 +156,19 @@ class test_jsonld_harvester(unittest.TestCase):
         content = self.readFile(rdfFile)
         self.assertIn('<schema:box>-29.06762 115.45924 -23.366095 122.62305</schema:box>', content)
 
-    @patch.object(Request, 'getData')
-    def only_during_developement_test_urlset_map(self, mockGetData):
-        mockGetData.side_effect = [
-            self.readTestfile('urlset.xml'),
-            self.readTestfile('page_1.html'),
-            self.readTestfile('page_2.html'),
-            self.readTestfile('page_3.html'),
-            self.readTestfile('page_4.html'),
-            self.readTestfile('page_5.html')
-        ]
-        harvestInfo = {}
-        harvestInfo['uri'] = ''
-        harvestInfo['provider_type'] = 'JSONLD'
-        harvestInfo['harvest_method'] = 'JSONLD'
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_2"
-        harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
-        harvestInfo['mode'] = "TEST"
-        # harvestReq = JSONLDHarvester(harvestInfo)
-        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
-        # t.start()
-        harvester = JSONLDHarvester(harvestInfo)
-        harvester.crosswalk()
 
     def only_during_developement_test_small_text_site_map_1(self):
+        batch_id = "JSONLD_3"
+        ds_id = 3
         harvestInfo = {}
-        harvestInfo['uri'] = 'http://demo.ands.org.au/small-sitemap.txt'
+        harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
+        harvestInfo['data_source_id'] = ds_id
         harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_1"
+        harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
@@ -203,76 +178,8 @@ class test_jsonld_harvester(unittest.TestCase):
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
 
-    def only_during_developement_test_small_crosswalk_2(self):
-        harvestInfo = {}
-        harvestInfo['uri'] = 'http://demo.ands.org.au/small-sitemap.txt'
-        harvestInfo['provider_type'] = 'JSONLD'
-        harvestInfo['harvest_method'] = 'JSONLD'
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_2"
-        harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
-        harvestInfo['mode'] = "HARVEST"
-        # harvestReq = JSONLDHarvester(harvestInfo)
-        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
-        # t.start()
-        harvester = JSONLDHarvester(harvestInfo)
-        harvester.crosswalk()
-
-    def only_during_developement_test_text_site_map_3(self):
-        harvestInfo = {}
-        harvestInfo['uri'] = 'http://demo.ands.org.au/auscope-sitemap.txt'
-        harvestInfo['provider_type'] = 'JSONLD'
-        harvestInfo['harvest_method'] = 'JSONLD'
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_3"
-        harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
-        harvestInfo['mode'] = "TEST"
-        #harvestReq = JSONLDHarvester(harvestInfo)
-        harvester = JSONLDHarvester(harvestInfo)
-        harvester.harvest()
-        #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
-        #t.start()
 
 
-    def only_during_developement_test_aurin_site_map_4(self):
-        harvestInfo = {}
-        harvestInfo['uri'] = 'https://demo.ands.org.au/aurin-sitemap.txt'
-        harvestInfo['provider_type'] = 'JSONLD'
-        harvestInfo['harvest_method'] = 'JSONLD'
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_4"
-        harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
-        harvestInfo['mode'] = "TEST"
-        harvester = JSONLDHarvester(harvestInfo)
-        harvester.harvest()
-
-    def only_during_developement_test_xml_site_map_earthcube_5(self):
-        harvestInfo = {}
-        harvestInfo['uri'] = 'https://demo.ands.org.au/home/sitemap/?ds=1'
-        harvestInfo['provider_type'] = 'JSONLD'
-        harvestInfo['harvest_method'] = 'JSONLD'
-        harvestInfo['data_store_path'] = myconfig.data_store_path
-        harvestInfo['response_url'] = myconfig.response_url
-        harvestInfo['data_source_id'] = 7
-        harvestInfo['harvest_id'] = 1
-        harvestInfo['batch_number'] = "JSONLD_5"
-        harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = ""
-        harvestInfo['mode'] = "TEST"
-        harvester = JSONLDHarvester(harvestInfo)
-        harvester.harvest()
 
 if __name__ == '__main__':
     unittest.main()

@@ -156,6 +156,7 @@ class Harvester():
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
+                    os.chmod(outFile, 0o775)
                 except subprocess.CalledProcessError as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
                     msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
@@ -282,7 +283,7 @@ class Harvester():
                     '(checkHarvestStatus) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def storeHarvestData(self):
-        if self.stopped:
+        if self.stopped or not(self.data):
             return
         try:
             #if data is JSON then save the json as well as a XML serialised copy
@@ -293,10 +294,11 @@ class Harvester():
             else:
                 self.outputFilePath = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
                 self.logger.logMessage("Harvester (storeHarvestData) %s " % (self.outputFilePath), "DEBUG")
-                dataFile = open(self.outputFilePath, 'w', 0o777)
+                dataFile = open(self.outputFilePath, 'w')
                 self.setStatus("HARVESTING", self.outputFilePath)
                 dataFile.write(self.data)
                 dataFile.close()
+                os.chmod(self.outputFilePath, 0o775)
         except Exception as e:
             self.handleExceptions(e)
             self.logger.logMessage("Harvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
@@ -308,9 +310,10 @@ class Harvester():
         try:
             outputFilePath = self.outputDir + os.sep + fileName + ".json"
             self.logger.logMessage("Harvester (storeJsonData) %s " % (outputFilePath), "DEBUG")
-            dataFile = open(outputFilePath, 'w', 0o777)
+            dataFile = open(outputFilePath, 'w')
             json.dump(data, dataFile)
             dataFile.close()
+            os.chmod(outputFilePath, 0o775)
         except Exception as e:
             self.handleExceptions(e)
             self.logger.logMessage("Harvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
@@ -324,7 +327,7 @@ class Harvester():
             root = self.__xml.createElement('datasets')
             self.__xml.appendChild(root)
             self.outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
-            dataFile = open(self.outputFilePath, 'w', 0o777)
+            dataFile = open(self.outputFilePath, 'w')
             if isinstance(data, list):
                 for j in data:
                     ds = self.__xml.createElement('dataset')
@@ -336,6 +339,7 @@ class Harvester():
                 self.parse_element(root, data)
                 self.__xml.writexml(dataFile)
                 dataFile.close()
+            os.chmod(self.outputFilePath, 0o775)
             self.logger.logMessage("Harvester (storeDataAsXML) %s " % (self.outputFilePath), "DEBUG")
         except Exception as e:
             self.logger.logMessage("Harvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
