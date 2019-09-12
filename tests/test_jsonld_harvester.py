@@ -145,7 +145,7 @@ class test_jsonld_harvester(unittest.TestCase):
 
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end .rdf"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         self.assertTrue(os.path.exists(rdfFile))
