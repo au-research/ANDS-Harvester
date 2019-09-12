@@ -143,9 +143,9 @@ class test_jsonld_harvester(unittest.TestCase):
         harvester.setCombineFiles(True)
         harvester.harvest()
 
-        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
-        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.xml"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end .rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         self.assertTrue(os.path.exists(rdfFile))
@@ -162,6 +162,7 @@ class test_jsonld_harvester(unittest.TestCase):
         ds_id = 3
         harvestInfo = {}
         harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
+        #harvestInfo['uri'] = 'http://demo.ands.org.au/auscope-sitemap.txt'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -171,7 +172,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
-        harvestInfo['mode'] = "TEST"
+        harvestInfo['mode'] = "HARVEST"
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()

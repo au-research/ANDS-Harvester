@@ -49,9 +49,9 @@ class JSONLDHarvester(Harvester):
 
         self.crawlPages()
         if self.combineFiles is True:
-            self.storeJsonData(self.jsonDict, 'combined')
-            self.storeDataAsRDF(self.jsonDict, 'combined')
-            self.storeDataAsXML(self.jsonDict, 'combined')
+            self.storeJsonData(self.jsonDict, 'combined_end')
+            self.storeDataAsRDF(self.jsonDict, 'combined_end')
+            self.storeDataAsXML(self.jsonDict, 'combined_end')
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -100,6 +100,7 @@ class JSONLDHarvester(Harvester):
             self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
             if self.combineFiles is True:
                 self.jsonDict.append(data)
+                self.saveBatch()
             else:
                 fileName = getFileName(data)
                 message = "HARVESTING %s" %fileName
@@ -109,7 +110,7 @@ class JSONLDHarvester(Harvester):
                 self.storeDataAsXML(data, fileName)
         else:
             self.logger.logMessage("No JSONLD found", "DEBUG")
-        self.saveBatch()
+
 
     def parse(self, response, **kwargs):
         html_soup = BeautifulSoup(response.text, 'html.parser')
@@ -123,6 +124,7 @@ class JSONLDHarvester(Harvester):
             data = json.loads(jsonld, strict=False)
             if self.combineFiles is True:
                 self.jsonDict.append(data)
+                self.saveBatch()
             else:
                 fileName = getFileName(data)
                 message = "HARVESTING %s" %fileName
@@ -130,16 +132,18 @@ class JSONLDHarvester(Harvester):
                 self.storeJsonData(data, fileName)
                 self.storeDataAsRDF(jsonld, fileName)
                 self.storeDataAsXML(data, fileName)
-        self.saveBatch()
 
     def saveBatch(self):
-        if self.combineFiles is True and len(self.jsonDict) > self.batchSize:
+        if self.combineFiles is True and len(self.jsonDict) >= self.batchSize:
+            self.logger.logMessage("JSONLDHarvester (saveBatch) %d ,%d" % (len(self.jsonDict), self.batchCount), "ERROR")
             self.batchCount += 1
             self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "saving batch %d:" % (self.batchCount))
-            self.storeJsonData(self.jsonDict, 'combined_%d' %self.batchCount)
-            self.storeDataAsRDF(self.jsonDict, 'combined_%d' %self.batchCount)
-            self.storeDataAsXML(self.jsonDict, 'combined_%d' %self.batchCount)
-            self.jsonDict.clear()
+            chunkDict = self.jsonDict
+            self.jsonDict = []
+            self.storeJsonData(chunkDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsRDF(chunkDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsXML(chunkDict, 'combined_%d' %self.batchCount)
+
 
     def storeJsonData(self, data, fileName):
         if self.stopped:
