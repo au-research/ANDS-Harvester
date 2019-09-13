@@ -88,6 +88,7 @@ class JSONLDHarvester(Harvester):
                 self.async_list.append(action_item)
             grequests.map(self.async_list, size=20)
         elif self.harvestInfo['requestHandler'] == 'asyncio':
+            asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()  # event loop
             future = asyncio.ensure_future(self.fetch_all())  # tasks to do
             loop.run_until_complete(future)  # loop until done
@@ -106,7 +107,7 @@ class JSONLDHarvester(Harvester):
 
     async def fetch_all(self):
         tasks = []
-        timeout = ClientTimeout(total=60)
+        timeout = ClientTimeout(total=86400) # a day
         connector = TCPConnector(limit=40, ssl=False)
         async with ClientSession(connector=connector, timeout=timeout) as session:
             for url in self.urlLinksList:
