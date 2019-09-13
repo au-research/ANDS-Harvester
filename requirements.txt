@@ -18,3 +18,4 @@ grequests
 mock
 rdflib
 rdflib_jsonld
+aiohttp
