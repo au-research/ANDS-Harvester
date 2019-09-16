@@ -159,7 +159,7 @@ class test_jsonld_harvester(unittest.TestCase):
         self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 
 
-    def only_during_developement_test_small_text_site_map_1(self):
+    def test_only_during_developement_test_small_text_site_map_1(self):
         batch_id = "JSONLD_3"
         ds_id = 3
         harvestInfo = {}

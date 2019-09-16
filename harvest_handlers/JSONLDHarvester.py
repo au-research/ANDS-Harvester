@@ -42,6 +42,7 @@ class JSONLDHarvester(Harvester):
             self.harvestInfo['requestHandler'] = 'asyncio'
         if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
             self.tcp_connection_limit = myconfig.tcp_connection_limit
+            # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
@@ -103,19 +104,19 @@ class JSONLDHarvester(Harvester):
 
     async def fetch_all(self):
         tasks = []
-        a_day = 86400
-        t_out_ps = ClientTimeout(total=a_day) # a day for the entire session
+        minute = 60
+        sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
+        cTimeout = ClientTimeout(total=sessionTimeout, connect=minute)
         connector = TCPConnector(limit=self.tcp_connection_limit, ssl=False)
-        async with ClientSession(connector=connector, timeout=t_out_ps) as session:
+        async with ClientSession(connector=connector, timeout=cTimeout) as session:
             for url in self.urlLinksList:
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
 
     async def fetch(self, url, session):
-        t_out_pr = 20 # time     out per request
         try:
-            async with session.get(url, timeout=t_out_pr) as response:
+            async with session.get(url) as response:
                 resp = await response.read()
                 self.processContent(resp.decode('utf-8'), url)
         except Exception as exc:
