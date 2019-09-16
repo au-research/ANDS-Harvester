@@ -27,6 +27,7 @@ class JSONLDHarvester(Harvester):
     urlLinksList = {}
     combineFiles = False
     batchSize = 400
+    tcp_connection_limit = 20
     async_list = []
     jsonDict = []
     batchCount = 0
@@ -39,9 +40,11 @@ class JSONLDHarvester(Harvester):
                 pass
         except KeyError:
             self.harvestInfo['requestHandler'] = 'asyncio'
-
+        if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
+            self.tcp_connection_limit = myconfig.tcp_connection_limit
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
+
 
     def harvest(self):
         self.stopped = False
@@ -51,10 +54,8 @@ class JSONLDHarvester(Harvester):
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
         self.getPageList()
-
         if len(self.urlLinksList) > self.batchSize:
             self.combineFiles = True
-
         self.crawlPages()
         if self.combineFiles is True:
             self.storeJsonData(self.jsonDict, 'combined_end')
@@ -71,6 +72,7 @@ class JSONLDHarvester(Harvester):
         sc = SiteMapCrawler(self.harvestInfo)
         sc.parse_sitemap()
         self.urlLinksList = sc.getLinksToCrawl()
+        self.listSize = len(self.urlLinksList)
         self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
         self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
 
@@ -101,17 +103,19 @@ class JSONLDHarvester(Harvester):
 
     async def fetch_all(self):
         tasks = []
-        timeout = ClientTimeout(total=86400) # a day
-        connector = TCPConnector(limit=20, ssl=False)
-        async with ClientSession(connector=connector, timeout=timeout) as session:
+        a_day = 86400
+        t_out_ps = ClientTimeout(total=a_day) # a day for the entire session
+        connector = TCPConnector(limit=self.tcp_connection_limit, ssl=False)
+        async with ClientSession(connector=connector, timeout=t_out_ps) as session:
             for url in self.urlLinksList:
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
 
     async def fetch(self, url, session):
+        t_out_pr = 20 # time     out per request
         try:
-            async with session.get(url) as response:
+            async with session.get(url, timeout=t_out_pr) as response:
                 resp = await response.read()
                 self.processContent(resp.decode('utf-8'), url)
         except Exception as exc:

@@ -19,6 +19,8 @@ class test_config(unittest.TestCase):
         self.assertIsInstance(myconfig.db_passwd, str)
         self.assertIsInstance(myconfig.db, str)
         self.assertIsInstance(myconfig.harvest_table, str)
+        self.assertIsInstance(myconfig.tcp_connection_limit, int)
+
 
     def test_database_connection(self):
         self.assertTrue(self.helper_is_connected(myconfig.harvest_table))
