@@ -1,5 +1,4 @@
 from Harvester import *
-import grequests
 from bs4 import BeautifulSoup
 from crawler.SiteMapCrawler import SiteMapCrawler
 import json, numbers
@@ -82,12 +81,7 @@ class JSONLDHarvester(Harvester):
     def crawlPages(self):
         self.start_time['start'] = default_timer()
 
-        if self.harvestInfo['requestHandler'] == 'grequest':
-            for url in self.urlLinksList:
-                action_item = grequests.get(url, hooks={'response': self.parse})
-                self.async_list.append(action_item)
-            grequests.map(self.async_list, size=20)
-        elif self.harvestInfo['requestHandler'] == 'asyncio':
+        if self.harvestInfo['requestHandler'] == 'asyncio':
             asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()  # event loop
             future = asyncio.ensure_future(self.fetch_all())  # tasks to do
@@ -96,7 +90,7 @@ class JSONLDHarvester(Harvester):
             for url in self.urlLinksList:
                 r = myRequest(url)
                 data = r.getData()
-                self.processContent(data)
+                self.processContent(data, url)
 
         tot_elapsed = default_timer() - self.start_time['start']
         self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'] , tot_elapsed))
@@ -118,37 +112,36 @@ class JSONLDHarvester(Harvester):
     async def fetch(self, url, session):
         async with session.get(url) as response:
             resp = await response.read()
-            self.processContent(resp.decode('utf-8'))
+            self.processContent(resp.decode('utf-8'), url)
 
-    def parse(self, response, **kwargs):
-        self.processContent(response.text)
-
-    def processContent(self, htmlStr):
+    def processContent(self, htmlStr, url):
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         jsonld = None
         if len(jsonlds) > 0:
             jsonld = jsonlds[0].text
         if jsonld is not None:
-            # self.logger.logMessage("jsonlds: %s" % str(jsonld), "DEBUG")
-            self.recordCount += 1
-            data = json.loads(jsonld, strict=False)
-            self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
-            if self.combineFiles is True:
-                self.jsonDict.append(data)
-                time.sleep(0.1)
-                if len(self.jsonDict) >= self.batchSize:
-                    self.saveBatch()
-            else:
-                fileName = getFileName(data)
-                message = "HARVESTING %s" % fileName
-                self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest',
-                                            message)
-                self.storeJsonData(data, fileName)
-                self.storeDataAsRDF(jsonld, fileName)
-                self.storeDataAsXML(data, fileName)
-        #else:
-        #    self.logger.logMessage("No JSONLD found", "DEBUG")
+            try:
+                data = json.loads(jsonld, strict=False)
+                self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
+                if self.combineFiles is True:
+                    self.jsonDict.append(data)
+                    time.sleep(0.1)
+                    if len(self.jsonDict) >= self.batchSize:
+                        self.saveBatch()
+                else:
+                    fileName = getFileName(data)
+                    message = "HARVESTING %s" % fileName
+                    self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest',
+                                                message)
+                    self.storeJsonData(data, fileName)
+                    self.storeDataAsRDF(jsonld, fileName)
+                    self.storeDataAsXML(data, fileName)
+                self.recordCount += 1
+            except Exception as e:
+                self.logger.logMessage("URL : %s, ERROR: %s, JSONLD %s" %(url, str(e), jsonld), "ERROR")
+        else:
+            self.logger.logMessage("Unable to extract jsonld from page %s" % url, "DEBUG")
 
 
     def saveBatch(self):
@@ -243,6 +236,46 @@ class JSONLDHarvester(Harvester):
                 except Exception as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
                     self.handleExceptions(e)
+
+
+    def parse_element(self, root, j):
+        if j is None:
+            return
+        if isinstance(j, dict):
+            for key in j.keys():
+                value = j[key]
+                if isinstance(value, list):
+                    for e in value:
+                        elem = self.getElement(key)
+                        self.parse_element(elem, e)
+                        root.appendChild(elem)
+                else:
+                    if key.isdigit():
+                        elem = self.__xml.createElement('item')
+                        elem.setAttribute('value', key)
+                    else:
+                        elem = self.getElement(key)
+                    self.parse_element(elem, value)
+                    root.appendChild(elem)
+        elif isinstance(j, str):
+            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            root.appendChild(text)
+        elif isinstance(j, numbers.Number):
+            text = self.__xml.createTextNode(str(j))
+            root.appendChild(text)
+        else:
+            raise Exception("bad type %s for %s" % (type(j), j,))
+
+
+    def getElement(self, jsonld_key):
+        qName = jsonld_key.replace(' ', '')
+        qName = qName.replace('@', '')
+        ns = qName.split("#", 2)
+        if len(ns) == 2:
+            elem = self.__xml.createElement(ns[1])
+        else:
+            elem = self.__xml.createElement(qName)
+        return elem
 
 
 def asterisks(num):

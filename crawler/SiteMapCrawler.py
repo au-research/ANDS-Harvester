@@ -59,12 +59,14 @@ class SiteMapCrawler:
 
     def parseXmlSitemap(self, response):
         xml = parseString(response)
-        if xml.firstChild.tagName == 'sitemapindex':
+        smi = xml.getElementsByTagName('sitemapindex')
+        urlset = xml.getElementsByTagName('urlset')
+        if len(smi) > 0:
             for loc in xml.getElementsByTagName('loc'):
                 if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                     continue
                 self.parse_sitemap(loc.firstChild.data)
-        elif xml.firstChild.tagName == 'urlset':
+        elif len(urlset) > 0:
             for loc in xml.getElementsByTagName('loc'):
                 if len(self.links_to_crawl) >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                     continue

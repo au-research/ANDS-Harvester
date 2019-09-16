@@ -156,7 +156,7 @@ class test_jsonld_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<name>EarthResourceML mining feature occurrences of Northern Territory of Australia</name>', content)
         content = self.readFile(rdfFile)
-        self.assertIn('<schema:box>-29.06762 115.45924 -23.366095 122.62305</schema:box>', content)
+        self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 
 
     def only_during_developement_test_small_text_site_map_1(self):
@@ -175,14 +175,38 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
-        #harvestInfo['requestHandler'] = "asyncio"
-        # grequest or asyncio
+        harvestInfo['requestHandler'] = "asyncio"
+        # basic or asyncio
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
 
+
+    def only_during_developement_test_small_text_site_map_balto_php(self):
+        batch_id = "JSONLD_4"
+        ds_id = 3
+        harvestInfo = {}
+        harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
+        #harvestInfo['uri'] = 'http://demo.ands.org.au/auscope-sitemap.txt'
+        harvestInfo['provider_type'] = 'JSONLD'
+        harvestInfo['harvest_method'] = 'JSONLD'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['requestHandler'] = "asyncio"
+        # basic or asyncio
+        #harvestReq = JSONLDHarvester(harvestInfo)
+        #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
+        #t.start()
+        harvester = JSONLDHarvester(harvestInfo)
+        harvester.harvest()
 
 
 

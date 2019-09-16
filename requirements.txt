@@ -14,7 +14,6 @@ six==1.11.0
 Werkzeug==0.15.3
 nose2==0.9.0
 beautifulsoup4
-grequests
 mock
 rdflib
 rdflib_jsonld
