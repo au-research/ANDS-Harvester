@@ -9,7 +9,7 @@ from rdflib import Graph
 from rdflib.plugin import register, Serializer
 register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
 import asyncio
-from aiohttp import ClientSession, TCPConnector, ClientTimeout
+from aiohttp import ClientSession, TCPConnector, ClientTimeout, client_exceptions, http_exceptions
 from timeit import default_timer
 
 class JSONLDHarvester(Harvester):
@@ -102,7 +102,7 @@ class JSONLDHarvester(Harvester):
     async def fetch_all(self):
         tasks = []
         timeout = ClientTimeout(total=86400) # a day
-        connector = TCPConnector(limit=40, ssl=False)
+        connector = TCPConnector(limit=20, ssl=False)
         async with ClientSession(connector=connector, timeout=timeout) as session:
             for url in self.urlLinksList:
                 task = asyncio.ensure_future(self.fetch(url, session))
@@ -110,9 +110,14 @@ class JSONLDHarvester(Harvester):
             _ = await asyncio.gather(*tasks)  # gather task responses
 
     async def fetch(self, url, session):
-        async with session.get(url) as response:
-            resp = await response.read()
-            self.processContent(resp.decode('utf-8'), url)
+        try:
+            async with session.get(url) as response:
+                resp = await response.read()
+                self.processContent(resp.decode('utf-8'), url)
+        except Exception as exc:
+            self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
+
+
 
     def processContent(self, htmlStr, url):
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
