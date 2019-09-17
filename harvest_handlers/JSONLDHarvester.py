@@ -126,7 +126,7 @@ class JSONLDHarvester(Harvester):
         cTimeout = ClientTimeout(total=sessionTimeout)
         connector = TCPConnector(limit=0, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
         jar = DummyCookieJar()
-        async with ClientSession(headers=headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
+        async with ClientSession(headers=self.headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
             for url in self.urlLinksList:
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
