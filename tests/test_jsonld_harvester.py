@@ -21,43 +21,6 @@ class test_jsonld_harvester(unittest.TestCase):
         return data
 
 
-    # @patch.object(Request, 'getData')
-    # def test_xml_site_map(self, mockGetData):
-    #     mockGetData.side_effect = []
-    #     mockGetData.side_effect = [
-    #         self.readTestfile('sitemap.xml'),
-    #         self.readTestfile('urlset.xml'),
-    #         self.readTestfile('urlset_2.xml'),
-    #         self.readTestfile('page_1.html'),
-    #         self.readTestfile('page_2.html'),
-    #         self.readTestfile('page_3.html'),
-    #         self.readTestfile('page_4.html'),
-    #         self.readTestfile('page_5.html'),
-    #         self.readTestfile('page_6.html'),
-    #         self.readTestfile('page_7.html'),
-    #         self.readTestfile('page_8.html'),
-    #         self.readTestfile('page_9.html'),
-    #         self.readTestfile('page_10.html')
-    #     ]
-    #     harvestInfo = {}
-    #     harvestInfo['uri'] = ''
-    #     harvestInfo['provider_type'] = 'JSONLD'
-    #     harvestInfo['harvest_method'] = 'JSONLD'
-    #     harvestInfo['data_store_path'] = myconfig.data_store_path
-    #     harvestInfo['response_url'] = myconfig.response_url
-    #     harvestInfo['data_source_id'] = 7
-    #     harvestInfo['harvest_id'] = 1
-    #     harvestInfo['batch_number'] = "JSONLD_1"
-    #     harvestInfo['advanced_harvest_mode'] = "STANDARD"
-    #     harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
-    #     harvestInfo['mode'] = "TEST"
-    #     #harvestReq = JSONLDHarvester(harvestInfo)
-    #     #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
-    #     #t.start()
-    #     harvester = JSONLDHarvester(harvestInfo)
-    #     harvester.harvest()
-
-
     @patch.object(Request, 'getData')
     def test_text_site_map(self, mockGetData):
         batch_id = "JSONLD_1"
@@ -175,7 +138,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
-        harvestInfo['requestHandler'] = "asyncio"
+        harvestInfo['requestHandler'] = "grequests"
         # basic or asyncio
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -189,11 +152,11 @@ class test_jsonld_harvester(unittest.TestCase):
         ds_id = 3
         harvestInfo = {}
         #harvestInfo['uri'] = 'http://balto.opendap.org/opendap/site_map.txt'
-        #harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
+        harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
         harvestInfo['uri'] = 'https://www.hydroshare.org/sitemap-resources.xml'
         #harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
         #harvestInfo['uri'] = 'https://earthref.org/MagIC/contributions.sitemap.xml'
-        #harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
+        harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemapCSDCOData.xml'
         #harvestInfo['uri'] = 'http://opentopography.org/sitemap.xml'
@@ -212,7 +175,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
-        harvestInfo['requestHandler'] = "asyncio"
+        harvestInfo['requestHandler'] = "grequests"
         # basic or asyncio
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)

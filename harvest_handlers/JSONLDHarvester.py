@@ -12,6 +12,7 @@ import asyncio
 from aiohttp import ClientSession, TCPConnector, ClientTimeout, DummyCookieJar, http_exceptions
 from timeit import default_timer
 import ast
+import grequests
 
 class JSONLDHarvester(Harvester):
     """
@@ -33,6 +34,7 @@ class JSONLDHarvester(Harvester):
     jsonDict = []
     batchCount = 0
     start_time = {}
+    headers = {'User-Agent': 'ARDC Harvester'}
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
@@ -40,7 +42,7 @@ class JSONLDHarvester(Harvester):
             if self.harvestInfo['requestHandler'] :
                 pass
         except KeyError:
-            self.harvestInfo['requestHandler'] = 'asyncio'
+            self.harvestInfo['requestHandler'] = 'grequests'
         if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
             self.tcp_connection_limit = myconfig.tcp_connection_limit
             # generic in-house xslt to convert json-ld (xml) to rifcs
@@ -95,6 +97,12 @@ class JSONLDHarvester(Harvester):
             loop.run_until_complete(future)  # loop until done
             loop.run_until_complete(asyncio.sleep(0.25))
             loop.close()
+        elif self.harvestInfo['requestHandler'] == 'grequests':
+            self.async_list = []
+            for url in self.urlLinksList:
+                action_item = grequests.get(url, headers=self.headers, timeout=5, hooks={'response': self.parse})
+                self.async_list.append(action_item)
+            grequests.map(self.async_list, size=self.tcp_connection_limit)
         else:
             for url in self.urlLinksList:
                 r = myRequest(url)
@@ -104,6 +112,8 @@ class JSONLDHarvester(Harvester):
         tot_elapsed = default_timer() - self.start_time['start']
         self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'] , tot_elapsed))
 
+    def parse(self, response, **kwargs):
+        self.processContent(response.text, response.url)
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
@@ -111,7 +121,7 @@ class JSONLDHarvester(Harvester):
     async def fetch_all(self):
         tasks = []
         minute = 60
-        headers = {'User-Agent':'ARDC Harvester'}
+
         sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
         cTimeout = ClientTimeout(total=sessionTimeout)
         connector = TCPConnector(limit=0, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
@@ -135,8 +145,6 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
 
 
-
-
     def processContent(self, htmlStr, url):
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
@@ -144,20 +152,21 @@ class JSONLDHarvester(Harvester):
         if len(jsonlds) > 0:
             jsonld = jsonlds[0].text
         if jsonld is not None:
+            message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
+            self.logger.logMessage(message, "DEBUG")
             try:
                 data = {}
                 try:
                     data = json.loads(jsonld, strict=False)
                 except Exception as e:
                     data = ast.literal_eval(jsonld)
-                self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
+                self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
                 if self.combineFiles is True:
                     self.jsonDict.append(data)
                     if len(self.jsonDict) >= self.batchSize:
                         self.saveBatch()
                 else:
                     fileName = getFileName(data)
-                    message = "HARVESTING %s" % fileName
                     self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest',
                                                 message)
                     self.storeJsonData(data, fileName)
