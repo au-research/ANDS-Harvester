@@ -28,10 +28,10 @@ class Request:
                 del req, fs
                 return self.data
             except Exception as e:
-                print(str(e))
+                print("ERROR %s : E: %s" %(self.url, str(e)))
                 retryCount += 1
                 if retryCount > 4:
-                    raise RuntimeError(str(e) + " Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
+                    raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
 
     def getURL(self):
         return self.url

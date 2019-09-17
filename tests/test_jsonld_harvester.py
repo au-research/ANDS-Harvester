@@ -159,7 +159,7 @@ class test_jsonld_harvester(unittest.TestCase):
         self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 
 
-    def test_only_during_developement_test_small_text_site_map_1(self):
+    def only_during_developement_test_small_text_site_map_1(self):
         batch_id = "JSONLD_3"
         ds_id = 3
         harvestInfo = {}
@@ -188,8 +188,20 @@ class test_jsonld_harvester(unittest.TestCase):
         batch_id = "JSONLD_4"
         ds_id = 3
         harvestInfo = {}
-        harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
-        #harvestInfo['uri'] = 'http://demo.ands.org.au/auscope-sitemap.txt'
+        #harvestInfo['uri'] = 'http://balto.opendap.org/opendap/site_map.txt'
+        #harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
+        harvestInfo['uri'] = 'https://www.hydroshare.org/sitemap-resources.xml'
+        #harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
+        #harvestInfo['uri'] = 'https://earthref.org/MagIC/contributions.sitemap.xml'
+        #harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
+        #harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
+        #harvestInfo['uri'] = 'http://opencoredata.org/sitemapCSDCOData.xml'
+        #harvestInfo['uri'] = 'http://opentopography.org/sitemap.xml'
+        #harvestInfo['uri'] = 'http://wiki.linked.earth/sitemap.xml'
+        #harvestInfo['uri'] = 'https://www.bco-dmo.org/sitemap.xml'
+        #harvestInfo['uri'] = 'https://www.unavco.org/data/demos/doi/sitemap.xml'
+        #harvestInfo['uri'] = 'http://ds.iris.edu/files/sitemap.xml'
+        #harvestInfo['uri'] = 'https://portal.edirepository.org/sitemap_index.xml'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path

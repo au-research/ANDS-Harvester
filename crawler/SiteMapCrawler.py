@@ -35,20 +35,24 @@ class SiteMapCrawler:
         self.outputDir = directory
 
     def parse_sitemap(self, url=None):
-        if url is not None:
-            r = Request(url)
-            response = r.getData()
-            if response[0] == '<':
-                self.parseXmlSitemap(response)
+        try:
+            if url is not None:
+                r = Request(url)
+                response = r.getData()
+                if response[0] == '<':
+                    self.parseXmlSitemap(response)
+                else:
+                    self.parseTextSitemap(response)
             else:
-                self.parseTextSitemap(response)
-        else:
-            r = Request(self.sitemap_url)
-            response = r.getData()
-            if response[0] == '<':
-                self.parseXmlSitemap(response)
-            else:
-                self.parseTextSitemap(response)
+                r = Request(self.sitemap_url)
+                response = r.getData()
+                if response[0] == '<':
+                    self.parseXmlSitemap(response)
+                else:
+                    self.parseTextSitemap(response)
+        except Exception as e:
+            raise Exception(e)
+
 
     def parseTextSitemap(self, response):
         for url in str(response).splitlines():

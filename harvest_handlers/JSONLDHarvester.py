@@ -9,8 +9,9 @@ from rdflib import Graph
 from rdflib.plugin import register, Serializer
 register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
 import asyncio
-from aiohttp import ClientSession, TCPConnector, ClientTimeout, client_exceptions, http_exceptions
+from aiohttp import ClientSession, TCPConnector, ClientTimeout, DummyCookieJar, http_exceptions
 from timeit import default_timer
+import ast
 
 class JSONLDHarvester(Harvester):
     """
@@ -69,14 +70,17 @@ class JSONLDHarvester(Harvester):
         self.finishHarvest()
 
     def getPageList(self):
-        self.setStatus("Scanning Sitemap(s)")
-        sc = SiteMapCrawler(self.harvestInfo)
-        sc.parse_sitemap()
-        self.urlLinksList = sc.getLinksToCrawl()
-        self.listSize = len(self.urlLinksList)
-        self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
-        self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
-
+        try:
+            self.setStatus("Scanning Sitemap(s)")
+            sc = SiteMapCrawler(self.harvestInfo)
+            sc.parse_sitemap()
+            self.urlLinksList = sc.getLinksToCrawl()
+            self.listSize = len(self.urlLinksList)
+            self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
+            self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
+        except Exception as e:
+            self.logger.logMessage(str(repr(e)), "ERROR")
+            self.handleExceptions(e, terminate=True)
 
     def setCombineFiles(self, tf):
         self.combineFiles = tf
@@ -89,6 +93,8 @@ class JSONLDHarvester(Harvester):
             loop = asyncio.get_event_loop()  # event loop
             future = asyncio.ensure_future(self.fetch_all())  # tasks to do
             loop.run_until_complete(future)  # loop until done
+            loop.run_until_complete(asyncio.sleep(0.25))
+            loop.close()
         else:
             for url in self.urlLinksList:
                 r = myRequest(url)
@@ -105,22 +111,29 @@ class JSONLDHarvester(Harvester):
     async def fetch_all(self):
         tasks = []
         minute = 60
+        headers = {'User-Agent':'ARDC Harvester'}
         sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
-        cTimeout = ClientTimeout(total=sessionTimeout, connect=minute)
-        connector = TCPConnector(limit=self.tcp_connection_limit, ssl=False)
-        async with ClientSession(connector=connector, timeout=cTimeout) as session:
+        cTimeout = ClientTimeout(total=sessionTimeout)
+        connector = TCPConnector(limit=0, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
+        jar = DummyCookieJar()
+        async with ClientSession(headers=headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
             for url in self.urlLinksList:
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
 
     async def fetch(self, url, session):
+        minute = 60
+        cTimeout = ClientTimeout(connect=minute)
         try:
-            async with session.get(url) as response:
+            async with session.get(url, ssl=False, timeout=cTimeout) as response:
                 resp = await response.read()
                 self.processContent(resp.decode('utf-8'), url)
+                response.close()
+                await session.close()
         except Exception as exc:
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
+
 
 
 
@@ -132,11 +145,14 @@ class JSONLDHarvester(Harvester):
             jsonld = jsonlds[0].text
         if jsonld is not None:
             try:
-                data = json.loads(jsonld, strict=False)
+                data = {}
+                try:
+                    data = json.loads(jsonld, strict=False)
+                except Exception as e:
+                    data = ast.literal_eval(jsonld)
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "Processed %d:" % (self.recordCount))
                 if self.combineFiles is True:
                     self.jsonDict.append(data)
-                    time.sleep(0.1)
                     if len(self.jsonDict) >= self.batchSize:
                         self.saveBatch()
                 else:
@@ -155,17 +171,18 @@ class JSONLDHarvester(Harvester):
 
 
     def saveBatch(self):
-            try:
-                self.batchCount += 1
-                self.logger.logMessage("JSONLDHarvester (saveBatch) %d ,%d" % (len(self.jsonDict), self.batchCount), "DEBUG")
-                self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "saving batch %d:" % (self.batchCount))
-                chunkDict = self.jsonDict.copy()
-                self.jsonDict.clear()
-                self.storeJsonData(chunkDict, 'combined_%d' %self.batchCount)
-                self.storeDataAsRDF(chunkDict, 'combined_%d' %self.batchCount)
-                self.storeDataAsXML(chunkDict, 'combined_%d' %self.batchCount)
-            except Exception as e:
-                print(e)
+        try:
+            self.batchCount += 1
+            self.logger.logMessage("JSONLDHarvester (saveBatch) %d ,%d" % (len(self.jsonDict), self.batchCount), "DEBUG")
+            self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "saving batch %d:" % (self.batchCount))
+            chunkDict = self.jsonDict.copy()
+            self.jsonDict.clear()
+            self.storeJsonData(chunkDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsRDF(chunkDict, 'combined_%d' %self.batchCount)
+            self.storeDataAsXML(chunkDict, 'combined_%d' %self.batchCount)
+            self.updateHarvestRequest()
+        except Exception as e:
+            print(e)
 
 
     def storeJsonData(self, data, fileName):
