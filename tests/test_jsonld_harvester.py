@@ -55,12 +55,11 @@ class test_jsonld_harvester(unittest.TestCase):
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
-        harvester.setCombineFiles(False)
         harvester.harvest()
 
-        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.tmp"
-        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "31c3e72ba626ff36881ec655953bcc9a.rdf"
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         self.assertTrue(os.path.exists(rdfFile))
@@ -69,7 +68,7 @@ class test_jsonld_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<spatialCoverage><type>Place</type><geo><type>GeoShape</type><box>-29.06762 115.45924 -23.366095 122.62305</box></geo></spatialCoverage>', content)
         content = self.readFile(rdfFile)
-        self.assertIn('<schema:box>-29.06762 115.45924 -23.366095 122.62305</schema:box>', content)
+        self.assertIn('<box>-29.06762 115.45924 -24.71488 122.62305</box>', content)
 
     @patch.object(Request, 'getData')
     def test_text_site_map_combined_files(self, mockGetData):
@@ -105,12 +104,11 @@ class test_jsonld_harvester(unittest.TestCase):
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
         harvester = JSONLDHarvester(harvestInfo)
-        harvester.setCombineFiles(True)
         harvester.harvest()
 
-        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.tmp"
-        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined_end.rdf"
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
+        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         self.assertTrue(os.path.exists(rdfFile))
@@ -165,6 +163,7 @@ class test_jsonld_harvester(unittest.TestCase):
         #harvestInfo['uri'] = 'https://www.unavco.org/data/demos/doi/sitemap.xml'
         #harvestInfo['uri'] = 'http://ds.iris.edu/files/sitemap.xml'
         #harvestInfo['uri'] = 'https://portal.edirepository.org/sitemap_index.xml'
+        #harvestInfo['uri'] = 'file:///' + myconfig.abs_path + '/tests/resources/test_source/jsonld/bco_sitemap.xml'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path

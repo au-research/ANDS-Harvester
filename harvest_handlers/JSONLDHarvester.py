@@ -27,12 +27,9 @@ class JSONLDHarvester(Harvester):
       }
     """
     urlLinksList = {}
-    combineFiles = False
     batchSize = 400
-    tcp_connection_limit = 20
-    async_list = []
+    tcp_connection_limit = 5
     jsonDict = []
-    batchCount = 0
     start_time = {}
     headers = {'User-Agent': 'ARDC Harvester'}
 
@@ -58,13 +55,25 @@ class JSONLDHarvester(Harvester):
         self.logger.logMessage("JSONLDHarvester Started")
         self.recordCount = 0
         self.getPageList()
+        batchCount = 1
         if len(self.urlLinksList) > self.batchSize:
-            self.combineFiles = True
-        self.crawlPages()
-        if self.combineFiles is True:
-            self.storeJsonData(self.jsonDict, 'combined_end')
-            self.storeDataAsRDF(self.jsonDict, 'combined_end')
-            self.storeDataAsXML(self.jsonDict, 'combined_end')
+            urlLinkLists = split(self.urlLinksList, self.batchSize)
+            for batches in urlLinkLists:
+                self.crawlPages(batches)
+                if len(self.jsonDict) > 0:
+                    self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
+                    self.storeDataAsRDF(self.jsonDict, 'combined_%d' %(batchCount))
+                    self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
+                    self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
+                    self.jsonDict.clear()
+                    batchCount += 1
+                time.sleep(2) # let them breathe
+        else:
+            self.crawlPages(self.urlLinksList)
+            if len(self.jsonDict) > 0:
+                self.storeJsonData(self.jsonDict, 'combined')
+                self.storeDataAsRDF(self.jsonDict, 'combined')
+                self.storeDataAsXML(self.jsonDict, 'combined')
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -79,32 +88,32 @@ class JSONLDHarvester(Harvester):
             self.urlLinksList = sc.getLinksToCrawl()
             self.listSize = len(self.urlLinksList)
             self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
-            self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)))
+            self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)), 'INFO')
         except Exception as e:
             self.logger.logMessage(str(repr(e)), "ERROR")
             self.handleExceptions(e, terminate=True)
 
-    def setCombineFiles(self, tf):
-        self.combineFiles = tf
-
-    def crawlPages(self):
+    def crawlPages(self, urlList):
         self.start_time['start'] = default_timer()
 
         if self.harvestInfo['requestHandler'] == 'asyncio':
             asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()  # event loop
-            future = asyncio.ensure_future(self.fetch_all())  # tasks to do
+            future = asyncio.ensure_future(self.fetch_all(urlList))  # tasks to do
             loop.run_until_complete(future)  # loop until done
             loop.run_until_complete(asyncio.sleep(0.25))
+            loop.run_until_complete(asyncio.sleep(0))
             loop.close()
         elif self.harvestInfo['requestHandler'] == 'grequests':
-            self.async_list = []
-            for url in self.urlLinksList:
+            async_list = []
+            for url in urlList:
                 action_item = grequests.get(url, headers=self.headers, timeout=5, hooks={'response': self.parse})
-                self.async_list.append(action_item)
-            grequests.map(self.async_list, size=self.tcp_connection_limit)
+                async_list.append(action_item)
+            grequests.map(async_list, size=self.tcp_connection_limit)
+            asyncio.sleep(0.25)
+            asyncio.sleep(0)
         else:
-            for url in self.urlLinksList:
+            for url in urlList:
                 r = myRequest(url)
                 data = r.getData()
                 self.processContent(data, url)
@@ -115,19 +124,20 @@ class JSONLDHarvester(Harvester):
     def parse(self, response, **kwargs):
         self.processContent(response.text, response.url)
 
+
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
 
-    async def fetch_all(self):
+    async def fetch_all(self, urlList):
         tasks = []
         minute = 60
 
         sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
         cTimeout = ClientTimeout(total=sessionTimeout)
-        connector = TCPConnector(limit=0, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
+        connector = TCPConnector(limit=self.batchCount, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
         jar = DummyCookieJar()
         async with ClientSession(headers=self.headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
-            for url in self.urlLinksList:
+            for url in urlList:
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
@@ -153,7 +163,7 @@ class JSONLDHarvester(Harvester):
             jsonld = jsonlds[0].text
         if jsonld is not None:
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
-            self.logger.logMessage(message, "DEBUG")
+            #self.logger.logMessage(message, "DEBUG")
             try:
                 data = {}
                 try:
@@ -161,37 +171,13 @@ class JSONLDHarvester(Harvester):
                 except Exception as e:
                     data = ast.literal_eval(jsonld)
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
-                if self.combineFiles is True:
-                    self.jsonDict.append(data)
-                    if len(self.jsonDict) >= self.batchSize:
-                        self.saveBatch()
-                else:
-                    fileName = getFileName(data)
-                    self.redisPoster.postMesage('datasource.' + str(self.harvestInfo['data_source_id']) + '.harvest',
-                                                message)
-                    self.storeJsonData(data, fileName)
-                    self.storeDataAsRDF(jsonld, fileName)
-                    self.storeDataAsXML(data, fileName)
+                self.jsonDict.append(data)
                 self.recordCount += 1
             except Exception as e:
-                self.logger.logMessage("URL : %s, ERROR: %s, JSONLD %s" %(url, str(e), jsonld), "ERROR")
-        else:
-            self.logger.logMessage("Unable to extract jsonld from page %s" % url, "DEBUG")
-
-
-    def saveBatch(self):
-        try:
-            self.batchCount += 1
-            self.logger.logMessage("JSONLDHarvester (saveBatch) %d ,%d" % (len(self.jsonDict), self.batchCount), "DEBUG")
-            self.setStatus("Scanning %d Pages" % len(self.urlLinksList), "saving batch %d:" % (self.batchCount))
-            chunkDict = self.jsonDict.copy()
-            self.jsonDict.clear()
-            self.storeJsonData(chunkDict, 'combined_%d' %self.batchCount)
-            self.storeDataAsRDF(chunkDict, 'combined_%d' %self.batchCount)
-            self.storeDataAsXML(chunkDict, 'combined_%d' %self.batchCount)
-            self.updateHarvestRequest()
-        except Exception as e:
-            print(e)
+                pass
+                #self.logger.logMessage("URL : %s, ERROR: %s, JSONLD %s" %(url, str(e), jsonld), "ERROR")
+        #else:
+        #    self.logger.logMessage("Unable to extract jsonld from page %s" % url, "DEBUG")
 
 
     def storeJsonData(self, data, fileName):
@@ -331,3 +317,14 @@ def getFileName(data):
     h.update(id.encode())
 
     return h.hexdigest()
+
+#https://stackoverflow.com/questions/752308/split-list-into-smaller-lists-split-in-half
+
+def split(arr, size):
+    arrs = []
+    while len(arr) > size:
+        pice = arr[:size]
+        arrs.append(pice)
+        arr = arr[size:]
+    arrs.append(arr)
+    return arrs

@@ -26,11 +26,14 @@ class Logger:
         self.logMessage("loglevel set to %s:%s" % (str(self.__logLevel), myconfig.log_level), myconfig.log_level)
 
     def logMessage(self, message, logLevel='DEBUG'):
-        if self.logLevels[logLevel] >= self.__logLevel:
-            self.rotateLogFile()
-            self.__file = open(self.__fileName, "a", 0o777)
-            self.__file.write(logLevel + ": " + message + " %s" % datetime.now() + "\n")
-            self.__file.close()
+        try:
+            if self.logLevels[logLevel] >= self.__logLevel:
+                self.rotateLogFile()
+                self.__file = open(self.__fileName, "a", 0o777)
+                self.__file.write(logLevel + ": " + message + " %s" % datetime.now() + "\n")
+                self.__file.close()
+        except Exception as e:
+            pass # bad luck
 
 
     def rotateLogFile(self):

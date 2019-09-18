@@ -22,7 +22,8 @@ db_user=''
 db_passwd=''
 db='dbs_registry_test'
 db_port=3306
-harvest_table = 'harvests
+harvest_table = 'harvests'
+tcp_connection_limit=5
 harvester_specific_datasource_attributes = "'xsl_file','title','harvest_method','uri','provider_type'," \
                                            "'advanced_harvest_mode','oai_set', 'last_harvest_run_date', " \
                                            "'harvest_params','user_defined_params', 'harvest_frequency'"
