@@ -96,7 +96,7 @@ class test_pure_harvester(unittest.TestCase):
         self.assertIn('<identifier type="doi">http://doi.org/10.4225/57/5b29e9c09280e</identifier>', content)
 
     # API KEYS PROVIDED BY Melanie (for testing)
-    def only_during_developement_test_uwa_pure_external(self):
+    def only_during_development_test_uwa_pure_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://api.research-repository.uwa.edu.au/ws/api/511/datasets'
         harvestInfo['harvest_method'] = 'PUREHarvester'
@@ -116,7 +116,7 @@ class test_pure_harvester(unittest.TestCase):
         harvester.harvest()
 
     # API KEYS PROVIDED BY Melanie (for testing)
-    def only_during_developement_test_bond_pure_external(self):
+    def only_during_development_test_bond_pure_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
         harvestInfo['harvest_method'] = 'PUREHarvester'

@@ -26,7 +26,7 @@ class JSONLDHarvester(Harvester):
             ]
       }
     """
-    urlLinksList = {}
+    urlLinksList = []
     batchSize = 400
     tcp_connection_limit = 5
     jsonDict = []
@@ -35,6 +35,8 @@ class JSONLDHarvester(Harvester):
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
+        self.jsonDict = []
+        self.urlLinksList = []
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
@@ -62,7 +64,7 @@ class JSONLDHarvester(Harvester):
                 self.crawlPages(batches)
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
-                    self.storeDataAsRDF(self.jsonDict, 'combined_%d' %(batchCount))
+                    #self.storeDataAsRDF(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
@@ -72,7 +74,7 @@ class JSONLDHarvester(Harvester):
             self.crawlPages(self.urlLinksList)
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
-                self.storeDataAsRDF(self.jsonDict, 'combined')
+                #self.storeDataAsRDF(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
@@ -134,7 +136,7 @@ class JSONLDHarvester(Harvester):
 
         sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
         cTimeout = ClientTimeout(total=sessionTimeout)
-        connector = TCPConnector(limit=self.batchCount, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
+        connector = TCPConnector(limit=self.batchSize, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
         jar = DummyCookieJar()
         async with ClientSession(headers=self.headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
             for url in urlList:

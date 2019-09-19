@@ -59,7 +59,7 @@ class test_ckan_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<private>False</private>', content)
 
-    def only_during_developement_test_ckan_package_list_external(self):
+    def only_during_development_test_ckan_package_list_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'http://data2.cerdi.edu.au/'
         harvestInfo['provider_type'] = 'CKAN'

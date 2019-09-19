@@ -4,7 +4,8 @@ from harvest_handlers.JSONLDHarvester import JSONLDHarvester
 import io, os
 from mock import patch
 from utils.Request import Request
-
+import threading
+import time
 class test_jsonld_harvester(unittest.TestCase):
 
     def readTestfile(self, path):
@@ -59,16 +60,16 @@ class test_jsonld_harvester(unittest.TestCase):
 
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
+        #rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
-        self.assertTrue(os.path.exists(rdfFile))
+        #self.assertTrue(os.path.exists(rdfFile))
         content = self.readFile(resultFile)
         self.assertIn('<description type="brief">Water Sampling</description>', content)
         content = self.readFile(tempFile)
         self.assertIn('<spatialCoverage><type>Place</type><geo><type>GeoShape</type><box>-29.06762 115.45924 -23.366095 122.62305</box></geo></spatialCoverage>', content)
-        content = self.readFile(rdfFile)
-        self.assertIn('<box>-29.06762 115.45924 -24.71488 122.62305</box>', content)
+        #content = self.readFile(rdfFile)
+        #self.assertIn('<box>-29.06762 115.45924 -24.71488 122.62305</box>', content)
 
     @patch.object(Request, 'getData')
     def test_text_site_map_combined_files(self, mockGetData):
@@ -108,19 +109,19 @@ class test_jsonld_harvester(unittest.TestCase):
 
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
-        rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
+        #rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
-        self.assertTrue(os.path.exists(rdfFile))
+        #self.assertTrue(os.path.exists(rdfFile))
         content = self.readFile(resultFile)
         self.assertIn('<key>https://demo.ands.org.au/mineral-occurrence-portrayal-australia-10/817266</key>', content)
         content = self.readFile(tempFile)
         self.assertIn('<name>EarthResourceML mining feature occurrences of Northern Territory of Australia</name>', content)
-        content = self.readFile(rdfFile)
-        self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
+        #content = self.readFile(rdfFile)
+        #self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 
 
-    def only_during_developement_test_small_text_site_map_1(self):
+    def only_during_development_test_small_text_site_map_1(self):
         batch_id = "JSONLD_3"
         ds_id = 3
         harvestInfo = {}
@@ -144,17 +145,75 @@ class test_jsonld_harvester(unittest.TestCase):
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
 
+    def only_during_development_test_thread_safe_crawl(self):
+        batch_id_1 = "JSONLD_T1"
+        ds_id_1 = 8
+        harvestInfo_1 = {}
+        harvestInfo_1['uri'] = 'file:///' + myconfig.abs_path + '/tests/resources/test_source/jsonld/thread_test_sitemap_1.xml'
+        harvestInfo_1['provider_type'] = 'JSONLD'
+        harvestInfo_1['harvest_method'] = 'JSONLD'
+        harvestInfo_1['data_store_path'] = myconfig.data_store_path
+        harvestInfo_1['response_url'] = myconfig.response_url
+        harvestInfo_1['data_source_id'] = ds_id_1
+        harvestInfo_1['harvest_id'] = 8
+        harvestInfo_1['batch_number'] = batch_id_1
+        harvestInfo_1['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo_1['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo_1['mode'] = "TEST"
+        harvestInfo_1['requestHandler'] = "grequests"
 
-    def only_during_developement_test_small_text_site_map_balto_php(self):
+        batch_id_2 = "JSONLD_T2"
+        ds_id_2 = 9
+        harvestInfo_2 = {}
+        harvestInfo_2['uri'] = 'file:///' + myconfig.abs_path + '/tests/resources/test_source/jsonld/thread_test_sitemap_2.xml'
+        harvestInfo_2['provider_type'] = 'JSONLD'
+        harvestInfo_2['harvest_method'] = 'JSONLD'
+        harvestInfo_2['data_store_path'] = myconfig.data_store_path
+        harvestInfo_2['response_url'] = myconfig.response_url
+        harvestInfo_2['data_source_id'] = ds_id_2
+        harvestInfo_2['harvest_id'] = 9
+        harvestInfo_2['batch_number'] = batch_id_2
+        harvestInfo_2['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo_2['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo_2['mode'] = "TEST"
+        harvestInfo_2['requestHandler'] = "grequests"
+        # basic or asyncio
+        harvestReq_1 = JSONLDHarvester(harvestInfo_1)
+        t_1 = threading.Thread(name="one", target=harvestReq_1.harvest)
+        t_1.start()
+
+        harvestReq_2 = JSONLDHarvester(harvestInfo_2)
+        t_2 = threading.Thread(name="two", target=harvestReq_2.harvest)
+        t_2.start()
+        both_running = True
+        while both_running:
+            both_running = t_1.isAlive() or t_2.isAlive()
+            time.sleep(1)
+
+        resultFile_1 = myconfig.data_store_path + str(ds_id_1) + os.sep + batch_id_1 + os.sep + "combined.tmp"
+        resultFile_2 = myconfig.data_store_path + str(ds_id_2) + os.sep + batch_id_2 + os.sep + "combined.tmp"
+        self.assertTrue(os.path.exists(resultFile_1))
+        self.assertTrue(os.path.exists(resultFile_2))
+
+
+        content_1 = self.readFile(resultFile_1)
+        self.assertIn('<url>http://opencoredata/id/resource/', content_1)
+        self.assertNotIn('<id>http://dx.doi.org/10', content_1)
+        content_2 = self.readFile(resultFile_2)
+        self.assertIn('<id>http://dx.doi.org/10', content_2)
+        self.assertNotIn('<url>http://opencoredata/id/resource/', content_2)
+
+
+
+    def test_only_during_development_test_small_text_site_map_balto_php(self):
         batch_id = "JSONLD_4"
         ds_id = 3
         harvestInfo = {}
         #harvestInfo['uri'] = 'http://balto.opendap.org/opendap/site_map.txt'
-        harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
-        harvestInfo['uri'] = 'https://www.hydroshare.org/sitemap-resources.xml'
-        #harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
+        #harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
+        harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
         #harvestInfo['uri'] = 'https://earthref.org/MagIC/contributions.sitemap.xml'
-        harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
+        #harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemapCSDCOData.xml'
         #harvestInfo['uri'] = 'http://opentopography.org/sitemap.xml'
@@ -164,6 +223,7 @@ class test_jsonld_harvester(unittest.TestCase):
         #harvestInfo['uri'] = 'http://ds.iris.edu/files/sitemap.xml'
         #harvestInfo['uri'] = 'https://portal.edirepository.org/sitemap_index.xml'
         #harvestInfo['uri'] = 'file:///' + myconfig.abs_path + '/tests/resources/test_source/jsonld/bco_sitemap.xml'
+        #harvestInfo['uri'] = 'file:///' + myconfig.abs_path + '/tests/resources/test_source/jsonld/thread_test_sitemap_1.xml'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path

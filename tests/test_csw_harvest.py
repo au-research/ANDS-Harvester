@@ -55,7 +55,7 @@ class test_csw_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<gco:CharacterString>ISO 19115.1:2015 Geographic information - Metadata – Fundamentals</gco:CharacterString>', content)
 
-    def only_during_developement_test_csw_harvest_external(self):
+    def only_during_development_test_csw_harvest_external(self):
         harvestInfo = {}
         harvestInfo['advanced_harvest_mode'] = "REFRESH"
         harvestInfo['batch_number'] = "CSW_TERN_LIVE"

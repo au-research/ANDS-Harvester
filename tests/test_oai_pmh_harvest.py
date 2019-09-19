@@ -56,7 +56,7 @@ class test_oai_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(file2))
 
 
-    def only_during_developement_test_oai_pmh_harvest_external(self):
+    def only_during_development_test_oai_pmh_harvest_external(self):
         harvestInfo = {}
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['batch_number'] = "PMH_DEAKIN_LIVE"

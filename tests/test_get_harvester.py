@@ -93,7 +93,7 @@ class test_get_harvester(unittest.TestCase):
         self.assertIn('<distribution>', content)
 
 
-    def only_during_developement_test_XML_get_external(self):
+    def only_during_development_test_XML_get_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://devl.ands.org.au/leo/UniSA_reimport280817.xml'
         harvestInfo['provider_type'] = 'GET'
@@ -112,7 +112,7 @@ class test_get_harvester(unittest.TestCase):
         harvester = GETHarvester(harvestInfo)
         harvester.harvest()
 
-    def only_during_developement_test_JSON_get_external(self):
+    def only_during_development_test_JSON_get_external(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://data.gov.au/api/3/action/package_search?fq=((*:*%20NOT%20harvest_source_id:*)%20AND%20(type:dataset))'
         harvestInfo['provider_type'] = 'GET'

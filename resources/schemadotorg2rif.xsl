@@ -9,7 +9,7 @@
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
-            <xsl:apply-templates select="//dataset[type = 'Dataset']"/>
+            <xsl:apply-templates select="//dataset[type = 'DataSet'] | //dataset[type = 'Dataset'] | //dataset[type = 'dataset']"/>
         </registryObjects>
     </xsl:template>
 
@@ -25,7 +25,7 @@
                 <xsl:apply-templates select="type"/>
                 <xsl:apply-templates select="name"/>
                 <xsl:apply-templates select="description"/>
-
+                <xsl:apply-templates select="keywords"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -62,11 +62,14 @@
                 <xsl:when test="identifier">
                     <xsl:value-of select="identifier[1]/value/text()"/>
                 </xsl:when>
+                <xsl:when test="id">
+                    <xsl:value-of select="id[1]/text()"/>
+                </xsl:when>
                 <xsl:when test="url">
                     <xsl:value-of select="url/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="id(current())"/>
+                    <xsl:value-of select="generate-id(.)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
@@ -87,6 +90,13 @@
         <xsl:attribute name="type">
             <xsl:text>dataset</xsl:text>
         </xsl:attribute>
+    </xsl:template>
+    
+    <xsl:template match="keywords">
+        <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">local</xsl:attribute>
+            <xsl:value-of select="normalize-space(.)"></xsl:value-of>
+        </xsl:element>
     </xsl:template>
     
     <xsl:template match="description">
