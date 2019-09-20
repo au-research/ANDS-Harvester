@@ -29,6 +29,7 @@ class PUREHarvester(Harvester):
         self.updateHarvestRequest()
         self.setUpCrosswalk()
         self.startPosition = 0
+        self.data = None
         while self.firstCall or(self.numberOfRecordsReturned > 0 and not(self.completed)):
             time.sleep(0.1)
             self.getHarvestData()

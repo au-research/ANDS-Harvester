@@ -22,6 +22,7 @@ class CKANHarvester(Harvester):
     def harvest(self):
         self.setupdirs()
         self.pageCount = 1
+        self.data = None
         self.updateHarvestRequest()
         self.setUpCrosswalk()
         self.__xml = Document()

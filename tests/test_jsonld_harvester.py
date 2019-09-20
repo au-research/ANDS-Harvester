@@ -205,18 +205,18 @@ class test_jsonld_harvester(unittest.TestCase):
 
 
 
-    def test_only_during_development_test_small_text_site_map_balto_php(self):
+    def only_during_development_test_small_text_site_map_balto_php(self):
         batch_id = "JSONLD_4"
         ds_id = 3
         harvestInfo = {}
         #harvestInfo['uri'] = 'http://balto.opendap.org/opendap/site_map.txt'
         #harvestInfo['uri'] = 'https://ssdb.iodp.org/dataset/sitemap.xml'
-        harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
+        #harvestInfo['uri'] = 'http://data.neotomadb.org/sitemap.xml'
         #harvestInfo['uri'] = 'https://earthref.org/MagIC/contributions.sitemap.xml'
         #harvestInfo['uri'] = 'http://get.iedadata.org/doi/xml-sitemap.php'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemap.xml'
         #harvestInfo['uri'] = 'http://opencoredata.org/sitemapCSDCOData.xml'
-        #harvestInfo['uri'] = 'http://opentopography.org/sitemap.xml'
+        harvestInfo['uri'] = 'http://opentopography.org/sitemap.xml'
         #harvestInfo['uri'] = 'http://wiki.linked.earth/sitemap.xml'
         #harvestInfo['uri'] = 'https://www.bco-dmo.org/sitemap.xml'
         #harvestInfo['uri'] = 'https://www.unavco.org/data/demos/doi/sitemap.xml'
@@ -241,6 +241,42 @@ class test_jsonld_harvester(unittest.TestCase):
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
+
+    def fun_test_instance_vs_class_variables(self):
+
+        harvestInfo = {}
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['xsl_file'] = ""
+        harvester_1 = JSONLDHarvester(harvestInfo)
+        harvester_2 = JSONLDHarvester(harvestInfo)
+
+        #unitialised class primitive variables can be set at instance level
+        print(harvester_2.getbatchSize())
+        harvester_1.setbatchSize(50)
+        print(harvester_2.getbatchSize())
+        harvester_2.setbatchSize(20)
+        print(harvester_1.getbatchSize())
+        print(harvester_2.getbatchSize())
+
+        # unitialised class variables eg list or dict are shared by instances
+        # uncomment self.testList = [] in the constructor to see the difference
+        harvester_1.addItemtoTestList("one stuff")
+        harvester_1.printTestList()
+
+        harvester_2.addItemtoTestList("two stuff")
+        harvester_2.printTestList()
+
+        harvester_1.testList.clear()
+
+        harvester_2.addItemtoTestList("two more stuff")
+        harvester_1.printTestList()
+        harvester_1.addItemtoTestList("one more stuff")
+        harvester_1.printTestList()
+        harvester_2.addItemtoTestList("two more more stuff")
+
+        harvester_2.printTestList()
+
+
 
 
 

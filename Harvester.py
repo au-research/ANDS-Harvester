@@ -37,12 +37,14 @@ class Harvester():
 
     def __init__(self, harvestInfo):
         self.__xml = Document()
+        self.data = None
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
         self.mode = harvestInfo['mode']
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
+
 
 
     def setupdirs(self):

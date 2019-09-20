@@ -14,6 +14,7 @@ class GETHarvester(Harvester):
     """
     def harvest(self):
         self.setupdirs()
+        self.data = None
         self.updateHarvestRequest()
         self.setUpCrosswalk()
         self.getHarvestData()

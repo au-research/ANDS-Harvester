@@ -28,14 +28,18 @@ class JSONLDHarvester(Harvester):
     """
     urlLinksList = []
     batchSize = 400
+    testList = []
     tcp_connection_limit = 5
     jsonDict = []
     start_time = {}
+
     headers = {'User-Agent': 'ARDC Harvester'}
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.jsonDict = []
+        self.data = None
+        #self.testList = []
         self.urlLinksList = []
         try:
             if self.harvestInfo['requestHandler'] :
@@ -300,6 +304,20 @@ class JSONLDHarvester(Harvester):
         else:
             elem = self.__xml.createElement(qName)
         return elem
+
+    def setbatchSize(self, size):
+        self.batchSize = size
+
+    def getbatchSize(self):
+        return self.batchSize
+
+
+    def addItemtoTestList(self, stuff):
+        self.testList.append(stuff)
+
+    def printTestList(self):
+        print(self.testList)
+
 
 
 def asterisks(num):
