@@ -31,7 +31,7 @@
                 <xsl:apply-templates select="identifier"/>
                 <xsl:apply-templates select="title" mode="primary"/>
                 <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
-                <xsl:apply-templates select="description | citation | license"/>
+                <xsl:apply-templates select="description | citation | license | publishingPrinciples"/>
                 <xsl:element name="location">
                     <xsl:element name="address">
                         <xsl:apply-templates select="distribution"/>
@@ -39,6 +39,40 @@
                 </xsl:element>
                 <xsl:apply-templates select="isPartOf"/>
             </xsl:element>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="getOriginatingSource">
+        <xsl:element name="originatingSource"
+            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:choose>
+                <xsl:when test="sourceOrganization">
+                    <xsl:value-of select="sourceOrganization/name/text()"/>
+                </xsl:when>
+                <xsl:when test="publisher">
+                    <xsl:apply-templates select="publisher" mode="originatingSource"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$originatingSource"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template name="getGroup">
+        <xsl:element name="originatingSource"
+            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:choose>
+                <xsl:when test="sourceOrganization">
+                    <xsl:value-of select="sourceOrganization/name/text()"/>
+                </xsl:when>
+                <xsl:when test="publisher">
+                    <xsl:apply-templates select="publisher" mode="originatingSource"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$originatingSource"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
 
@@ -145,26 +179,18 @@
     </xsl:template>
 
 
-    <xsl:template match="license">
+    <xsl:template match="license | publishingPrinciples">
         <xsl:element name="rights" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:element name="rightsStatement">
-                    <xsl:value-of select="text()"/>
-            </xsl:element>
-        </xsl:element>
-    </xsl:template>
-
-    <xsl:template name="getOriginatingSource">
-        <xsl:element name="originatingSource"
-            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:choose>
-                <xsl:when test="sourceOrganization">
-                    <xsl:value-of select="sourceOrganization/name/text()"/>
-                </xsl:when>
-                <xsl:when test="publisher">
-                    <xsl:apply-templates select="publisher" mode="originatingSource"/>
+                <xsl:when test="starts-with(text(), 'http')">
+                    <xsl:element name="rightsStatement">
+                        <xsl:attribute name="rightsUri"><xsl:value-of select="normalize-space(text())"/></xsl:attribute>
+                    </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$originatingSource"/>
+                    <xsl:element name="rightsStatement">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
@@ -226,21 +252,59 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="distribution">
-        <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="type">
-                <xsl:text>url</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="target">
-                <xsl:text>directDownload</xsl:text>
-            </xsl:attribute>
-            <xsl:apply-templates select="downloadURL | accessURL | contentUrl"/>
-            <xsl:apply-templates select="mediaType | encodingFormat"/>
+<!-- 
+    
+    <distribution>
+            <provider>
+                <logo>https://daac.ornl.gov/daac_logo.png</logo>
+                <name>ORNL DAAC</name>
+                <url>https://daac.ornl.gov</url>
+                <type>Organization</type>
+            </provider>
+            <url>https://daac.ornl.gov/daacdata/airmoss/campaign/AirMOSS_L1_Sigma0_DukeFr/</url>
+            <name>Direct Access: AirMOSS: L1 S-0 Polarimetric Data from AirMOSS P-band SAR, Duke
+                Forest, 2012-2015</name>
+            <publisher>
+                <logo>https://daac.ornl.gov/daac_logo.png</logo>
+                <name>ORNL DAAC</name>
+                <url>https://daac.ornl.gov</url>
+                <type>Organization</type>
+            </publisher>
+            <encodingFormat>binary, ascii, HDF5, KML, png, jpeg</encodingFormat>
+            <description>This link allows direct data access via Earthdata Login to: AirMOSS: L1 S-0
+                Polarimetric Data from AirMOSS P-band SAR, Duke Forest, 2012-2015</description>
+            <type>DataDownload</type>
+        </distribution>
+    
+    -->
 
-        </xsl:element>
+    <xsl:template match="distribution">
+        <xsl:if test="descendant/node()">
+            <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">
+                    <xsl:text>url</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="target">
+                    <xsl:text>directDownload</xsl:text>
+                </xsl:attribute>
+                <xsl:apply-templates select="downloadURL | accessURL | contentUrl"/>
+                <xsl:apply-templates select="url" mode="distribution"/>
+                <xsl:apply-templates select="name"/>
+                <xsl:apply-templates select="mediaType | encodingFormat"/>
+                <xsl:apply-templates select="type" mode="distribution"/>
+                
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="accessURL | downloadURL | contentUrl">
+        <xsl:element name="value" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:value-of select="text()"/>
+        </xsl:element>
+    </xsl:template>
+
+
+    <xsl:template match="url" mode="distribution">
         <xsl:element name="value" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:value-of select="text()"/>
         </xsl:element>
@@ -252,15 +316,10 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template name="getGroup">
-        <xsl:choose>
-            <xsl:when test="sourceOrganization">
-                <xsl:value-of select="sourceOrganization/name/text()"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$originatingSource"/>
-            </xsl:otherwise>
-        </xsl:choose>
+    <xsl:template match="type" mode="distribution">
+        <xsl:element name="mediaType" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:value-of select="text()"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="name | title" mode="primary">
@@ -365,5 +424,5 @@
         <xsl:variable name="coords" select="tokenize(text(),'\s?[, ]\s?')" as="xs:string*"/>
         <xsl:value-of select="concat('westlimit=',$coords[1], '; southlimit=', $coords[2], '; eastlimit=', $coords[3], '; northlimit=', $coords[4],'; projection=WGS84')"/>
     </xsl:template>
-    
+      
 </xsl:stylesheet>
