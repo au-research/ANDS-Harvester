@@ -34,6 +34,7 @@
                 <xsl:apply-templates select="description | citation | license | publishingPrinciples"/>
                 <xsl:element name="location">
                     <xsl:element name="address">
+                        <xsl:apply-templates select="url"/>
                         <xsl:apply-templates select="distribution"/>
                     </xsl:element>
                 </xsl:element>
@@ -102,7 +103,7 @@
                 <xsl:attribute name="dateFormat">
                     <xsl:text>W3CDTF</xsl:text>
                 </xsl:attribute>
-                <xsl:value-of select="text()"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -119,7 +120,7 @@
                 <xsl:attribute name="dateFormat">
                     <xsl:text>W3CDTF</xsl:text>
                 </xsl:attribute>
-                <xsl:value-of select="text()"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -151,7 +152,7 @@
 
     <xsl:template match="type">
         <xsl:attribute name="type">
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:attribute>
     </xsl:template>
 
@@ -173,7 +174,7 @@
     <xsl:template match="citation">
         <xsl:element name="citationInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:element name="fullCitation">
-                    <xsl:value-of select="text()"/>
+                    <xsl:apply-templates select="text()"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -205,7 +206,7 @@
                 <xsl:text>landingPage</xsl:text>
             </xsl:attribute>
             <xsl:element name="value">
-                <xsl:value-of select="text()"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -246,7 +247,7 @@
                     <xsl:attribute name="type">
                         <xsl:text>url</xsl:text>
                     </xsl:attribute>
-                    <xsl:value-of select="text()"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:element>
@@ -278,8 +279,22 @@
     
     -->
 
+    <xsl:template match="url">
+        <xsl:if test="text() != ''">
+            <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">
+                    <xsl:text>url</xsl:text>
+                </xsl:attribute>
+                <xsl:element name="value">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:element> 
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+
+
     <xsl:template match="distribution">
-        <xsl:if test="descendant/node()">
+        <xsl:if test="node()">
             <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="type">
                     <xsl:text>url</xsl:text>
@@ -291,35 +306,38 @@
                 <xsl:apply-templates select="url" mode="distribution"/>
                 <xsl:apply-templates select="name"/>
                 <xsl:apply-templates select="mediaType | encodingFormat"/>
-                <xsl:apply-templates select="type" mode="distribution"/>
-                
+                <xsl:apply-templates select="type" mode="distribution"/>   
             </xsl:element>
         </xsl:if>
     </xsl:template>
 
     <xsl:template match="accessURL | downloadURL | contentUrl">
         <xsl:element name="value" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
 
 
     <xsl:template match="url" mode="distribution">
         <xsl:element name="value" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
 
     <xsl:template match="encodingFormat | mediaType">
-        <xsl:element name="mediaType" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:value-of select="text()"/>
-        </xsl:element>
+        <xsl:if test="text() != ''">
+            <xsl:element name="mediaType" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:apply-templates select="text()"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="type" mode="distribution">
-        <xsl:element name="mediaType" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:value-of select="text()"/>
-        </xsl:element>
+        <xsl:if test="text() != ''">
+            <xsl:element name="mediaType" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:apply-templates select="text()"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="name | title" mode="primary">
@@ -328,7 +346,7 @@
                 <xsl:text>primary</xsl:text>
             </xsl:attribute>
             <xsl:element name="namePart" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:value-of select="text()"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -349,7 +367,7 @@
     
     <xsl:template match="name">
         <xsl:element name="title" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
     
@@ -358,7 +376,7 @@
             <xsl:attribute name="type">
                 <xsl:text>url</xsl:text>
             </xsl:attribute>
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
     
@@ -414,7 +432,7 @@
         <xsl:attribute name="type">
             <xsl:text>text</xsl:text>
         </xsl:attribute>
-        <xsl:value-of select="text()"/>
+        <xsl:apply-templates select="text()"/>
     </xsl:template>
     
     <xsl:template match="box">
@@ -424,5 +442,9 @@
         <xsl:variable name="coords" select="tokenize(text(),'\s?[, ]\s?')" as="xs:string*"/>
         <xsl:value-of select="concat('westlimit=',$coords[1], '; southlimit=', $coords[2], '; eastlimit=', $coords[3], '; northlimit=', $coords[4],'; projection=WGS84')"/>
     </xsl:template>
+      
+    <xsl:template match="text()">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>  
       
 </xsl:stylesheet>
