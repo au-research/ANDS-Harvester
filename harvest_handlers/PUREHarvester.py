@@ -20,7 +20,7 @@ class PUREHarvester(Harvester):
 
     retryCount = 0
     pageCount = 1
-    maxRecords = 10
+    maxRecords = 100
     firstCall = True
     numberOfRecordsReturned = 0
 

@@ -10,6 +10,7 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
             <xsl:apply-templates select="//dataset"/>
+            <xsl:apply-templates select="//includedInDataCatalog" mode="catalog"/>
             <xsl:apply-templates select="//publisher | //funder | //contributor" mode="party"/>
         </registryObjects>
     </xsl:template>
@@ -29,7 +30,7 @@
     </publisher-->
 
     <xsl:template match="publisher| funder | contributor" mode="party">
-        <xsl:if test="type = 'Organization'">
+        <xsl:if test="type = 'Organization' and name(parent::node()) = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="group">
@@ -44,19 +45,46 @@
                         <xsl:text>group</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="name | legalName | title" mode="primary"/>
-                    <xsl:apply-templates select="url" mode="identifier"/>
-                    <xsl:apply-templates select="description | logo"/>
                     <xsl:element name="location">
                         <xsl:element name="address">
                             <xsl:apply-templates select="url"/>
-                            <xsl:apply-templates select="distribution"/>
                         </xsl:element>
                     </xsl:element>
+                    <xsl:apply-templates select="contactPoint"/>
+                    <xsl:apply-templates select="url" mode="identifier"/>
+                    <xsl:apply-templates select="description | logo"/>
+                    
                 </xsl:element>
             </xsl:element>
         </xsl:if>
     </xsl:template>
 
+
+    <xsl:template match="includedInDataCatalog" mode="catalog">
+        <xsl:element name="registryObject"
+            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="group">
+                <xsl:call-template name="getGroup"/>
+            </xsl:attribute>
+            <xsl:call-template name="getKey"/>
+            <xsl:call-template name="getOriginatingSource"/>
+            <xsl:element name="collection">
+                <xsl:attribute name="type">
+                    <xsl:text>catalog</xsl:text>
+                </xsl:attribute>
+                <xsl:apply-templates select="name" mode="primary"/>
+                <xsl:call-template name="getKeyAsIdentifier"/>
+                <xsl:apply-templates select="identifier"/>
+                <xsl:apply-templates select="name" mode="description"/>
+                <xsl:element name="location">
+                    <xsl:element name="address">
+                        <xsl:apply-templates select="url"/>
+                        <xsl:apply-templates select="distribution"/>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
 
     <xsl:template match="dataset">
         <xsl:if test="type = 'DataSet'or type = 'Dataset' or type = 'dataset'">
@@ -76,7 +104,7 @@
                     <xsl:apply-templates select="identifier"/>
                     <xsl:apply-templates select="title" mode="primary"/>
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
-                    <xsl:apply-templates select="description | citation | license | publishingPrinciples"/>
+                    <xsl:apply-templates select="keywords| description | citation | license | publishingPrinciples"/>
                     <xsl:element name="location">
                         <xsl:element name="address">
                             <xsl:apply-templates select="url"/>
@@ -85,6 +113,8 @@
                     </xsl:element>
                     <xsl:apply-templates select="isPartOf"/>
                     <xsl:apply-templates select="publisher | funder | contributor" mode="relatedInfo"/>
+                    <xsl:apply-templates select="includedInDataCatalog" mode="relatedInfo"/>
+                    
                 </xsl:element>
             </xsl:element>
         </xsl:if>
@@ -264,12 +294,31 @@
     <xsl:template match="keywords">
         <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">local</xsl:attribute>
-            <xsl:value-of select="normalize-space(.)"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="contentSize">
+        <xsl:element name="byteSize" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
+
+    <xsl:template match="distribution/description">
+        <xsl:element name="notes" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>
 
-
     <xsl:template match="description">
+        <xsl:element name="description" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">brief</xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="name" mode="description">
         <xsl:element name="description" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">brief</xsl:attribute>
             <xsl:apply-templates/>
@@ -391,11 +440,11 @@
     
     -->
 
-    <xsl:template match="url">
+    <xsl:template match="url | email">
         <xsl:if test="text() != ''">
             <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="type">
-                    <xsl:text>url</xsl:text>
+                    <xsl:value-of select="name()"/>
                 </xsl:attribute>
                 <xsl:element name="value">
                     <xsl:apply-templates select="text()"/>
@@ -403,7 +452,85 @@
             </xsl:element>
         </xsl:if>
     </xsl:template>
-
+    
+    <!--
+        <contactPoint>
+            <email>uso@daac.ornl.gov</email>
+            <telephone>+18652413952</telephone>
+            <contactType>customer support</contactType>
+            <name>ORNL DAAC User Support Office</name>
+            <type>ContactPoint</type>
+        </contactPoint>
+        
+        -->
+    
+    <xsl:template match="contactPoint">
+        <xsl:if test="email/text() != '' or url/text() != ''">
+            <xsl:element name="location" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:element name="address">
+                    <xsl:apply-templates select="url"/>
+                    <xsl:apply-templates select="email"/>
+                </xsl:element>
+            </xsl:element>
+        </xsl:if>
+        <xsl:if test="telephone/text() != '' or name/text() != ''">
+            <xsl:element name="location" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:element name="address">
+                    <xsl:element name="physical" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                        <xsl:apply-templates select="type"/>
+                        <xsl:apply-templates select="name" mode="addressPart"/>
+                        <xsl:apply-templates select="contactType" mode="addressPart"/>
+                        <xsl:apply-templates select="telephone" mode="addressPart"/>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="name | contactType | telephone" mode="addressPart">
+        <xsl:element name="addressPart" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:choose>
+                    <xsl:when test="name() = 'telephone'">
+                        <xsl:text>telephoneNumber</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>addressLine</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
+    
+<!-- 
+    <distribution>
+            <provider>
+                <logo>https://daac.ornl.gov/daac_logo.png</logo>
+                <name>ORNL DAAC</name>
+                <url>https://daac.ornl.gov</url>
+                <type>Organization</type>
+            </provider>
+            <contentSize>2.3 GB</contentSize>
+            <name>Download Dataset: AirMOSS: L2/3 Volumetric Soil Moisture Profiles Derived From
+                Radar, 2012-2015</name>
+            <description>Download entire dataset bundle: AirMOSS: L2/3 Volumetric Soil Moisture
+                Profiles Derived From Radar, 2012-2015</description>
+            <url>https://daac.ornl.gov/cgi-bin/download.pl?ds_id=1418&amp;source=schema_org_metadata</url>
+            <encodingFormat/>
+            <publisher>
+                <logo>https://daac.ornl.gov/daac_logo.png</logo>
+                <name>ORNL DAAC</name>
+                <url>https://daac.ornl.gov</url>
+                <type>Organization</type>
+            </publisher>
+            <type>DataDownload</type>
+        </distribution>
+    
+    
+    
+    -->
 
     <xsl:template match="distribution">
         <xsl:if test="node()">
@@ -417,8 +544,11 @@
                 <xsl:apply-templates select="downloadURL | accessURL | contentUrl"/>
                 <xsl:apply-templates select="url" mode="distribution"/>
                 <xsl:apply-templates select="name"/>
+                <xsl:apply-templates select="description"/>
                 <xsl:apply-templates select="mediaType | encodingFormat"/>
-                <xsl:apply-templates select="type" mode="distribution"/>   
+                <xsl:apply-templates select="type" mode="distribution"/> 
+                <xsl:apply-templates select="contentSize"/>
+  
             </xsl:element>
         </xsl:if>
     </xsl:template>
@@ -479,17 +609,17 @@
     </xsl:template>
     
     
-    <xsl:template match="publisher | funder | contributor" mode="relatedInfo">
+    <xsl:template match="publisher | funder | contributor | includedInDataCatalog" mode="relatedInfo">
         <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">
-            <!--xsl:choose>
-                <xsl:when test="type">
-                   <xsl:apply-templates select="type/text()"/> 
+            <xsl:choose>
+                <xsl:when test="name() = 'includedInDataCatalog'">
+                    <xsl:text>collection</xsl:text>
                 </xsl:when>
-                <xsl:otherwise-->
+                <xsl:otherwise>
                     <xsl:text>party</xsl:text>
-                <!--/xsl:otherwise>
-            </xsl:choose-->
+                </xsl:otherwise>
+            </xsl:choose>
             </xsl:attribute>
             <xsl:element name="relation">
                 <xsl:attribute name="type">
@@ -502,6 +632,9 @@
                         </xsl:when>
                         <xsl:when test="name() = 'contributor'">
                             <xsl:text>hasAssociationWith</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="name() = 'includedInDataCatalog'">
+                            <xsl:text>isPartOf</xsl:text>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:attribute>
