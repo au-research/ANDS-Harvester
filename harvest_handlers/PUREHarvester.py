@@ -81,6 +81,14 @@ class PUREHarvester(Harvester):
             pass
 
         try:
+            if isinstance(urlParams['pageSize'], list):
+                urlParams['pageSize'] = urlParams['pageSize'][0]
+        except KeyError:
+            urlParams['pageSize'] = str(self.maxRecords)
+
+        #pageSize apiKey can be defined by the datasource page
+
+        try:
             params = json.loads(self.harvestInfo['user_defined_params'])
             for item in params:
                 urlParams[item['name']] = item['value']
@@ -91,7 +99,7 @@ class PUREHarvester(Harvester):
                 urlParams['apiKey'] = self.harvestInfo['apiKey']
         except KeyError:
             pass
-        urlParams['pageSize'] = str(self.maxRecords)
+
         urlParams['page'] = str(self.pageCount)
         query = urllib.parse.urlencode(urlParams)
         return "%s://%s%s?%s" %(parsed_url.scheme, parsed_url.netloc, parsed_url.path, query)
