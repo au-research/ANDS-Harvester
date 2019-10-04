@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
     <xsl:output indent="yes"/>
     <xsl:strip-space elements="*"/>
-    <xsl:param name="originatingSource">'NO ORIGINATING SOURCE FOUND'</xsl:param>
+    <xsl:param name="originatingSource">ARDC sitemap crawler</xsl:param>
 
     <xsl:template match="/">
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
@@ -101,7 +101,7 @@
                     </xsl:attribute>
                     <xsl:apply-templates select="name" mode="primary"/>
                     <xsl:call-template name="getKeyAsIdentifier"/>
-                    <xsl:apply-templates select="identifier"/>
+                    <xsl:apply-templates select="identifier | id"/>
                     <xsl:apply-templates select="title" mode="primary"/>
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
                     <xsl:apply-templates select="keywords| description | citation | license | publishingPrinciples"/>
@@ -694,7 +694,7 @@
             </xsl:element>
         </xsl:element>
     </xsl:template>
-
+   
     <xsl:template match="geo">
         <xsl:choose>
             <xsl:when test="type = 'GeoCoordinates'">
@@ -705,6 +705,7 @@
             </xsl:when>
             <xsl:when test="type = 'GeoShape'">
                 <xsl:apply-templates select="box"/>
+                <xsl:apply-templates select="line"/>
             </xsl:when> 
         </xsl:choose>
     </xsl:template>
@@ -722,6 +723,13 @@
         </xsl:attribute>
         <xsl:variable name="coords" select="tokenize(text(),'\s?[, ]\s?')" as="xs:string*"/>
         <xsl:value-of select="concat('westlimit=',$coords[1], '; southlimit=', $coords[2], '; eastlimit=', $coords[3], '; northlimit=', $coords[4],'; projection=WGS84')"/>
+    </xsl:template>
+    
+    <xsl:template match="line">
+        <xsl:attribute name="type">
+            <xsl:text>kmlPolyCoords</xsl:text>
+        </xsl:attribute>
+        <xsl:apply-templates select="text()"/>
     </xsl:template>
       
     <xsl:template match="text()">
