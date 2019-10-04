@@ -79,9 +79,16 @@ class PUREHarvester(Harvester):
                 urlParams['apiKey'] = urlParams['apiKey'][0]
         except KeyError:
             pass
+
         try:
-            if self.harvestInfo['api_key'] :
-                urlParams['apiKey'] = self.harvestInfo['api_key']
+            params = json.loads(self.harvestInfo['user_defined_params'])
+            for item in params:
+                urlParams[item['name']] = item['value']
+        except KeyError:
+            pass
+        try:
+            if self.harvestInfo['apiKey'] :
+                urlParams['apiKey'] = self.harvestInfo['apiKey']
         except KeyError:
             pass
         urlParams['pageSize'] = str(self.maxRecords)

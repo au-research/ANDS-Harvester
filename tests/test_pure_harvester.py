@@ -42,7 +42,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/Elsevier_PURE_Params.xsl"
         harvestInfo['mode'] = "TEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
+        harvestInfo['apiKey'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -80,7 +80,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/Elsevier_PURE_Params.xsl"
         harvestInfo['mode'] = "TEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
+        harvestInfo['apiKey'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -108,7 +108,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "TEST"
-        harvestInfo['api_key'] = myconfig.uwa_api_key
+        harvestInfo['apiKey'] = myconfig.uwa_api_key
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -128,7 +128,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "TEST"
-        # harvestInfo['api_key'] = myconfig.bond_api_key
+        # harvestInfo['apiKey'] = myconfig.bond_api_key
         # harvestReq =   PUREHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
