@@ -307,7 +307,8 @@ class HarvesterDaemon(Daemon):
             for harvestID in list(self.__harvestRequests):
                 try:
                     harvestReq = self.__harvestRequests[harvestID]
-                    if harvestReq.getStatus() == "WAITING":
+                    # can use harvest_id to stop multiple harvest into same datasource  
+                    if harvestReq.getStatus() == "WAITING" and harvestID not in self.__runningHarvests.keys():
                         self.__runningHarvests[harvestID] = harvestReq
                         del self.__harvestRequests[harvestID]
                         harvestReq = self.__runningHarvests[harvestID]
@@ -596,7 +597,6 @@ class HarvesterDaemon(Daemon):
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
             self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))), "DEBUG")
-            self.__logger.logMessage('RUNNING', "DEBUG")
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
                 self.__logger.logMessage(harvestReq.getInfo(), "DEBUG")
