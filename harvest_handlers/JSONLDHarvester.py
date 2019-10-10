@@ -89,8 +89,8 @@ class JSONLDHarvester(Harvester):
     def getPageList(self):
         try:
             self.setStatus("Scanning Sitemap(s)")
-            sc = SiteMapCrawler(self.harvestInfo)
-            sc.parse_sitemap()
+            sc = SiteMapCrawler(self.harvestInfo['mode'])
+            sc.parse_sitemap(self.harvestInfo['uri'])
             self.urlLinksList = sc.getLinksToCrawl()
             self.listSize = len(self.urlLinksList)
             self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
