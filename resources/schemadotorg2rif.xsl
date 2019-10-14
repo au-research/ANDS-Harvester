@@ -5,30 +5,18 @@
     <xsl:output indent="yes"/>
     <xsl:strip-space elements="*"/>
     <xsl:param name="originatingSource">ARDC sitemap crawler</xsl:param>
-
+    <!--xsl:variable name="xsd_url" select="'/Users/leomonus/dev/ands/registry/applications/registry/registry_object/schema/registryObjects.xsd'"/-->
+    <xsl:variable name="xsd_url" select="'http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd'"/>
+    
     <xsl:template match="/">
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+            xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects {$xsd_url}">
             <xsl:apply-templates select="//dataset"/>
             <xsl:apply-templates select="//includedInDataCatalog" mode="catalog"/>
             <xsl:apply-templates select="//publisher | //funder | //contributor" mode="party"/>
         </registryObjects>
     </xsl:template>
-
-    <!--publisher>
-        <logo>https://daac.ornl.gov/daac_logo.png</logo>
-        <contactPoint>
-            <email>uso@daac.ornl.gov</email>
-            <telephone>+18652413952</telephone>
-            <contactType>customer support</contactType>
-            <name>ORNL DAAC User Support Office</name>
-            <type>ContactPoint</type>
-        </contactPoint>
-        <name>ORNL DAAC</name>
-        <url>https://daac.ornl.gov</url>
-        <type>Organization</type>
-    </publisher-->
 
     <xsl:template match="publisher| funder | contributor" mode="party">
         <xsl:if test="type = 'Organization' and name(parent::node()) = 'dataset'">
@@ -107,6 +95,7 @@
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
                     <xsl:apply-templates
                         select="keywords| description | citation | license | publishingPrinciples"/>
+                    <xsl:call-template name="addCitationMetadata"/>
                     <xsl:element name="location">
                         <xsl:element name="address">
                             <xsl:apply-templates select="url"/>
@@ -156,6 +145,91 @@
             </xsl:choose>
         </xsl:element>
     </xsl:template>
+
+    <xsl:template name="addCitationMetadata">
+        <xsl:if test="creator and (identifier or id or  url) and publisher and (datePublished or dateCreated)">
+            <xsl:element name="citationInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:element name="citationMetadata">
+                    <xsl:choose>
+                        <xsl:when test="identifier">
+                            <xsl:apply-templates select="identifier[1]"/>
+                        </xsl:when>
+                        <xsl:when test="id">
+                            <xsl:apply-templates select="id[1]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="url" mode="identifier"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="name">
+                            <xsl:apply-templates select="name[1]"/>
+                        </xsl:when>
+                        <xsl:when test="title">
+                            <xsl:apply-templates select="title[1]"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:apply-templates select="publisher" mode="CitationMetadata"/>
+                    <xsl:apply-templates select="locationCreated | version | url" mode="CitationMetadata"/>
+                    <xsl:apply-templates select="datePublished | dateCreated" mode="CitationMetadata"/>
+                    <xsl:for-each select="creator">
+                        <xsl:element name="contributor">
+                            <xsl:attribute name="seq">
+                                <xsl:value-of select="position()"/>
+                            </xsl:attribute>
+                            <xsl:element name="namePart">
+                                <xsl:apply-templates select="name/text()"/>
+                            </xsl:element>
+                        </xsl:element>
+                    </xsl:for-each>
+                </xsl:element>
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+    
+
+    <xsl:template match="datePublished" mode="CitationMetadata">
+        <xsl:element name="date" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>publicationDate</xsl:text>
+            </xsl:attribute>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="dateCreated" mode="CitationMetadata">
+        <xsl:element name="date" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>created</xsl:text>
+            </xsl:attribute>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="publisher" mode="CitationMetadata">
+        <xsl:element name="publisher" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="name/text()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="version" mode="CitationMetadata">
+        <xsl:element name="version" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="url" mode="CitationMetadata">
+        <xsl:element name="url" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="locationCreated" mode="CitationMetadata">
+        <xsl:element name="placePublished" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
+    </xsl:template>
+    
 
     <xsl:template match="publisher| funder | contributor" mode="originatingSource">
         <xsl:choose>
@@ -421,32 +495,6 @@
         </xsl:element>
     </xsl:template>
 
-    <!-- 
-    
-    <distribution>
-            <provider>
-                <logo>https://daac.ornl.gov/daac_logo.png</logo>
-                <name>ORNL DAAC</name>
-                <url>https://daac.ornl.gov</url>
-                <type>Organization</type>
-            </provider>
-            <url>https://daac.ornl.gov/daacdata/airmoss/campaign/AirMOSS_L1_Sigma0_DukeFr/</url>
-            <name>Direct Access: AirMOSS: L1 S-0 Polarimetric Data from AirMOSS P-band SAR, Duke
-                Forest, 2012-2015</name>
-            <publisher>
-                <logo>https://daac.ornl.gov/daac_logo.png</logo>
-                <name>ORNL DAAC</name>
-                <url>https://daac.ornl.gov</url>
-                <type>Organization</type>
-            </publisher>
-            <encodingFormat>binary, ascii, HDF5, KML, png, jpeg</encodingFormat>
-            <description>This link allows direct data access via Earthdata Login to: AirMOSS: L1 S-0
-                Polarimetric Data from AirMOSS P-band SAR, Duke Forest, 2012-2015</description>
-            <type>DataDownload</type>
-        </distribution>
-    
-    -->
-
     <xsl:template match="url | email">
         <xsl:if test="text() != ''">
             <xsl:element name="electronic"
@@ -460,17 +508,6 @@
             </xsl:element>
         </xsl:if>
     </xsl:template>
-
-    <!--
-        <contactPoint>
-            <email>uso@daac.ornl.gov</email>
-            <telephone>+18652413952</telephone>
-            <contactType>customer support</contactType>
-            <name>ORNL DAAC User Support Office</name>
-            <type>ContactPoint</type>
-        </contactPoint>
-        
-        -->
 
     <xsl:template match="contactPoint">
         <xsl:if test="email/text() != '' or url/text() != ''">
@@ -511,35 +548,6 @@
             <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
-
-
-    <!-- 
-    <distribution>
-            <provider>
-                <logo>https://daac.ornl.gov/daac_logo.png</logo>
-                <name>ORNL DAAC</name>
-                <url>https://daac.ornl.gov</url>
-                <type>Organization</type>
-            </provider>
-            <contentSize>2.3 GB</contentSize>
-            <name>Download Dataset: AirMOSS: L2/3 Volumetric Soil Moisture Profiles Derived From
-                Radar, 2012-2015</name>
-            <description>Download entire dataset bundle: AirMOSS: L2/3 Volumetric Soil Moisture
-                Profiles Derived From Radar, 2012-2015</description>
-            <url>https://daac.ornl.gov/cgi-bin/download.pl?ds_id=1418&amp;source=schema_org_metadata</url>
-            <encodingFormat/>
-            <publisher>
-                <logo>https://daac.ornl.gov/daac_logo.png</logo>
-                <name>ORNL DAAC</name>
-                <url>https://daac.ornl.gov</url>
-                <type>Organization</type>
-            </publisher>
-            <type>DataDownload</type>
-        </distribution>
-    
-    
-    
-    -->
 
     <xsl:template match="distribution">
         <xsl:if test="node()">
@@ -658,7 +666,7 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="name">
+    <xsl:template match="name | title">
         <xsl:element name="title" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:apply-templates select="text()"/>
         </xsl:element>
@@ -681,23 +689,6 @@
             <xsl:apply-templates select="text()"/>
         </xsl:element>
     </xsl:template>
-
-    <!-- 
-        <publisher>
-            <logo>https://daac.ornl.gov/daac_logo.png</logo>
-            <contactPoint>
-                <email>uso@daac.ornl.gov</email>
-                <telephone>+18652413952</telephone>
-                <contactType>customer support</contactType>
-                <name>ORNL DAAC User Support Office</name>
-                <type>ContactPoint</type>
-            </contactPoint>
-            <name>ORNL DAAC</name>
-            <url>https://daac.ornl.gov</url>
-            <type>Organization</type>
-        </publisher>
-    
-    -->
 
     <xsl:template match="spatialCoverage">
         <xsl:element name="coverage" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
