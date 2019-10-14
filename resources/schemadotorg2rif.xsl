@@ -23,6 +23,7 @@
             <xsl:variable name="keyValue">
                 <xsl:call-template name="getKeyValue"/>
             </xsl:variable>
+            <!-- don't create a related party object if we can't identify its key -->
             <xsl:if test="$keyValue != ''">
                 <xsl:element name="registryObject"
                     xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -48,7 +49,6 @@
                         <xsl:apply-templates select="contactPoint"/>
                         <xsl:apply-templates select="url" mode="identifier"/>
                         <xsl:apply-templates select="description | logo"/>
-                        
                     </xsl:element>
                 </xsl:element>
             </xsl:if>         
@@ -60,7 +60,8 @@
         <xsl:variable name="keyValue">
             <xsl:call-template name="getKeyValue"/>
         </xsl:variable>
-        <xsl:if test="keyValue != ''">
+        <!-- don't create a related collection object if we can't identify its key -->
+        <xsl:if test="$keyValue != ''">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="group">
@@ -113,7 +114,7 @@
                     <xsl:apply-templates select="title" mode="primary"/>
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
                     <xsl:apply-templates
-                        select="keywords| description | citation | license | publishingPrinciples"/>
+                        select="keywords| description | license | publishingPrinciples"/>
                     <xsl:call-template name="addCitationMetadata"/>
                     <xsl:element name="location">
                         <xsl:element name="address">
@@ -131,6 +132,9 @@
         </xsl:if>
     </xsl:template>
 
+<!-- the group and originating source is mandatory 
+        TODO: we should find more than these 2 places  
+        -->
     <xsl:template name="getOriginatingSource">
         <xsl:element name="originatingSource"
             xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -164,46 +168,56 @@
             </xsl:choose>
         </xsl:element>
     </xsl:template>
-
+<!-- 
+    Citation metadata has 4 mandatory elements
+    identifier, contributor(s) publisher and date(s)
+    don't proceed unless the json-ld has all 4
+    -->
     <xsl:template name="addCitationMetadata">
-        <xsl:if test="creator and (identifier or id or  url) and publisher and (datePublished or dateCreated)">
-            <xsl:element name="citationInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:element name="citationMetadata">
-                    <xsl:choose>
-                        <xsl:when test="identifier">
-                            <xsl:apply-templates select="identifier[1]"/>
-                        </xsl:when>
-                        <xsl:when test="id">
-                            <xsl:apply-templates select="id[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:apply-templates select="url" mode="identifier"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="name">
-                            <xsl:apply-templates select="name[1]"/>
-                        </xsl:when>
-                        <xsl:when test="title">
-                            <xsl:apply-templates select="title[1]"/>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:apply-templates select="publisher" mode="CitationMetadata"/>
-                    <xsl:apply-templates select="locationCreated | version | url" mode="CitationMetadata"/>
-                    <xsl:apply-templates select="datePublished | dateCreated" mode="CitationMetadata"/>
-                    <xsl:for-each select="creator">
-                        <xsl:element name="contributor">
-                            <xsl:attribute name="seq">
-                                <xsl:value-of select="position()"/>
-                            </xsl:attribute>
-                            <xsl:element name="namePart">
-                                <xsl:apply-templates select="name/text()"/>
+        <xsl:choose>  
+            <xsl:when test="creator and (identifier or id or  url) and publisher and (datePublished or dateCreated)">
+                <xsl:element name="citationInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                    <xsl:element name="citationMetadata">
+                        <xsl:choose>
+                            <xsl:when test="identifier">
+                                <xsl:apply-templates select="identifier[1]"/>
+                            </xsl:when>
+                            <xsl:when test="id">
+                                <xsl:apply-templates select="id[1]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:apply-templates select="url" mode="identifier"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="name">
+                                <xsl:apply-templates select="name[1]"/>
+                            </xsl:when>
+                            <xsl:when test="title">
+                                <xsl:apply-templates select="title[1]"/>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:apply-templates select="publisher" mode="CitationMetadata"/>
+                        <xsl:apply-templates select="locationCreated | version | url" mode="CitationMetadata"/>
+                        <xsl:apply-templates select="datePublished | dateCreated" mode="CitationMetadata"/>
+                        <xsl:for-each select="creator">
+                            <xsl:element name="contributor">
+                                <xsl:attribute name="seq">
+                                    <xsl:value-of select="position()"/>
+                                </xsl:attribute>
+                                <xsl:element name="namePart">
+                                    <xsl:apply-templates select="name/text()"/>
+                                </xsl:element>
                             </xsl:element>
-                        </xsl:element>
-                    </xsl:for-each>
+                        </xsl:for-each>
+                    </xsl:element>
                 </xsl:element>
-            </xsl:element>
-        </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- if we have a citation but unable to construct citation metadata maybe use it -->
+                <xsl:apply-templates select="citation"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
 
@@ -569,7 +583,6 @@
                 <xsl:apply-templates select="mediaType | encodingFormat"/>
                 <xsl:apply-templates select="type" mode="distribution"/>
                 <xsl:apply-templates select="contentSize"/>
-
             </xsl:element>
         </xsl:if>
     </xsl:template>
