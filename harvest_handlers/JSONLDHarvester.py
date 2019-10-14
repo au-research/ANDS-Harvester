@@ -1,9 +1,8 @@
 from Harvester import *
 from bs4 import BeautifulSoup
 from crawler.SiteMapCrawler import SiteMapCrawler
-import json, numbers
+import json
 from xml.dom.minidom import Document
-import hashlib
 from utils.Request import Request as myRequest
 from rdflib import Graph
 from rdflib.plugin import register, Serializer
@@ -26,20 +25,23 @@ class JSONLDHarvester(Harvester):
             ]
       }
     """
+    # the list of urls the crawler has found
     urlLinksList = []
+    # the number of pages stored per batchfile
     batchSize = 400
-    testList = []
+    # the number of simultaneous connections
     tcp_connection_limit = 5
+    # the array to store the harvested json-lds
     jsonDict = []
+    # use to benchmark asyncio vs grequest vs request
     start_time = {}
-
+    # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.jsonDict = []
         self.data = None
-        #self.testList = []
         self.urlLinksList = []
         try:
             if self.harvestInfo['requestHandler'] :
@@ -52,7 +54,15 @@ class JSONLDHarvester(Harvester):
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
-
+    ####
+    # the harvest method
+    # the usual set of procedures
+    # except we need to get a list of pages to extract the json-ld from
+    # get all content (in batches)
+    # save all content (in batches)
+    # run crosswalk after all content is received
+    # tell the registry the harvest is completed
+    # finish harvest
     def harvest(self):
         self.stopped = False
         self.setupdirs()
@@ -86,6 +96,8 @@ class JSONLDHarvester(Harvester):
         self.postHarvestData()
         self.finishHarvest()
 
+    # use the SitemapCrawler to get all urls for a given site
+    # add all urls to the urlLinksList
     def getPageList(self):
         try:
             self.setStatus("Scanning Sitemap(s)")
@@ -99,10 +111,13 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage(str(repr(e)), "ERROR")
             self.handleExceptions(e, terminate=True)
 
+    # depending on the implementation we can use either asyncio, grequest of simple request object to crawl the pages
+    # fund that grequest was somewhat best so set it as default
     def crawlPages(self, urlList):
         self.start_time['start'] = default_timer()
 
         if self.harvestInfo['requestHandler'] == 'asyncio':
+            # the standard way to run asynchronous requests using asyncio
             asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()  # event loop
             future = asyncio.ensure_future(self.fetch_all(urlList))  # tasks to do
@@ -111,6 +126,7 @@ class JSONLDHarvester(Harvester):
             loop.run_until_complete(asyncio.sleep(0))
             loop.close()
         elif self.harvestInfo['requestHandler'] == 'grequests':
+            # the standard way of implementing grequest using a map and action items
             async_list = []
             for url in urlList:
                 action_item = grequests.get(url, headers=self.headers, timeout=5, hooks={'response': self.parse})
@@ -127,6 +143,8 @@ class JSONLDHarvester(Harvester):
         tot_elapsed = default_timer() - self.start_time['start']
         self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'] , tot_elapsed))
 
+    # grequest parse callback
+    # just get the content and call the generic content handler processContent
     def parse(self, response, **kwargs):
         self.processContent(response.text, response.url)
 
@@ -134,6 +152,7 @@ class JSONLDHarvester(Harvester):
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
 
+    # fetch all using asyncio to handle request
     async def fetch_all(self, urlList):
         tasks = []
         minute = 60
@@ -148,6 +167,8 @@ class JSONLDHarvester(Harvester):
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
 
+    # the fetch method for asyncio requests
+    # pass the response to the generic content handler: processContent
     async def fetch(self, url, session):
         minute = 60
         cTimeout = ClientTimeout(connect=minute)
@@ -160,7 +181,10 @@ class JSONLDHarvester(Harvester):
         except Exception as exc:
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
 
-
+    # the json-ld content extractor all request pass their data to this content handler
+    # it tries to find a script tag with type application/ld+json
+    # if ther's any it will attempt to parse the first json-ld string into a json object
+    # if successful it adds the json-ld into an list (to be processed once all page in the current batch is extracted or no more pages left
     def processContent(self, htmlStr, url):
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
@@ -185,7 +209,7 @@ class JSONLDHarvester(Harvester):
         #else:
         #    self.logger.logMessage("Unable to extract jsonld from page %s" % url, "DEBUG")
 
-
+    # stores a batch of json objects in a json file
     def storeJsonData(self, data, fileName):
         if self.stopped:
            return
@@ -199,7 +223,8 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-
+    # creates a graph of a bacth of json-ld objects and serialise it as RDF file
+    # not used but are considering
     def storeDataAsRDF(self, jsonld, fileName):
         outputFilePath = self.outputDir + os.sep + fileName + ".rdf"
         dataFile = open(outputFilePath, 'w')
@@ -216,6 +241,8 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
+    # serialise the json-ld objects as a set of XML elements (needed for XSLT to rif-cs)
+    # until XSLT can natively transform json
     def storeDataAsXML(self, data, fileName):
         self.__xml = Document()
         outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
@@ -242,7 +269,8 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-
+    # scan through the result contents and run an xslt transfor
+    # generic in-house xslt to convert json-ld (xml) to rifcs unless the datasource harvest config sets an other XSLT
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
@@ -266,77 +294,13 @@ class JSONLDHarvester(Harvester):
                     self.handleExceptions(e)
 
 
-    def parse_element(self, root, j):
-        if j is None:
-            return
-        if isinstance(j, dict):
-            for key in j.keys():
-                value = j[key]
-                if isinstance(value, list):
-                    for e in value:
-                        elem = self.getElement(key)
-                        self.parse_element(elem, e)
-                        root.appendChild(elem)
-                else:
-                    if key.isdigit():
-                        elem = self.__xml.createElement('item')
-                        elem.setAttribute('value', key)
-                    else:
-                        elem = self.getElement(key)
-                    self.parse_element(elem, value)
-                    root.appendChild(elem)
-        elif isinstance(j, str):
-            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
-            root.appendChild(text)
-        elif isinstance(j, numbers.Number):
-            text = self.__xml.createTextNode(str(j))
-            root.appendChild(text)
-        else:
-            raise Exception("bad type %s for %s" % (type(j), j,))
-
-
-    def getElement(self, jsonld_key):
-        qName = jsonld_key.replace(' ', '')
-        qName = qName.replace('@', '')
-        ns = qName.split("#", 2)
-        if len(ns) == 2:
-            elem = self.__xml.createElement(ns[1])
-        else:
-            elem = self.__xml.createElement(qName)
-        return elem
-
+    # only used in tests, not used in production
     def setbatchSize(self, size):
         self.batchSize = size
 
+    # only used in tests, not used in production
     def getbatchSize(self):
         return self.batchSize
-
-
-    def addItemtoTestList(self, stuff):
-        self.testList.append(stuff)
-
-    def printTestList(self):
-        print(self.testList)
-
-
-
-def asterisks(num):
-    """Returns a string of asterisks reflecting the magnitude of a number."""
-    return int(num*10)*'*'
-
-def getFileName(data):
-    id = "NOTHING"
-    try:
-        id = data['url']
-    except KeyError:
-        try:
-            id = data['@id']
-        except KeyError:
-            id = datetime.now().strftime("%Y-%m-%d")
-    h = hashlib.md5()
-    h.update(id.encode())
-
-    return h.hexdigest()
 
 #https://stackoverflow.com/questions/752308/split-list-into-smaller-lists-split-in-half
 

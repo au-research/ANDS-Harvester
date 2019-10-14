@@ -567,6 +567,7 @@ class Harvester():
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
 
+    # the simplest json to XML parser
     def parse_element(self, root, j):
         if j is None:
             return
@@ -575,9 +576,7 @@ class Harvester():
                 value = j[key]
                 if isinstance(value, list):
                     for e in value:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
+                        elem = self.getElement(key)
                         self.parse_element(elem, e)
                         root.appendChild(elem)
                 else:
@@ -585,9 +584,7 @@ class Harvester():
                         elem = self.__xml.createElement('item')
                         elem.setAttribute('value', key)
                     else:
-                        keyFormatted = key.replace(' ', '')
-                        keyFormatted = keyFormatted.replace('@', '')
-                        elem = self.__xml.createElement(keyFormatted)
+                        elem = self.getElement(key)
                     self.parse_element(elem, value)
                     root.appendChild(elem)
         elif isinstance(j, str):
@@ -598,3 +595,14 @@ class Harvester():
             root.appendChild(text)
         else:
             raise Exception("bad type %s for %s" % (type(j), j,))
+
+
+    def getElement(self, jsonld_key):
+        qName = jsonld_key.replace(' ', '')
+        qName = qName.replace('@', '')
+        ns = qName.split("#", 2)
+        if len(ns) == 2:
+            elem = self.__xml.createElement(ns[1])
+        else:
+            elem = self.__xml.createElement(qName)
+        return elem
