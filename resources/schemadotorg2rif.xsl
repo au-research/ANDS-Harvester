@@ -20,63 +20,82 @@
 
     <xsl:template match="publisher| funder | contributor" mode="party">
         <xsl:if test="type = 'Organization' and name(parent::node()) = 'dataset'">
-            <xsl:element name="registryObject"
-                xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:attribute name="group">
-                    <xsl:apply-templates select="." mode="originatingSource"/>
-                </xsl:attribute>
-                <xsl:call-template name="getKey"/>
-                <xsl:element name="originatingSource">
-                    <xsl:apply-templates select="." mode="originatingSource"/>
-                </xsl:element>
-                <xsl:element name="party">
-                    <xsl:attribute name="type">
-                        <xsl:text>group</xsl:text>
+            <xsl:variable name="keyValue">
+                <xsl:call-template name="getKeyValue"/>
+            </xsl:variable>
+            <xsl:if test="$keyValue != ''">
+                <xsl:element name="registryObject"
+                    xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                    <xsl:attribute name="group">
+                        <xsl:apply-templates select="." mode="originatingSource"/>
                     </xsl:attribute>
-                    <xsl:apply-templates select="name | legalName | title" mode="primary"/>
-                    <xsl:element name="location">
-                        <xsl:element name="address">
-                            <xsl:apply-templates select="url"/>
-                        </xsl:element>
+                    <xsl:element name="key">
+                        <xsl:value-of select="$keyValue"/>
                     </xsl:element>
-                    <xsl:apply-templates select="contactPoint"/>
-                    <xsl:apply-templates select="url" mode="identifier"/>
-                    <xsl:apply-templates select="description | logo"/>
-
+                    <xsl:element name="originatingSource">
+                        <xsl:apply-templates select="." mode="originatingSource"/>
+                    </xsl:element>
+                    <xsl:element name="party">
+                        <xsl:attribute name="type">
+                            <xsl:text>group</xsl:text>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="name | legalName | title" mode="primary"/>
+                        <xsl:element name="location">
+                            <xsl:element name="address">
+                                <xsl:apply-templates select="url"/>
+                            </xsl:element>
+                        </xsl:element>
+                        <xsl:apply-templates select="contactPoint"/>
+                        <xsl:apply-templates select="url" mode="identifier"/>
+                        <xsl:apply-templates select="description | logo"/>
+                        
+                    </xsl:element>
                 </xsl:element>
-            </xsl:element>
+            </xsl:if>         
         </xsl:if>
     </xsl:template>
 
 
     <xsl:template match="includedInDataCatalog" mode="catalog">
-        <xsl:element name="registryObject"
-            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="group">
-                <xsl:call-template name="getGroup"/>
-            </xsl:attribute>
-            <xsl:call-template name="getKey"/>
-            <xsl:call-template name="getOriginatingSource"/>
-            <xsl:element name="collection">
-                <xsl:attribute name="type">
-                    <xsl:text>catalog</xsl:text>
+        <xsl:variable name="keyValue">
+            <xsl:call-template name="getKeyValue"/>
+        </xsl:variable>
+        <xsl:if test="keyValue != ''">
+            <xsl:element name="registryObject"
+                xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="group">
+                    <xsl:call-template name="getGroup"/>
                 </xsl:attribute>
-                <xsl:apply-templates select="name" mode="primary"/>
-                <xsl:call-template name="getKeyAsIdentifier"/>
-                <xsl:apply-templates select="identifier"/>
-                <xsl:apply-templates select="name" mode="description"/>
-                <xsl:element name="location">
-                    <xsl:element name="address">
-                        <xsl:apply-templates select="url"/>
-                        <xsl:apply-templates select="distribution"/>
+                <xsl:element name="key">
+                    <xsl:value-of select="$keyValue"/>
+                </xsl:element>
+                <xsl:call-template name="getOriginatingSource"/>
+                <xsl:element name="collection">
+                    <xsl:attribute name="type">
+                        <xsl:text>catalog</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="name" mode="primary"/>
+                    <xsl:element name="identifier">
+                        <xsl:attribute name="type">
+                            <xsl:text>local</xsl:text>
+                        </xsl:attribute>
+                        <xsl:value-of select="$keyValue"/>
+                    </xsl:element>
+                    <xsl:apply-templates select="identifier"/>
+                    <xsl:apply-templates select="name" mode="description"/>
+                    <xsl:element name="location">
+                        <xsl:element name="address">
+                            <xsl:apply-templates select="url"/>
+                            <xsl:apply-templates select="distribution"/>
+                        </xsl:element>
                     </xsl:element>
                 </xsl:element>
             </xsl:element>
-        </xsl:element>
+        </xsl:if>       
     </xsl:template>
 
     <xsl:template match="dataset">
-        <xsl:if test="type = 'DataSet'or type = 'Dataset' or type = 'dataset'">
+        <xsl:if test="type = 'DataSet' or type = 'Dataset' or type = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="group">
@@ -286,26 +305,7 @@
     -->
     <xsl:template name="getKey">
         <xsl:element name="key" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:choose>
-                <xsl:when test="identifier/value">
-                    <xsl:value-of select="identifier[1]/value/text()"/>
-                </xsl:when>
-                <xsl:when test="identifier">
-                    <xsl:value-of select="identifier[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="id">
-                    <xsl:value-of select="id[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="url">
-                    <xsl:value-of select="url/text()"/>
-                </xsl:when>
-                <xsl:when test="landingPage">
-                    <xsl:value-of select="landingPage/text()"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="generate-id(.)"/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="getKeyValue"/>
         </xsl:element>
     </xsl:template>
 
@@ -326,9 +326,6 @@
             <xsl:when test="landingPage">
                 <xsl:value-of select="landingPage/text()"/>
             </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="generate-id(.)"/>
-            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -491,6 +488,12 @@
                     </xsl:attribute>
                     <xsl:apply-templates select="text()"/>
                 </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="type">
+                        <xsl:text>local</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="text()"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
     </xsl:template>
