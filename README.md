@@ -18,7 +18,8 @@ The following harvest methods are currently supported:
 * PURE (a simple dataset harvester using the PURE API)
     * Requesting pages of 100 datasets until completed.
 * JSONLD ( a sitemap crawler and jsonld content extractor )
-    * The sitemap crawler requires a sitemap file, it could be text or xml (either <sitemapindex> or <urlset>)
+    * The sitemap crawler requires a sitemap file, \
+    it could be text or xml (either \<sitemapindex> or \<urlset>)
     * Using asynchronous request (max 5)
     * Attempts to extract json-ld from all pages
     * Combines the result into batches of 400
