@@ -90,7 +90,7 @@ class test_jsonld_harvester(unittest.TestCase):
             self.readTestfile('page_10.html')
         ]
         harvestInfo = {}
-        harvestInfo['uri'] = ''
+        harvestInfo['uri'] = 'https://www.iedadata.org/path1/path2/sitemap.xml'
         harvestInfo['provider_type'] = 'JSONLD'
         harvestInfo['harvest_method'] = 'JSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -116,9 +116,9 @@ class test_jsonld_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(resultFile))
         #self.assertTrue(os.path.exists(rdfFile))
         content = self.readFile(resultFile)
-        self.assertIn('<key>98dfe019-1753-4e91-8582-ab3a21dd8d0b</key>', content)
+        self.assertIn('<key>c3a075c5-4b01-4bd5-9160-23402706678f</key>', content)
         content = self.readFile(tempFile)
-        self.assertIn('<value>98dfe019-1753-4e91-8582-ab3a21dd8d0b</value>', content)
+        self.assertIn('<value>c3a075c5-4b01-4bd5-9160-23402706678f</value>', content)
         #content = self.readFile(rdfFile)
         #self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 

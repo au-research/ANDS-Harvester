@@ -29,7 +29,7 @@
                 <xsl:element name="registryObject"
                     xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                     <xsl:attribute name="group">
-                        <xsl:apply-templates select="." mode="originatingSource"/>
+                        <xsl:apply-templates select="." mode="group"/>
                     </xsl:attribute>
                     <xsl:element name="key">
                         <xsl:value-of select="$keyValue"/>
@@ -65,9 +65,7 @@
         <xsl:if test="$keyValue != ''">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:attribute name="group">
-                    <xsl:call-template name="getGroup"/>
-                </xsl:attribute>
+                <xsl:call-template name="getGroup"/>
                 <xsl:element name="key">
                     <xsl:value-of select="$keyValue"/>
                 </xsl:element>
@@ -100,9 +98,7 @@
         <xsl:if test="type = 'DataSet' or type = 'Dataset' or type = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:attribute name="group">
-                    <xsl:call-template name="getGroup"/>
-                </xsl:attribute>
+                <xsl:call-template name="getGroup"/>
                 <xsl:call-template name="getKey"/>
                 <xsl:call-template name="getOriginatingSource"/>
                 <xsl:element name="collection">
@@ -141,7 +137,7 @@
             xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:choose>
                 <xsl:when test="sourceOrganization">
-                    <xsl:value-of select="sourceOrganization/name/text()"/>
+                    <xsl:apply-templates select="sourceOrganization" mode="originatingSource"/>
                 </xsl:when>
                 <xsl:when test="publisher">
                     <xsl:apply-templates select="publisher" mode="originatingSource"/>
@@ -157,11 +153,10 @@
     </xsl:template>
 
     <xsl:template name="getGroup">
-        <xsl:element name="originatingSource"
-            xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+        <xsl:attribute name="group">
             <xsl:choose>
                 <xsl:when test="sourceOrganization">
-                    <xsl:value-of select="sourceOrganization/name/text()"/>
+                    <xsl:apply-templates select="sourceOrganization" mode="group"/>
                 </xsl:when>
                 <xsl:when test="publisher">
                     <xsl:apply-templates select="publisher" mode="group"/>
@@ -173,7 +168,7 @@
                     <xsl:value-of select="$group"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:element>
+        </xsl:attribute>
     </xsl:template>
 <!--
     Citation metadata has 4 mandatory elements
@@ -271,7 +266,7 @@
     </xsl:template>
 
 
-    <xsl:template match="publisher| funder | contributor | creator" mode="originatingSource">
+    <xsl:template match="publisher| funder | contributor | creator | sourceOrganization" mode="originatingSource">
         <xsl:choose>
             <xsl:when test="url">
                 <xsl:value-of select="normalize-space(url)"/>
@@ -286,7 +281,7 @@
     </xsl:template>
 
 
-    <xsl:template match="publisher| funder | contributor | creator" mode="group">
+    <xsl:template match="publisher| funder | contributor | creator | sourceOrganization" mode="group">
         <xsl:choose>
             <xsl:when test="name">
                 <xsl:value-of select="normalize-space(name)"/>
