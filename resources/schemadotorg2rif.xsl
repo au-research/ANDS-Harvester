@@ -4,7 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
     <xsl:output indent="yes"/>
     <xsl:strip-space elements="*"/>
-    <xsl:param name="originatingSource">ARDC sitemap crawler</xsl:param>
+    <xsl:param name="originatingSource">http://</xsl:param>
+    <xsl:param name="group">ARDC sitemap crawler</xsl:param>
     <!--xsl:variable name="xsd_url" select="'/Users/leomonus/dev/ands/registry/applications/registry/registry_object/schema/registryObjects.xsd'"/-->
     <xsl:variable name="xsd_url" select="'http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd'"/>
     
@@ -145,6 +146,9 @@
                 <xsl:when test="publisher">
                     <xsl:apply-templates select="publisher" mode="originatingSource"/>
                 </xsl:when>
+                <xsl:when test="creator">
+                    <xsl:apply-templates select="creator" mode="originatingSource"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$originatingSource"/>
                 </xsl:otherwise>
@@ -160,10 +164,13 @@
                     <xsl:value-of select="sourceOrganization/name/text()"/>
                 </xsl:when>
                 <xsl:when test="publisher">
-                    <xsl:apply-templates select="publisher" mode="originatingSource"/>
+                    <xsl:apply-templates select="publisher" mode="group"/>
+                </xsl:when>
+                <xsl:when test="creator">
+                    <xsl:apply-templates select="creator" mode="group"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$originatingSource"/>
+                    <xsl:value-of select="$group"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
@@ -264,7 +271,22 @@
     </xsl:template>
     
 
-    <xsl:template match="publisher| funder | contributor" mode="originatingSource">
+    <xsl:template match="publisher| funder | contributor | creator" mode="originatingSource">
+        <xsl:choose>
+            <xsl:when test="url">
+                <xsl:value-of select="normalize-space(url)"/>
+            </xsl:when>
+            <xsl:when test="name">
+                <xsl:value-of select="normalize-space(name)"/>
+            </xsl:when>
+            <xsl:when test="legalName">
+                <xsl:value-of select="normalize-space(legalName)"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+
+    <xsl:template match="publisher| funder | contributor | creator" mode="group">
         <xsl:choose>
             <xsl:when test="name">
                 <xsl:value-of select="normalize-space(name)"/>

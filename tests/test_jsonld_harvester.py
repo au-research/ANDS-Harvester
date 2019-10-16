@@ -52,6 +52,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['requestHandler'] = "basic"
+        harvestInfo['title'] = "The Oak Ridge National Laboratory Distributed Active Archive Center"
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         #t.start()
@@ -101,6 +102,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['requestHandler'] = "basic"
+        harvestInfo['title'] = "The Datasource Title"
         # harvestReq = JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
@@ -114,9 +116,9 @@ class test_jsonld_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(resultFile))
         #self.assertTrue(os.path.exists(rdfFile))
         content = self.readFile(resultFile)
-        self.assertIn('<key>https://demo.ands.org.au/mineral-occurrence-portrayal-australia-10/817266</key>', content)
+        self.assertIn('<key>98dfe019-1753-4e91-8582-ab3a21dd8d0b</key>', content)
         content = self.readFile(tempFile)
-        self.assertIn('<name>EarthResourceML mining feature occurrences of Northern Territory of Australia</name>', content)
+        self.assertIn('<value>98dfe019-1753-4e91-8582-ab3a21dd8d0b</value>', content)
         #content = self.readFile(rdfFile)
         #self.assertIn('<rdf:Description rdf:about="doi:10.1594/IEDA/111278">', content)
 
@@ -138,6 +140,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['requestHandler'] = "grequests"
+        harvestInfo['title'] = "The Datasource Title"
         # basic or asyncio
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -161,6 +164,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo_1['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo_1['mode'] = "TEST"
         harvestInfo_1['requestHandler'] = "grequests"
+        harvestInfo_1['title'] = "The Datasource Title"
 
         batch_id_2 = "JSONLD_T2"
         ds_id_2 = 9
@@ -177,6 +181,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo_2['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo_2['mode'] = "TEST"
         harvestInfo_2['requestHandler'] = "grequests"
+        harvestInfo_2['title'] = "The Datasource Title"
         # basic or asyncio
         harvestReq_1 = JSONLDHarvester(harvestInfo_1)
         t_1 = threading.Thread(name="one", target=harvestReq_1.harvest)
@@ -235,6 +240,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo['mode'] = "TEST"
         harvestInfo['requestHandler'] = "grequests"
+        harvestInfo['title'] = "The Datasource Title"
         # basic or asyncio
         #harvestReq = JSONLDHarvester(harvestInfo)
         #t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -247,6 +253,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo = {}
         harvestInfo['mode'] = "TEST"
         harvestInfo['xsl_file'] = ""
+        harvestInfo['title'] = "The Datasource Title"
         harvester_1 = JSONLDHarvester(harvestInfo)
         harvester_2 = JSONLDHarvester(harvestInfo)
 

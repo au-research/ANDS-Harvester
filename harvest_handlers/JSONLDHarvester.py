@@ -12,7 +12,7 @@ from aiohttp import ClientSession, TCPConnector, ClientTimeout, DummyCookieJar, 
 from timeit import default_timer
 import ast
 import grequests
-
+import urllib.parse as urlparse
 class JSONLDHarvester(Harvester):
     """
        {
@@ -282,7 +282,11 @@ class JSONLDHarvester(Harvester):
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
                 inFile = self.outputDir + os.sep + file
                 try:
-                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
+                    parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile,
+                                         'inFile': inFile, 'originatingSource':"%s://%s" % (parsed_url.scheme, parsed_url.netloc),
+                                         'group': self.harvestInfo['title']}
+
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
                 except subprocess.CalledProcessError as e:
