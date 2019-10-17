@@ -13,7 +13,7 @@
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects {$xsd_url}">
-            <xsl:apply-templates select="//dataset"/>
+            <xsl:apply-templates select="//dataset | datasets"/>
             <xsl:apply-templates select="//includedInDataCatalog" mode="catalog"/>
             <xsl:apply-templates select="//publisher | //funder | //contributor" mode="party"/>
         </registryObjects>
@@ -98,7 +98,7 @@
         </xsl:if>       
     </xsl:template>
 
-    <xsl:template match="dataset">
+    <xsl:template match="dataset | datasets">
         <xsl:if test="type = 'DataSet' or type = 'Dataset' or type = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -139,15 +139,22 @@
     <xsl:template name="getOriginatingSource">
         <xsl:element name="originatingSource"
             xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:variable name="valueFound">
+                <xsl:choose>
+                    <xsl:when test="sourceOrganization">
+                        <xsl:apply-templates select="sourceOrganization" mode="originatingSource"/>
+                    </xsl:when>
+                    <xsl:when test="publisher">
+                        <xsl:apply-templates select="publisher" mode="originatingSource"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$originatingSource"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
-                <xsl:when test="sourceOrganization">
-                    <xsl:apply-templates select="sourceOrganization" mode="originatingSource"/>
-                </xsl:when>
-                <xsl:when test="publisher">
-                    <xsl:apply-templates select="publisher" mode="originatingSource"/>
-                </xsl:when>
-                <xsl:when test="creator">
-                    <xsl:apply-templates select="creator" mode="originatingSource"/>
+                <xsl:when test="$valueFound != ''">
+                    <xsl:value-of select="$valueFound"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$originatingSource"/>
@@ -158,15 +165,19 @@
 
     <xsl:template name="getGroup">
         <xsl:attribute name="group">
+            <xsl:variable name="valueFound">
+                <xsl:choose>
+                    <xsl:when test="sourceOrganization">
+                        <xsl:apply-templates select="sourceOrganization" mode="group"/>
+                    </xsl:when>
+                    <xsl:when test="publisher">
+                        <xsl:apply-templates select="publisher" mode="group"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
-                <xsl:when test="sourceOrganization">
-                    <xsl:apply-templates select="sourceOrganization" mode="group"/>
-                </xsl:when>
-                <xsl:when test="publisher">
-                    <xsl:apply-templates select="publisher" mode="group"/>
-                </xsl:when>
-                <xsl:when test="creator">
-                    <xsl:apply-templates select="creator" mode="group"/>
+                <xsl:when test="$valueFound != ''">
+                    <xsl:value-of select="$valueFound"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$group"/>
@@ -270,7 +281,7 @@
     </xsl:template>
     
 
-    <xsl:template match="publisher| funder | contributor | creator | sourceOrganization" mode="originatingSource">
+    <xsl:template match="publisher | sourceOrganization" mode="originatingSource">
         <xsl:choose>
             <xsl:when test="url">
                 <xsl:value-of select="normalize-space(url)"/>
@@ -280,12 +291,15 @@
             </xsl:when>
             <xsl:when test="legalName">
                 <xsl:value-of select="normalize-space(legalName)"/>
+            </xsl:when>
+            <xsl:when test="normalize-space(.)">
+                <xsl:apply-templates select="text()"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
 
 
-    <xsl:template match="publisher| funder | contributor | creator | sourceOrganization" mode="group">
+    <xsl:template match="publisher|  sourceOrganization" mode="group">
         <xsl:choose>
             <xsl:when test="name">
                 <xsl:value-of select="normalize-space(name)"/>
@@ -295,6 +309,9 @@
             </xsl:when>
             <xsl:when test="url">
                 <xsl:value-of select="normalize-space(url)"/>
+            </xsl:when>
+            <xsl:when test="normalize-space(.)">
+                <xsl:apply-templates select="text()"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -750,8 +767,7 @@
                 <xsl:value-of select="concat(longitude/text(), ',' , latitude/text())"/>
             </xsl:when>
             <xsl:when test="type = 'GeoShape'">
-                <xsl:apply-templates select="box"/>
-                <xsl:apply-templates select="line"/>
+                <xsl:apply-templates select="box | polygon | line"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -778,7 +794,7 @@
         <xsl:value-of select="concat('westlimit=',$coords[1], '; southlimit=', $coords[2], '; eastlimit=', $coords[3], '; northlimit=', $coords[4],'; projection=WGS84')"/>
     </xsl:template>
 
-    <xsl:template match="line">
+    <xsl:template match="line | polygon">
         <xsl:attribute name="type">
             <xsl:text>kmlPolyCoords</xsl:text>
         </xsl:attribute>
