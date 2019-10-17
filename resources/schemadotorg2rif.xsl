@@ -117,12 +117,14 @@
                     <xsl:apply-templates
                         select="keywords| description | license | publishingPrinciples"/>
                     <xsl:call-template name="addCitationMetadata"/>
-                    <xsl:element name="location">
-                        <xsl:element name="address">
-                            <xsl:apply-templates select="url"/>
-                            <xsl:apply-templates select="distribution"/>
+                    <xsl:if test="url | distribution">
+                        <xsl:element name="location">
+                            <xsl:element name="address">
+                                <xsl:apply-templates select="url"/>
+                                <xsl:apply-templates select="distribution"/>
+                            </xsl:element>
                         </xsl:element>
-                    </xsl:element>
+                    </xsl:if>
                     <xsl:apply-templates select="isPartOf"/>
                     <xsl:apply-templates select="publisher | funder | contributor"
                         mode="relatedInfo"/>
@@ -683,41 +685,46 @@
     </xsl:template>
 
 
-    <xsl:template match="publisher | funder | contributor | includedInDataCatalog"
-        mode="relatedInfo">
-        <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="type">
-                <xsl:choose>
-                    <xsl:when test="name() = 'includedInDataCatalog'">
-                        <xsl:text>collection</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>party</xsl:text>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:element name="relation">
+    <xsl:template match="publisher | funder | contributor | includedInDataCatalog" mode="relatedInfo">
+        <xsl:variable name="keyValue">
+            <xsl:call-template name="getKeyValue"/>
+        </xsl:variable>
+        <!-- don't create relatedInfo if we can't add an identifier  -->
+        <xsl:if test="$keyValue != ''">
+            <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="type">
                     <xsl:choose>
-                        <xsl:when test="name() = 'publisher'">
-                            <xsl:text>publishedBy</xsl:text>
-                        </xsl:when>
-                        <xsl:when test="name() = 'funder'">
-                            <xsl:text>fundedBy</xsl:text>
-                        </xsl:when>
-                        <xsl:when test="name() = 'contributor'">
-                            <xsl:text>hasAssociationWith</xsl:text>
-                        </xsl:when>
                         <xsl:when test="name() = 'includedInDataCatalog'">
-                            <xsl:text>isPartOf</xsl:text>
+                            <xsl:text>collection</xsl:text>
                         </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>party</xsl:text>
+                        </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
+                <xsl:element name="relation">
+                    <xsl:attribute name="type">
+                        <xsl:choose>
+                            <xsl:when test="name() = 'publisher'">
+                                <xsl:text>publishedBy</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="name() = 'funder'">
+                                <xsl:text>fundedBy</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="name() = 'contributor'">
+                                <xsl:text>hasAssociationWith</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="name() = 'includedInDataCatalog'">
+                                <xsl:text>isPartOf</xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </xsl:element>
+                <xsl:apply-templates select="name"/>
+                <xsl:apply-templates select="id"/>
+                <xsl:apply-templates select="url" mode="identifier"/>
             </xsl:element>
-            <xsl:apply-templates select="name"/>
-            <xsl:apply-templates select="id"/>
-            <xsl:apply-templates select="url" mode="identifier"/>
-        </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="name | title">
