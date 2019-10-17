@@ -198,6 +198,8 @@ class JSONLDHarvester(Harvester):
                 data = {}
                 try:
                     data = json.loads(jsonld, strict=False)
+                    if not 'url' in data:
+                        data['url'] = url
                 except Exception as e:
                     data = ast.literal_eval(jsonld)
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
