@@ -4,8 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
     <xsl:output indent="yes"/>
     <xsl:strip-space elements="*"/>
-    <xsl:param name="originatingSource">http://</xsl:param>
-    <xsl:param name="group">ARDC sitemap crawler</xsl:param>
+    <xsl:param name="originatingSource" select="'https://researchdata.ardc.edu.au'"/>
+    <xsl:param name="group" select="'ARDC Sitemap Crawler'"/>
     <!--xsl:variable name="xsd_url" select="'/Users/leomonus/dev/ands/registry/applications/registry/registry_object/schema/registryObjects.xsd'"/-->
     <xsl:variable name="xsd_url" select="'http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd'"/>
     
@@ -29,13 +29,13 @@
                 <xsl:element name="registryObject"
                     xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                     <xsl:attribute name="group">
-                        <xsl:apply-templates select="." mode="group"/>
+                        <xsl:value-of select="$group"/>
                     </xsl:attribute>
                     <xsl:element name="key">
                         <xsl:value-of select="$keyValue"/>
                     </xsl:element>
                     <xsl:element name="originatingSource">
-                        <xsl:apply-templates select="." mode="originatingSource"/>
+                        <xsl:value-of select="$originatingSource"/>
                     </xsl:element>
                     <xsl:element name="party">
                         <xsl:attribute name="type">
@@ -65,11 +65,15 @@
         <xsl:if test="$keyValue != ''">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:call-template name="getGroup"/>         
+                <xsl:attribute name="group">
+                    <xsl:value-of select="$group"/>
+                </xsl:attribute>
                 <xsl:element name="key">
                     <xsl:value-of select="$keyValue"/>
                 </xsl:element>
-                <xsl:call-template name="getOriginatingSource"/>
+                <xsl:element name="originatingSource">
+                    <xsl:value-of select="$originatingSource"/>
+                </xsl:element>
                 <xsl:element name="collection">
                     <xsl:attribute name="type">
                         <xsl:text>catalog</xsl:text>
