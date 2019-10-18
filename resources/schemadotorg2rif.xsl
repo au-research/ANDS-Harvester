@@ -102,7 +102,9 @@
         <xsl:if test="type = 'DataSet' or type = 'Dataset' or type = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-                <xsl:call-template name="getGroup"/>
+                <xsl:attribute name="group">
+                    <xsl:value-of select="$group"/>
+                </xsl:attribute>
                 <xsl:call-template name="getKey"/>
                 <xsl:call-template name="getOriginatingSource"/>
                 <xsl:element name="collection">
@@ -458,7 +460,8 @@
     <xsl:template match="logo">
         <xsl:element name="description" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">logo</xsl:attribute>
-            <xsl:apply-templates/>
+            <xsl:apply-templates select="text()"/>
+            <xsl:apply-templates select="url/text()"/>
         </xsl:element>
     </xsl:template>
 
@@ -616,8 +619,20 @@
                 <xsl:attribute name="target">
                     <xsl:text>directDownload</xsl:text>
                 </xsl:attribute>
-                <xsl:apply-templates select="downloadURL | accessURL | contentUrl"/>
-                <xsl:apply-templates select="url" mode="distribution"/>
+                <xsl:choose>
+                    <xsl:when test="downloadURL">
+                        <xsl:apply-templates select="downloadURL"/>
+                    </xsl:when>
+                    <xsl:when test="accessURL">
+                        <xsl:apply-templates select="accessURL"/>
+                    </xsl:when>
+                    <xsl:when test="contentUrl">
+                        <xsl:apply-templates select="contentUrl"/>
+                    </xsl:when>
+                    <xsl:when test="url">
+                        <xsl:apply-templates select="url" mode="distribution"/>    
+                    </xsl:when>
+                </xsl:choose>
                 <xsl:apply-templates select="name"/>
                 <xsl:apply-templates select="description"/>
                 <xsl:apply-templates select="mediaType | encodingFormat"/>
@@ -754,8 +769,18 @@
     <xsl:template match="spatialCoverage">
         <xsl:element name="coverage" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:element name="spatial">
-                <xsl:apply-templates select="geo"/>
-                <xsl:apply-templates select="name" mode="spatial"/>
+                <xsl:choose>
+                    <xsl:when test="geo or name">
+                        <xsl:apply-templates select="geo"/>
+                        <xsl:apply-templates select="name" mode="spatial"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="type">
+                            <xsl:text>text</xsl:text>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="text()"/>    
+                    </xsl:otherwise>           
+                </xsl:choose>
             </xsl:element>
         </xsl:element>
     </xsl:template>
