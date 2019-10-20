@@ -12,11 +12,20 @@
     
     -->
     <xsl:template match="box">
-        <xsl:attribute name="type">
-            <xsl:text>iso19139dcmiBox</xsl:text>
-        </xsl:attribute>
         <xsl:variable name="coords" select="tokenize(text(),'\s?[, ]\s?')" as="xs:string*"/>
-        <xsl:value-of select="concat('southlimit=',$coords[1], '; westlimit=', $coords[2], '; northlimit=', $coords[3], '; eastlimit=', $coords[4],'; projection=WGS84')"/>
+        <xsl:element name="spatial" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:choose>
+                    <xsl:when test="not(abs(number($coords[2])) &gt; 180) and not(abs(number($coords[4])) &gt; 180) and not(abs(number($coords[1])) &gt; 90) and not(abs(number($coords[3])) &gt; 90)">
+                        <xsl:text>iso19139dcmiBox</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>text</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:value-of select="concat('southlimit=',$coords[1], '; westlimit=', $coords[2], '; northlimit=', $coords[3], '; eastlimit=', $coords[4],'; projection=WGS84')"/>
+        </xsl:element>
     </xsl:template>
     
 </xsl:stylesheet>

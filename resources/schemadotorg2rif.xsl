@@ -112,12 +112,13 @@
                         <xsl:text>dataset</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="name" mode="primary"/>
+                    <xsl:apply-templates select="alternateName"/>
                     <xsl:call-template name="getKeyAsIdentifier"/>
                     <xsl:apply-templates select="identifier | id"/>
                     <xsl:apply-templates select="title" mode="primary"/>
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
                     <xsl:apply-templates
-                        select="keywords| description | license | publishingPrinciples"/>
+                        select="keywords| description | license | publishingPrinciples | isAccessibleForFree"/>
                     <xsl:call-template name="addCitationMetadata"/>
                     <xsl:if test="url | distribution">
                         <xsl:element name="location">
@@ -474,7 +475,7 @@
     </xsl:template>
 
 
-    <xsl:template match="license | publishingPrinciples">
+    <xsl:template match="license">
         <xsl:element name="rights" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:choose>
                 <xsl:when test="starts-with(text(), 'http')">
@@ -492,6 +493,43 @@
             </xsl:choose>
         </xsl:element>
     </xsl:template>
+    
+    <xsl:template match="publishingPrinciples">
+        <xsl:element name="rights" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:choose>
+                <xsl:when test="url">
+                    <xsl:element name="rightsStatement">
+                        <xsl:attribute name="rightsUri">
+                            <xsl:apply-templates select="url/text()"/>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="name/text()"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:element name="rightsStatement">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+    </xsl:template>
+    
+    <!-- accessRights ‘Accessible for free’ -->
+    
+    
+    <xsl:template match="isAccessibleForFree">
+        <xsl:variable name="value" select="translate(normalize-space(.), 'true', 'TRUE')"/>
+        <xsl:choose>
+            <xsl:when test="$value = 'TRUE'">
+                <xsl:element name="rights" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                    <xsl:element name="accessRights">
+                        <xsl:text>Accessible for free</xsl:text>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
 
     <xsl:template match="landinPage">
         <xsl:element name="electronic" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -685,6 +723,19 @@
     </xsl:template>
 
 
+    <xsl:template match="alternateName">
+        <xsl:element name="name" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>alternative</xsl:text>
+            </xsl:attribute>
+            <xsl:element name="namePart" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:apply-templates select="text()"/>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
+
+
+
     <xsl:template match="isPartOf">
         <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:apply-templates select="type"/>
@@ -768,35 +819,37 @@
 
     <xsl:template match="spatialCoverage">
         <xsl:element name="coverage" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:element name="spatial">
                 <xsl:choose>
                     <xsl:when test="geo or name">
                         <xsl:apply-templates select="geo"/>
                         <xsl:apply-templates select="name" mode="spatial"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:attribute name="type">
-                            <xsl:text>text</xsl:text>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="text()"/>    
+                        <xsl:element name="spatial">
+                            <xsl:attribute name="type">
+                                <xsl:text>text</xsl:text>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="text()"/>    
+                        </xsl:element>
                     </xsl:otherwise>           
                 </xsl:choose>
-            </xsl:element>
         </xsl:element>
     </xsl:template>
 
     <xsl:template match="geo">
         <xsl:choose>
             <xsl:when test="type = 'GeoCoordinates'">
-                <xsl:attribute name="type">
-                    <xsl:choose>
-                        <xsl:when test="not(abs(number(longitude/text())) &gt; 180) and not(abs(number(latitude/text())) &gt; 180)">
-                            <xsl:text>kmlPolyCoords</xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise><xsl:text>text</xsl:text></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
-                <xsl:value-of select="concat(longitude/text(), ',' , latitude/text())"/>
+                <xsl:element name="spatial" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                    <xsl:attribute name="type">
+                        <xsl:choose>
+                            <xsl:when test="not(abs(number(longitude/text())) &gt; 180) and not(abs(number(latitude/text())) &gt; 180)">
+                                <xsl:text>kmlPolyCoords</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise><xsl:text>text</xsl:text></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:value-of select="concat(longitude/text(), ',' , latitude/text())"/>
+                </xsl:element>
             </xsl:when>
             <xsl:when test="type = 'GeoShape'">
                 <xsl:apply-templates select="box | polygon | line"/>
@@ -805,32 +858,38 @@
     </xsl:template>
 
     <xsl:template match="name" mode="spatial">
-        <xsl:attribute name="type">
-            <xsl:text>text</xsl:text>
-        </xsl:attribute>
-        <xsl:apply-templates select="text()"/>
+        <xsl:element name="spatial" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>text</xsl:text>
+            </xsl:attribute>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="box">
         <xsl:variable name="coords" select="tokenize(text(),'\s?[, ]\s?')" as="xs:string*"/>
-        <xsl:attribute name="type">
-            <xsl:choose>
-                <xsl:when test="not(abs(number($coords[1])) &gt; 180) and not(abs(number($coords[3])) &gt; 180) and not(abs(number($coords[2])) &gt; 90) and not(abs(number($coords[4])) &gt; 90)">
-                    <xsl:text>iso19139dcmiBox</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>text</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:attribute>
+        <xsl:element name="spatial" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:choose>
+                    <xsl:when test="not(abs(number($coords[1])) &gt; 180) and not(abs(number($coords[3])) &gt; 180) and not(abs(number($coords[2])) &gt; 90) and not(abs(number($coords[4])) &gt; 90)">
+                        <xsl:text>iso19139dcmiBox</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>text</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
         <xsl:value-of select="concat('westlimit=',$coords[1], '; southlimit=', $coords[2], '; eastlimit=', $coords[3], '; northlimit=', $coords[4],'; projection=WGS84')"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="line | polygon">
-        <xsl:attribute name="type">
-            <xsl:text>kmlPolyCoords</xsl:text>
-        </xsl:attribute>
-        <xsl:apply-templates select="text()"/>
+        <xsl:element name="spatial" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>kmlPolyCoords</xsl:text>
+            </xsl:attribute>
+            <xsl:apply-templates select="text()"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="text()">
