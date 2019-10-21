@@ -432,7 +432,7 @@
     </xsl:template>
 
     <xsl:template match="keywords">
-        <xsl:variable name="keywordsList" select="tokenize(text(),'\s?[,;:>|]\s?')" as="xs:string*"/>
+        <xsl:variable name="keywordsList" select="tokenize(text(),'\s?[,;:]\s?')" as="xs:string*"/>
         <xsl:for-each select="$keywordsList">
             <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="type">local</xsl:attribute>
