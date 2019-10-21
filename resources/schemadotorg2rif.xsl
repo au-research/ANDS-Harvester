@@ -269,7 +269,14 @@
 
     <xsl:template match="publisher" mode="CitationMetadata">
         <xsl:element name="publisher" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:apply-templates select="name/text()"/>
+            <xsl:choose>
+                <xsl:when test="name">
+                    <xsl:apply-templates select="name/text()"/>
+                </xsl:when>
+                <xsl:otherwise>            
+                    <xsl:value-of select="normalize-space(.)"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
 
