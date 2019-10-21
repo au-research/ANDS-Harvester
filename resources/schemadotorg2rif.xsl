@@ -42,12 +42,15 @@
                             <xsl:text>group</xsl:text>
                         </xsl:attribute>
                         <xsl:apply-templates select="name | legalName | title" mode="primary"/>
-                        <xsl:element name="location">
-                            <xsl:element name="address">
-                                <xsl:apply-templates select="url"/>
+                        <xsl:if test="url">
+                            <xsl:element name="location">
+                                <xsl:element name="address">
+                                    <xsl:apply-templates select="url"/>
+                                </xsl:element>
                             </xsl:element>
-                        </xsl:element>
+                        </xsl:if>
                         <xsl:apply-templates select="contactPoint"/>
+                        <xsl:apply-templates select="identifier | id"/>
                         <xsl:apply-templates select="url" mode="identifier"/>
                         <xsl:apply-templates select="description | logo"/>
                     </xsl:element>
@@ -85,14 +88,17 @@
                         </xsl:attribute>
                         <xsl:value-of select="$keyValue"/>
                     </xsl:element>
-                    <xsl:apply-templates select="identifier"/>
+                    <xsl:apply-templates select="identifier | id"/>
+                    <xsl:apply-templates select="url" mode="identifier"/>
                     <xsl:apply-templates select="name" mode="description"/>
-                    <xsl:element name="location">
-                        <xsl:element name="address">
-                            <xsl:apply-templates select="url"/>
-                            <xsl:apply-templates select="distribution"/>
+                    <xsl:if test="distribution | url">
+                        <xsl:element name="location">
+                            <xsl:element name="address">
+                                <xsl:apply-templates select="url"/>
+                                <xsl:apply-templates select="distribution"/>
+                            </xsl:element>
                         </xsl:element>
-                    </xsl:element>
+                    </xsl:if>          
                 </xsl:element>
             </xsl:element>
         </xsl:if>       
@@ -128,7 +134,7 @@
                             </xsl:element>
                         </xsl:element>
                     </xsl:if>
-                    <xsl:apply-templates select="isPartOf"/>
+                    <xsl:apply-templates select="isPartOf | hasPart"/>
                     <xsl:apply-templates select="publisher | funder | contributor"
                         mode="relatedInfo"/>
                     <xsl:apply-templates select="includedInDataCatalog" mode="relatedInfo"/>
@@ -735,6 +741,20 @@
     </xsl:template>
 
 
+    <xsl:template match="hasPart">
+        <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:apply-templates select="type"/>
+            <xsl:element name="relation">
+                <xsl:attribute name="type">
+                    <xsl:text>hasPart</xsl:text>
+                </xsl:attribute>
+            </xsl:element>
+            <xsl:apply-templates select="name"/>
+            <xsl:apply-templates select="id | identifier"/>
+            <xsl:apply-templates select="url" mode="identifier"/>
+        </xsl:element>
+    </xsl:template>
+
 
     <xsl:template match="isPartOf">
         <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -745,7 +765,7 @@
                 </xsl:attribute>
             </xsl:element>
             <xsl:apply-templates select="name"/>
-            <xsl:apply-templates select="id"/>
+            <xsl:apply-templates select="id | identifier"/>
             <xsl:apply-templates select="url" mode="identifier"/>
         </xsl:element>
     </xsl:template>
@@ -788,6 +808,7 @@
                 </xsl:element>
                 <xsl:apply-templates select="name"/>
                 <xsl:apply-templates select="id"/>
+                <xsl:apply-templates select="identifier"/>
                 <xsl:apply-templates select="url" mode="identifier"/>
             </xsl:element>
         </xsl:if>
