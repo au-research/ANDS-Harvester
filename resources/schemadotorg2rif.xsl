@@ -13,7 +13,7 @@
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects {$xsd_url}">
-            <xsl:apply-templates select="//dataset | datasets"/>
+            <xsl:apply-templates select="dataset | datasets"/>
             <xsl:apply-templates select="//includedInDataCatalog" mode="catalog"/>
             <xsl:apply-templates select="//publisher | //funder | //contributor" mode="party"/>
         </registryObjects>
@@ -82,12 +82,6 @@
                         <xsl:text>catalog</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="name" mode="primary"/>
-                    <xsl:element name="identifier">
-                        <xsl:attribute name="type">
-                            <xsl:text>local</xsl:text>
-                        </xsl:attribute>
-                        <xsl:value-of select="$keyValue"/>
-                    </xsl:element>
                     <xsl:apply-templates select="identifier | id"/>
                     <xsl:apply-templates select="url" mode="identifier"/>
                     <xsl:apply-templates select="name" mode="description"/>
@@ -105,7 +99,8 @@
     </xsl:template>
 
     <xsl:template match="dataset | datasets">
-        <xsl:if test="type = 'DataSet' or type = 'Dataset' or type = 'dataset'">
+        <xsl:variable name="type" select="translate(normalize-space(type), 'DATASET', 'dataset')"/>
+        <xsl:if test="$type = 'dataset'">
             <xsl:element name="registryObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:attribute name="group">
@@ -115,7 +110,7 @@
                 <xsl:call-template name="getOriginatingSource"/>
                 <xsl:element name="collection">
                     <xsl:attribute name="type">
-                        <xsl:text>dataset</xsl:text>
+                        <xsl:value-of select="$type"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="name" mode="primary"/>
                     <xsl:apply-templates select="alternateName"/>
@@ -123,8 +118,7 @@
                     <xsl:apply-templates select="identifier | id"/>
                     <xsl:apply-templates select="title" mode="primary"/>
                     <xsl:apply-templates select="datePublished | dateCreated | spatialCoverage"/>
-                    <xsl:apply-templates
-                        select="keywords| description | license | publishingPrinciples | isAccessibleForFree"/>
+                    <xsl:apply-templates select="keywords | description | license | publishingPrinciples | isAccessibleForFree"/>
                     <xsl:call-template name="addCitationMetadata"/>
                     <xsl:if test="url | distribution">
                         <xsl:element name="location">
@@ -135,13 +129,13 @@
                         </xsl:element>
                     </xsl:if>
                     <xsl:apply-templates select="isPartOf | hasPart"/>
-                    <xsl:apply-templates select="publisher | funder | contributor"
-                        mode="relatedInfo"/>
+                    <xsl:apply-templates select="publisher | funder | contributor" mode="relatedInfo"/>
                     <xsl:apply-templates select="includedInDataCatalog" mode="relatedInfo"/>
 
                 </xsl:element>
             </xsl:element>
         </xsl:if>
+        <xsl:apply-templates select="dataset"/>
     </xsl:template>
 
 <!-- the group and originating source is mandatory 
@@ -438,10 +432,13 @@
     </xsl:template>
 
     <xsl:template match="keywords">
-        <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="type">local</xsl:attribute>
-            <xsl:apply-templates select="text()"/>
-        </xsl:element>
+        <xsl:variable name="keywordsList" select="tokenize(text(),'\s?[,;:>|]\s?')" as="xs:string*"/>
+        <xsl:for-each select="$keywordsList">
+            <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">local</xsl:attribute>
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:element>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="contentSize">
