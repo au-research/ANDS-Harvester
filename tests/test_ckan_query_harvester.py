@@ -59,9 +59,9 @@ class test_ckan_query_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<value>FD60E2DF-678A-46FE-A189-121F83F30428</value>', content)
 
-    def only_during_development_test_ckan_package_list_external(self):
+    def only_during_development_test_retry_count(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://ckan.publishing.service.gov.uk/api/action/package_search?fq=(type:dataset)'
+        harvestInfo['uri'] = 'https://ckan.publis.service.govy'
         harvestInfo['provider_type'] = 'CKANQUERY'
         harvestInfo['harvest_method'] = 'CKANQUERY'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -70,7 +70,27 @@ class test_ckan_query_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = '6'
         harvestInfo['batch_number'] = "CKAN_DATA_GOV_UK"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = "resources/odapi2rif.xsl"
+        harvestInfo['xsl_file'] = "tests/resources/xslt/data.gov.au_json_to_rif-cs.xsl"
+        harvestInfo['mode'] = "TEST"
+        # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
+        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
+        # t.start()
+        harvester = CKANQUERYHarvester(harvestInfo)
+        harvester.harvest()
+
+
+    def only_during_development_test_ckan_package_list_external(self):
+        harvestInfo = {}
+        harvestInfo['uri'] = 'https://data.gov.au/api/3/action/package_search?fq=((*:*%20NOT%20harvest_source_id:*)%20AND%20(type:dataset))'
+        harvestInfo['provider_type'] = 'CKANQUERY'
+        harvestInfo['harvest_method'] = 'CKANQUERY'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = '8'
+        harvestInfo['harvest_id'] = '6'
+        harvestInfo['batch_number'] = "CKAN_DATA_GOV_UK"
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['xsl_file'] = "tests/resources/xslt/data.gov.au_json_to_rif-cs.xsl"
         harvestInfo['mode'] = "TEST"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
