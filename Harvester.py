@@ -600,6 +600,9 @@ class Harvester():
     def getElement(self, jsonld_key):
         qName = jsonld_key.replace(' ', '')
         qName = qName.replace('@', '')
+        # some ckan harvest during tests produced {"": "true"} fields
+        if qName == '':
+            qName = 'unknown'
         ns = qName.split("#", 2)
         if len(ns) == 2:
             elem = self.__xml.createElement(ns[1])
