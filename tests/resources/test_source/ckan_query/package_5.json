@@ -1,0 +1,2215 @@
+{
+    "help": "https://ckan.publishing.service.gov.uk/api/3/action/help_show?name=package_search",
+    "success": true,
+    "result": {
+        "count": 52,
+        "sort": "score desc, metadata_modified desc",
+        "facets": {},
+        "results": [
+            {
+                "license_title": "",
+                "temporal_coverage-from": ["1911-01-01"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 8,
+                "id": "bfe26526-760d-42a5-b48e-d59c356fe691",
+                "metadata_created": "2011-10-10T12:54:53.219950",
+                "metadata_modified": "2019-10-22T23:49:36.085606",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2001-12-31"],
+                "license_id": "",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Get a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://catalogue.ceh.ac.uk/datastore/eidchub/2303498e-c499-42d1-9950-1b1f763a20fa/extracted",
+                        "cache_last_updated": null,
+                        "package_id": "bfe26526-760d-42a5-b48e-d59c356fe691",
+                        "created": "2019-10-22T23:49:36.398204",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "bf407d3a-f35e-413d-84f1-6ef83d4a5663",
+                        "url_type": null,
+                        "id": "4cef121c-e55e-4691-9092-c265af11f52d",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Documents available to assist with re-use of this dataset",
+                        "name": "Documents",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/2303498e-c499-42d1-9950-1b1f763a20fa.zip",
+                        "cache_last_updated": null,
+                        "package_id": "bfe26526-760d-42a5-b48e-d59c356fe691",
+                        "created": "2019-10-22T23:49:36.398212",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "bf407d3a-f35e-413d-84f1-6ef83d4a5663",
+                        "url_type": null,
+                        "id": "e3e1608b-0a2f-4ea2-8448-65768097e8f9",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nenquiries@ceh.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "3-hourly",
+                        "id": "667dab89-b84e-4116-94d9-5ce413a5c21c",
+                        "name": "3-hourly"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Atmosphere",
+                        "id": "c30d7e01-c859-4731-b928-71bd28f8a47b",
+                        "name": "Atmosphere"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Atmospheric Conditions",
+                        "id": "76b17097-f8b0-4afb-bb4c-7136b04b8915",
+                        "name": "Atmospheric Conditions"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Hydrology",
+                        "id": "93fe4c28-ac07-4e64-82a1-8c27315da0b7",
+                        "name": "Hydrology"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Land surface modelling",
+                        "id": "f2adc716-236e-4ac5-beb1-628a995f7fbf",
+                        "name": "Land surface modelling"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Meteorological geographical features",
+                        "id": "9ba211ef-4e17-4973-bbb3-4b477923d2b4",
+                        "name": "Meteorological geographical features"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "land surface",
+                        "id": "3cabe645-b3fb-4a1f-975e-00eed897b59e",
+                        "name": "land surface"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "meteorology",
+                        "id": "2055709f-dd0e-4eba-a0c1-3a1cae080f77",
+                        "name": "meteorology"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "60e687bf-a6d8-43e2-a50e-efab84b27952",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "watch-forcing-data-wfd-20th-century-qair-specific-humidity-1901-2001",
+                "isopen": false,
+                "url": null,
+                "notes": "The WATCH Forcing data is a twentieth century meteorological forcing dataset for land surface and hydrological models. It consists of three/six-hourly states of the weather for global half-degree land grid points. It was generated as part of the EU FP 6 project \"WATCH\" (WATer and global CHange\") which ran from 2007-2011. The data was generated in 2 tranches with slightly different methodology: 1901-1957 and 1958-2001, but generally the dataset can be considered as continuous. More details regarding the generation process can be found in the associated WATCH technical report and paper in J. Hydrometeorology. To understand how the data grid is formed it is necessary to read the attached WFD-land-long-lat-z files either in NetCDF or DAT formats. The data covers land points only and excludes the Antarctica. Qair or 2m specific humidity (instantaneous) is the instantaneous specific humidity at 2m measured in kg/kg at 6 hourly resolution and 0.5 x 0.5 degrees spatial resolution. ",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[\"unknown\"]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "180"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "90"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "-90"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-180"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2011-08-01\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "2303498e-c499-42d1-9950-1b1f763a20fa"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"Please note that these data are based on climate reanalysis data, plus a spatial interpolation (from one-degree to half-degree), elevation correction and monthly-correction based on gridded observations. As such the WATCH Forcing data are designed for use in modelling (e.g. hydrological modelling) and for where good meteorological observations are not readily available.\", \"Please reference the use of the WATCH forcing data in any work published using http://journals.ametsoc.org/doi/pdf/10.1175/2011JHM1369.1\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:18"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": ""
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "Centre for Ecology & Hydrology (pointOfContact); Environmental Information Data Centre (custodian)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[180, -90], [-180, -90], [-180, 90], [180, 90], [180, -90]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "4326"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "962beaad-ff73-41b7-a749-555206791bb9"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "title": "WATCH forcing data (WFD) - 20th century Qair (specific humidity) 1901-2001",
+                "revision_id": "ce422ba9-55a1-43f9-9cbe-dcc8ae131b93"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["2015-06-01"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 4,
+                "id": "6af74374-f673-4f8e-b042-1b7141209bd5",
+                "metadata_created": "2017-06-20T06:34:56.914125",
+                "metadata_modified": "2019-10-22T23:49:32.644276",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2015-06-30"],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/5b400b69-b828-45e8-b04e-7ccbfdb0987f.zip",
+                        "cache_last_updated": null,
+                        "package_id": "6af74374-f673-4f8e-b042-1b7141209bd5",
+                        "created": "2019-10-22T23:49:32.863166",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "ebdfbf34-8a7a-4435-8a3e-b3d098727edc",
+                        "url_type": null,
+                        "id": "0c6d48fe-c3f5-4d09-9ad6-eb443419a756",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://data-package.ceh.ac.uk/data/5b400b69-b828-45e8-b04e-7ccbfdb0987f",
+                        "cache_last_updated": null,
+                        "package_id": "6af74374-f673-4f8e-b042-1b7141209bd5",
+                        "created": "2019-10-22T23:49:32.863172",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "ebdfbf34-8a7a-4435-8a3e-b3d098727edc",
+                        "url_type": null,
+                        "id": "964c9ab2-8337-4e33-a3f3-e1d4e2a2322f",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nenquiries@ceh.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Californian poppy",
+                        "id": "fb648e9b-7e12-442a-8706-42a84ccd27c0",
+                        "name": "Californian poppy"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Environmental Monitoring Facilities",
+                        "id": "1ab109f7-fa03-4de9-ab56-3b79cb9a14ea",
+                        "name": "Environmental Monitoring Facilities"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "pollination",
+                        "id": "ec5da2a7-77d6-40b5-a43f-eb095a190cb5",
+                        "name": "pollination"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "seed",
+                        "id": "069b4b9a-b0b6-490e-92c2-a3ffaaf88df4",
+                        "name": "seed"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "the-seed-set-of-eschscholzia-californica-plants-introduced-into-habitats-comprising-different-f",
+                "isopen": true,
+                "url": null,
+                "notes": "This dataset contains seed counts of Eschscholzia californica plants introduced to form experimental arrays within habitats comprising different floral cover. Data was collected in June 2015 at the Hillesden estate, Buckinghamshire, UK. Experimental arrays comprised of three E.californica plants separated by 1m and arranged in a triangular formation. A total of sixteen arrays were introduced across four 100 hectare replicate blocks, each separated by >500m. At the centre of each block, four experimental arrays were placed at 50m intervals along a 150m transect laid symmetrically across the boundary between an established wildflower patch and bare, fallow ground or grazed grassland (two arrays within the florally rich habitat and two arrays within the florally poor habitat). On each plant, the seed set was measured for flowers which were exposed and excluded from pollinators to determine the effects of habitat context on plant reproduction. The dataset was part of a larger experiment looking at the effect of floral resources on the pollination services to isolated plants. Full details about this dataset can be found at https://doi.org/10.5285/5b400b69-b828-45e8-b04e-7ccbfdb0987f",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "-0.965"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "51.979"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "51.936"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-1.03"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2017-06-13\"}, {\"type\": \"creation\", \"value\": \"2015-06-30\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "5b400b69-b828-45e8-b04e-7ccbfdb0987f"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 Centre for Ecology & Hydrology (Natural Environment Research Council)\", \"If you reuse this data, you should cite: Evans, T.M., Heard, M.S., Vanbergen, A.J., Cavers, S., Ennos, R. (2017). The seed set of Eschscholzia californica plants introduced into habitats comprising different floral cover. NERC Environmental Information Data Centre https://doi.org/10.5285/5b400b69-b828-45e8-b04e-7ccbfdb0987f\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:17"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "University of Edinburgh (author); Centre for Ecology & Hydrology (pointOfContact, author); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[-0.965, 51.936], [-1.03, 51.936], [-1.03, 51.979], [-0.965, 51.979], [-0.965, 51.936]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "27700"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "f01090b1-3a10-4586-8a59-7dc351c9b7da"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "The seed set of Eschscholzia californica plants introduced into habitats comprising different floral cover",
+                "revision_id": "ebdfbf34-8a7a-4435-8a3e-b3d098727edc"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["2013-05-31"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 18,
+                "id": "12a202e0-c25e-4221-8a17-9e8c1c3dca82",
+                "metadata_created": "2016-04-18T09:58:48.850345",
+                "metadata_modified": "2019-10-22T23:49:29.154448",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2015-01-26"],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://data-package.ceh.ac.uk/data/b1e2fb9c-8c34-490a-b6ae-2fdf6b460726",
+                        "cache_last_updated": null,
+                        "package_id": "12a202e0-c25e-4221-8a17-9e8c1c3dca82",
+                        "created": "2019-10-22T23:49:29.420424",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "cd97e255-4957-4f17-9eca-a6cbf90a32fd",
+                        "url_type": null,
+                        "id": "27b1be63-a8d0-4183-8fd0-dafdde146037",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/b1e2fb9c-8c34-490a-b6ae-2fdf6b460726.zip",
+                        "cache_last_updated": null,
+                        "package_id": "12a202e0-c25e-4221-8a17-9e8c1c3dca82",
+                        "created": "2019-10-22T23:49:29.420430",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "cd97e255-4957-4f17-9eca-a6cbf90a32fd",
+                        "url_type": null,
+                        "id": "9bdfa96e-8b1c-48c4-85ca-d3fffcc80634",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nt.c.hill@exeter.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "BESS",
+                        "id": "2b8119be-054e-46c9-821d-7773bbc6b4c4",
+                        "name": "BESS"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "CBESS",
+                        "id": "b7f9e276-de76-4c19-811c-aea25cdbaf95",
+                        "name": "CBESS"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Meteorological geographical features",
+                        "id": "9ba211ef-4e17-4973-bbb3-4b477923d2b4",
+                        "name": "Meteorological geographical features"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "PAR",
+                        "id": "ef9e668e-c75d-4f98-a141-660f7da7232c",
+                        "name": "PAR"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "VPD",
+                        "id": "d0965a17-cbbd-4cd4-bfab-b3510994c11f",
+                        "name": "VPD"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "air",
+                        "id": "17ec8eed-aeb1-4159-a40f-76ed08695d03",
+                        "name": "air"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "humidity",
+                        "id": "1bb0241c-8315-4398-b7a9-2fa08d1d6d39",
+                        "name": "humidity"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "net radiation",
+                        "id": "4a17a2c8-cfcc-4fad-8403-7a7542e024f2",
+                        "name": "net radiation"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "photosynthetically active radiation",
+                        "id": "8ceca29f-cc97-4f37-a817-b376af3ce6ba",
+                        "name": "photosynthetically active radiation"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "precipitation",
+                        "id": "567a6440-94ec-4ce9-9a50-ef59e207676e",
+                        "name": "precipitation"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "radiation",
+                        "id": "306bec7e-4d33-474d-958c-2edf215b88c8",
+                        "name": "radiation"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "relative humidity",
+                        "id": "a7814711-6e3f-4c84-b16c-77cec5c826e1",
+                        "name": "relative humidity"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "saltmarsh",
+                        "id": "68b55b2c-1c26-42e9-9f3f-af64a17ca06f",
+                        "name": "saltmarsh"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "soil",
+                        "id": "c213e1fe-84ec-4c8b-8a4d-a9c0eba11896",
+                        "name": "soil"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "temperature",
+                        "id": "cc98d906-8d6f-49f2-bce5-457150b45c9d",
+                        "name": "temperature"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "vapour pressure deficit",
+                        "id": "bd534659-58dd-40fd-b3ff-2129444c2dc9",
+                        "name": "vapour pressure deficit"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "wind direction",
+                        "id": "2a915c95-3d27-4cdd-9add-60d263417288",
+                        "name": "wind direction"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "wind speed",
+                        "id": "640153d9-e4f8-4777-b8cf-6d660f13e697",
+                        "name": "wind speed"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "coastal-biodiversity-and-ecosystem-service-sustainability-cbess-meteorological-data-from-cartme",
+                "isopen": true,
+                "url": null,
+                "notes": "The meteorological data describes the air and soil temperatures, net radiation balance, down-welling photosynthetically active radiation, wind speed, wind direction and the vapour pressure deficit.\nData collection was carried out at Cartmel Sands marsh from the 31st of May 2013 till the 26th of January 2015. The Cartmel Sands site is in Morecambe, North West England, and the meteorological tower was situated in the middle of the marsh.\nThis data was collected as part of Coastal Biodiversity and Ecosystem Service Sustainability (CBESS): NE/J015644/1. The project was funded with support from the Biodiversity and Ecosystem Service Sustainability (BESS) programme. BESS is a six-year programme (2011-2017) funded by the UK Natural Environment Research Council (NERC) and the Biotechnology and Biological Sciences Research Council (BBSRC) as part of the UK's Living with Environmental Change (LWEC) programme.\nFull details about this dataset can be found at https://doi.org/10.5285/b1e2fb9c-8c34-490a-b6ae-2fdf6b460726",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "-2.898"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "54.219"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "54.126"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-3.048"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2016-02-29\"}, {\"type\": \"creation\", \"value\": \"2015-01-26\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "b1e2fb9c-8c34-490a-b6ae-2fdf6b460726"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 University of Exeter\", \"If you reuse this data, you should cite: Hill, T.C., Chocholek, M. (2016). Coastal Biodiversity and Ecosystem Service Sustainability (CBESS) meteorological data from Cartmel Sands, Morecambe. NERC Environmental Information Data Centre https://doi.org/10.5285/b1e2fb9c-8c34-490a-b6ae-2fdf6b460726\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:15"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "University of Exeter (pointOfContact, author); University of St Andrews (author); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[-2.898, 54.126], [-3.048, 54.126], [-3.048, 54.219], [-2.898, 54.219], [-2.898, 54.126]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "27700"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "65e60c87-b4f9-4eeb-ad52-de474dbaf47b"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "Coastal Biodiversity and Ecosystem Service Sustainability (CBESS) meteorological data from Cartmel Sands, Morecambe",
+                "revision_id": "cd97e255-4957-4f17-9eca-a6cbf90a32fd"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["1789-01-01"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 6,
+                "id": "aa1e16e8-eded-4a60-8d1d-0df920c319b6",
+                "metadata_created": "2018-07-24T16:57:51.802523",
+                "metadata_modified": "2019-10-22T23:49:25.985724",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2001-12-31"],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/f5a7d56c-cea0-4f00-b159-c3788a3b2b38.zip",
+                        "cache_last_updated": null,
+                        "package_id": "aa1e16e8-eded-4a60-8d1d-0df920c319b6",
+                        "created": "2019-10-22T23:49:26.219667",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "6ac9144d-ef72-4abb-b31f-4ba696158a86",
+                        "url_type": null,
+                        "id": "9653d4b7-2ddb-47d4-9f67-32aaaa67abf5",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "CSV",
+                        "url": "https://catalogue.ceh.ac.uk/datastore/eidchub/f5a7d56c-cea0-4f00-b159-c3788a3b2b38/HD_Inventory_of_UK_reservoirs_datafile.csv",
+                        "cache_last_updated": null,
+                        "package_id": "aa1e16e8-eded-4a60-8d1d-0df920c319b6",
+                        "created": "2019-10-22T23:49:26.219675",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "6ac9144d-ef72-4abb-b31f-4ba696158a86",
+                        "url_type": null,
+                        "id": "028e5ed3-4a91-4971-a780-ff843ccd4482",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nm.durant@hrwallingford.com\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Drought Catalogue",
+                        "id": "f538ee10-515b-4034-94de-441a26749bc7",
+                        "name": "Drought Catalogue"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Drought Inventory",
+                        "id": "fca600b0-163d-4ee6-ac1d-eee6330ba6a9",
+                        "name": "Drought Inventory"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Droughts",
+                        "id": "4b09f5dd-ef61-4eef-9ad0-4f3e24682c05",
+                        "name": "Droughts"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Historic Droughts",
+                        "id": "6c834dfe-1204-4eb9-a7b0-6886adb4fd93",
+                        "name": "Historic Droughts"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Hydrography",
+                        "id": "a0e3af6e-dcf6-491b-8f22-867c0d62add6",
+                        "name": "Hydrography"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Reservoir ",
+                        "id": "15f07582-b6ca-4ec1-9de5-dffe22a7804f",
+                        "name": "Reservoir "
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "inventory-of-reservoirs-amounting-to-90-of-total-uk-storage",
+                "isopen": true,
+                "url": null,
+                "notes": "This dataset is an inventory of reservoir details for the UK. It provides information, including reservoir location, type (impounding or non-impounding), use (water resources, hydro-electric, ecological, flood storage, canal), capacity, planning date, construction date, catchment National River Flow Archive (NRFA) gauge references and membership of a reservoir group, based on current usage within the CEH Monthly Hydrological Summary (https://nrfa.ceh.ac.uk/monthly-hydrological-summary-uk). The dataset comprises 273 individual reservoirs, which amount to approximately 90% of total UK reservoir storage. Data quality has been recorded, using a data flag system and a notes section, with references relevant to each reservoir provided. Full details about this dataset can be found at https://doi.org/10.5285/f5a7d56c-cea0-4f00-b159-c3788a3b2b38",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "1.768"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "60.861"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "49.864"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-8.648"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2018-07-20\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "f5a7d56c-cea0-4f00-b159-c3788a3b2b38"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"If you reuse this data, you should cite: Durant, M.J., Counsell, C.J. (2018). Inventory of reservoirs amounting to 90% of total UK storage. NERC Environmental Information Data Centre https://doi.org/10.5285/f5a7d56c-cea0-4f00-b159-c3788a3b2b38\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:14"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "NERC Environmental Information Data Centre (publisher); Environmental Information Data Centre (custodian); HR Wallingford Ltd (pointOfContact, author)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[1.768, 49.864], [-8.648, 49.864], [-8.648, 60.861], [1.768, 60.861], [1.768, 49.864]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "27700"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "c90ddf61-2aed-4378-9f8a-34e6774d5d01"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "Inventory of reservoirs amounting to 90% of total UK storage",
+                "revision_id": "6ac9144d-ef72-4abb-b31f-4ba696158a86"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["2013-01-01"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 11,
+                "id": "7e7d528f-6c06-4f68-aecc-aec382244f1e",
+                "metadata_created": "2017-02-02T13:12:01.087300",
+                "metadata_modified": "2019-10-22T23:49:22.742957",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2013-12-31"],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://data-package.ceh.ac.uk/data/b8e9c03e-4b71-4e3b-9110-820b7bc0bac7",
+                        "cache_last_updated": null,
+                        "package_id": "7e7d528f-6c06-4f68-aecc-aec382244f1e",
+                        "created": "2019-10-22T23:49:22.972522",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "632a0bda-4acd-4c28-b58b-388d5abb8fb7",
+                        "url_type": null,
+                        "id": "bfa3dd3f-8c87-4ed0-92ee-77b59951c334",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/b8e9c03e-4b71-4e3b-9110-820b7bc0bac7.zip",
+                        "cache_last_updated": null,
+                        "package_id": "7e7d528f-6c06-4f68-aecc-aec382244f1e",
+                        "created": "2019-10-22T23:49:22.972528",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "632a0bda-4acd-4c28-b58b-388d5abb8fb7",
+                        "url_type": null,
+                        "id": "dc4d89d9-f1f2-4d1f-a313-687636940446",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nellen.fry@manchester.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Environmental Monitoring Facilities",
+                        "id": "1ab109f7-fa03-4de9-ab56-3b79cb9a14ea",
+                        "name": "Environmental Monitoring Facilities"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Wessex BESS",
+                        "id": "6a6b6d41-6167-486f-b5e4-5c72d518aad6",
+                        "name": "Wessex BESS"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "ammonium",
+                        "id": "db43d5a8-4456-48d8-a791-496ecf733774",
+                        "name": "ammonium"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "bulk density",
+                        "id": "950ec335-6bea-498e-a923-647a118e8176",
+                        "name": "bulk density"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "carbon",
+                        "id": "5c410519-5f4a-4cd8-bf0a-1acf13317eb8",
+                        "name": "carbon"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "microbial biomass",
+                        "id": "562b5285-6061-4f58-819e-0b0cc57548d6",
+                        "name": "microbial biomass"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "mineralisation rate",
+                        "id": "daafde4a-2bd1-45e5-a165-bdfb3db8c28e",
+                        "name": "mineralisation rate"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "nitrate",
+                        "id": "eb69d8d3-42e8-4012-9486-04ca35e6b1df",
+                        "name": "nitrate"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "nitrification rate",
+                        "id": "ae06a1c1-8008-440b-b0b0-00e698630b0b",
+                        "name": "nitrification rate"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "nitrogen",
+                        "id": "8aaa11f2-5885-412e-a8ab-15108e46f3f3",
+                        "name": "nitrogen"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "particle size",
+                        "id": "0d736155-6b8a-494e-9d15-9d0ba6e79a3d",
+                        "name": "particle size"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "ecosystem-function-data-from-winklebury-hill-uk-in-2013",
+                "isopen": true,
+                "url": null,
+                "notes": "This dataset contains nitrate and ammonium concentrations, nitrification and mineralisation rates, particle size and microbial biomass data from soils taken from an experiment based at Winklebury Hill, UK. The experiment used seeds and plug plants to create different plant communities on the bare chalk on Winklebury Hill and tested the resulting carbon and nutrient cycling rates and compared these to the characteristics of different plant functional groups. The experiment ran from 2013 to 2016 and this dataset contains data from 2013 only. This experiment was part of the Wessex BESS project, a six-year (2011-2017) project aimed at understanding how biodiversity underpins the ecosystem functions and services that landscapes provide. Full details about this dataset can be found at https://doi.org/10.5285/b8e9c03e-4b71-4e3b-9110-820b7bc0bac7",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "-2.063"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "50.998"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "50.986"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-2.08"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2017-01-10\"}, {\"type\": \"creation\", \"value\": \"2013-12-31\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "b8e9c03e-4b71-4e3b-9110-820b7bc0bac7"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"If you reuse this data, you should cite: Fry, E.L., Hall, A.L., Savage, J., Bardgett, R.D., Ostle, N., Pywell, R.F., Bullock, J.M. (2017). Ecosystem function data from Winklebury Hill, UK, in 2013. NERC Environmental Information Data Centre https://doi.org/10.5285/b8e9c03e-4b71-4e3b-9110-820b7bc0bac7\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:10"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "University of Manchester (pointOfContact, author); Lancaster University (author); Centre for Ecology & Hydrology (author); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[-2.063, 50.986], [-2.08, 50.986], [-2.08, 50.998], [-2.063, 50.998], [-2.063, 50.986]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "27700"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "91379411-c679-41d0-877e-5cd3abd968b3"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "Ecosystem function data from Winklebury Hill, UK, in 2013",
+                "revision_id": "632a0bda-4acd-4c28-b58b-388d5abb8fb7"
+            },
+            {
+                "license_title": null,
+                "temporal_coverage-from": ["2016-11-15"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 5,
+                "id": "87e46c9c-48c7-461a-b690-3fc18c221ef9",
+                "metadata_created": "2019-09-17T22:53:32.250447",
+                "metadata_modified": "2019-10-22T23:49:19.371003",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2018-07-17"],
+                "license_id": null,
+                "type": "dataset",
+                "resources": [],
+                "num_resources": 0,
+                "contact-email": "\nchris.hodgson@rothamsted.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Cattle",
+                        "id": "de1d26e6-d386-4e42-9d16-3a339261af36",
+                        "name": "Cattle"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "E. coli ",
+                        "id": "733eb802-69e9-46fc-a72e-cb040014dddd",
+                        "name": "E. coli "
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Environmental Monitoring Facilities",
+                        "id": "1ab109f7-fa03-4de9-ab56-3b79cb9a14ea",
+                        "name": "Environmental Monitoring Facilities"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Faeces",
+                        "id": "9c00dd85-a83e-4412-b84c-30b47e78f8fb",
+                        "name": "Faeces"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "North Wyke Farm Platform",
+                        "id": "9bfbd90e-9eca-4a91-8f28-47b87b0dae19",
+                        "name": "North Wyke Farm Platform"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "fe27eda4-4fcf-46e5-8818-5fdb2b0a52f9",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "e-coli-counts-of-fresh-cattle-faeces-from-the-north-wyke-farm-platform",
+                "isopen": false,
+                "url": null,
+                "notes": "[This dataset is embargoed until December 31, 2020]. The data consists of faecal microbiology and moisture content taken from two separate cohorts of 30 cattle. The cattle were from the North Wyke Farm Platform, a UK national capability, located at Rothamsted Research, North Wyke in Devon. Faecal samples were collected between November 2016 and July 2018. Samples were collected and microbiologically analysed in the laboratory within 6 to 8 hours.\nTwo cohorts of 30 cattle were selected from 90 animals, ten from each of the three farmlets. Each cohort covering the period that cattle enter the farm platform, i.e. from weaning until slaughter ca. 16 â\u0080\u0093 20 months.\nFull details about this dataset can be found at https://doi.org/10.5285/ec83a4ea-923a-4f02-8a9f-aeecc43d7123",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "-3.877"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "50.77"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "50.744"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-3.931"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2019-09-13\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": ""
+                    },
+                    {
+                        "key": "guid",
+                        "value": "ec83a4ea-923a-4f02-8a9f-aeecc43d7123"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 Natural Environment Research Council\", \"If you reuse this data, you should cite: Hodgson, C. J. (2019). E. coli counts of fresh cattle faeces from the North Wyke Farm Platform. NERC Environmental Information Data Centre https://doi.org/10.5285/ec83a4ea-923a-4f02-8a9f-aeecc43d7123\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:08"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "Rothamsted Research (author, pointOfContact); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[-3.877, 50.744], [-3.931, 50.744], [-3.931, 50.77], [-3.877, 50.77], [-3.877, 50.744]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "4326"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "2e86026c-8dfd-424d-9595-d595062786cd"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "title": "E. coli counts of fresh cattle faeces from the North Wyke Farm Platform",
+                "revision_id": "12dd1717-3bbb-4a91-8ca7-ff17435ecf47"
+            },
+            {
+                "license_title": null,
+                "temporal_coverage-from": ["2018-02-15"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 6,
+                "id": "19189726-bd80-49f9-bf22-a3074f236432",
+                "metadata_created": "2019-03-29T17:24:59.391736",
+                "metadata_modified": "2019-10-22T23:49:16.267542",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2018-02-20"],
+                "license_id": null,
+                "type": "dataset",
+                "resources": [],
+                "num_resources": 0,
+                "contact-email": "\nk.farkas@bangor.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Antibiotic resistance",
+                        "id": "08d5c4c2-e6b0-4f25-a0be-453446ea89b8",
+                        "name": "Antibiotic resistance"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Human Health and Safety",
+                        "id": "7738154f-e3b1-4f61-87ed-e69c31778261",
+                        "name": "Human Health and Safety"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Norovirus",
+                        "id": "871a8749-0979-4c63-ae64-4ec9c77edbb1",
+                        "name": "Norovirus"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Risk perception",
+                        "id": "f34b948b-9b63-4a2e-9cce-47ea18dd1b8f",
+                        "name": "Risk perception"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Shellfish hygiene",
+                        "id": "5ccaa884-5fe2-4cb0-b56e-efe8a5515c03",
+                        "name": "Shellfish hygiene"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Water safety",
+                        "id": "99ba7a08-ffb2-42b3-8827-e115f5c8187c",
+                        "name": "Water safety"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "fe27eda4-4fcf-46e5-8818-5fdb2b0a52f9",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "perception-of-environmental-and-other-risks-data-from-a-2018-social-science-questionnaire-in-th4",
+                "isopen": false,
+                "url": null,
+                "notes": "[This dataset is embargoed until December 1, 2020]. This dataset contains the answers gathered from the 806 participants who successfully finished an on-line survey on risk perception of environment-associated risks. The survey was launched on the 15th of February 2018 and ran for five days. The survey contained best worst scaling (BWS) to understand peopleâ\u0080\u0099s perceptions to certain risks. In this study 16 risks were included in the BWS including four air-, food- and waterborne illnesses and 12 other hazards. The BWS was run in two blocks to consider two factors: first the respondents selected which risk they fear the most/least and in the second block they selected the risk they believed they had the most/least control. The survey also contained a detailed questionnaire on the participants eating habits and health status. Participants were also asked about their knowledge on enteric pathogens and whether they have ever sought or would consider seeking advice on the symptoms. Respondents were also asked whether they have experienced the hazards described in the BWS and whether they have done anything to reduce the risks in their life.\nThe data were collected to gather information on people perceptions on environment-associated risks. This was done to understand the common knowledge on environment-associated pollutants and enlighten issues regarding risk management and mitigation.\nThe data were collected as part of the VIRAQUA project was funded by the Natural Environment Research Council (NERC) under the Environmental Microbiology and Human Health (EMHH) Programme (NE/M010996/1). Full details about this dataset can be found at https://doi.org/10.5285/0869d961-99ca-4946-9192-f35afccdda38",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "1.768"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "60.861"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "49.864"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-8.648"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2019-02-11\"}, {\"type\": \"creation\", \"value\": \"2018-12-14\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "0869d961-99ca-4946-9192-f35afccdda38"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 Bangor University\", \"If you reuse this data, you should cite: Farkas, K., Green, E., Cross, P., Jones, D.L. (2019). Perception of environmental and other risks - data from a 2018 social science questionnaire in the UK. NERC Environmental Information Data Centre https://doi.org/10.5285/0869d961-99ca-4946-9192-f35afccdda38\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:06"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "Bangor University (author, pointOfContact); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[1.768, 49.864], [-8.648, 49.864], [-8.648, 60.861], [1.768, 60.861], [1.768, 49.864]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "27700"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "dc639953-cb88-4ed3-980a-c1cb44cfa889"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "title": "Perception of environmental and other risks - data from a 2018 social science questionnaire in the UK",
+                "revision_id": "873debd1-57c6-4980-a232-8c5d7d3b624f"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": [],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 3,
+                "id": "29922bce-d108-44ff-879d-83e6faf42988",
+                "metadata_created": "2017-10-04T15:05:50.544736",
+                "metadata_modified": "2019-10-22T23:49:12.945609",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": [],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://catalogue.ceh.ac.uk/download?fileIdentifier=6a5a9a2a-730b-49f7-9e42-2295040aee56",
+                        "cache_last_updated": null,
+                        "package_id": "29922bce-d108-44ff-879d-83e6faf42988",
+                        "created": "2019-10-22T23:49:13.157998",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "order",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "cb8028fa-eb3b-4fb2-af41-496b231ac575",
+                        "url_type": null,
+                        "id": "19fc6841-d585-4fe0-9251-5bfda6662e41",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/6a5a9a2a-730b-49f7-9e42-2295040aee56.zip",
+                        "cache_last_updated": null,
+                        "package_id": "29922bce-d108-44ff-879d-83e6faf42988",
+                        "created": "2019-10-22T23:49:13.158004",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "cb8028fa-eb3b-4fb2-af41-496b231ac575",
+                        "url_type": null,
+                        "id": "ea8a875a-eeab-4020-b74f-0e781f29e9a0",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nsarah.robinson09@gmail.com\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Central Asia",
+                        "id": "101fdda6-bc0f-401b-92a7-28cdcb14ee55",
+                        "name": "Central Asia"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Habitats and Biotopes",
+                        "id": "ff8beadf-6e6d-41e9-9c47-a12d1ba58ee7",
+                        "name": "Habitats and Biotopes"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "forage",
+                        "id": "d1366f20-9ff6-4d98-ade0-8d9784bdd68f",
+                        "name": "forage"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "chemical-composition-of-central-asian-forage-plants",
+                "isopen": true,
+                "url": null,
+                "notes": "The database of chemical composition of Central Asian forage plants contains just under 1000 desert and steppe species with information such as Latin and Russian names and family and related records of chemical composition from various sources including percentages by weight of protein, ash, cellulose and fat. Where available, it also includes data on digestible protein content, metabolisable energy and Soviet Feed Units (SFU). Records also include information on the country, location, season or month and phenological phase at time of collection of each sample. As one of the original uses of the database was for modelling food and energy intake by the saiga antelope, it also includes information identifying saiga food plant species along with sources of this information. Data on the edibility of many species for livestock in different seasons are also available. See the detailed documentation available here for more information on the data types, definitions and sources.\nNB The database is in text format and must be imported e.g. into relational database software, as Unicode (UTF-8) in order to convert the Cyrillic characters in Russian names. Full details about this dataset can be found at https://doi.org/10.5285/6a5a9a2a-730b-49f7-9e42-2295040aee56",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "90"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "56"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "35"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "45"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2017-09-20\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "6a5a9a2a-730b-49f7-9e42-2295040aee56"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"If you reuse this data, you should cite: Robinson, S. J. (2017). Chemical composition of Central Asian forage plants. NERC Environmental Information Data Centre https://doi.org/10.5285/6a5a9a2a-730b-49f7-9e42-2295040aee56\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-21T13:02:27"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "NERC Environmental Information Data Centre (publisher); University of Oxford (author); Environmental Information Data Centre (custodian); Oxford University, visiting researcher (pointOfContact)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[90, 35], [45, 35], [45, 56], [90, 56], [90, 35]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": ""
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "726d768c-3ab7-415b-aed1-4bed74051cb3"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "Chemical composition of Central Asian forage plants",
+                "revision_id": "cb8028fa-eb3b-4fb2-af41-496b231ac575"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["2014-01-01"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 7,
+                "id": "119f2e3c-1308-40ac-93d9-47983a950f81",
+                "metadata_created": "2014-08-20T13:48:23.975456",
+                "metadata_modified": "2019-10-22T23:49:09.850421",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": [],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [],
+                "num_resources": 0,
+                "contact-email": "\nenquiries@ceh.ac.uk\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Hydrography",
+                        "id": "a0e3af6e-dcf6-491b-8f22-867c0d62add6",
+                        "name": "Hydrography"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Topography",
+                        "id": "c4a128e4-c348-46f8-a169-8f343c691a6f",
+                        "name": "Topography"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "hydrological regimes",
+                        "id": "63403ee5-057a-4bcf-87b1-1a49505cc0e5",
+                        "name": "hydrological regimes"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "hydrology",
+                        "id": "187f2d7b-e238-42c3-939d-852a96e4de70",
+                        "name": "hydrology"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "inundation",
+                        "id": "be5caaf2-8c32-4e8e-b69c-e18eb499261a",
+                        "name": "inundation"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "soil moisture",
+                        "id": "3715daea-c5ec-4e70-8b1f-a70e522f8d61",
+                        "name": "soil moisture"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "spatial data",
+                        "id": "d1e881e7-c8cd-4ea3-ab55-14fdace58e62",
+                        "name": "spatial data"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "60e687bf-a6d8-43e2-a50e-efab84b27952",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "high-resolution-global-topographic-index-values-withdrawn",
+                "isopen": true,
+                "url": null,
+                "notes": "[THIS DATASET HAS BEEN WITHDRAWN]. The topographic index is a hydrological quantity describing the propensity of the soil at landscape points to become saturated with water as a result of topographic position (i.e. not accounting for other factors such as climate that also affect soil moisture but are accounted for separately). Modern land surface models require a characterisation of the land surface hydrological regime and this parameter allows the use of the TOPMODEL hydrological model to achieve this .This Geographic Information System layer is intended for use as topographic ancillary files for the TOPMODEL routing model option within the Joint UK Land Environment Simulator (JULES) land surface model. The topographic index variable here is directly comparable to the compound topographic index available from United States Geological Survey's Hydro1K at 30 sec resolution. Full details about this dataset can be found at https://doi.org/10.5285/ce391488-1b3c-4f82-9289-4beb8b8aa7da",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[\"superseded\"]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "180"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "86.1"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "-56.35"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "-180"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2014-11-30\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": "notPlanned"
+                    },
+                    {
+                        "key": "guid",
+                        "value": "ce391488-1b3c-4f82-9289-4beb8b8aa7da"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 Centre for Ecology & Hydrology (Natural Environment Research Council)\", \"If you reuse this data, you should cite: Marthews, T.R., Dadson, S.J., Lehner, B., Abele, S., Gedney, N. (2014). High-resolution global topographic index values. NERC Environmental Information Data Centre https://doi.org/10.5285/ce391488-1b3c-4f82-9289-4beb8b8aa7da\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:06:33"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "McGill University (author); Centre for Ecology & Hydrology (pointOfContact); Hadley Centre for Climate Prediction and Research (author); University of Oxford (author); Environmental Information Data Centre (custodian); NERC Environmental Information Data Centre (publisher)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[180, -56.35], [-180, -56.35], [-180, 86.1], [180, 86.1], [180, -56.35]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "4326"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "32359b58-cc97-48ab-9181-5558467cd43b"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "High-resolution global topographic index values",
+                "revision_id": "0dedbd88-f8d7-44a2-a2d5-51589f106b1f"
+            },
+            {
+                "license_title": "UK Open Government Licence (OGL)",
+                "temporal_coverage-from": ["1986-04-26"],
+                "relationships_as_object": [],
+                "private": false,
+                "num_tags": 3,
+                "id": "0262d64f-d152-471f-a341-f881fa378a0c",
+                "metadata_created": "2017-07-25T07:26:03.117935",
+                "metadata_modified": "2019-10-22T23:49:06.435136",
+                "state": "active",
+                "version": null,
+                "temporal_coverage-to": ["2014-12-31"],
+                "license_id": "uk-ogl",
+                "type": "dataset",
+                "resources": [
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Download a copy of this data",
+                        "name": "Download the data",
+                        "format": "",
+                        "url": "https://data-package.ceh.ac.uk/data/782ec845-2135-4698-8881-b38823e533bf",
+                        "cache_last_updated": null,
+                        "package_id": "0262d64f-d152-471f-a341-f881fa378a0c",
+                        "created": "2019-10-22T23:49:06.655044",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "download",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 0,
+                        "revision_id": "258cd6a9-b206-4b0a-8ede-d353b71bb731",
+                        "url_type": null,
+                        "id": "f512513b-4a8a-4447-9151-a90db78a3664",
+                        "resource_type": null,
+                        "size": null
+                    },
+                    {
+                        "mimetype": null,
+                        "cache_url": null,
+                        "hash": "",
+                        "description": "Supporting information available to assist in re-use of this dataset",
+                        "name": "Supporting information",
+                        "format": "ZIP",
+                        "url": "https://data-package.ceh.ac.uk/sd/782ec845-2135-4698-8881-b38823e533bf.zip",
+                        "cache_last_updated": null,
+                        "package_id": "0262d64f-d152-471f-a341-f881fa378a0c",
+                        "created": "2019-10-22T23:49:06.655050",
+                        "state": "active",
+                        "mimetype_inner": null,
+                        "resource_locator_function": "information",
+                        "last_modified": null,
+                        "resource_locator_protocol": "",
+                        "position": 1,
+                        "revision_id": "258cd6a9-b206-4b0a-8ede-d353b71bb731",
+                        "url_type": null,
+                        "id": "c9dba8d3-2ea1-4f7e-9c11-bf339e1f8f21",
+                        "resource_type": null,
+                        "size": null
+                    }
+                ],
+                "num_resources": 2,
+                "contact-email": "\nvak@uiar.org.ua\n",
+                "tags": [
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "Human Health and Safety",
+                        "id": "7738154f-e3b1-4f61-87ed-e69c31778261",
+                        "name": "Human Health and Safety"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "nuclear power plant",
+                        "id": "1b0dc0f1-7363-4f12-9b1b-3df51c36a825",
+                        "name": "nuclear power plant"
+                    },
+                    {
+                        "vocabulary_id": null,
+                        "state": "active",
+                        "display_name": "radioecology",
+                        "id": "0f09c127-9651-4a98-b6c6-6b612d38a6b7",
+                        "name": "radioecology"
+                    }
+                ],
+                "groups": [],
+                "creator_user_id": "431b5956-7b87-41ba-8fc5-a4a8b681b797",
+                "relationships_as_subject": [],
+                "organization": {
+                    "description": "<p>The <a href=\"http://eidc.ceh.ac.uk/\" target=\"_blank\">Environmental Information Data Centre (EIDC)<\/a> is the UK's national data centre for terrestrial and freshwater sciences.<\/p>\r\n\r\n<p>The EIDC is one of the network of Natural Environment Research Council (NERC) data centres that provide a focal point for its scientific data and information.<\/p>\r\n\r\n<p>The EIDC is hosted by <a href=\"http://www.ceh.ac.uk/\" target=\"_blank\">the Centre for Ecology & Hydrology (CEH)<\/a>, a world-class research organisation focusing on land and freshwater ecosystems and their interaction with the atmosphere. CEH integrates UK-wide observation systems and curiosity driven research, from the smallest scale of genetic diversity to large-scale, whole-Earth systems. We work across disciplines and facilitate academic, public, private and voluntary sector partnerships. CEH\u2019s extensive, long-term monitoring, analysis and modelling deliver UK and global environmental data, providing early warnings of change and management solutions for our land and freshwaters.<\/p>",
+                    "created": "2012-06-27T14:54:40.370760",
+                    "title": "Environmental Information Data Centre",
+                    "name": "eidc",
+                    "is_organization": true,
+                    "state": "active",
+                    "image_url": "2019-02-11-123216.722693CEHLogoLarge.png",
+                    "revision_id": "eb234891-e63d-4297-befa-ce4fc92ba12e",
+                    "type": "organization",
+                    "id": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                    "approval_status": "pending"
+                },
+                "name": "spatial-datasets-of-radionuclide-contamination-in-the-ukrainian-chernobyl-exclusion-zone",
+                "isopen": true,
+                "url": null,
+                "notes": "Data comprise radionuclide deposition, radioactivity dose measurements, radioactive particle activity and physical characteristic information from soil samples collected within and around the Chernobyl Exclusion Zone (CEZ) following the Chernobyl nuclear accident in 1986.\nData include radiocaesium, radiostrontium and soil chemistry parameters from soils collected in 1997, plutonium isotope measurements in soil samples and soil layers collected in 2000 and 2001, 'Hot particle' dataset presenting radionuclide activity and some physical characteristics of 'hot particles' extracted from soils collected in the Ukraine and Poland between 1995 and 1997; and Ivankov region data (radionuclide activity concentrations and natural background dose measurements) from a survey of the Ivankov region, immediately to the south of the CEZ conducted in 2014.\nFunding for preparing this data set was provided by the EU COMET project (http://www.radioecology-exchange.org/content/comet) and TREE (http://www.ceh.ac.uk/tree) project funded by the NERC, Environment Agency and Radioactive Waste Management Ltd. under the RATE programme. Full details about this dataset can be found at https://doi.org/10.5285/782ec845-2135-4698-8881-b38823e533bf",
+                "owner_org": "866f4088-ae4f-43b8-ba8c-6d3141a327f2",
+                "extras": [
+                    {
+                        "key": "UKLP",
+                        "value": "True"
+                    },
+                    {
+                        "key": "access_constraints",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "bbox-east-long",
+                        "value": "40.509"
+                    },
+                    {
+                        "key": "bbox-north-lat",
+                        "value": "52.355"
+                    },
+                    {
+                        "key": "bbox-south-lat",
+                        "value": "45.989"
+                    },
+                    {
+                        "key": "bbox-west-long",
+                        "value": "21.789"
+                    },
+                    {
+                        "key": "coupled-resource",
+                        "value": "[]"
+                    },
+                    {
+                        "key": "dataset-reference-date",
+                        "value": "[{\"type\": \"publication\", \"value\": \"2017-07-24\"}]"
+                    },
+                    {
+                        "key": "frequency-of-update",
+                        "value": ""
+                    },
+                    {
+                        "key": "guid",
+                        "value": "782ec845-2135-4698-8881-b38823e533bf"
+                    },
+                    {
+                        "key": "licence",
+                        "value": "[\"\\u00c2\\u00a9 Ukrainian Institute of Agricultural Radiology of National University of Life and Environmental Sciences of Ukraine\", \"If you reuse this data, you should cite: Kashparov, V., Levchuk, S., Zhurba, M., Protsak, V., Khomutinin, Yu., Beresford, N.A., Chaplow, J.S. (2017). Spatial datasets of radionuclide contamination in the Ukrainian Chernobyl Exclusion Zone. NERC Environmental Information Data Centre https://doi.org/10.5285/782ec845-2135-4698-8881-b38823e533bf\"]"
+                    },
+                    {
+                        "key": "metadata-date",
+                        "value": "2019-10-18T13:05:04"
+                    },
+                    {
+                        "key": "metadata-language",
+                        "value": "eng"
+                    },
+                    {
+                        "key": "progress",
+                        "value": ""
+                    },
+                    {
+                        "key": "provider",
+                        "value": "NERC Environmental Information Data Centre"
+                    },
+                    {
+                        "key": "resource-type",
+                        "value": "dataset"
+                    },
+                    {
+                        "key": "responsible-party",
+                        "value": "NERC Environmental Information Data Centre (publisher); Environmental Information Data Centre (custodian); Centre for Ecology & Hydrology (author, pointOfContact); Ukrainian Institute of Agricultural Radiology of National University of Life and Environmental Sciences of Ukraine and CERAD CoE Environmental Radioactivity/Department of Environmental Sciences (author); Ukrainian Institute of Agricultural Radiology of National University of Life and Environmental Sciences of Ukraine (author)"
+                    },
+                    {
+                        "key": "spatial",
+                        "value": "{\"type\": \"Polygon\", \"coordinates\": [[[40.509, 45.989], [21.789, 45.989], [21.789, 52.355], [40.509, 52.355], [40.509, 45.989]]]}"
+                    },
+                    {
+                        "key": "spatial-data-service-type",
+                        "value": ""
+                    },
+                    {
+                        "key": "spatial-reference-system",
+                        "value": "CRS:84"
+                    },
+                    {
+                        "key": "harvest_object_id",
+                        "value": "a2611a36-edea-4ad4-9097-cf5de2da7f41"
+                    },
+                    {
+                        "key": "harvest_source_id",
+                        "value": "92985a0c-1d7c-4ef2-bf51-d5e43178de24"
+                    },
+                    {
+                        "key": "harvest_source_title",
+                        "value": "EIDC GEMINI records"
+                    }
+                ],
+                "license_url": "http://reference.data.gov.uk/id/open-government-licence",
+                "title": "Spatial datasets of radionuclide contamination in the Ukrainian Chernobyl Exclusion Zone",
+                "revision_id": "258cd6a9-b206-4b0a-8ede-d353b71bb731"
+            }
+        ],
+        "search_facets": {}
+    }
+}
