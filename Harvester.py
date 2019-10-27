@@ -495,7 +495,7 @@ class Harvester():
                             % (
                                 myconfig.harvest_table,
                                 field,
-                                json.dumps(summary),
+                                json.dumps(summary, default=str),
                                 str(self.harvestInfo['harvest_id']))
                             )
                 conn.commit()
