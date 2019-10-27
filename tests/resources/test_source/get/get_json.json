@@ -1,0 +1,662 @@
+{
+    "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+    "@id": "https://www.data.act.gov.au/data.json",
+    "@type": "dcat:Catalog",
+    "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+    "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
+    "dataset": [
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/23b9-j9ha",
+            "issued": "2019-04-03",
+            "@type": "dcat:Dataset",
+            "modified": "2019-04-05",
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "Strategic Portfolio and Data Excellence"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/23b9-j9ha",
+            "description": "Unemployment rate (%) for ACT young people aged 15\u201324 years and not attending\nfull-time education (12-month moving average) and for people aged 15 years and\nabove (trend), 2013\u201318.\n\nSource: ABS cat. no. 6202.0; 6291.0.55.001 and ACT Treasury\u2019s calculation.",
+            "title": "A Picture 2018 - Indicator 25, Figure 24",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/23b9-j9ha/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/23b9-j9ha/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/23b9-j9ha/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/23b9-j9ha/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Business and Industry"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/28a2-f2xq",
+            "issued": "2017-07-21",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-28",
+            "keyword": [
+                "light rail",
+                "metro",
+                "canberra",
+                "public transport; govhack-transport"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TAMS",
+                "hasEmail": "mailto:tamsdspatial@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/28a2-f2xq",
+            "description": "Location of stops for Canberra Light Rail, Stage One",
+            "title": "Light Rail Stops",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/28a2-f2xq?method=export&format=KML",
+                    "mediaType": "application/vnd.google-earth.kml+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/28a2-f2xq?method=export&format=KMZ",
+                    "mediaType": "application/vnd.google-earth.kmz"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/28a2-f2xq?method=export&format=Shapefile",
+                    "mediaType": "application/zip"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/28a2-f2xq?method=export&format=Original",
+                    "mediaType": "application/zip"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/9tiz-jzvf/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/9tiz-jzvf/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2acm-wq55",
+            "issued": "2012-06-28",
+            "@type": "dcat:Dataset",
+            "modified": "2019-01-21",
+            "keyword": [
+                "action",
+                "buses"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TAMS",
+                "hasEmail": "mailto:tamsdspatial@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2acm-wq55",
+            "description": "Files in GTFS format for ACTION Bus routes and timetables.\nThis dataset is currently hosted on Transport Canberra\u2019s website, with the Last Updated dates being available here:\nhttps://www.transport.act.gov.au/contact-us/information-for-developers\nThe dates displayed on this page refer to the metadata within data.act only, and are not reflective of the changes made to the Transit Feed data.",
+            "title": "ACTION timetables - Google Transit Feed",
+            "distribution": [{
+                "@type": "dcat:Distribution",
+                "downloadURL": "http://www.transport.act.gov.au/googletransit/google_transit.zip",
+                "mediaType": "application/zip"
+            }],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2egm-dieb",
+            "issued": "2017-07-13",
+            "@type": "dcat:Dataset",
+            "modified": "2018-09-26",
+            "keyword": [
+                "crime",
+                "act",
+                "statistics",
+                "safety",
+                "policing",
+                "afp",
+                "assault",
+                "homicide",
+                "theft"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "ACT Policing Performance Statistics",
+                "hasEmail": "mailto:ACT-MPP-PerformanceStatistics@afp.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2egm-dieb",
+            "description": "Each quarter, ACT Policing issues crime statistics illustrating the offences reported or becoming known in suburbs across Canberra.\r\n\r\nThe selected offences highlighted in the statistics include: assault, sexual offences, robbery, burglary, motor vehicle theft, other theft (such as shoplifting and fraud) and property damage. It is important to note that these numbers may fluctuate as new complainants come forward, more Traffic Infringement Notices are downloaded into the system, or when complaints are withdrawn.\r\n\r\nIt should also be noted that the individual geographical areas will not combine to the ACT totals due to the exclusion of rural sectors and other regions.\r\n\r\nIt is important for the community to understand there may be a straight-forward explanation for a spike in offences in their neighbourhood.\r\n\r\nFor example, sexual offences in Narrabundah increased from two in the January to March last year, to 32 in the first quarter of 2012. These 32 sexual offences relate to one historical case which was reported to police in January 2012, and which has since been finalised.\r\n\r\nThe smaller the number of reported offences involved, the greater the chance for a dramatic percentage increase.",
+            "title": "ACT Crime Statistics",
+            "distribution": [{
+                "@type": "dcat:Distribution",
+                "downloadURL": "https://www.data.act.gov.au/download/2egm-dieb/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "mediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            }],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Justice, Safety and Emergency"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2gwu-jj6g",
+            "issued": "2017-07-23",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-31",
+            "keyword": [
+                "act",
+                "esa",
+                "fire",
+                "rfs",
+                "ses",
+                "vehicle",
+                "locations"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "esamapping",
+                "hasEmail": "mailto:esamapping@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2gwu-jj6g",
+            "description": "ACT ESA (Fire, RFS, SES) vehicle locations, 2012-04 through 2012-09. This is one of a suite of datasets showing ACT ESA vehicle locations between 2004 and 2016.",
+            "title": "ESA vehicle locations in the period between 201204 - 201209",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/2gwu-jj6g?method=export&format=KML",
+                    "mediaType": "application/vnd.google-earth.kml+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/2gwu-jj6g?method=export&format=KMZ",
+                    "mediaType": "application/vnd.google-earth.kmz"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/2gwu-jj6g?method=export&format=Shapefile",
+                    "mediaType": "application/zip"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/geospatial/2gwu-jj6g?method=export&format=Original",
+                    "mediaType": "application/zip"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/gb24-qesm/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/gb24-qesm/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Justice, Safety and Emergency"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2hx4-2gfs",
+            "issued": "2018-09-06",
+            "@type": "dcat:Dataset",
+            "modified": "2018-09-10",
+            "keyword": ["act household travel survey"],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TAMS",
+                "hasEmail": "mailto:edmund.hall@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2hx4-2gfs",
+            "description": "This data set provides the average time of trips (in minutes) categorised by the purpose of the trip and the time of day. This data is obtained from individuals sampled in obtaining data for the ACT Household Travel Survey. \n\nA trip is defined as the travel between two main activities, where a stop may constitute a change in transport mode. As an example: driving from home to a park and ride facility, then catching a bus to an interchange, then walking to a shop to purchase an item and finally walking to work is comprised of 4 \u2018stops\u2019 and two \u2018trips\u2019. \n\nNote: This data represents travel and activity on an average weekday, and average times include wait times at transport interchanges. The main method of travel across a trip is used to classify trip types. The time of day is based on the mid-point of the start and arrival time of the trip. \nAM Peak: 8-9AM, PM Peak: 5-6PM",
+            "title": "ACTQP HTS - Average Trip Time Categorised by Trip Purpose and Time of Day",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2hx4-2gfs/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2hx4-2gfs/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2hx4-2gfs/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2hx4-2gfs/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by-sa/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2idw-j3j2",
+            "issued": "2015-06-01",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-09",
+            "keyword": [
+                "wildlife",
+                "environment",
+                "fauna",
+                "atlas",
+                "sightings",
+                "animals"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "ACT_ESDD"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2idw-j3j2",
+            "description": "Metadata description for ACT Wildlife csv data set",
+            "title": "ACT GOV Metadata - ACTWildlife Atlas Dec14",
+            "distribution": [{
+                "@type": "dcat:Distribution",
+                "downloadURL": "https://www.data.act.gov.au/download/2idw-j3j2/application/msword",
+                "mediaType": "application/msword"
+            }],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Environment"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2mpy-823g",
+            "issued": "2017-07-28",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-31",
+            "keyword": [
+                "uc",
+                "arboretum",
+                "nodes",
+                "temperature"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "University of Canberra - ITM"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2mpy-823g",
+            "description": "UC has placed three IOT devices in Arboretum to capture data regarding temperature, the voltage for different nodes.",
+            "title": "University of Canberra Arboretum Data",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2mpy-823g/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2mpy-823g/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2mpy-823g/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2mpy-823g/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "theme": ["Education"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2q44-5we7",
+            "issued": "2019-01-21",
+            "@type": "dcat:Dataset",
+            "modified": "2019-02-15",
+            "keyword": [
+                "light rail",
+                "transport",
+                "kiss and ride",
+                "public transport",
+                "canberra"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TAMS",
+                "hasEmail": "mailto:tamsdspatial@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2q44-5we7",
+            "description": "This dataset contains the locations and descriptions of Kiss and Ride facilities which will be incorporated as part of the Transport Canberra Light Rail system.\n\nPlease note that these facilities are not currently operational and will be functioning following the Light Rail Service Commencement.\n\nA link to more information will be provided once published on the Transport Canberra website.",
+            "title": "Kiss And Ride Locations",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2q44-5we7/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2q44-5we7/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2q44-5we7/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2q44-5we7/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by-sa/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2sn6-ma2c",
+            "issued": "2018-09-04",
+            "@type": "dcat:Dataset",
+            "modified": "2018-10-03",
+            "keyword": [
+                "ttm",
+                "transport",
+                "roads",
+                "traffic",
+                "closure"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TAMS",
+                "hasEmail": "mailto:tamsdspatial@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2sn6-ma2c",
+            "description": "This Java Script Open Notation (JSON) Feed and ArcGIS Online map presents the unplanned road closures within the ACT in real-time.\n\n\nThe fields of the JSON string include: \n\nObject ID (Numeric field)\nGlobal ID (Alpha-numeric field)\nProject title (Free text field string)\nType (Selected from: light rail, special event, road works, emergency, utilities, telecommunications, building construction, ActewAGL, NBN, charitable organisation, inclement weather, other)\nDescribe activity (Free text field string required if \"other\" type selected)\nRoads closed (Free text field string)\nReason for road closure (Free text field string)\nClosure start time (Unix Format - see data dictionary for syntax)\nClosure end time (Unix Format - see data dictionary for syntax)\nGeometry (X,Y longitude, latitude format)\n\nMore information regarding the syntax for querying this API can be found in the linked data dictionary.",
+            "title": "Unplanned Road Closures (Live Stream)",
+            "distribution": [
+                {
+                    "mediaType": "text/html",
+                    "downloadURL": "https://services1.arcgis.com/E5n4f1VY84i0xSjy/arcgis/rest/services/Public_Temporary_Road_Closures/FeatureServer/0/query?&where=objectid%3E0&outFields=*&f=json",
+                    "describedBy": "http://geoportal.ancpi.ro/arcgis/sdk/rest/fsquery.html",
+                    "description": "This data set queries an ArcGIS Online REST API which provides a live stream of unplanned road closures within the ACT. The supplied feed is a Javascript Open Notation (JSON) string returning all available fields. This query can be refined using the information supplied in the data dictionary.",
+                    "@type": "dcat:Distribution",
+                    "title": "Temporary Traffic Management (TTM) Unplanned Road Closures JSON Feed"
+                },
+                {
+                    "mediaType": "text/html",
+                    "downloadURL": "http://www.arcgis.com/home/webmap/viewer.html?url=https://services1.arcgis.com/E5n4f1VY84i0xSjy/ArcGIS/rest/services/Public_Temporary_Road_Closures/FeatureServer&source=sd",
+                    "description": "This is the ArcGIS Online webmap view of the live stream of planned road closures within the ACT.",
+                    "@type": "dcat:Distribution",
+                    "title": "Temporary Traffic Management (TTM) Unplanned Road Closures ArcGIS Online Map"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by-sa/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2sx9-4wg7",
+            "issued": "2018-08-10",
+            "@type": "dcat:Dataset",
+            "modified": "2019-08-08",
+            "keyword": [
+                "red light camera",
+                "speed camera",
+                "point to point camera",
+                "mobile speed camera"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "TCO Operations",
+                "hasEmail": "mailto:tcooperations@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2sx9-4wg7",
+            "description": "Monthly Infringement count and value displayed by camera location, penalty, vehicle type and client type.\r\nThe penalty amount and the infringement count are penalties that occurred within the date described in the offence month. The withdrawal amount and the withdrawal count relate to the date the fine was withdrawn and not the date the original fine occurred",
+            "title": "Traffic camera offences and fines",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2sx9-4wg7/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2sx9-4wg7/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2sx9-4wg7/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2sx9-4wg7/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2tvn-fm8n",
+            "issued": "2017-07-26",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-26",
+            "keyword": [
+                "wifi",
+                "cbr",
+                "free",
+                "access",
+                "points",
+                "internet"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "Digital Canberra",
+                "hasEmail": "mailto:DigitalCanberra@act.gov.au"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2tvn-fm8n",
+            "description": "A google map which contains the locations of the CBR Free WiFi Access points. This map is exportable as a KML. Accurate as at July 2017\r\n\r\nKey:\r\nCircles = Outdoor Access Point\r\nDiamonds = Indoor Access Point\r\nGreen = Fibred Access Point\r\nBlue = Meshed Access Point",
+            "title": "Canberra Free WiFi Access Points",
+            "distribution": [{
+                "@type": "dcat:Distribution",
+                "downloadURL": "https://www.google.com/maps/d/viewer?mid=1_CvWr_stgaUyXOz8GpcirQL4sEg",
+                "mediaType": "text/html",
+                "title": "Google Map"
+            }],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Infrastructure and Utilities"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2w3d-6k8b",
+            "issued": "2012-10-18",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-31",
+            "keyword": [
+                "2008 election",
+                "legislative assembly"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "OCDO"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2w3d-6k8b",
+            "description": "A table of first preference votes for each electorate in the 2008 Legislative Assembly Election",
+            "title": "2008 Assembly Election - Summary of First Preference Votes by Electorate",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2w3d-6k8b/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2w3d-6k8b/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2w3d-6k8b/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/2w3d-6k8b/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Government and Transparency"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/2xfc-29mw",
+            "issued": "2016-08-29",
+            "@type": "dcat:Dataset",
+            "modified": "2017-07-31",
+            "keyword": [
+                "smart",
+                "parking",
+                "api"
+            ],
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "DoubleR"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/2xfc-29mw",
+            "description": "SmartParking is a 12 month trial designed to help ease traffic congestion and lower travel times by using real-time bay sensor data. Registration is required to access the API.",
+            "title": "SmartParking API",
+            "distribution": [{
+                "format": "API",
+                "description": "GovHack 2017 - For GovHack participants we have provided a generic API key for you to use during the competition. The key is cfd19cc72c2845f3b42fb9a805226010 .  The API documentation is available at https://api.smartparking.com/Help?Version=1 . The <sitecode> referred to in the help documentation will be AUACTCC01 .\tEnsure you use https and not http.  \r\n\r\nThe SmartLot API v1 lets you query for most locations and returns Lot details, Lot operating hours, Lot tariffs, Lot occupancies, and Unavailable bays.\r\nThe APIs are RESTful; they are URLs with parameters submitted via HTTP. How the API responds is dependent on the URL string that is used, and the content of your HTTP request header. The URL query string dictates the specific API operations. The APIs provide two different ways to get the data back to you, XML and JSON.\r\n",
+                "accessURL": "https://api.smartparking.com/",
+                "@type": "dcat:Distribution",
+                "title": "SmartParking API"
+            }],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Transport"]
+        },
+        {
+            "accessLevel": "public",
+            "landingPage": "https://www.data.act.gov.au/d/32et-zcdi",
+            "issued": "2018-05-04",
+            "@type": "dcat:Dataset",
+            "modified": "2019-02-11",
+            "contactPoint": {
+                "@type": "vcard:Contact",
+                "fn": "Access Canberra (VM)"
+            },
+            "publisher": {
+                "@type": "org:Organization",
+                "name": "www.data.act.gov.au"
+            },
+            "identifier": "https://www.data.act.gov.au/api/views/32et-zcdi",
+            "description": "This is the register of dams referred to in s.58 of the Act.\r\n\r\nThe register also includes the list of \"listed\" dams referred to in s.70(b) of the Act.",
+            "title": "Register of dams",
+            "distribution": [
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/32et-zcdi/rows.csv?accessType=DOWNLOAD",
+                    "mediaType": "text/csv"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/32et-zcdi/rows.rdf?accessType=DOWNLOAD",
+                    "mediaType": "application/rdf+xml"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/32et-zcdi/rows.json?accessType=DOWNLOAD",
+                    "mediaType": "application/json"
+                },
+                {
+                    "@type": "dcat:Distribution",
+                    "downloadURL": "https://www.data.act.gov.au/api/views/32et-zcdi/rows.xml?accessType=DOWNLOAD",
+                    "mediaType": "application/xml"
+                }
+            ],
+            "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+            "theme": ["Environment"]
+        }
+    ]
+}

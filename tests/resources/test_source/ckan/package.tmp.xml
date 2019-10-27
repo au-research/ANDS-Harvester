@@ -1,0 +1,1297 @@
+<?xml version="1.0" ?>
+<datasets>
+    <help>https://data.gov.au/data/api/3/action/help_show?name=package_search</help>
+    <success>True</success>
+    <result>
+        <count>5050</count>
+        <sort>extras_harvest_portal asc, score desc, metadata_modified desc</sort>
+        <facets/>
+        <results>
+            <license_title>Creative Commons Attribution 3.0 Australia</license_title>
+            <maintainer>cogb_gis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>4</num_tags>
+            <geospatial_topic>Transportation</geospatial_topic>
+            <id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</id>
+            <metadata_created>2016-05-10T07:28:16.599934</metadata_created>
+            <spatial_coverage>http://services.land.vic.gov.au/catalogue/publicproxy/guest/dv_geoserver/datavic/wfs?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetFeature&amp;TYPENAME=datavic:VMADMIN_LGA_POLYGON&amp;SRSNAME=EPSG:4283&amp;cql_filter=LGA_CODE=325</spatial_coverage>
+            <metadata_modified>2019-08-28T04:00:02.723241</metadata_modified>
+            <author>City of Greater Bendigo</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[144.268592904838,-36.7758771971451],[144.268592904838,-36.4629791857738],[144.53049457945,-36.4629791857738],[144.53049457945,-36.7758771971451],[144.268592904838,-36.7758771971451]]]}</spatial>
+            <license_id>cc-by</license_id>
+            <contact_point>gis@bendigo.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>Road Closure within the City of Greater Bendigo\r\nESRI SHP
+                    File</description>
+                <name>City of Greater Bendigo Road Closures SHP</name>
+                <format>SHP</format>
+                <url>https://data.gov.au/data/dataset/a0f2aa22-512d-4c08-9b7d-bb8a51163f4c/resource/79e98368-c763-4df5-b596-0ab7cf9312ba/download/cogb-road-closures.shz</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2016-05-10T17:48:52.567041</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T04:00:02.683001</last_modified>
+                <position>0</position>
+                <revision_id>2070ffd3-9b9b-4731-b838-7404ba05c2a2</revision_id>
+                <url_type>upload</url_type>
+                <id>79e98368-c763-4df5-b596-0ab7cf9312ba</id>
+                <resource_type/>
+                <size>1910</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>Road Closure within the City of Greater Bendigo\r\nSLD (Styled Layer
+                    Descriptor) </description>
+                <name>City of Greater Bendigo Road Closures SLD</name>
+                <format>SLD</format>
+                <url>https://data.gov.au/data/dataset/a0f2aa22-512d-4c08-9b7d-bb8a51163f4c/resource/ddd2471e-30dd-4a0d-9d5e-e5acdb4cd4b8/download/cogb-road-closures.sld</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2016-05-18T14:47:20.358988</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2017-07-24T00:40:39.516748</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>59810c63-c411-4546-8726-dca51b26cb8e</revision_id>
+                <url_type>upload</url_type>
+                <id>ddd2471e-30dd-4a0d-9d5e-e5acdb4cd4b8</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>View the data in this dataset online via an online map</description>
+                <name>City of Greater Bendigo : Road Closures - Preview this Dataset (WMS)</name>
+                <format>WMS</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wms?request=GetCapabilities</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-08-27T17:17:22.325370</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T03:17:21.764951</last_modified>
+                <position>2</position>
+                <wms_layer>ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c</wms_layer>
+                <revision_id>15c3c84e-85ac-4080-b623-597f0e0e1297</revision_id>
+                <url_type/>
+                <id>ab5cde48-7383-4f64-ad60-67e335c6a85d</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>WFS API Link for use in Desktop GIS tools</description>
+                <name>City of Greater Bendigo : Road Closures Web Feature Service API Link</name>
+                <format>WFS</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wfs</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-08-27T17:17:25.104072</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T03:17:24.611146</last_modified>
+                <id>d4f84acc-fd4a-4c2c-b5a9-e01f4558fe29</id>
+                <position>3</position>
+                <revision_id>15c3c84e-85ac-4080-b623-597f0e0e1297</revision_id>
+                <url_type/>
+                <wfs_layer>ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c</wfs_layer>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>For use in web-based data visualisation of this
+                    collection</description>
+                <name>City of Greater Bendigo : Road Closures GeoJSON</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/geoserver/greater-bendigo-road-closures/wfs?request=GetFeature&amp;typeName=ckan_a0f2aa22_512d_4c08_9b7d_bb8a51163f4c&amp;outputFormat=json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a0f2aa22-512d-4c08-9b7d-bb8a51163f4c</package_id>
+                <created>2019-08-27T17:17:27.900996</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T03:17:27.409100</last_modified>
+                <position>4</position>
+                <revision_id>15c3c84e-85ac-4080-b623-597f0e0e1297</revision_id>
+                <url_type/>
+                <id>611cb133-95be-4b41-8887-574d1ddb25ce</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <num_resources>5</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>Bendigo</display_name>
+                <id>7e6e8c07-d68c-4d9a-9619-a88db9a66c57</id>
+                <name>Bendigo</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>closure</display_name>
+                <id>7ac46cc8-4e2a-4904-8d09-d30353f6fd72</id>
+                <name>closure</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>road</display_name>
+                <id>3c06e670-f520-40ae-8c21-0c3ca21f7874</id>
+                <name>road</name>
+            </tags>
+            <temporal_coverage_from>2016-05-10</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>09d77289-89aa-49ae-b265-479ee97a0bcc</creator_user_id>
+            <organization>
+                <description>The City of Greater Bendigo is situated in the geographic centre of
+                    Victoria, covering almost 3,000 square kilometres.\r\nWe enjoy many features of
+                    a thriving regional town with a strong community spirit.\r\n</description>
+                <created>2016-04-26T14:53:56.152975</created>
+                <title>City of Greater Bendigo</title>
+                <name>city-of-greater-bendigo</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2016-04-27-232837.816371COGBlogo.jpg</image_url>
+                <revision_id>69554a17-04b2-481d-95de-6a4718d4abf5</revision_id>
+                <type>organization</type>
+                <id>a56f8067-b250-4c32-9609-f2191dc88a3a</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>greater-bendigo-road-closures</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Road closures within the City of Greater Bendigo</notes>
+            <owner_org>a56f8067-b250-4c32-9609-f2191dc88a3a</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/3.0/au/</license_url>
+            <data_state>active</data_state>
+            <title>City of Greater Bendigo : Road Closures</title>
+            <revision_id>3ec4cedf-3950-48f4-839f-0cddffd80d63</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>gis-wcma</maintainer>
+            <jurisdiction>Victorian Public Sector</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>6</num_tags>
+            <geospatial_topic>Elevation</geospatial_topic>
+            <id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</id>
+            <metadata_created>2018-01-02T00:37:42.059015</metadata_created>
+            <spatial_coverage>http://services.land.vic.gov.au/catalogue/publicproxy/guest/dv_geoserver/datavic/wfs?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetFeature&amp;TYPENAME=datavic:CATCHMENTS_CMA100&amp;SRSNAME=EPSG:4283&amp;cql_filter=CMA_NO=2</spatial_coverage>
+            <metadata_modified>2019-08-28T03:56:03.584039</metadata_modified>
+            <author>Wimmera CMA</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[140.943637498177,-37.378335738714],[140.943637498177,-35.6266079402284],[143.376716364864,-35.6266079402284],[143.376716364864,-37.378335738714],[140.943637498177,-37.378335738714]]]}</spatial>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>gis@wcma.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>Grid index for the Wimmera CMA 2004 Lidar Catchment
+                    (Shapefile)</description>
+                <name>Contour Grid Index</name>
+                <format>zip (shp)</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/929b962d-2c08-4f43-b7b9-8c6bd3947253/download/index_grid.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-12T03:21:05.114036</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-12T03:21:05.025737</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>929b962d-2c08-4f43-b7b9-8c6bd3947253</id>
+                <resource_type/>
+                <size>161146</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>External link to dem datasets</description>
+                <name>DEM Tiles (External Link)</name>
+                <format/>
+                <url>https://wcma.box.com/v/elevation2004dem</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T01:49:52.915105</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>28798468-aea5-4f0a-b4fc-0a8e6eebee77</revision_id>
+                <url_type/>
+                <id>e8ff2363-92bd-4817-acfd-b5797f720d9e</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>External link to contour datasets</description>
+                <name>Contour Tiles (External Link)</name>
+                <format/>
+                <url>https://wcma.box.com/v/elevation2004contours</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T01:50:11.810712</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified/>
+                <position>2</position>
+                <wms_layer/>
+                <revision_id>8d53af07-8662-4f4a-885d-43e009f3cb0c</revision_id>
+                <url_type/>
+                <id>8df7adf9-abfb-44e5-9e8d-6eb04f5650fb</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Wimmera Trench &amp; Warrachnabeal Metadata (0.5m)</name>
+                <format>PDF</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/386f1baa-860e-40d9-aa84-b5a6a8d2e7e1/download/wimmeratrenchwarrachnabeal_0.5m.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T02:11:25.742494</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-19T02:11:25.617758</last_modified>
+                <position>3</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>386f1baa-860e-40d9-aa84-b5a6a8d2e7e1</id>
+                <resource_type/>
+                <size>648573</size>
+            </resources>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Yarriambiack Creek &amp; North East Plains Metadata (1m)</name>
+                <format>PDF</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/b84593f1-f3e0-4ff0-b1fe-6de8529cb973/download/yarricreeknortheastplains_1m.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T02:12:05.233263</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-19T02:12:05.105786</last_modified>
+                <position>4</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>b84593f1-f3e0-4ff0-b1fe-6de8529cb973</id>
+                <resource_type/>
+                <size>797982</size>
+            </resources>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>West of Wimmera Trench Metadata (1m)</name>
+                <format>PDF</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/8a72153b-7143-4a0b-875f-f78d54a835dc/download/westofwimmeratrench_1m.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T02:12:40.018401</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-19T02:12:39.895096</last_modified>
+                <position>5</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>8a72153b-7143-4a0b-875f-f78d54a835dc</id>
+                <resource_type/>
+                <size>826313</size>
+            </resources>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Other Areas Metadata (1m)</name>
+                <format>PDF</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/15216b86-cf44-41f0-bc4f-478f2bb2e649/download/otherareas_1m.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T02:13:08.610290</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-19T02:13:08.476016</last_modified>
+                <position>6</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>15216b86-cf44-41f0-bc4f-478f2bb2e649</id>
+                <resource_type/>
+                <size>881797</size>
+            </resources>
+            <resources>
+                <mimetype>application/pdf</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>DEM Metadata (2m)</name>
+                <format>PDF</format>
+                <url>https://data.gov.au/data/dataset/a1bcd185-bcbb-43d4-9170-a0db57dae08b/resource/beeef74b-3d2d-432f-9471-147f060ca51c/download/dem_2m.pdf</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-19T02:14:21.295908</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-19T02:14:21.161207</last_modified>
+                <position>7</position>
+                <wms_layer/>
+                <revision_id>b7a55a2c-3d0e-4699-be20-c7c807f7486d</revision_id>
+                <url_type>upload</url_type>
+                <id>beeef74b-3d2d-432f-9471-147f060ca51c</id>
+                <resource_type/>
+                <size>789940</size>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>View the data in this dataset online via an online map</description>
+                <name>Wimmera CMA Elevation - Preview this Dataset (WMS)</name>
+                <format>WMS</format>
+                <url>https://data.gov.au/geoserver/wimmeracma-elevation/wms?request=GetCapabilities</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-20T17:22:32.211971</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-21T03:22:32.084013</last_modified>
+                <position>8</position>
+                <wms_layer>ckan_a1bcd185_bcbb_43d4_9170_a0db57dae08b</wms_layer>
+                <revision_id>9d169db4-8f67-41df-9eb8-1d4b2f353c99</revision_id>
+                <url_type/>
+                <id>44827e6c-5ec1-40ab-99b6-1bdbcfdc11ca</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>WFS API Link for use in Desktop GIS tools</description>
+                <name>Wimmera CMA Elevation Web Feature Service API Link</name>
+                <format>WFS</format>
+                <url>https://data.gov.au/geoserver/wimmeracma-elevation/wfs</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-20T17:22:34.306758</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-21T03:22:34.173113</last_modified>
+                <id>1d417c7a-52b9-457f-8189-a9db3203685d</id>
+                <position>9</position>
+                <revision_id>f2be7517-3a59-4fd0-a048-7b8226008c4f</revision_id>
+                <url_type/>
+                <wfs_layer>ckan_a1bcd185_bcbb_43d4_9170_a0db57dae08b</wfs_layer>
+                <resource_type/>
+                <size/>
+            </resources>
+            <resources>
+                <mimetype/>
+                <cache_url/>
+                <hash/>
+                <description>For use in web-based data visualisation of this
+                    collection</description>
+                <name>Wimmera CMA Elevation GeoJSON</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/geoserver/wimmeracma-elevation/wfs?request=GetFeature&amp;typeName=ckan_a1bcd185_bcbb_43d4_9170_a0db57dae08b&amp;outputFormat=json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>a1bcd185-bcbb-43d4-9170-a0db57dae08b</package_id>
+                <created>2019-08-20T17:22:36.296642</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-21T03:22:36.161248</last_modified>
+                <position>10</position>
+                <revision_id>d92b7c83-7fe4-4375-ad55-70e262ef4a7c</revision_id>
+                <url_type/>
+                <id>d4624c84-8938-4e90-bc4c-3726d1653d3f</id>
+                <resource_type/>
+                <size/>
+            </resources>
+            <num_resources>11</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>DEM - Digital Elevation Model</display_name>
+                <id>b054fdf5-bf7f-4b47-906b-ae518ba32942</id>
+                <name>DEM - Digital Elevation Model</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>contours</display_name>
+                <id>65041fe7-e7ab-4cda-a7f1-1da206f2063c</id>
+                <name>contours</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>dem</display_name>
+                <id>f2dca6fd-2893-48c6-99f4-32ecc4022b1d</id>
+                <name>dem</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>digital elevation data</display_name>
+                <id>e86f955d-b525-4808-98cf-1699fc54e0a4</id>
+                <name>digital elevation data</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>elevation</display_name>
+                <id>a52a11ac-cb68-499b-bb3a-074478608e48</id>
+                <name>elevation</name>
+            </tags>
+            <temporal_coverage_from>2004-01-01</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Science</display_name>
+                <description>Developing policy and standards to support research and systematic
+                    studies. Administering scientific bodies and monitoring industry research and
+                    development programs. Providing funding and implementing promotional strategies.
+                    Includes research into living things and their environments, natural laws and
+                    the application of knowledge to practical problems. \r\n\r\nIncludes components
+                    listed at http://agift.naa.gov.au/000010.htm\r\n</description>
+                <image_display_url/>
+                <title>Science</title>
+                <id>049a32a5-dac6-48c0-9add-e7847e85b7b3</id>
+                <name>sciences</name>
+            </groups>
+            <creator_user_id>431a3747-b64c-4aa4-9583-2995bfa635dc</creator_user_id>
+            <organization>
+                <description>Wimmera CMA works in partnership with the community, stakeholders, and
+                    partners to deliver a range of services to improve and enhance the condition of
+                    the region&amp;#8217;s environment.</description>
+                <created>2016-04-01T12:29:46.181002</created>
+                <title>Wimmera CMA</title>
+                <name>wimmera-cma</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>2016-04-01-043141.670781WCMAlogoplustext.jpg</image_url>
+                <revision_id>cc17a0d2-0df2-412e-b87f-2a86c81df4c2</revision_id>
+                <type>organization</type>
+                <id>d62506f6-4203-4854-a817-a773b2894e10</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wimmeracma-elevation</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Elevation datasets for the Wimmera CMA region derived from a 2004 lidar
+                study.\r\n\r\n1.0m coverage is available across entire region, with 0.5m contours
+                available along the Wimmera River Trench.\r\n\r\nIndividual contour tiles available
+                below, or entire dataset can be viewed on wcma.pozi.com.\r\n\r\nDEM is also avaiable
+                at below.\r\n\r\nLidar is available upon request.\r\n\r\nDataset provided represents
+                the grid of available tiles for the contours dataset.\r\n\r\nAlthough all due care
+                has been taken to ensure that this data is correct, no warranty is expressed or
+                implied by Wimmera CMA in its use.</notes>
+            <owner_org>d62506f6-4203-4854-a817-a773b2894e10</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>Wimmera CMA Elevation</title>
+            <revision_id>b59b1a3f-477a-41b6-9353-f0862826ac07</revision_id>
+            <update_freq>never</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>wyndhamgis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>2</num_tags>
+            <id>dd7d4020-7558-4e88-b9bc-001ff5fc8c3f</id>
+            <metadata_created>2018-08-27T05:57:29.447005</metadata_created>
+            <spatial_coverage>GA83: WYNDHAM</spatial_coverage>
+            <metadata_modified>2019-08-28T03:50:37.096439</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [128.12429,-15.4869]}</spatial>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@wyndham.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Wyndham Air Quality</name>
+                <format>JSON</format>
+                <url>https://data.gov.au/data/dataset/dd7d4020-7558-4e88-b9bc-001ff5fc8c3f/resource/bc5f476c-af21-49a7-8ca0-187425e2473b/download/wyndham-air-qulaity.json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>dd7d4020-7558-4e88-b9bc-001ff5fc8c3f</package_id>
+                <created>2018-08-27T05:58:35.950730</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T03:50:37.063795</last_modified>
+                <position>0</position>
+                <revision_id>33427fb2-500c-4580-8dbc-7f812881577a</revision_id>
+                <url_type>upload</url_type>
+                <id>bc5f476c-af21-49a7-8ca0-187425e2473b</id>
+                <resource_type/>
+                <size>621</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>air quality</display_name>
+                <id>be5d6d30-0ef9-49e0-be9e-d30baf29ca49</id>
+                <name>air quality</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>smart city</display_name>
+                <id>9d33e0f0-7794-44d2-b6bd-06b3d585a37d</id>
+                <name>smart city</name>
+            </tags>
+            <temporal_coverage_from>2018-08-27</temporal_coverage_from>
+            <language>English</language>
+            <creator_user_id>f9073dab-7727-4675-99ff-759a63420043</creator_user_id>
+            <organization>
+                <description>Wyndham City, located in the outer west of Melbourne is one of seven
+                    designated Victorian growth areas. Comprising the predominantly residential
+                    suburbs of Werribee, Hoppers Crossing, Point Cook, Sanctuary Lakes, Tarneit,
+                    Truganina and Wyndham Vale and the small rural township of Little River the city
+                    also boasts one of Melbourne&amp;#8217;s largest industrial precincts at
+                    Laverton North.</description>
+                <created>2015-02-25T21:47:37.561050</created>
+                <title>Wyndham City Council</title>
+                <name>wyndham-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>3c0b90ab-9dbb-4d3c-8850-31558e441bf0</revision_id>
+                <type>organization</type>
+                <id>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wyndham-air-quality</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Near real time air quality data-test</notes>
+            <owner_org>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>Wyndham Air Quality</title>
+            <revision_id>919f4487-e192-47fa-b18a-90a18c5241bc</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 2.5 Australia</license_title>
+            <maintainer>wyndhamgis</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>2</num_tags>
+            <id>08531201-ac9f-4f5f-bb7e-ac16b1da28b4</id>
+            <metadata_created>2018-06-28T22:50:46.691984</metadata_created>
+            <spatial_coverage>VIC5474</spatial_coverage>
+            <metadata_modified>2019-08-28T03:39:12.512382</metadata_modified>
+            <author>Wyndham City Council</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <spatial>{&quot;type&quot;: &quot;Point&quot;,&quot;coordinates&quot;:
+                [144.6523611,-37.9043056]}</spatial>
+            <license_id>cc-by-2.5</license_id>
+            <contact_point>gis@wyndham.vic.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/json</mimetype>
+                <cache_url/>
+                <hash/>
+                <description/>
+                <name>Wyndham Smart Bin Latest Fullness Information</name>
+                <format>GeoJSON</format>
+                <url>https://data.gov.au/data/dataset/08531201-ac9f-4f5f-bb7e-ac16b1da28b4/resource/15732b49-3e50-40ce-8dfd-0efed18661f4/download/sb_fill_lvel.json</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>08531201-ac9f-4f5f-bb7e-ac16b1da28b4</package_id>
+                <created>2018-06-28T23:06:27.249110</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T03:39:12.476898</last_modified>
+                <position>0</position>
+                <revision_id>890450e8-0a9d-483b-9b73-21eb2eb6fe0b</revision_id>
+                <url_type>upload</url_type>
+                <id>15732b49-3e50-40ce-8dfd-0efed18661f4</id>
+                <resource_type/>
+                <size>16139</size>
+            </resources>
+            <num_resources>1</num_resources>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>rubbish bin</display_name>
+                <id>5f7b7af3-a7f0-424d-beac-4a9ecb5e05b6</id>
+                <name>rubbish bin</name>
+            </tags>
+            <tags>
+                <vocabulary_id/>
+                <state>active</state>
+                <display_name>smart city</display_name>
+                <id>9d33e0f0-7794-44d2-b6bd-06b3d585a37d</id>
+                <name>smart city</name>
+            </tags>
+            <temporal_coverage_from>2018-06-29</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Civic Infrastructure</display_name>
+                <description>Developing policy to support the growth of towns and cities.
+                    Implementing programs to manage urban development and maintain essential
+                    services. Installing buildings and services to meet the administrative, social
+                    and recreational needs of local residents.\r\n\r\nIncludes components listed at
+                    http://agift.naa.gov.au/000424.htm</description>
+                <image_display_url/>
+                <title>Civic Infrastructure</title>
+                <id>7d67a152-2ac6-4f5f-b1e5-f6a2791067cc</id>
+                <name>civic</name>
+            </groups>
+            <creator_user_id>f9073dab-7727-4675-99ff-759a63420043</creator_user_id>
+            <organization>
+                <description>Wyndham City, located in the outer west of Melbourne is one of seven
+                    designated Victorian growth areas. Comprising the predominantly residential
+                    suburbs of Werribee, Hoppers Crossing, Point Cook, Sanctuary Lakes, Tarneit,
+                    Truganina and Wyndham Vale and the small rural township of Little River the city
+                    also boasts one of Melbourne&amp;#8217;s largest industrial precincts at
+                    Laverton North.</description>
+                <created>2015-02-25T21:47:37.561050</created>
+                <title>Wyndham City Council</title>
+                <name>wyndham-city-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>3c0b90ab-9dbb-4d3c-8850-31558e441bf0</revision_id>
+                <type>organization</type>
+                <id>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>wyndham-smart-bin-fill-level</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>Latest fill level of smart bins installed in Werribee and Point Cook areas. The
+                dataset updated every hour to provide the latest fullness information.</notes>
+            <owner_org>7f4ec0eb-7f04-4491-bd7c-f1c21af2fd52</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/2.5/au/</license_url>
+            <data_state>active</data_state>
+            <title>Wyndham Smart Bin Fill level</title>
+            <revision_id>4f1add6f-39e8-4f24-b058-5c1412eacd78</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution Share Alike 4.0
+                International</license_title>
+            <maintainer>jthomas</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>0</num_tags>
+            <id>147a7ff0-e091-4752-9ca3-9c8707895953</id>
+            <metadata_created>2019-08-28T02:31:46.906235</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=QLD24498</spatial_coverage>
+            <metadata_modified>2019-08-28T02:53:11.122484</metadata_modified>
+            <author>Noosa Shire Council</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-nc</license_id>
+            <contact_point>opendata@noosa.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <cache_last_updated/>
+                <package_id>147a7ff0-e091-4752-9ca3-9c8707895953</package_id>
+                <datastore_active>False</datastore_active>
+                <id>7fa7581a-ed54-4912-b02f-a2e5ec40784c</id>
+                <size>102780</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Zipped ESRI ArcGIS shapefiles of koala location data to
+                    2014</description>
+                <format>esri shapefile - zipped</format>
+                <last_modified>2019-08-28T02:53:11.098694</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>Noosa_Koalas_2014</name>
+                <created>2019-08-28T02:32:46.997039</created>
+                <url>https://data.gov.au/data/dataset/147a7ff0-e091-4752-9ca3-9c8707895953/resource/7fa7581a-ed54-4912-b02f-a2e5ec40784c/download/noosa_koalas_2014_all_lp_sj_re9.zip</url>
+                <mimetype_inner/>
+                <position>0</position>
+                <revision_id>8cc8dde4-8322-46ed-911c-b954e5714c58</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>1</num_resources>
+            <temporal_coverage_from>2016-01-01</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage
+                    concerns.\r\n\r\nInvolves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>d5cda03b-fa9c-43d1-ab97-83603edc1518</creator_user_id>
+            <organization>
+                <description>Noosa Shire Council is a local government authority on the Sunshine
+                    Coast in the state of Queensland Australia.\r\n</description>
+                <created>2014-08-07T01:59:13.326601</created>
+                <title>Noosa Shire Council</title>
+                <name>noosa-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>20140807-022133.043844nclogosrgb.jpg</image_url>
+                <revision_id>70c34ff5-b2b0-4c29-bb57-cccf4af661f2</revision_id>
+                <type>organization</type>
+                <id>6faaf8e8-19c7-4329-9843-d390becec290</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>koala-records-for-twenty-years-to-2016</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Data provided for the 2019 GovHack event. Koala records for twenty years to
+                2014</notes>
+            <owner_org>6faaf8e8-19c7-4329-9843-d390becec290</owner_org>
+            <license_url>https://creativecommons.org/licenses/by-sa/4.0/legalcode</license_url>
+            <data_state>active</data_state>
+            <title>Koala records for twenty years to 2014</title>
+            <revision_id>75c2d8d3-1525-4d29-9650-9c6b3d7d82b3</revision_id>
+            <update_freq>never</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution Share Alike 4.0
+                International</license_title>
+            <maintainer>jthomas</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>0</num_tags>
+            <id>cdb245d0-fb7a-4521-a3db-4a7abd371704</id>
+            <metadata_created>2019-08-28T02:25:54.440137</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=QLD24498</spatial_coverage>
+            <metadata_modified>2019-08-28T02:29:42.922897</metadata_modified>
+            <author>Noosa Shire Council</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-nc</license_id>
+            <contact_point>opendata@noosa.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <cache_last_updated/>
+                <package_id>cdb245d0-fb7a-4521-a3db-4a7abd371704</package_id>
+                <datastore_active>False</datastore_active>
+                <id>758cd40c-26c5-453e-a0ba-7613e327678b</id>
+                <size>41783</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Zipped ESRI ArcGIS shapefiles of Koala tracking data to 2013 for Noosa
+                    Shire provided here for the 2019 GovHack event.</description>
+                <format>esri shapefile - zipped</format>
+                <last_modified>2019-08-28T02:28:10.553532</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>Noosa_Koala_Tracker_20131130.zip</name>
+                <created>2019-08-28T02:28:10.654128</created>
+                <url>https://data.gov.au/data/dataset/cdb245d0-fb7a-4521-a3db-4a7abd371704/resource/758cd40c-26c5-453e-a0ba-7613e327678b/download/noosa_koala_tracker_20131130.zip</url>
+                <mimetype_inner/>
+                <position>0</position>
+                <revision_id>06bf3f10-cff9-4bee-a64e-fd20d320b14b</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>1</num_resources>
+            <temporal_coverage_from>2013-11-30</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage
+                    concerns.\r\n\r\nInvolves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>d5cda03b-fa9c-43d1-ab97-83603edc1518</creator_user_id>
+            <organization>
+                <description>Noosa Shire Council is a local government authority on the Sunshine
+                    Coast in the state of Queensland Australia.\r\n</description>
+                <created>2014-08-07T01:59:13.326601</created>
+                <title>Noosa Shire Council</title>
+                <name>noosa-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>20140807-022133.043844nclogosrgb.jpg</image_url>
+                <revision_id>70c34ff5-b2b0-4c29-bb57-cccf4af661f2</revision_id>
+                <type>organization</type>
+                <id>6faaf8e8-19c7-4329-9843-d390becec290</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>koala-tracking-data-from-2016</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Koala tracking data mapping provided here for use in the GovHack 2019
+                event</notes>
+            <owner_org>6faaf8e8-19c7-4329-9843-d390becec290</owner_org>
+            <license_url>https://creativecommons.org/licenses/by-sa/4.0/legalcode</license_url>
+            <data_state>active</data_state>
+            <title>Koala tracking data to 2013</title>
+            <revision_id>67ba6b4f-131b-4319-a97b-0ca599bd6e16</revision_id>
+            <update_freq>never</update_freq>
+        </results>
+        <results>
+            <license_title>Public Domain Mark</license_title>
+            <maintainer>jthomas</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>0</num_tags>
+            <id>591206d6-c258-4518-b4bc-3f7d48d3a25f</id>
+            <metadata_created>2019-08-28T02:11:28.334273</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=QLD24498</spatial_coverage>
+            <metadata_modified>2019-08-28T02:12:53.750840</metadata_modified>
+            <author>Noosa Shire Council</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>pdm</license_id>
+            <contact_point>opendata@noosa.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <cache_last_updated/>
+                <package_id>591206d6-c258-4518-b4bc-3f7d48d3a25f</package_id>
+                <datastore_active>False</datastore_active>
+                <id>19d1aa79-033d-43bd-b366-ff1ee307878c</id>
+                <size>716127</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Zipped ESRI ArcGIS geodatabase of koala habitat regrowth areas in Noosa
+                    Shire.</description>
+                <format>zipped esri file geodatabase</format>
+                <last_modified>2019-08-28T02:12:25.708318</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>koalahabitat_regrowth.gdb.zip</name>
+                <created>2019-08-28T02:12:25.794318</created>
+                <url>https://data.gov.au/data/dataset/591206d6-c258-4518-b4bc-3f7d48d3a25f/resource/19d1aa79-033d-43bd-b366-ff1ee307878c/download/koalahabitat_regrowth.gdb.zip</url>
+                <mimetype_inner/>
+                <position>0</position>
+                <revision_id>2ffb7db4-e6b9-49d3-b850-5d8cc4839f19</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>1</num_resources>
+            <temporal_coverage_from>2019-08-28</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage
+                    concerns.\r\n\r\nInvolves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>d5cda03b-fa9c-43d1-ab97-83603edc1518</creator_user_id>
+            <organization>
+                <description>Noosa Shire Council is a local government authority on the Sunshine
+                    Coast in the state of Queensland Australia.\r\n</description>
+                <created>2014-08-07T01:59:13.326601</created>
+                <title>Noosa Shire Council</title>
+                <name>noosa-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>20140807-022133.043844nclogosrgb.jpg</image_url>
+                <revision_id>70c34ff5-b2b0-4c29-bb57-cccf4af661f2</revision_id>
+                <type>organization</type>
+                <id>6faaf8e8-19c7-4329-9843-d390becec290</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>koala-habitat-regrowth-areas</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Mapping of koala habitat regrowth areas in Noosa Shire.</notes>
+            <owner_org>6faaf8e8-19c7-4329-9843-d390becec290</owner_org>
+            <license_url>http://creativecommons.org/publicdomain/mark/1.0/</license_url>
+            <data_state>active</data_state>
+            <title>Koala habitat regrowth areas</title>
+            <revision_id>87bc92ff-89ec-4a54-a687-ac0b82bf8b07</revision_id>
+            <update_freq>infrequently</update_freq>
+        </results>
+        <results>
+            <license_title>Public Domain Mark</license_title>
+            <maintainer>jthomas</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>0</num_tags>
+            <id>bcc9bc0d-6533-4a95-a133-efd5c1f909a3</id>
+            <metadata_created>2019-08-28T02:00:06.385827</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=QLD24498</spatial_coverage>
+            <metadata_modified>2019-08-28T02:10:26.040461</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>pdm</license_id>
+            <contact_point>opendata@noosa.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <cache_last_updated/>
+                <package_id>bcc9bc0d-6533-4a95-a133-efd5c1f909a3</package_id>
+                <datastore_active>False</datastore_active>
+                <id>e92e2cd5-20fd-4e8c-ab4a-1d139d4ba2f2</id>
+                <size>50729</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Zipped ESRI ArcGIS geodatabase files for koala conservation areas in
+                    Noosa Shire.</description>
+                <format>zipped esri file geodatabase</format>
+                <last_modified>2019-08-28T02:05:41.711843</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>koalaconservationareas.gdb.zip</name>
+                <created>2019-08-28T02:05:41.796693</created>
+                <url>https://data.gov.au/data/dataset/bcc9bc0d-6533-4a95-a133-efd5c1f909a3/resource/e92e2cd5-20fd-4e8c-ab4a-1d139d4ba2f2/download/koalaconservationareas.gdb.zip</url>
+                <mimetype_inner/>
+                <position>0</position>
+                <revision_id>43ac5cd6-3f7e-4227-a73c-9ad626d2489e</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>1</num_resources>
+            <temporal_coverage_from>2019-08-28</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage
+                    concerns.\r\n\r\nInvolves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>d5cda03b-fa9c-43d1-ab97-83603edc1518</creator_user_id>
+            <organization>
+                <description>Noosa Shire Council is a local government authority on the Sunshine
+                    Coast in the state of Queensland Australia.\r\n</description>
+                <created>2014-08-07T01:59:13.326601</created>
+                <title>Noosa Shire Council</title>
+                <name>noosa-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>20140807-022133.043844nclogosrgb.jpg</image_url>
+                <revision_id>70c34ff5-b2b0-4c29-bb57-cccf4af661f2</revision_id>
+                <type>organization</type>
+                <id>6faaf8e8-19c7-4329-9843-d390becec290</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>koala-conservation-areas-mapping</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Mapping of koala conservation areas in Noosa Shire.</notes>
+            <owner_org>6faaf8e8-19c7-4329-9843-d390becec290</owner_org>
+            <license_url>http://creativecommons.org/publicdomain/mark/1.0/</license_url>
+            <data_state>active</data_state>
+            <title>Koala conservation areas mapping</title>
+            <revision_id>f8abe624-cbb4-46a7-bd5d-e61253c70a9b</revision_id>
+            <update_freq>infrequently</update_freq>
+        </results>
+        <results>
+            <license_title>Public Domain Mark</license_title>
+            <maintainer>jthomas</maintainer>
+            <jurisdiction>Local Government</jurisdiction>
+            <temporal_coverage_to/>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>1</num_tags>
+            <geospatial_topic>Environment</geospatial_topic>
+            <id>479302c7-20f1-4635-b808-27f589bb4378</id>
+            <metadata_created>2019-08-28T02:08:03.706028</metadata_created>
+            <spatial_coverage>http://www.ga.gov.au/place-names/PlaceDetails.jsp?submit1=QLD24498</spatial_coverage>
+            <metadata_modified>2019-08-28T02:09:44.756244</metadata_modified>
+            <author/>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>pdm</license_id>
+            <contact_point>opendata@noosa.qld.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <cache_last_updated/>
+                <package_id>479302c7-20f1-4635-b808-27f589bb4378</package_id>
+                <datastore_active>False</datastore_active>
+                <id>ec492b99-9ad6-414a-baa3-7bb0631e0b5a</id>
+                <size>526246</size>
+                <zip_extract>True</zip_extract>
+                <wms_layer/>
+                <state>active</state>
+                <hash/>
+                <description>Zipped ESRI ArcGIS database of koala habitat areas in Noosa
+                    Shire</description>
+                <format>zipped esri file geodatabase</format>
+                <last_modified>2019-08-28T02:09:22.025935</last_modified>
+                <url_type>upload</url_type>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <name>koalahabitatareas.gdb.zip</name>
+                <created>2019-08-28T02:09:22.120048</created>
+                <url>https://data.gov.au/data/dataset/479302c7-20f1-4635-b808-27f589bb4378/resource/ec492b99-9ad6-414a-baa3-7bb0631e0b5a/download/koalahabitatareas.gdb.zip</url>
+                <mimetype_inner/>
+                <position>0</position>
+                <revision_id>6d244175-82eb-4e8e-b224-f8756c0d5b3d</revision_id>
+                <resource_type/>
+            </resources>
+            <num_resources>1</num_resources>
+            <temporal_coverage_from>2019-08-28</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Environment</display_name>
+                <description>Developing policy to support the management of the surrounding natural
+                    and built environments. Balancing competing requirements to generate long term
+                    sustainable benefits for industry, tourism and the community. Protecting
+                    elements of the natural and built environment that are of special significance.
+                    Includes conservation of the national estate and world heritage
+                    concerns.\r\n\r\nInvolves components identified by AGIFT at
+                    http://agift.naa.gov.au/000478.htm</description>
+                <image_display_url/>
+                <title>Environment</title>
+                <id>707bd86f-3a3f-4810-93da-04e2b6d59a11</id>
+                <name>environment</name>
+            </groups>
+            <creator_user_id>d5cda03b-fa9c-43d1-ab97-83603edc1518</creator_user_id>
+            <organization>
+                <description>Noosa Shire Council is a local government authority on the Sunshine
+                    Coast in the state of Queensland Australia.\r\n</description>
+                <created>2014-08-07T01:59:13.326601</created>
+                <title>Noosa Shire Council</title>
+                <name>noosa-shire-council</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url>20140807-022133.043844nclogosrgb.jpg</image_url>
+                <revision_id>70c34ff5-b2b0-4c29-bb57-cccf4af661f2</revision_id>
+                <type>organization</type>
+                <id>6faaf8e8-19c7-4329-9843-d390becec290</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>koala-habitat-areas</name>
+            <isopen>False</isopen>
+            <url/>
+            <notes>Mapping of koala habitat areas in Noosa Shire.</notes>
+            <owner_org>6faaf8e8-19c7-4329-9843-d390becec290</owner_org>
+            <license_url>http://creativecommons.org/publicdomain/mark/1.0/</license_url>
+            <data_state>active</data_state>
+            <title>Koala habitat areas</title>
+            <revision_id>93f495ce-556d-4307-96f7-bccd9d9f7b7e</revision_id>
+            <update_freq>infrequently</update_freq>
+        </results>
+        <results>
+            <license_title>Creative Commons Attribution 4.0 International</license_title>
+            <maintainer>datagovaubot</maintainer>
+            <jurisdiction>Commonwealth of Australia</jurisdiction>
+            <temporal_coverage_to>2019-03-14</temporal_coverage_to>
+            <private>False</private>
+            <maintainer_email/>
+            <num_tags>0</num_tags>
+            <id>058118a3-b685-4af6-82c2-341a266a661f</id>
+            <metadata_created>2018-03-26T23:49:46.319291</metadata_created>
+            <spatial_coverage>Australia</spatial_coverage>
+            <metadata_modified>2019-08-28T01:39:42.276854</metadata_modified>
+            <author>Tax Practitioners Board</author>
+            <author_email/>
+            <state>active</state>
+            <version/>
+            <license_id>cc-by-4.0</license_id>
+            <contact_point>enquirymanagement@tpb.gov.au</contact_point>
+            <type>dataset</type>
+            <resources>
+                <mimetype>application/zip</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>TPB Public Register - compressed format</description>
+                <name>TPB Public Register - compressed</name>
+                <format>ZIP</format>
+                <url>https://data.gov.au/data/dataset/058118a3-b685-4af6-82c2-341a266a661f/resource/8d15c302-b1e2-4908-b860-2a52d6c9980a/download/tpb_register20190828.zip</url>
+                <datastore_active>False</datastore_active>
+                <cache_last_updated/>
+                <package_id>058118a3-b685-4af6-82c2-341a266a661f</package_id>
+                <created>2018-04-27T01:21:33.675955</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-28T01:39:42.239098</last_modified>
+                <position>0</position>
+                <wms_layer/>
+                <revision_id>39a870fa-0ecd-47fd-8484-21dcdcdf09cb</revision_id>
+                <url_type>upload</url_type>
+                <id>8d15c302-b1e2-4908-b860-2a52d6c9980a</id>
+                <resource_type/>
+                <size>9594577</size>
+            </resources>
+            <resources>
+                <mimetype>text/xml</mimetype>
+                <cache_url/>
+                <hash/>
+                <description>TPB Public Register</description>
+                <name>TPB Public Register</name>
+                <format>XML</format>
+                <url>https://data.gov.au/data/dataset/058118a3-b685-4af6-82c2-341a266a661f/resource/6d698ad4-bdea-4e8e-99f3-fe17d66f8ff5/download/tpb_register20190826.xml</url>
+                <datastore_active>True</datastore_active>
+                <cache_last_updated/>
+                <package_id>058118a3-b685-4af6-82c2-341a266a661f</package_id>
+                <created>2018-03-27T22:41:39.648055</created>
+                <state>active</state>
+                <mimetype_inner/>
+                <last_modified>2019-08-25T23:32:56.908160</last_modified>
+                <position>1</position>
+                <wms_layer/>
+                <revision_id>39a870fa-0ecd-47fd-8484-21dcdcdf09cb</revision_id>
+                <url_type>upload</url_type>
+                <id>6d698ad4-bdea-4e8e-99f3-fe17d66f8ff5</id>
+                <resource_type/>
+                <size>117306680</size>
+            </resources>
+            <num_resources>2</num_resources>
+            <temporal_coverage_from>2019-03-14</temporal_coverage_from>
+            <language>English</language>
+            <groups>
+                <display_name>Finance Management</display_name>
+                <description>Developing policy for the administration of public funds and other
+                    resources. Determining appropriate strategies for raising revenue and regulating
+                    expenditure. Monitoring economic indicators and forecasting trends to enable
+                    financial planning.\r\n\r\nInvolves components from AGIFT at
+                    http://agift.naa.gov.au/000001.htm</description>
+                <image_display_url/>
+                <title>Finance Management</title>
+                <id>7170b37f-994d-4056-b5fc-5ada01041f5a</id>
+                <name>finance</name>
+            </groups>
+            <creator_user_id>74003979-2c21-40fa-8890-df9411884cba</creator_user_id>
+            <organization>
+                <description/>
+                <created>2017-11-29T15:16:13.369319</created>
+                <title>Tax Practitioners Board</title>
+                <name>tax-practitioners-board</name>
+                <is_organization>True</is_organization>
+                <state>active</state>
+                <image_url/>
+                <revision_id>e64bc4c4-57f3-4eae-8289-333d6ef09070</revision_id>
+                <type>organization</type>
+                <id>b0854fab-6fdb-40d2-adc6-75dcb2291f8c</id>
+                <approval_status>approved</approval_status>
+            </organization>
+            <name>tpb-register</name>
+            <isopen>True</isopen>
+            <url/>
+            <notes>TPB Public Register</notes>
+            <owner_org>b0854fab-6fdb-40d2-adc6-75dcb2291f8c</owner_org>
+            <license_url>http://creativecommons.org/licenses/by/4.0</license_url>
+            <data_state>active</data_state>
+            <title>TPB Public Register</title>
+            <revision_id>78b48027-6cf5-491c-b085-2b73e21ef842</revision_id>
+            <update_freq>daily</update_freq>
+        </results>
+        <search_facets/>
+    </result>
+</datasets>

@@ -1,97 +1,15 @@
-try:
-    import urllib.request as urllib2
-except:
-    import urllib2
-import redis
 import os
-import ssl
-import json
-from xml.dom.minidom import parseString
+from xml.dom.minidom import Document
 from datetime import datetime, timezone
 import time
-from xml.dom.minidom import Document
-import numbers
+from utils.RedisPoster import RedisPoster
+from utils.Logger import Logger as MyLogger
+from utils.Database import DataBase as MyDataBase
+from utils.Request import Request
+from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
-
-class Request:
-    data = None
-    url = None
-
-    def __init__(self, url):
-        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
-                getattr(ssl, '_create_unverified_context', None)):
-            ssl._create_default_https_context = ssl._create_unverified_context
-        self.url = url
-
-    def getData(self):
-        self.data = None
-        retryCount = 0
-        while retryCount < 5:
-            try:
-                req = urllib2.Request(self.url)
-                req.add_header('User-Agent', 'ARDC Harvester')
-                fs = urllib2.urlopen(req, timeout=60)
-                self.data = fs.read()
-                return self.data
-            except Exception as e:
-                retryCount += 1
-                if retryCount > 4:
-                    raise RuntimeError(str(e) + " Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
-
-    def getURL(self):
-        return self.url
-
-    def postData(self, data):
-        try:
-            req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req, data, timeout=30)
-            self.data = f.read()
-            return self.data
-        except Exception as e:
-            raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
-
-    def postCompleted(self):
-        try:
-            req = urllib2.Request(self.url)
-            f = urllib2.urlopen(req, timeout=30)
-            self.data = f.read()
-            return self.data
-        except Exception as e:
-            pass
-
-
-class RedisPoster:
-
-    poster = False
-
-    def __init__(self):
-        if hasattr(myconfig, 'redis_poster_host') and myconfig.redis_poster_host != "":
-            self.poster = redis.StrictRedis(host=myconfig.redis_poster_host, port=6379, db=0)
-
-    def postMesage(self, chanel, message):
-        if self.poster:
-            self.poster.publish(chanel, message)
-
-
-class XSLT2Transformer:
-
-    #XSLT 2.0 transformer run in java
-
-    def __init__(self, transformerConfig):
-        self.__xsl = transformerConfig['xsl']
-        self.__outfile = transformerConfig['outFile']
-        self.__inputFile = transformerConfig['inFile']
-
-    def transform(self):
-        shellCommand = myconfig.java_home + " "
-        shellCommand += " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
-        shellCommand += " -o " + self.__outfile
-        shellCommand += " " + self.__inputFile
-        shellCommand += " " + self.__xsl
-        subprocess.check_output(shellCommand, stderr=subprocess.STDOUT, shell=True)
-        subprocess.call(shellCommand, shell=True)
-
+import json, numbers
 
 class Harvester():
     startUpTime = 0
@@ -99,6 +17,7 @@ class Harvester():
     recordCount = 0
     harvestInfo = None
     data = None
+    __xml = None
     logger = None
     database = None
     outputFilePath = None
@@ -109,59 +28,86 @@ class Harvester():
     errorLog = ""
     errored = False
     stopped = False
+    mode = 'HARVEST'
     completed = False
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
     redisPoster = False
+    combineFiles = False
 
-    def __init__(self, harvestInfo, logger, database):
+    def __init__(self, harvestInfo):
+        self.__xml = Document()
+        self.data = None
         self.startUpTime = int(time.time())
         self.harvestInfo = harvestInfo
+        self.mode = harvestInfo['mode']
         self.redisPoster = RedisPoster()
-        self.logger = logger
-        self.database = database
-        self.cleanPreviousHarvestRecords()
-        self.updateHarvestRequest()
-        self.setUpCrosswalk()
+        self.logger = MyLogger()
+        self.database = MyDataBase()
+
+
+
+    def setupdirs(self):
+        number_to_keep = 3
+        # set up the data source path
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+        elif len(os.listdir(self.outputDir)) > number_to_keep:
+            the_files = self.listdir_fullpath(self.outputDir)
+            the_files.sort(key=os.path.getmtime, reverse=True)
+            for i in range(number_to_keep, len(the_files)):
+                fileName = the_files[i]
+                try:
+                    if os.path.isfile(the_files[i]):
+                        os.unlink(the_files[i])
+                    else:
+                        self.emptyDirectory(the_files[i])
+                        os.rmdir(the_files[i])
+                except PermissionError as e:
+                    self.logger.logMessage("Unable to remove %s" % fileName, "ERROR")
+        #set up the batch path
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+        if not os.path.exists(self.outputDir):
+            os.makedirs(self.outputDir)
+        else:
+            self.emptyDirectory(self.outputDir)
+
 
     def harvest(self):
+        self.setupdirs()
+        self.updateHarvestRequest()
+        self.setUpCrosswalk()
         self.getHarvestData()
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
-    def cleanPreviousHarvestRecords(self):
-        directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id'])
-        number_to_keep = 3
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        elif len(os.listdir(directory)) > number_to_keep:
-            the_files = self.listdir_fullpath(directory)
-            the_files.sort(key=os.path.getmtime, reverse=True)
-            for i in range(number_to_keep, len(the_files)):
-                try:
-                    if os.path.isfile(the_files[i]):
-                        os.unlink(the_files[i])
-                    else:
-                        self.deleteDirectory(the_files[i])
-                        os.rmdir(the_files[i])
-                except Exception as e:
-                    self.logger.logMessage(str(repr(e)), "ERROR")
+    def crosswalk(self):
+        self.setStatus('REGENERATING CONTENT')
+        self.setUpCrosswalk()
+        self.runCrossWalk()
+        self.postHarvestData()
+        self.finishHarvest()
+
 
     def listdir_fullpath(self, d):
         return [os.path.join(d, f) for f in os.listdir(d)]
 
-    def deleteDirectory(self, directory):
+    def setCombineFiles(self, tf):
+        self.combineFiles = tf
+
+    def emptyDirectory(self, directory):
         for the_file in os.listdir(directory):
             file_path = os.path.join(directory, the_file)
             try:
                 if os.path.isfile(file_path):
                     os.unlink(file_path)
                 else:
-                    self.deleteDirectory(file_path)
+                    self.emptyDirectory(file_path)
                     os.rmdir(file_path)
-            except Exception as e:
-                self.logger.logMessage(e, "ERROR")
+            except PermissionError as e:
+                self.logger.logMessage("Unable to emptyDirectory %s" % file_path, "ERROR")
 
     def getHarvestData(self):
         if self.stopped:
@@ -177,27 +123,53 @@ class Harvester():
     def setUpCrosswalk(self):
         if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
            self.storeFileExtension = 'tmp'
+        #clean up previous crosswalk and import content
+           self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+           self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+           for file in os.listdir(self.outputDir):
+               if file.endswith(self.resultFileExtension) or \
+                       file.endswith(self.resultFileExtension + ".validated") or\
+                       file.endswith(self.resultFileExtension + ".processed"):
+                   try:
+                       if os.path.isfile(self.outputDir + os.sep + file):
+                           os.unlink(self.outputDir + os.sep + file)
+                       else:
+                           self.emptyDirectory(self.outputDir + os.sep + file)
+                           os.rmdir(self.outputDir + os.sep + file)
+                   except PermissionError as e:
+                       self.logger.logMessage("Unable to remove %s" % (self.outputDir + os.sep + file), "ERROR")
+
 
 
     def runCrossWalk(self):
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
-        outFile = self.outputDir  + os.sep + str(self.harvestInfo['batch_number']) + "." + self.resultFileExtension
-        self.setStatus("HARVESTING", "RUNNING CROSSWALK")
-        try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
-                                 'outFile' : outFile, 'inFile' : self.outputFilePath}
-            tr = XSLT2Transformer(transformerConfig)
-            tr.transform()
-        except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
-        except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
-            self.handleExceptions(e)
+        transformCount = 0
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                transformCount += 1
+        for file in os.listdir(self.outputDir):
+            if file.endswith(self.storeFileExtension):
+                self.logger.logMessage("runCrossWalk %s" %file)
+                outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                inFile = self.outputDir + os.sep + file
+                try:
+                    self.setStatus('RUNNING %s CROSSWALK ' %str(transformCount), "Generating %s:" % outFile)
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
+                    tr = XSLT2Transformer(transformerConfig)
+                    tr.transform()
+                    os.chmod(outFile, 0o775)
+                except subprocess.CalledProcessError as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
+                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
+                    self.handleExceptions(msg, transformCount == 1)
+                except Exception as e:
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
+                    self.handleExceptions(e, transformCount == 1)
+
 
     def postHarvestData(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -206,7 +178,7 @@ class Harvester():
         del postRequest
 
     def postHarvestError(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -216,7 +188,7 @@ class Harvester():
         del postRequest
 
     def postHarvestNoRecords(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
@@ -229,7 +201,7 @@ class Harvester():
     def updateHarvestRequest(self):
         self.checkHarvestStatus()
         self.write_summary()
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         upTime = int(time.time()) - self.startUpTime
         statusDict = {'status':self.__status,
@@ -270,7 +242,7 @@ class Harvester():
 
 
     def checkHarvestStatus(self):
-        if self.stopped:
+        if self.stopped or self.mode == 'TEST':
             return
         attempts = 0
         while attempts < 3:
@@ -313,22 +285,75 @@ class Harvester():
                     '(checkHarvestStatus) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def storeHarvestData(self):
-        if self.stopped:
+        if self.stopped or not(self.data):
             return
         try:
-            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-                os.chmod(directory, 0o777)
-            self.outputDir = directory
-            self.outputFilePath = directory + str(self.harvestInfo['batch_number']) + "." + self.storeFileExtension
-            dataFile = open(self.outputFilePath, 'wb', 0o777)
-            self.setStatus("HARVESTING", self.outputFilePath)
-            dataFile.write(self.data)
-            dataFile.close()
+            #if data is JSON then save the json as well as a XML serialised copy
+            if self.is_json(self.data):
+                jsonObj = json.loads(self.data, strict=False)
+                self.storeJsonData(jsonObj, str(self.pageCount))
+                self.storeDataAsXML(jsonObj, str(self.pageCount))
+            else:
+                self.outputFilePath = self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension
+                self.logger.logMessage("Harvester (storeHarvestData) %s " % (self.outputFilePath), "DEBUG")
+                dataFile = open(self.outputFilePath, 'w')
+                self.setStatus("HARVESTING", self.outputFilePath)
+                dataFile.write(self.data)
+                dataFile.close()
+                os.chmod(self.outputFilePath, 0o775)
         except Exception as e:
             self.handleExceptions(e)
-            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("Harvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
+
+
+    def storeJsonData(self, data, fileName):
+        if self.stopped:
+           return
+        try:
+            outputFilePath = self.outputDir + os.sep + fileName + ".json"
+            self.logger.logMessage("Harvester (storeJsonData) %s " % (outputFilePath), "DEBUG")
+            dataFile = open(outputFilePath, 'w')
+            json.dump(data, dataFile)
+            dataFile.close()
+            os.chmod(outputFilePath, 0o775)
+        except Exception as e:
+            self.handleExceptions(e)
+            self.logger.logMessage("Harvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
+
+
+    def storeDataAsXML(self, data, fileName):
+        if self.stopped:
+           return
+        try:
+            self.__xml = Document()
+            root = self.__xml.createElement('datasets')
+            self.__xml.appendChild(root)
+            self.outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
+            dataFile = open(self.outputFilePath, 'w')
+            if isinstance(data, list):
+                for j in data:
+                    ds = self.__xml.createElement('dataset')
+                    self.parse_element(ds, j)
+                    root.appendChild(ds)
+                self.__xml.writexml(dataFile)
+                dataFile.close()
+            else:
+                self.parse_element(root, data)
+                self.__xml.writexml(dataFile)
+                dataFile.close()
+            os.chmod(self.outputFilePath, 0o775)
+            self.logger.logMessage("Harvester (storeDataAsXML) %s " % (self.outputFilePath), "DEBUG")
+        except Exception as e:
+            self.logger.logMessage("Harvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
+
+    # https://stackoverflow.com/questions/11294535/verify-if-a-string-is-json-in-python
+
+    def is_json(self, myjson):
+        try:
+            json_object = json.loads(myjson)
+        except ValueError as e:
+            return False
+        return True
 
     def getStatus(self):
         self.checkHarvestStatus()
@@ -448,6 +473,7 @@ class Harvester():
             return 0
 
     def write_to_field(self, summary, field):
+
         """
         Writes into the harvests table
         Retries 3 times
@@ -458,10 +484,11 @@ class Harvester():
         :param summary: the content that will be json.dumps
         :param field: the field where it will be written to
         """
+        if self.stopped or self.mode == 'TEST':
+            return
         attempts = 0
         while attempts < 3:
             try:
-                self.logger.logMessage('(write_to_field) %s' % field)
                 conn = self.database.getConnection()
                 cur = conn.cursor()
                 cur.execute("UPDATE %s SET `%s` ='%s' where `harvest_id` = %s"
@@ -539,3 +566,46 @@ class Harvester():
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
+
+    # the simplest json to XML parser
+    def parse_element(self, root, j):
+        if j is None:
+            return
+        if isinstance(j, dict):
+            for key in j.keys():
+                value = j[key]
+                if isinstance(value, list):
+                    for e in value:
+                        elem = self.getElement(key)
+                        self.parse_element(elem, e)
+                        root.appendChild(elem)
+                else:
+                    if key.isdigit():
+                        elem = self.__xml.createElement('item')
+                        elem.setAttribute('value', key)
+                    else:
+                        elem = self.getElement(key)
+                    self.parse_element(elem, value)
+                    root.appendChild(elem)
+        elif isinstance(j, str):
+            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            root.appendChild(text)
+        elif isinstance(j, numbers.Number):
+            text = self.__xml.createTextNode(str(j))
+            root.appendChild(text)
+        else:
+            raise Exception("bad type %s for %s" % (type(j), j,))
+
+
+    def getElement(self, jsonld_key):
+        qName = jsonld_key.replace(' ', '')
+        qName = qName.replace('@', '')
+        # some ckan harvest during tests produced {"": "true"} fields
+        if qName == '':
+            qName = 'unknown'
+        ns = qName.split("#", 2)
+        if len(ns) == 2:
+            elem = self.__xml.createElement(ns[1])
+        else:
+            elem = self.__xml.createElement(qName)
+        return elem

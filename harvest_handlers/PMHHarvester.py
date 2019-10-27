@@ -1,5 +1,5 @@
 from Harvester import *
-
+from xml.dom.minidom import parseString
 class PMHHarvester(Harvester):
     """
         {
@@ -14,18 +14,23 @@ class PMHHarvester(Harvester):
             ]
         }
     """
-    __resumptionToken = False
+    __resumptionToken = ""
     __from = "1900-01-01T00:00:00Z"
-    __until = False
-    __metadataPrefix = False
-    __set = False
+    __until = None
+    __metadataPrefix = ""
+    __set = None
     retryCount = 0
     firstCall = True
     noRecordsMatchCodeValue = 'noRecordsMatch'
+
+
     def harvest(self):
-        now = datetime.now().replace(microsecond=0)
+        self.setupdirs()
+        self.updateHarvestRequest()
+        self.setUpCrosswalk()
+        self.data = None
         self.__until = datetime.fromtimestamp(self.startUpTime, timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-        self.__metadataPrefix= self.harvestInfo['provider_type']
+        self.__metadataPrefix = self.harvestInfo['provider_type']
         try:
             self.__set = self.harvestInfo['oai_set']
         except KeyError:
@@ -40,7 +45,7 @@ class PMHHarvester(Harvester):
                 time.sleep(0.1)
                 self.getHarvestData()
                 self.storeHarvestData()
-                self.runCrossWalk()
+            self.runCrossWalk()
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
@@ -50,6 +55,7 @@ class PMHHarvester(Harvester):
     def identifyRequest(self):
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
+        data = ""
         try:
             data = getRequest.getData()
         except Exception as e:
@@ -129,38 +135,6 @@ class PMHHarvester(Harvester):
             self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
         del getRequest
 
-    def storeHarvestData(self):
-        if self.stopped or not(self.data):
-            return
-        try:
-            directory = self.harvestInfo['data_store_path'] + os.sep + str(self.harvestInfo['data_source_id']) + os.sep + str(self.harvestInfo['batch_number']) + os.sep
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-                os.chmod(directory, 0o777)
-            self.outputDir = directory
-            dataFile = open(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension, 'wb', 0o777)
-
-            #self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + str(self.pageCount) + "." + self.storeFileExtension))
-            dataFile.write(self.data)
-            dataFile.close()
-        except Exception as e:
-            self.handleExceptions(e)
-            self.logger.logMessage("PMH (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
 
-    def runCrossWalk(self):
-        if self.stopped or self.harvestInfo['xsl_file'] == None or self.harvestInfo['xsl_file'] == '':
-            return
-        outFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.resultFileExtension
-        inFile = self.outputDir  + os.sep + str(self.pageCount) + "." + self.storeFileExtension
-        #self.setStatus("HARVESTING", "RUNNING CROSSWALK")
-        try:
-            transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile' : outFile, 'inFile' : inFile}
-            tr = XSLT2Transformer(transformerConfig)
-            tr.transform()
-        except subprocess.CalledProcessError as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-            self.handleExceptions("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()))
-        except Exception as e:
-            self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK", "ERROR")
-            self.handleExceptions(e)
+

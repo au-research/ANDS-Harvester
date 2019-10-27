@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type='text/xsl' href='oai2.xsl' ?>
+<OAI-PMH  xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2019-08-28T04:23:47Z</responseDate>
+  <request verb="Identify" resumptionToken="">http://dro.deakin.edu.au/oai.php</request>
+  
+  <Identify >
+    <repositoryName>DRO</repositoryName>
+    <baseURL>http://dro.deakin.edu.au/oai.php</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>drosupport@deakin.edu.au</adminEmail>
+    <earliestDatestamp>2001-01-01T00:00:00Z</earliestDatestamp>
+    <deletedRecord>transient</deletedRecord>
+    <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+    <description>
+      <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+        <scheme>oai</scheme>
+        <repositoryIdentifier>dro.deakin.edu.au</repositoryIdentifier>
+        <delimiter>:</delimiter>
+        <sampleIdentifier>oai:dro.deakin.edu.au:DU:23</sampleIdentifier>
+      </oai-identifier>
+    </description>
+    <description>
+      <eprints xmlns="http://www.openarchives.org/OAI/1.1/eprints" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/1.1/eprints http://www.openarchives.org/OAI/1.1/eprints.xsd">
+        <content>
+<text>        
+DRO is Deakin University's institutional digital repository for publications, 
+research, and teaching materials. Deposited material covers a very wide range of subjects and disciplines. 
+The repository holds the full text of many peer-reviewed published articles and conference papers, as well 
+as book chapters, theses and other forms of written research from DU academic staff and 
+postgraduate students. It contains working and discussion papers, technical reports and some preprints. 
+Research datasets, sound and image collections, multimedia, software and other forms of research data are 
+also held. Learning objects and other course-related materials are welcome.
+http://dro.deakin.edu.au/ 
+</text>
+        </content>
+        <metadataPolicy >
+          <text>DRO metadata are freely accessible to all, and freely re-useable 
+by all, under the following conditions: (1) The full name(s) of the 
+author(s) and (2) the full bibliographic reference information for 
+the paper (date, title, and, if published, publisher, if any, full 
+name of journal or conference proceedings, volume, issue/number and 
+pages, if any) must always co-appear prominently with any re-use or 
+redisplay of the metadata, in any medium. The metadata may not be 
+offered for sale without the formal permission of the author and 
+publisher. (Note: DRO is NOT the publisher; it is merely the 
+online archive that hosts the papers. Attribution of DRO when 
+re-using any metadata is required.)
+</text></metadataPolicy>
+        <dataPolicy >
+          <text >The repository accepts research output in the following formats: 
+* pre-prints
+* working papers 
+* published articles (post-prints)
+* books and monographs
+* book chapters
+* online journals
+* research reports
+* draft or final conference papers 
+* conference posters
+* data sets
+* theses
+* any other form of research output which can be technically loaded to the 
+repository.
+</text>
+</dataPolicy>
+<submissionPolicy>
+  <text>DRO is a repository for the self-archiving, by their 
+authors (or, by authorised second parties, or, if the papers are in the 
+public domain, by anyone), of research papers in any discipline by 
+academic staff and postgraduate students of the . 
+Papers can be (1) refereed, accepted, published final drafts (post-prints) 
+or (2) unrefereed drafts prior to publication (pre-prints). Deposits will 
+be vetted by DRO for provenance and completeness; they will not be 
+otherwise validated or authenticated. Responsibility for the validity and 
+authenticity of the content of these self-archived papers rests entirely 
+with the depositor. Any copyright violations are also entirely the 
+responsibility of the depositor. (DRO, if it receives proof of 
+copyright violation, will immediately remove the paper in question.)
+</text>
+          </submissionPolicy>
+        <comment>This system is running Fez server software (Fez ) developed at the University of Queensland. For more information see https://github.com/uqlibrary/fez</comment>
+      </eprints>
+    </description>
+  </Identify>
+</OAI-PMH>

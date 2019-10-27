@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://www.bco-dmo.org/award/471824</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.bco-dmo.org/dataset/471773</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>http://www.bco-dmo.org/project/471826</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.bco-dmo.org/person/471748</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.bco-dmo.org/person/471749</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+</urlset>

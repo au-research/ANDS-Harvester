@@ -9,38 +9,19 @@ import sys, os, time, atexit
 from signal import SIGTERM, SIGINT
 import pymysql
 import myconfig
+from utils import Logger
 import time
 import Harvester
 import string
 import json
 import threading
 from harvest_handlers import *
+from utils.Logger import Logger as MyLogger
+from utils.Database import DataBase as MyDataBase
+from gevent import monkey
+monkey.patch_all()
 import web_server
 
-class Logger:
-    __fileName = False
-    __file = False
-    __current_log_time = False
-    logLevels = {'ERROR':100,'INFO':50,'DEBUG':10}
-    __logLevel = 100
-    def __init__(self):
-        self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
-        self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
-        self.__logLevel = self.logLevels[myconfig.log_level]
-        self.logMessage("loglevel set to %s:%s" %(str(self.__logLevel), myconfig.log_level), myconfig.log_level)
-
-    def logMessage(self, message, logLevel='DEBUG'):
-        if (self.logLevels[logLevel] >= self.__logLevel):
-            self.rotateLogFile()
-            self.__file = open(self.__fileName, "a", 0o775)
-            os.chmod(self.__fileName, 0o775)
-            self.__file.write(message + " %s"  % datetime.now() + "\n")
-            self.__file.close()
-
-    def rotateLogFile(self):
-        if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
-            self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
-            self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
 
 class Daemon(object):
     """
@@ -51,7 +32,7 @@ class Daemon(object):
         self.stdout = stdout
         self.stderr = stderr
         self.pidfile = pidfile
-        self.__logger = Logger()
+        self.__logger = MyLogger()
 
     def daemonize(self):
         """
@@ -226,82 +207,6 @@ class HarvesterDaemon(Daemon):
     __harvestErrored = 0
     __harvestStopped = 0
 
-    class __Logger:
-        __fileName = False
-        __file = False
-        __current_log_time = False
-        logLevels = {'ERROR':100,'INFO':50,'DEBUG':10}
-        __logLevel = 100
-        def __init__(self):
-            self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
-            self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
-            self.__logLevel = self.logLevels[myconfig.log_level]
-            self.logMessage("loglevel set to %s:%s" %(str(self.__logLevel), myconfig.log_level), myconfig.log_level)
-
-        def logMessage(self, message, logLevel='DEBUG'):
-            if(self.logLevels[logLevel] >= self.__logLevel):
-                self.rotateLogFile()
-                self.__file = open(self.__fileName, "a", 0o777)
-                self.__file.write(logLevel + ": " + message + " %s"  % datetime.now() + "\n")
-                self.__file.close()
-
-        def rotateLogFile(self):
-            if(self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
-                self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
-                self.__fileName = myconfig.log_dir + os.sep + self.__current_log_time + ".log"
-                number_to_keep = 14
-                if len(os.listdir(myconfig.log_dir)) > number_to_keep:
-                    the_files = self.listdir_fullpath(myconfig.log_dir)
-                    the_files.sort(key=os.path.getmtime, reverse=True)
-                    for i in range(number_to_keep, len(the_files)):
-                        try:
-                            if os.path.isfile(the_files[i]):
-                                os.unlink(the_files[i])
-                            else:
-                                self.deleteDirectory(the_files[i])
-                                os.rmdir(the_files[i])
-                        except Exception as e:
-                            self.logger.logMessage(e, "ERROR")
-
-
-        def listdir_fullpath(self, d):
-            return [os.path.join(d, f) for f in os.listdir(d)]
-
-        def deleteDirectory(self, directory):
-            for the_file in os.listdir(directory):
-                file_path = os.path.join(directory, the_file)
-                try:
-                    if os.path.isfile(file_path):
-                        os.unlink(file_path)
-                    else:
-                        self.deleteDirectory(file_path)
-                        os.rmdir(file_path)
-                except Exception as e:
-                    self.logMessage(e, "ERROR")
-
-    class __DataBase:
-        __connection = False
-        __db_host = ''
-        __unix_socket = '/tmp/mysql.sock'
-        __db_user = ''
-        __db_passwd = ''
-        __db = ''
-        def __init__(self):
-            self.__host = myconfig.db_host
-            self.__user = myconfig.db_user
-            self.__passwd = myconfig.db_passwd
-            self.__db = myconfig.db
-
-
-        def getConnection(self):
-            #if not(self.__connection):
-            try:
-                self.__connection = pymysql.connect(host=self.__host, user=self.__user,
-                                                    passwd = self.__passwd, db = self.__db)
-            except:
-                e = sys.exc_info()[1]
-                raise RuntimeError("Database Exception %s" %(e))
-            return self.__connection
 
     def handleException(self, harvestId, exception):
         harvesterStatus = 'STOPPED'
@@ -327,7 +232,7 @@ class HarvesterDaemon(Daemon):
         return
 
     def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
-        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s " %(str(dataSourceId),str(harvestID)), "INFO")
+
         harvestInfo = {}
         attempts = 0
         while attempts < 3:
@@ -356,7 +261,6 @@ class HarvesterDaemon(Daemon):
                 harvestInfo['from_date'] = lastRun
                 harvestInfo['until_date'] = nextRun
                 cur.close()
-
                 break
             except Exception as e:
                 attempts += 1
@@ -365,17 +269,17 @@ class HarvesterDaemon(Daemon):
                     '(addHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
                 if attempts == 3:
                     return
-
+        self.__logger.logMessage("DataSource ID: %s, harvest_id: %s HarvestMethod:%s" %
+                                 (str(dataSourceId), str(harvestID), harvestInfo['harvest_method']), "INFO")
         try:
             harvester_module = __import__(harvestInfo['harvest_method'], globals={}, locals={}, fromlist=[], level=0)
 
             class_ = getattr(harvester_module, harvestInfo['harvest_method'])
-            myHarvester = class_(harvestInfo, self.__logger, self.__database)
+            myHarvester = class_(harvestInfo)
             self.__harvestRequests[harvestID] = myHarvester
-
         except ImportError as e:
             self.handleException(harvestID, e)
-
+        return harvestInfo
 
     def manageHarvests(self):
         # self.reportToRegistry()
@@ -403,7 +307,8 @@ class HarvesterDaemon(Daemon):
             for harvestID in list(self.__harvestRequests):
                 try:
                     harvestReq = self.__harvestRequests[harvestID]
-                    if harvestReq.getStatus() == "WAITING":
+                    # can use harvest_id to stop multiple harvest into same datasource  
+                    if harvestReq.getStatus() == "WAITING" and harvestID not in self.__runningHarvests.keys():
                         self.__runningHarvests[harvestID] = harvestReq
                         del self.__harvestRequests[harvestID]
                         harvestReq = self.__runningHarvests[harvestID]
@@ -439,6 +344,72 @@ class HarvesterDaemon(Daemon):
                 time.sleep(5)
                 self.__logger.logMessage(
                     '(checkForHarvestRequests) %s, , limit %s, Retry: %d' % (str(repr(e)), str(limit), attempts), "ERROR")
+
+    def runHarvestById(self, ds_id):
+        attempts = 0
+        harvestInfo = {}
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute(
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='SCHEDULED' WHERE `data_source_id` = " + str(ds_id) + ";")
+                conn.commit()
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + str(ds_id) + ";")
+                if cur.rowcount > 0:
+                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" % str(ds_id), "DEBUG")
+                    for r in cur:
+                        harvestInfo = self.addHarvestRequest(r[0],r[1],r[4],r[5],r[6],r[7])
+                else:
+                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %str(ds_id), "DEBUG")
+                cur.close()
+                del cur
+                conn.close()
+                return harvestInfo
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(Adding Harvest by DS_ID) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts), "ERROR")
+
+    def runBatch(self, ds_id, batch_id):
+        attempts = 0
+        harvestInfo = {}
+        if not os.path.exists(myconfig.data_store_path + str(ds_id) + os.sep + batch_id):
+            harvestInfo["ERROR"] = "content belonging to the given batch_id can not be located"
+            return harvestInfo
+        while attempts < 3:
+            try:
+                conn = self.__database.getConnection()
+                cur = conn.cursor()
+                cur.execute(
+                    "UPDATE " + myconfig.harvest_table + " SET `status`='WAITING' WHERE `data_source_id` = " + str(ds_id) + ";")
+                conn.commit()
+                cur.execute("SELECT * FROM " + myconfig.harvest_table + " WHERE `data_source_id` = " + str(ds_id) + ";")
+                if cur.rowcount > 0:
+                    self.__logger.logMessage("Adding Harvest by data_source_id :%s" %str(ds_id), "DEBUG")
+                    for r in cur:
+                        harvest_id = r[0]
+                        harvestInfo = self.addHarvestRequest(r[0], r[1], r[4], r[5], r[6], batch_id)
+                        harvestReq = self.__harvestRequests.pop(harvest_id)
+                        self.__runningHarvests[harvest_id] = harvestReq
+                        t = threading.Thread(target=harvestReq.crosswalk)
+                        self.__running_threads[harvest_id] = t
+                        t.start()
+                        self.__harvestStarted = self.__harvestStarted + 1
+                else:
+                    self.__logger.logMessage("Harvest for data_source_id :%s doesn't exist" %str(ds_id), "DEBUG")
+                cur.close()
+                del cur
+                conn.close()
+                return harvestInfo
+            except Exception as e:
+                attempts += 1
+                time.sleep(5)
+                self.__logger.logMessage(
+                    '(Adding Harvest (Crosswalk only) by data_source_id) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts),
+                    "ERROR")
+
 
     def fixBrokenHarvestRequests(self):
         attempts = 0
@@ -568,6 +539,10 @@ class HarvesterDaemon(Daemon):
 
 
     def setupEnv(self):
+
+        if not os.path.exists(myconfig.data_dir):
+            os.makedirs(myconfig.data_dir)
+            os.chmod(myconfig.data_dir, 0o775)
         if not os.path.exists(myconfig.data_store_path):
             os.makedirs(myconfig.data_store_path)
             os.chmod(myconfig.data_store_path, 0o775)
@@ -578,9 +553,9 @@ class HarvesterDaemon(Daemon):
     def run(self):
         self.__startUpTime = time.time()
         self.__lastLogCount = 99
-        self.__database = self.__DataBase()
-        self.__logger = self.__Logger()
-        self.__harvesterDefinitionFile = myconfig.run_dir + os.sep + "harvester_definition.json"
+        self.__database = MyDataBase()
+        self.__logger = MyLogger()
+        self.__harvesterDefinitionFile = myconfig.data_dir + "harvester_definition.json"
         self.setupEnv()
         self.describeModules()
         self.fixBrokenHarvestRequests()
@@ -622,7 +597,6 @@ class HarvesterDaemon(Daemon):
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
             self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))), "DEBUG")
-            self.__logger.logMessage('RUNNING', "DEBUG")
             for harvestID in list(self.__runningHarvests):
                 harvestReq = self.__runningHarvests[harvestID]
                 self.__logger.logMessage(harvestReq.getInfo(), "DEBUG")
