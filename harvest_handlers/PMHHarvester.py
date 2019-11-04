@@ -25,6 +25,11 @@ class PMHHarvester(Harvester):
 
 
     def harvest(self):
+        """
+        The OAI-PMH Harvester allows incremental harvest by allowing the usage of from and until in its parameters
+        if harvest mode is INCREMENTAL it uses the last harvest date for this datasource
+        it
+        """
         self.setupdirs()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
@@ -53,6 +58,10 @@ class PMHHarvester(Harvester):
             self.handleExceptions(e)
 
     def identifyRequest(self):
+        """
+        used only if from date is required but no last harvest date is given
+        TODO we could just ignore the from then (one less call)
+        """
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
         data = ""
@@ -69,6 +78,16 @@ class PMHHarvester(Harvester):
             self.handleExceptions(e)
 
     def getResumptionToken(self):
+        """
+        the resumptiontoken is the progress controller in OIA-PMH harvest
+        it allows the harvester to continue a harvest from any point by providing a token instead of an page increment
+        if no resumptionToken is given the harvest is completed
+        the page count used in this case only to save the package as {pageCount}.xml
+        INFO: some faulty implementation we found that the last resumption token is returned
+        so we test is the resumptionToken is the same as the previous one to determine if the harvest has completed
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         try:
@@ -106,6 +125,12 @@ class PMHHarvester(Harvester):
 
 
     def getHarvestData(self):
+        """
+        retrieves a set of records
+        stores it in the data variable
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         query = "?verb=ListRecords"

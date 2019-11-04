@@ -20,6 +20,13 @@ class CKANHarvester(Harvester):
 
 
     def harvest(self):
+        """
+        the harvest method is a lot different from most harvest handlers
+        the pagelist is generated and for each page the content is serialized as XML
+        and appended to a dom document
+        once all items received the XML document is stored
+        and the harvest is completed
+        """
         self.setupdirs()
         self.pageCount = 1
         self.data = None
@@ -34,6 +41,11 @@ class CKANHarvester(Harvester):
         self.finishHarvest()
 
     def getPackageList(self):
+        """
+        Using the package list query we identifier all items the CKAN server provides
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         getRequest = Request(self.harvestInfo['uri'] +  self.__listQuery)
@@ -48,6 +60,15 @@ class CKANHarvester(Harvester):
         del getRequest
 
     def getPackageItems(self):
+        """
+        using the package show service endpoint request all items from the list
+        convert the response JSON to a DOM ELEMENT
+        append the DOM ELEMENT to a XML DOCUMENT
+        once all records are retrieved
+        it stores resuklt Document into te data variable (as String)
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         time.sleep(0.1)

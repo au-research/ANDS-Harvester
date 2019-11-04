@@ -567,8 +567,17 @@ class Harvester():
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
 
-    # the simplest json to XML parser
+
     def parse_element(self, root, j):
+        """
+        the simplest json to XML parser
+        :param root:
+        :type root:
+        :param j:
+        :type j:
+        :return:
+        :rtype:
+        """
         if j is None:
             return
         if isinstance(j, dict):
@@ -598,6 +607,13 @@ class Harvester():
 
 
     def getElement(self, jsonld_key):
+        """
+        used by the JSON to XML parser to create an element name 
+        :param jsonld_key:
+        :type jsonld_key:
+        :return:
+        :rtype:
+        """
         qName = jsonld_key.replace(' ', '')
         qName = qName.replace('@', '')
         # some ckan harvest during tests produced {"": "true"} fields

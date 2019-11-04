@@ -25,6 +25,9 @@ class PUREHarvester(Harvester):
     numberOfRecordsReturned = 0
 
     def harvest(self):
+        """
+        The PURE Harvester uses page and pageSize to harvest records until no more records returned
+        """
         self.setupdirs()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
@@ -40,6 +43,11 @@ class PUREHarvester(Harvester):
 
 
     def getHarvestData(self):
+        """
+        gets a set of "maxRecords" records from PURE using the page pageSize params
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         request_url = self.getRequestUrl()
@@ -72,6 +80,13 @@ class PUREHarvester(Harvester):
 
 
     def getRequestUrl(self):
+        """
+        the url is constructed based on params provided by the harvest configuration
+        that can be included in the url or added individually as user_defined_params
+        the page param is derived from the pageCount variable that is auto-incremented after each successful call
+        :return:
+        :rtype:
+        """
         parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
         urlParams = urlparse.parse_qs(parsed_url.query)
         try:
@@ -105,6 +120,11 @@ class PUREHarvester(Harvester):
         return "%s://%s%s?%s" %(parsed_url.scheme, parsed_url.netloc, parsed_url.path, query)
 
     def storeHarvestData(self):
+        """
+        stores data only if numberOfRecordsReturned is greater than 0
+        :return:
+        :rtype:
+        """
         if self.stopped or self.numberOfRecordsReturned == 0:
             return
         try:
@@ -118,6 +138,12 @@ class PUREHarvester(Harvester):
             self.logger.logMessage("PURE (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
     def getRecordCount(self):
+        """
+        the number of records are determined by the number of elements called 'dataSet'
+
+        :return:
+        :rtype:
+        """
         self.numberOfRecordsReturned = 0
         if self.stopped:
             return

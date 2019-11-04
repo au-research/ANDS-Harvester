@@ -27,6 +27,10 @@ class CSWHarvester(Harvester):
     urlParams = {}
 
     def harvest(self):
+        """
+        using the common harvest procedure
+        iteratively retrieve and store data until we have retrieved them all
+        """
         self.setupdirs()
         self.data = None
         self.updateHarvestRequest()
@@ -43,6 +47,11 @@ class CSWHarvester(Harvester):
 
 
     def getHarvestData(self):
+        """
+        requests a set of "maxRecords" (100) until there are no more records to be retrieved
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         query = self.getParamString()
@@ -73,6 +82,11 @@ class CSWHarvester(Harvester):
 
 
     def getParamString(self):
+        """
+        generates the url query params
+        :return:
+        :rtype:
+        """
         if len(self.urlParams) == 0:
             try:
                 urlParams = json.loads(self.harvestInfo['user_defined_params'])
@@ -89,6 +103,13 @@ class CSWHarvester(Harvester):
 
 
     def checkNextRecord(self):
+        """
+        the purpose of this function is to determine if the harvest is completed
+        if there are more records it sets the startPosition to the next record's start position
+        otherwise sets it to zero and sets the harvest status completed
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         try:
