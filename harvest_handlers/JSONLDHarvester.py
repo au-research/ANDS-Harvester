@@ -54,16 +54,18 @@ class JSONLDHarvester(Harvester):
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
-    ####
-    # the harvest method
-    # the usual set of procedures
-    # except we need to get a list of pages to extract the json-ld from
-    # get all content (in batches)
-    # save all content (in batches)
-    # run crosswalk after all content is received
-    # tell the registry the harvest is completed
-    # finish harvest
+
     def harvest(self):
+        """
+        the harvest method
+        the usual set of procedures
+        except we need to get a list of pages to extract the json-ld from
+        get all content (in batches)
+        save all content (in batches)
+        run crosswalk after all content is received
+        tell the registry the harvest is completed
+        finish harvest
+        """
         self.stopped = False
         self.setupdirs()
         self.setUpCrosswalk()
@@ -96,9 +98,12 @@ class JSONLDHarvester(Harvester):
         self.postHarvestData()
         self.finishHarvest()
 
-    # use the SitemapCrawler to get all urls for a given site
-    # add all urls to the urlLinksList
+
     def getPageList(self):
+        """
+        use the SitemapCrawler to get all urls for a given site
+        add all urls to the urlLinksList
+        """
         try:
             self.setStatus("Scanning Sitemap(s)")
             sc = SiteMapCrawler(self.harvestInfo['mode'])
@@ -111,9 +116,14 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage(str(repr(e)), "ERROR")
             self.handleExceptions(e, terminate=True)
 
-    # depending on the implementation we can use either asyncio, grequest of simple request object to crawl the pages
-    # fund that grequest was somewhat best so set it as default
+
     def crawlPages(self, urlList):
+        """
+        depending on the implementation we can use either asyncio, grequest of simple request object to crawl the pages
+        fund that grequest was somewhat best so set it as default
+        :param urlList:
+        :type urlList:
+        """
         self.start_time['start'] = default_timer()
 
         if self.harvestInfo['requestHandler'] == 'asyncio':
@@ -143,17 +153,28 @@ class JSONLDHarvester(Harvester):
         tot_elapsed = default_timer() - self.start_time['start']
         self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'] , tot_elapsed))
 
-    # grequest parse callback
-    # just get the content and call the generic content handler processContent
+
     def parse(self, response, **kwargs):
+        """
+        grequest parse callback
+        just get the content and call the generic content handler processContent
+        :param response:
+        :type response:
+        :param kwargs:
+        :type kwargs:
+        """
         self.processContent(response.text, response.url)
 
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
 
-    # fetch all using asyncio to handle request
     async def fetch_all(self, urlList):
+        """
+        fetch all using asyncio to handle request
+        :param urlList:
+        :type urlList:
+        """
         tasks = []
         minute = 60
 
@@ -167,9 +188,16 @@ class JSONLDHarvester(Harvester):
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
 
-    # the fetch method for asyncio requests
-    # pass the response to the generic content handler: processContent
+
     async def fetch(self, url, session):
+        """
+        the fetch method for asyncio requests
+        pass the response to the generic content handler: processContent
+        :param url:
+        :type url:
+        :param session:
+        :type session:
+        """
         minute = 60
         cTimeout = ClientTimeout(connect=minute)
         try:
@@ -181,11 +209,19 @@ class JSONLDHarvester(Harvester):
         except Exception as exc:
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
 
-    # the json-ld content extractor all request pass their data to this content handler
-    # it tries to find a script tag with type application/ld+json
-    # if ther's any it will attempt to parse the first json-ld string into a json object
-    # if successful it adds the json-ld into an list (to be processed once all page in the current batch is extracted or no more pages left
+
     def processContent(self, htmlStr, url):
+        """
+        the json-ld content extractor all request pass their data to this content handler
+        it tries to find a script tag with type application/ld+json
+        if ther's any it will attempt to parse the first json-ld string into a json object
+        if successful it adds the json-ld into an list (to be processed once all page in the current batch is extracted
+        or no more pages left
+        :param htmlStr:
+        :type htmlStr:
+        :param url:
+        :type url:
+        """
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         jsonld = None
@@ -193,7 +229,6 @@ class JSONLDHarvester(Harvester):
             jsonld = jsonlds[0].text
         if jsonld is not None:
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
-            #self.logger.logMessage(message, "DEBUG")
             try:
                 data = {}
                 try:
@@ -207,12 +242,18 @@ class JSONLDHarvester(Harvester):
                 self.recordCount += 1
             except Exception as e:
                 pass
-                #self.logger.logMessage("URL : %s, ERROR: %s, JSONLD %s" %(url, str(e), jsonld), "ERROR")
-        #else:
-        #    self.logger.logMessage("Unable to extract jsonld from page %s" % url, "DEBUG")
 
-    # stores a batch of json objects in a json file
+
     def storeJsonData(self, data, fileName):
+        """
+        stores a batch of json objects in a json file
+        :param data:
+        :type data:
+        :param fileName:
+        :type fileName:
+        :return:
+        :rtype:
+        """
         if self.stopped:
            return
         outputFilePath = self.outputDir + os.sep + fileName + ".json"
@@ -225,9 +266,16 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-    # creates a graph of a bacth of json-ld objects and serialise it as RDF file
-    # not used but are considering
+
     def storeDataAsRDF(self, jsonld, fileName):
+        """
+        creates a graph of a bacth of json-ld objects and serialise it as RDF file
+        not used but are considering
+        :param jsonld:
+        :type jsonld:
+        :param fileName:
+        :type fileName:
+        """
         outputFilePath = self.outputDir + os.sep + fileName + ".rdf"
         dataFile = open(outputFilePath, 'w')
         g = Graph()
@@ -243,9 +291,17 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-    # serialise the json-ld objects as a set of XML elements (needed for XSLT to rif-cs)
-    # until XSLT can natively transform json
     def storeDataAsXML(self, data, fileName):
+        """
+        serialise the json-ld objects as a set of XML elements (needed for XSLT to rif-cs)
+        until XSLT can natively transform json
+        :param data:
+        :type data:
+        :param fileName:
+        :type fileName:
+        :return:
+        :rtype:
+        """
         self.__xml = Document()
         outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
         dataFile = open(outputFilePath, 'w')
@@ -271,9 +327,14 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-    # scan through the result contents and run an xslt transfor
-    # generic in-house xslt to convert json-ld (xml) to rifcs unless the datasource harvest config sets an other XSLT
+
     def runCrossWalk(self):
+        """
+        scan through the result contents and run an xslt transfor
+        generic in-house xslt to convert json-ld (xml) to rifcs unless the datasource harvest config sets an other XSLT
+        :return:
+        :rtype:
+        """
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
         self.logger.logMessage("runCrossWalk XSLT: %s" % self.harvestInfo['xsl_file'])
@@ -299,18 +360,35 @@ class JSONLDHarvester(Harvester):
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
                     self.handleExceptions(e)
 
-
-    # only used in tests, not used in production
     def setbatchSize(self, size):
+        """
+        only used in tests, not used in production
+        :param size:
+        :type size:
+        """
         self.batchSize = size
 
-    # only used in tests, not used in production
+
     def getbatchSize(self):
+        """
+        only used in tests, not used in production
+        :return:
+        :rtype:
+        """
         return self.batchSize
 
-#https://stackoverflow.com/questions/752308/split-list-into-smaller-lists-split-in-half
+
 
 def split(arr, size):
+    """
+    sourced form https://stackoverflow.com/questions/752308/split-list-into-smaller-lists-split-in-half
+    :param arr:
+    :type arr:
+    :param size:
+    :type size:
+    :return:
+    :rtype:
+    """
     arrs = []
     while len(arr) > size:
         pice = arr[:size]
