@@ -1,5 +1,5 @@
 # harvester daemon script in python
-# for ANDS registry
+# for ARDC registry
 # Author: u4187959
 # created 12/05/2014
 #

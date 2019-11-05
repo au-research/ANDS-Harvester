@@ -2,14 +2,28 @@ import subprocess
 import myconfig
 
 class XSLT2Transformer:
+    """
+    XSLT 2.0 transformer run in java
+    Since there are no XSLT 2.0 transformers in Python
+    """
 
-    #XSLT 2.0 transformer run in java
     __xsl = None
     __outfile = None
     __inputFile = None
     __params = ''
 
     def __init__(self, transformerConfig):
+        """
+        the transformerConfig is a dictionary that contains a mix of values
+        the required ones are
+        'xsl':the path to the xsl file
+        'outFile': the path where the result is saved
+        'inFile': the source XML document
+        all other key value pairs are passed as parameters to the XSLT transform
+        eg: 'originatingSource':'ARDC Harvester'
+        :param transformerConfig:
+        :type a dict containig transformer configurations:
+        """
         for key, value in transformerConfig.items():
             if key == 'xsl':
                 self.__xsl = value
@@ -22,6 +36,10 @@ class XSLT2Transformer:
 
 
     def transform(self):
+        """
+        XSLT transformer is using java and Saxon XSLT 2.0 transformer running in a subprocess
+        to
+        """
         shellCommand = myconfig.java_home + " "
         shellCommand += " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
         shellCommand += " -o " + self.__outfile

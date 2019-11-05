@@ -1,4 +1,4 @@
-# ANDS-Harvester
+# ARDC Harvester
 
 The harvester daemon is a monitoring and processing class for the Harvester, it checks for scheduled harvests, monitors running harvests, stops harvests that are marked 'STOPPED'  by the registry.
 

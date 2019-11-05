@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# ands-harvester  Startup script for the ANDS Harvester
+# ands-harvester  Startup script for the ARDC Harvester
 # chkconfig: - 86 15
-# description: The ANDS Harvester does harvesting.
+# description: The ARDC Harvester does harvesting.
 
 ### BEGIN INIT INFO
 # Provides: 
@@ -12,7 +12,7 @@
 # Should-Stop: 
 # Default-Start: 
 # Default-Stop: 
-# Short-Description: This is the ANDS Harvester.
+# Short-Description: This is the ARDC Harvester.
 # Description: 
 ### END INIT INFO
 

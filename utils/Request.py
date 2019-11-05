@@ -4,6 +4,9 @@ import os
 #from utils.Logger import Logger as MyLogger
 
 class Request:
+    """
+    urllib based class that used to retries or send data to and from any webresource
+    """
     data = None
     url = None
     logger = None
@@ -15,6 +18,11 @@ class Request:
         #self.logger = MyLogger()
 
     def getData(self):
+        """
+        retieves the data as a utf-8 encoded string from the given url
+        :return:
+        :rtype:
+        """
         retryCount = 0
         while retryCount < 5:
             try:
@@ -40,6 +48,13 @@ class Request:
         self.url = url
 
     def postData(self, data):
+        """
+        posts the given data
+        :param data:
+        :type data:
+        :return:
+        :rtype:
+        """
         try:
             req = urllib.request.Request(self.url)
             req.add_header('User-Agent', 'ARDC Harvester')
@@ -54,10 +69,16 @@ class Request:
             raise RuntimeError(str(e) + " Error while trying to connect to: " + self.url)
 
     def postCompleted(self):
+        """
+        actually this method just send a GET request
+        this is the "agreed" communication between the harvester and the registry
+        :return:
+        :rtype:
+        """
         try:
             req = urllib.request.Request(self.url)
             fs = urllib.request.urlopen(req, timeout=30)
-            self.data = f.read()
+            self.data = fs.read()
             del req, fs
             return self.data
         except Exception as e:

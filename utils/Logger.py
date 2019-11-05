@@ -1,5 +1,6 @@
-# harvester daemon script in python
-# for ANDS registry
+# harvester Logger class
+# very primitive logging functionality
+# for ARDC registry
 # Author: u4187959
 # created 12/05/2014
 #
@@ -26,6 +27,13 @@ class Logger:
         self.logMessage("loglevel set to %s:%s" % (str(self.__logLevel), myconfig.log_level), myconfig.log_level)
 
     def logMessage(self, message, logLevel='DEBUG'):
+        """
+        append to logs if the loglevel is greater or equal to the loglevel that is set by the config
+        :param message:
+        :type message:
+        :param logLevel:
+        :type logLevel:
+        """
         try:
             if self.logLevels[logLevel] >= self.__logLevel:
                 self.rotateLogFile()
@@ -37,6 +45,9 @@ class Logger:
 
 
     def rotateLogFile(self):
+        """
+        log files are created for daily logs
+        """
         if (self.__current_log_time != datetime.now().strftime("%Y-%m-%d")):
             self.__current_log_time = datetime.now().strftime("%Y-%m-%d")
             self.__fileName = myconfig.log_dir + self.__current_log_time + ".log"
