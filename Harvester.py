@@ -15,11 +15,17 @@ class Harvester():
     startUpTime = 0
     pageCount = 0
     recordCount = 0
+    # the harvestInfo contains all information that is needed by the harvester to complete a harvest
     harvestInfo = None
+    # data is where the response kept (either XML or JSON string)
     data = None
+    # the XML Document the data can be constructed (if it is construct of multiple requests)
     __xml = None
+    # the simple logger object that the harvester is used to write log
     logger = None
+    # the database to query and update harvest status
     database = None
+    # each harvest has a unique outputDir constructed by the default datastore path and the datasource ID and batch ID
     outputFilePath = None
     outputDir = None
     __status = 'WAITING'
@@ -30,6 +36,7 @@ class Harvester():
     stopped = False
     mode = 'HARVEST'
     completed = False
+    # store file extension is xml unless a crosswalk is defined then it will be 'tmp'
     storeFileExtension = 'xml'
     resultFileExtension = 'xml'
     redisPoster = False
@@ -75,6 +82,9 @@ class Harvester():
 
 
     def harvest(self):
+        """
+        This method is overridden by all harvest handlers
+        """
         self.setupdirs()
         self.updateHarvestRequest()
         self.setUpCrosswalk()
@@ -84,6 +94,10 @@ class Harvester():
         self.finishHarvest()
 
     def crosswalk(self):
+        """
+        The crosswalk method is used to re-transform the content of already harvested content
+        this feature will be implemented after R34
+        """
         self.setStatus('REGENERATING CONTENT')
         self.setUpCrosswalk()
         self.runCrossWalk()
@@ -98,6 +112,14 @@ class Harvester():
         self.combineFiles = tf
 
     def emptyDirectory(self, directory):
+        """
+
+        the directory is emptied before harvest begins
+        if found to have content
+
+        :param directory:
+        :type directory:
+        """
         for the_file in os.listdir(directory):
             file_path = os.path.join(directory, the_file)
             try:
@@ -110,6 +132,12 @@ class Harvester():
                 self.logger.logMessage("Unable to emptyDirectory %s" % file_path, "ERROR")
 
     def getHarvestData(self):
+        """
+        the simple getHarvest data that retieves the content of a uri
+        and stores the data in the 'data' variable
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         try:
@@ -121,6 +149,10 @@ class Harvester():
             self.handleExceptions(e)
 
     def setUpCrosswalk(self):
+        """
+        Setup crosswalk changes the store file extension to 'tmp'
+        also removes all "registry import pipeline" generated content if any
+        """
         if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
            self.storeFileExtension = 'tmp'
         #clean up previous crosswalk and import content
@@ -142,6 +174,12 @@ class Harvester():
 
 
     def runCrossWalk(self):
+        """
+        Uses the XSLT2Transformer object it runs a XSLT transformation on all files with file extension 'tmp' in the
+        harvester's outputDir and saves the result as 'xml' file(s)
+        :return:
+        :rtype:
+        """
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
         transformCount = 0
@@ -169,6 +207,11 @@ class Harvester():
 
 
     def postHarvestData(self):
+        """
+        contrary to its name the PostHarvestData only makes a request to the registry API to let it know that the harvest is completed
+        :return:
+        :rtype:
+        """
         if self.stopped or self.mode == 'TEST':
             return
         self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
@@ -178,6 +221,11 @@ class Harvester():
         del postRequest
 
     def postHarvestError(self):
+        """
+        same as postHarvestData except the status will be ERROR so the apropriate import pipeline will be applied
+        :return:
+        :rtype:
+        """
         if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
@@ -188,6 +236,12 @@ class Harvester():
         del postRequest
 
     def postHarvestNoRecords(self):
+        """
+        This post was requred to allow OAI harvest to appear to run successfully even if no records are returned
+        since it's not an error
+        :return:
+        :rtype:
+        """
         if self.stopped or self.mode == 'TEST':
             return
         self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
@@ -199,6 +253,11 @@ class Harvester():
 
 
     def updateHarvestRequest(self):
+        """
+        periodically update the registry's harvest table to the state of the running harvests
+        :return:
+        :rtype:
+        """
         self.checkHarvestStatus()
         self.write_summary()
         if self.stopped or self.mode == 'TEST':
@@ -242,6 +301,11 @@ class Harvester():
 
 
     def checkHarvestStatus(self):
+        """
+        Periodically check the harvester status in case the registry user stopped the harvest while it was running
+        :return:
+        :rtype:
+        """
         if self.stopped or self.mode == 'TEST':
             return
         attempts = 0
@@ -285,10 +349,14 @@ class Harvester():
                     '(checkHarvestStatus) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def storeHarvestData(self):
+        """
+        if data is JSON then save the json as well as an XML serialised copy
+        :return:
+        :rtype:
+        """
         if self.stopped or not(self.data):
             return
         try:
-            #if data is JSON then save the json as well as a XML serialised copy
             if self.is_json(self.data):
                 jsonObj = json.loads(self.data, strict=False)
                 self.storeJsonData(jsonObj, str(self.pageCount))
@@ -307,6 +375,15 @@ class Harvester():
 
 
     def storeJsonData(self, data, fileName):
+        """
+        Use jsondump to save the json Objects into a file
+        :param data:
+        :type data:
+        :param fileName:
+        :type fileName:
+        :return:
+        :rtype:
+        """
         if self.stopped:
            return
         try:
@@ -322,6 +399,15 @@ class Harvester():
 
 
     def storeDataAsXML(self, data, fileName):
+        """
+        parse the json data into an XML document and save its content to a file
+        :param data:
+        :type data:
+        :param fileName:
+        :type fileName:
+        :return:
+        :rtype:
+        """
         if self.stopped:
            return
         try:
@@ -346,9 +432,17 @@ class Harvester():
         except Exception as e:
             self.logger.logMessage("Harvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
 
-    # https://stackoverflow.com/questions/11294535/verify-if-a-string-is-json-in-python
+
 
     def is_json(self, myjson):
+        """
+        sourced from https://stackoverflow.com/questions/11294535/verify-if-a-string-is-json-in-python
+        check if the content is JSON
+        :param myjson:
+        :type myjson:
+        :return:
+        :rtype:
+        """
         try:
             json_object = json.loads(myjson)
         except ValueError as e:
@@ -540,6 +634,13 @@ class Harvester():
         self.updateHarvestRequest()
 
     def checkRunTime(self):
+        """
+        The max_up_seconds_per_harvest is used to stop harvest that are running too long,
+        it doesn't mean that something is wrong but worth to investigate
+        some sitemap crawling can take a lot longer than the allowed 2 hours
+        :return:
+        :rtype:
+        """
         if self.stopped:
             return
         upTime = int(time.time()) - self.startUpTime
@@ -557,6 +658,13 @@ class Harvester():
         self.stopped = True
 
     def handleExceptions(self, exception, terminate=True):
+        """
+        Some errors are should be logged some errors should stop the harvest completely
+        :param exception:
+        :type exception:
+        :param terminate:
+        :type terminate:
+        """
         self.errored = True
         if terminate:
             self.__status= 'ERROR'
@@ -608,7 +716,7 @@ class Harvester():
 
     def getElement(self, jsonld_key):
         """
-        used by the JSON to XML parser to create an element name 
+        used by the JSON to XML parser to create an element name
         :param jsonld_key:
         :type jsonld_key:
         :return:

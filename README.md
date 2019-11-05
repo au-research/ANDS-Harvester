@@ -1,8 +1,12 @@
 # ANDS-Harvester
 
-The Harvester is an extensible Python module that enables harvesting capabilities within the ANDS Registry.
+The harvester daemon is a monitoring and processing class for the Harvester, it checks for scheduled harvests, monitors running harvests, stops harvests that are marked 'STOPPED'  by the registry.
 
-The plugin-architecture enables the development of further modules that support additional harvest methods and metadata schemas and/or profiles.  Further modules can be ‘plugged-in’ to this architecture, enabling the creation of ANDS Registry records from any web resource.
+The Harvester is a class that defines all basic transactions and methods that are preformed by a generic harvest
+
+harvest handlers are specific classes that extends the  Harvester class and overrides the protocol and content handler 
+
+The harvester daemon instantiates a specific harvest handler that was selected by the datasource admin
 
 The following harvest methods are currently supported:
 
@@ -11,6 +15,9 @@ The following harvest methods are currently supported:
 * CKAN - json metadata over HTTP
     * The CKAN harvester attempts to get a list of Identifiers and retrieve the json data for each record.
     * Conversts the entire set as one XML document (json serialised as XML)
+* CKAN QUERY - json metadata over HTTP
+    * The CKAN QUERY sends a query string to the CKAN server and retrieves all content using the start and rows params 
+Converts the json response to serialised XML
 * OAI-PMH - xml
     * Retrieves all records in the metadataFormat requested by the datasource owner using the ListRecords endpoint
 * CSW (Catalogue Services for the Web) - xml
@@ -24,9 +31,11 @@ The following harvest methods are currently supported:
     * Attempts to extract json-ld from all pages
     * Combines the result into batches of 400
 
-Whilst the Harvester can retrieve metadata in any format, it must be transformed into RIF-CS XML to be compatible with the ANDS Registry ingest process; where a transform is required, an XSL transformation can be incorporated within the ‘plug-in’ module.
+Whilst the Harvester can retrieve metadata in any format, it must be transformed into RIF-CS XML to be compatible with the ARDC Registry's ingest process
 
-The Harvester can perform simultaneous harvests; the maximum number of concurrent harvests can be set within its configuration.
+If a Crosswalk is added in the harvest setting by the Registry, the Harvester will save the response(s) as .tmp file(s) and after all data is retrieved it will attempt to run a crosswalk on each .tmp file to generate the rifcs (.xml)
+
+The Harvester can perform simultaneous harvests; the maximum number of concurrent harvests can be set within its configuration. the default is 3
 
 ## Installation
 Requirements:
