@@ -1,0 +1,753 @@
+{
+    "dataSets": [
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme. This dataset was derived from multiple datasets. You can find a link to the parent datasets in the Lineage Field in this metadata statement. The History Field in this metadata statement describes how this dataset was derived.\n\n\n\nA historical sequence using multiple images for selected years was built to represent the changing mine foot prints for selected mines in the Sydney Basin Bioregion. The dataset includes images clipped to the spatial extent of the selected mines and band combinations of B3, B4 and B7 were used to identify the extent of disturbance around the mine sites in the selected years. \n\n\n\nMines for which footprints were derived from Landsat imagery:\n\n\n\nPine Dale\n\nInvincible\n\n## **Dataset History** \n\nA historical sequence using multiple images for selected years was built to represent the changing mine foot prints for selected mines in the Sydney Basin Bioregion. Mine boundaries were digitised through interpretation of the disturbed land in the vicinity of known coal mines (see GUID:302e2a0d-244a-4369-9ed6-c529f14b4db8). Band combinations of B3, B4 and B7 were used to identify the extent of disturbance around the mine sites in the selected years. \n\n\n\nMines for which footprints were derived from Landsat imagery:\n\n\n\nPine Dale\n\nInvincible\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (2016) SSB Landsat processed data v01. Bioregional Assessment Derived Dataset. Viewed 18 June 2018, http://data.bioregionalassessments.gov.au/dataset/46e9abad-16c3-448c-b34d-c25dba10c694.\n\n## **Dataset Ancestors** \n\n* **Derived From** [SYD Landsat raw data v01](https://data.gov.au/dataset/fe7aa98d-ea2a-48fc-bc09-1d5ce3a50246)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/ALL/DATA/Geography/LandCoverSSB_Landsat_processed_data_v01/46e9abad-16c3-448c-b34d-c25dba10c694.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-1b75655f-c99d-4cb1-ab25-333d8f00cbd1",
+                "issued": "2018-06-17T21:51:25Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) U.S. Geological Survey."},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "SSB Landsat processed data v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-85c99aa9-f053-4507-b22d-7c28e4d8ad17",
+            "indexed": "2019-06-26T08:05:18.194Z",
+            "issued": "2018-06-17T21:51:25Z",
+            "keywords": [
+                "New South Wales",
+                "Sydney Basin bioregion",
+                "economy",
+                "geoscientificInformation",
+                "imageryBaseMapsEarthCover",
+                "structure"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/85c99aa9-f053-4507-b22d-7c28e4d8ad17",
+            "languages": ["eng"],
+            "modified": "2018-06-17T21:51:25Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "SSB Landsat processed data v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThis dataset and its metadata statement were supplied to the Bioregional Assessment Programme by a third party and are presented here as originally supplied.\n\n\n\nMrVBF is a topographic index designed to identify areas of deposited material at a range of scales based on the observations that valley bottoms are low and flat relative to their surroundings and that large valley bottoms are flatter than smaller ones. Zero values indicate erosional terrain with values 1 and larger indicating progressively larger areas of deposition. There is some evidence that MrVBF values correlate with depth of deposited material.\n\n\n\nThe MrVBF product was derived from the Smoothed Digital Elevation Model (DEM-S; ANZCW0703014016), which is based on the 1 second resolution SRTM data acquired by NASA in February 2000.\n\n## **Dataset History** \n\nThe 1 second SRTM-derived Smoothed Digital Elevation Model (DEM-S; ANZCW0703014016).\n\n\n\nMrVBF calculation\n\nThe MrVBF method is described in Gallant and Dowling (2003). It is based on slope and position in landscape (ranking within a 3- or 6-cell circular window) calculated from the original DEM and progressively generalised DEMs. The algorithm used to create this product is version 6g-a5, which is slightly different to that in the original paper.\n\n\n\nEach value of MrVBF is associated with a particular scale and slope threshold. For each successive value the slope threshold halves and the scale triples. At each scale a location is considered erosional if it is high (ranked above the majority of the surrounding cells) or steep (slope greater than the threshold), and depositional otherwise. The largest value takes precedence at each location, so a value of zero indicates the site is considered to be erosional at all scales.\n\n\n\nValue    Threshold    Resolution      Interpretation\n\n         slope (%)    (approx)\n\n  0                      30 m         Erosional\n\n  1        16            30           Small hillside deposit\n\n  2         8            30           Narrow valley floor\n\n  3         4            90\n\n  4         2           270           Valley floor\n\n  5         1           800           Extensive valley floor\n\n  6         0.5         2.4 km\n\n  7         0.25        7.2 km        Depositional basin\n\n  8         0.125        22 km\n\n  9         0.0625       66 km        Extensive depositional basin\n\n\n\nMrVBF has been used with topographic wetness index (TWI) to predict soil depths; see McKenzie, Gallant and Gregory (2003) for details.\n\n\n\nThe MrVBF calculation was performed on 1&#xB0; &#xf0b4; 1&#xB0; tiles, with overlaps to ensure correct values at tile edges, for the finer scale steps (1 through 3). The coarser scale steps use lower resolution data so could be processed for the entire continent as a single piece, starting with a generalised version of DEM-S at 9 second resolution. The tiled processing clipped out the relevant parts of the 9 second results and combined them with the finer scale results from the 1 second DEM-S.\n\n## **Dataset Citation** \n\nCSIRO (2016) AUS SRTM 1sec MRVBF mosaic v01. Bioregional Assessment Source Dataset. Viewed 18 June 2018, http://data.bioregionalassessments.gov.au/dataset/79975b4a-1204-4ab1-b02b-0c6fbbbbbcb5.",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/BA_ALL/ALL/DATA/Geography/Physiography/DEMAUS_SRTM_1sec_MRVBF_mosaic_v01/79975b4a-1204-4ab1-b02b-0c6fbbbbbcb5.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-a1bf463a-2fa8-43cd-90f9-9fd14d285042",
+                "issued": "2018-06-17T21:55:23Z",
+                "license": {"name": "Creative Commons Attribution 3.0 Australia, http://creativecommons.org/licenses/by/3.0/au/, (c) CSIRO 2011"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "AUS SRTM 1sec MRVBF mosaic v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-6c9b35fd-6985-4751-b66f-f5a510cfe84d",
+            "indexed": "2019-06-26T08:05:18.194Z",
+            "issued": "2018-06-17T21:55:22Z",
+            "keywords": [
+                "Australia",
+                "Sydney Basin bioregion",
+                "elevation"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/6c9b35fd-6985-4751-b66f-f5a510cfe84d",
+            "languages": ["eng"],
+            "modified": "2018-06-17T21:55:22Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "AUS SRTM 1sec MRVBF mosaic v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from multiple source datasets. The source datasets are identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement.\n\n\n\nThe dataset consists of shapefiles of historical mine foot prints for the South Sydney Basin derived from Landsat imagery.  Mine boundaries were digitised through interpretation of the disturbed land in the vicinity of known coal mines. A historical sequence using multiple images for selected years was built to represent the changing mine foot prints.\n\n## **Dataset History** \n\nMine boundaries were digitised through interpretation of the disturbed land in the vicinity of known coal mines. A historical sequence using multiple images for selected years was built to represent the changing mine foot prints.\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (2016) SSB Historical Landsat Derived Mine Foot Prints v01. Bioregional Assessment Derived Dataset. Viewed 18 June 2018, http://data.bioregionalassessments.gov.au/dataset/302e2a0d-244a-4369-9ed6-c529f14b4db8.\n\n## **Dataset Ancestors** \n\n* **Derived From** [SSB Landsat processed data v01](https://data.gov.au/dataset/46e9abad-16c3-448c-b34d-c25dba10c694)\n\n* **Derived From** [SYD Landsat raw data v01](https://data.gov.au/dataset/fe7aa98d-ea2a-48fc-bc09-1d5ce3a50246)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/ALL/DATA/Resources/MinesSSB_HistoricalLandsatDerivedMineFootPrints_v01/302e2a0d-244a-4369-9ed6-c529f14b4db8.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-3055e030-27b8-4d18-899f-dd81ccb5ed87",
+                "issued": "2018-06-17T22:00:54Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) U.S. Geological Survey."},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "SSB Historical Landsat Derived Mine Foot Prints v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-8a1b13e5-dd6c-4041-baf8-b45d797244fd",
+            "indexed": "2019-06-26T08:05:18.194Z",
+            "issued": "2018-06-17T22:00:54Z",
+            "keywords": [
+                "Sydney Basin bioregion",
+                "imageryBaseMapsEarthCover",
+                "structure"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/8a1b13e5-dd6c-4041-baf8-b45d797244fd",
+            "languages": ["eng"],
+            "modified": "2018-06-17T22:00:54Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "SSB Historical Landsat Derived Mine Foot Prints v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from multiple source datasets. The source datasets are identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement.\n\n\n\nThis dataset uses the results of the design of experiment runs of the alluvial MODFLOW groundwater models for the Avon and Karuah alluvial systems of the Gloucester to train emulators to (a) constrain the prior parameter ensembles into the posterior parameter ensembles and to (b) generate the predictive posterior ensembles of maximum drawdown and time to maximum drawdown. This is described in product 2.6.2 Groundwater numerical modelling (Peeters et al. 2016).\n\n\n\nPeeters L, Dawes W, Rachakonda P, Pagendam D, Singh R, Pickett T, Frery E, Marvanek S, and McVicar T (2016) Groundwater numerical modelling for the Gloucester subregion. Product 2.6.2 for the Gloucester subregion from the Northern Sydney Basin Bioregional Assessment. Department of the Environment, Bureau of Meteorology, CSIRO and Geoscience Australia, Australia. http://data.bioregionalassessments.gov.au/product/NSB/GLO/2.6.2.\n\n## **Dataset History** \n\nThis dataset contains all the scripts to carry out the uncertainty analysis for the maximum drawdown and time to maximum drawdown at the groundwater receptors associated with the Avon and Karuah alluvia and all the resulting posterior predictions. This is described in product 2.6.2 Groundwater numerical modelling (Peeters et al. 2016).\n\n\n\nThe file 'GLO_MF_dmax_UA_workflow.pptx' shows a diagram of the workflow of the uncertainty analysis for the Avon model. The workflow for the Karuah uncertainty analysis is identical. Avon specific files have '_g_' in the filename. Karuah specific files have '_k_' in the filename.\n\n\n\nThe post-processed results from the numerical modelling (dataset GLO MF Model v02) are summarised in files 'GLO_MF_karuah_budget_m3d.csv', 'GLO_MF_gloc_budget_m3d.csv', 'GLO_MF_dmax_g_DoE_Predictions.csv' and ''GLO_MF_dmax_g_DoE_Predictions.csv' . \n\n\n\nPython script 'GLO_MF_dmax_Predictions.py' creates input files for the uncertainty analysis:\n\n- 'GLO_MF_dmax_g_Predictions.csv': summary of the maximum drawdown (dmax) predictions at the receptors - Name, Transform, Emulate, Min, Max, Median\n\n- 'GLO_MF_tmax_g_Predictions.csv': summary of the time to maximum drawdown (tmax)  predictions at the receptors - Name, Transform, Emulate, Min, Max, Median\n\n- 'GLO_MF_sumstat.csv': summary of the summary statistics to constrain the models - Name, Transform, Emulate, Min, Max, Median\n\n- 'GLO_AEM_dmax_DoE_Predictions.csv': simulated maximum drawdown values at receptor locations corresponding to the parameter combinations in 'GLO_DoE_Parameters.csv'\n\n- 'GLO_AEM_tmax_DoE_Predictions.csv': simulated time to maximum drawdown values at receptor locations corresponding to the parameter combinations in 'GLO_DoE_Parameters.csv'\n\n- 'GLO_sumstat_DoE.csv': summary statistics to constrain the models corresponding to the parameter combinations in 'GLO_DoE_Parameters.csv'\n\n\n\nFile 'GLO_DoE_Parameters.csv' contains the 10.000 parameter combinations used in the design of experiment, generated with the maximin latin hypercube sampling.\n\n\n\nFile 'GLO_MF_dmax_Parameters.csv' contains information on the parameters of the Avon and Karuah MODFLOW model that are varied in the uncertainty analysis. This is the name, transform, minimum, maximum, description, the type of prior distribution, the first and second moments of the prior distribution and the covariance. These values are specified by the modelling team and described in section 2.6.2.6 in Peeters et al. (2016).\n\n\n\nThe script 'GLO_MF_SensitivityAnalysis.py' calculates the Plischke et al (2013) sensitivity index for all HRV-receptor-parameter combination, which are stored in files 'GLO_MF_dmax_SI.csv', 'GLO_MF_tmax_SI.csv' and 'GLO_MF_sumstat_SI.csv'.\n\n\n\nFor each prediction of tmax and dmax an emulator is created with R-scripts 'GLO_MF_dmax_g_Emulate_pred_i.R' and 'GLO_MF_dmax_g_Emulate_pred_i.R'. The script uses the R-scripts in dataset 'R-scripts for uncertainty analysis v01' and stores an R data object with extension .Rdata in subdirectory 'emulators/predictionname'.\n\n\n\nThe R script 'GLO_MF_dmax_CreatePosteriorParameters.R' performs the Approximate Bayesian Computation Markov Chain Monte Carlo to constrain the prior parameter distributions with an acceptance criterion based on the historical water balance of the alluvial system. This model result is summarised in file 'GLO_sumstat.csv' and all results of the design of experiment are stored in 'GLO_sumstat_DoE.csv'. The script results in an emulator object (file '\\emulator\\glo_sumstat\\glo_sumstat.RData') and a spreadsheet with 10.000 posterior parameter combinations (file 'GLO_MF_dmax_g_Posterior_Parameters.csv'). The first 200 of these parameter combinations are used to generate the output for interpolation of exceedance probabilities in dataset GLO MF Model v02.\n\n\n\nThe R scripts 'GLO_MF_tmax_g_MCsampler_pred_i.R' and 'GLO_MF_dmax_g_MCsampler_pred_i.R' use the emulators for each prediction to sample the posterior parameters to create the posterior predictive ensembles, which are stored for each prediction separately in '\\emulators\\predname_prediction.csv'\n\n\n\nPost-processing scripts 'GLO_MF_dmax_Postprocess_Predictions.py' and 'GLO_MF_tmax_Postprocess_Predictions.py' combine these individual files into two posterior prediction files: 'GLO_MF_dmax_Posterior_Predictions.csv' and 'GLO_MF_tmax_Posterior_Predictions.csv'. These have the combined predictions at the receptor locations of both the Karuah and Avon alluvial MODFLOW models.\n\n\n\nThese files are further summarised in exceedance probabilities with script 'GLO_MF_probabilities.py', which outputs files 'GLO_MF_dmax_ExceedanceProbabilities.csv' and 'GLO_MF_tmax_ExceedanceProbabilities.csv'\n\n\n\nReferences\n\n\n\nPeeters L, Dawes W, Rachakonda P, Pagendam D, Singh R, Pickett T, Frery E, Marvanek S, and McVicar T (2016) Groundwater numerical modelling for the Gloucester subregion. Product 2.6.2 for the Gloucester subregion from the Northern Sydney Basin Bioregional Assessment. Department of the Environment, Bureau of Meteorology, CSIRO and Geoscience Australia, Australia. http://data.bioregionalassessments.gov.au/product/NSB/GLO/2.6.2.\n\n\n\nPlischke E, Borgonovo E, and Smith CL (2013) Global sensitivity measures from given data European Journal of Operational Research 226, 536-550\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (XXXX) GLO MFdmax v01. Bioregional Assessment Derived Dataset. Viewed 18 July 2018, http://data.bioregionalassessments.gov.au/dataset/df0ff3b6-b131-4cf7-9d86-33d1de01634d.\n\n## **Dataset Ancestors** \n\n* **Derived From** [Standard Instrument Local Environmental Plan (LEP) - Heritage (HER) (NSW)](https://data.gov.au/dataset/fd1ff106-2f48-4bda-bfd1-a7206747c483)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations - GLO v5 UID elements 27032014](https://data.gov.au/dataset/0115c2ba-73c6-4c98-b539-9f67594980cf)\n\n* **Derived From** [Groundwater Economic Assets GLO 20150326](https://data.gov.au/dataset/2e314212-0677-40b8-86ff-c5166c6906bd)\n\n* **Derived From** [Gloucester digitised coal mine boundaries](https://data.gov.au/dataset/be85b60f-49dd-485c-bb85-11d45de9792d)\n\n* **Derived From** [Groundwater Dependent Ecosystems supplied by the NSW Office of Water on 13/05/2014](https://data.gov.au/dataset/1bdc6089-c114-4485-b962-35a8b3d2357f)\n\n* **Derived From** [Geology 100K NSW selected mapsheets for Sydney Bioregion](https://data.gov.au/dataset/19a28cab-2acb-4c9d-b265-1535158508f2)\n\n* **Derived From** [GLO Geological Model Extracted Horizons Final Grid XYZ V01](https://data.gov.au/dataset/18402b28-677e-45af-9860-067c258eea33)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations GLOv4 UID 14032014](https://data.gov.au/dataset/98341388-5705-4c42-9f7a-186e16647614)\n\n* **Derived From** [Communities of National Environmental Significance Database - RESTRICTED - Metadata only](https://data.gov.au/dataset/c01c4693-0a51-4dbc-bbbd-7a07952aa5f6)\n\n* **Derived From** [National Groundwater Dependent Ecosystems (GDE) Atlas](https://data.gov.au/dataset/e358e0c8-7b83-4179-b321-3b4b70df857d)\n\n* **Derived From** [Asset database for the Gloucester subregion on 12 September 2014](https://data.gov.au/dataset/d0c21c5c-1b30-4aae-933a-71145b935cc6)\n\n* **Derived From** [GEODATA 9 second DEM and D8: Digital Elevation Model Version 3 and Flow Direction Grid 2008](https://data.gov.au/dataset/ebcf6ca2-513a-4ec7-9323-73508c5d7b93)\n\n* **Derived From** [BA SYD GLO -  AGL Avon Wards River alluvium extent v1](https://data.gov.au/dataset/4484f125-8401-4324-a8a4-42fd1828e485)\n\n* **Derived From** [National Groundwater Information System (NGIS) v1.1](https://data.gov.au/dataset/e157b1cd-3cb7-4cf9-a13c-a6bed576b8c7)\n\n* **Derived From** [Groundwater Entitlement Data GLO NSW Office of Water 20150320 PersRemoved](https://data.gov.au/dataset/5afdddd5-f5b5-42d1-8ca6-8db19ecf1fd3)\n\n* **Derived From** [R-scripts for uncertainty analysis v01](https://data.gov.au/dataset/322c38ef-272f-4e77-964c-a14259abe9cf)\n\n* **Derived From** [New South Wales 2 kilometers Residential Exclusions Zone](https://data.gov.au/dataset/8e9b4d01-bba2-4741-9ffd-aed0484eb14a)\n\n* **Derived From** [Geofabric Surface Cartography - V2.1](https://data.gov.au/dataset/5342c4ba-f094-4ac5-a65d-071ff5c642bc)\n\n* **Derived From** [BA SYD selected GA TOPO 250K data plus added map features](https://data.gov.au/dataset/ba5feac2-b35a-4611-82da-5b6213777069)\n\n* **Derived From** [Groundwater Entitlement Data Gloucester - NSW Office of Water 20150320](https://data.gov.au/dataset/bf435e81-60d4-40c7-ac00-76585fc1fe77)\n\n* **Derived From** [Collaborative Australian Protected Areas Database (CAPAD) 2010 - External Restricted](https://data.gov.au/dataset/47312aee-722e-4c6e-bef8-9e439480503e)\n\n* **Derived From** [National Groundwater Dependent Ecosystems (GDE) Atlas (including WA)](https://data.gov.au/dataset/6dbaee0d-8813-46b1-9c13-1b796e7ed3bf)\n\n* **Derived From** [EIS Gloucester Coal 2010](https://data.gov.au/dataset/04c22c59-2f7c-4ba6-a192-7bfb89f6b98d)\n\n* **Derived From** [Species Profile and Threats Database (SPRAT) - Australia - Species of National Environmental Significance Database (BA subset - RESTRICTED - Metadata only)](https://data.gov.au/dataset/7276dd93-cc8c-4c01-8df0-cef743c72112)\n\n* **Derived From** [Geological Maps Combined for NSW](https://data.gov.au/dataset/f507bb28-8095-43f8-901e-565699a290b5)\n\n* **Derived From** [GEODATA TOPO 250K Series 3](https://data.gov.au/dataset/a0650f18-518a-4b99-a553-44f82f28bb5f)\n\n* **Derived From** [Asset database for the Gloucester subregion on 28 May 2015](https://data.gov.au/dataset/5815842e-d271-4f73-9d1a-d15c90571330)\n\n* **Derived From** [Gloucester Deep Wells Completion Reports - Geology](https://data.gov.au/dataset/0529ae9a-4d40-460d-b52a-fb0e5f646746)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations GLOv3 12032014](https://data.gov.au/dataset/587c6834-09aa-4cd8-8972-5632880f5ae5)\n\n* **Derived From** [EIS for Rocky Hill Coal Project 2013](https://data.gov.au/dataset/ebc1abb5-8b0e-43fa-95e3-2c49dd3343d7)\n\n* **Derived From** [GLO AEM dmax v01](https://data.gov.au/dataset/c54640db-ca88-4ed2-8e58-6b1a198293c5)\n\n* **Derived From** [National Heritage List Spatial Database (NHL) (v2.1)](https://data.gov.au/dataset/26daa8d7-a90e-47f3-982b-0df362414e65)\n\n* **Derived From** [Asset database for the Gloucester subregion on 8 April 2015](https://data.gov.au/dataset/d559e708-089a-46bc-bad2-dc5068993574)\n\n* **Derived From** [Gloucester - Additional assets from local councils](https://data.gov.au/dataset/47e9540a-dd75-4e04-bddb-574de1b89ecb)\n\n* **Derived From** [NSW Office of Water combined geodatabase of regulated rivers and water sharing plan regions](https://data.gov.au/dataset/24157c41-c42f-4e1f-a791-a1ad18c8215d)\n\n* **Derived From** [GLO RMS Model Depth Structure Eroded v01](https://data.gov.au/dataset/d2d676b1-26e5-4b5f-bcf3-60ae7fe41cec)\n\n* **Derived From** [Asset database for the Gloucester subregion on 29 August 2014](https://data.gov.au/dataset/7000a82c-85f2-461a-ba35-9d7d1ba6d339)\n\n* **Derived From** [New South Wales NSW Regional CMA Water Asset Information WAIT tool databases, RESTRICTED Includes ALL Reports](https://data.gov.au/dataset/a2a929ea-2cb3-42ab-86b9-87deac68acae)\n\n* **Derived From** [Groundwater Modelling Report for Stratford Coal Mine](https://data.gov.au/dataset/4a9d9e6c-8d12-4d9c-837f-5c63fa03472a)\n\n* **Derived From** [AGL Gloucester Gas Project AECOM report location map features](https://data.gov.au/dataset/7fca4f35-6e4e-4d37-bbae-1c1029a93a40)\n\n* **Derived From** [Directory of Important Wetlands in Australia (DIWA) Spatial Database (Public)](https://data.gov.au/dataset/6636846e-e330-4110-afbb-7b89491fe567)\n\n* **Derived From** [NSW Office of Water Groundwater Licence Extract Gloucester - Oct 2013](https://data.gov.au/dataset/56a49393-abaa-43f2-8b7d-97c5d414c1cf)\n\n* **Derived From** [New South Wales NSW - Regional - CMA - Water Asset Information Tool - WAIT - databases](https://data.gov.au/dataset/330532aa-66ba-44f5-984b-8a21a99661a0)\n\n* **Derived From** [GLO Deep Well Locations and Depths of Formations V01](https://data.gov.au/dataset/e549473c-5b78-4279-8eeb-af86ca6522b3)\n\n* **Derived From** [GLO MF Model v02](https://data.gov.au/dataset/9d732408-003e-4901-86a7-cea95b585640)\n\n* **Derived From** [Freshwater Fish Biodiversity Hotspots](https://data.gov.au/dataset/6093bd55-a978-4fcc-a8fa-6881fa015329)\n\n* **Derived From** [NSW Office of Water Groundwater licence extract linked to spatial locations GLOv2 19022014](https://data.gov.au/dataset/38c9e2c9-02ac-45a8-a188-936f91a58391)\n\n* **Derived From** [GLO AEM Model v02](https://data.gov.au/dataset/e76e05a1-3d3c-4014-a163-66a342278ea2)\n\n* **Derived From** [Australia - Species of National Environmental Significance Database](https://data.gov.au/dataset/4eff885b-0d68-45e8-b4b1-e3e5448354eb)\n\n* **Derived From** [GLO DEM 1sec SRTM MGA56](https://data.gov.au/dataset/ca38ed31-e15d-4bb5-a7ef-0aeba3dad3f4)\n\n* **Derived From** [Australia, Register of the National Estate (RNE) - Spatial Database (RNESDB) Internal](https://data.gov.au/dataset/878f6780-be97-469b-8517-54bd12a407d0)\n\n* **Derived From** [Avon Wards River alluvium v03](https://data.gov.au/dataset/72858ae2-da7f-4a97-8481-62aab1e3c184)\n\n* **Derived From** [NSW Office of Water Groundwater Entitlements Spatial Locations](https://data.gov.au/dataset/0f4da0d0-9e82-42f3-84da-1148e0b730c1)\n\n* **Derived From** [GLO Receptors 20150828](https://data.gov.au/dataset/acdd94a6-5201-4026-8177-035f25077587)\n\n* **Derived From** [Report for Director Generals Requirement Rocky Hill Project 2012](https://data.gov.au/dataset/d8837d3d-91bb-4496-814e-e707cf65fbb2)\n\n* **Derived From** [Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM)](https://data.gov.au/dataset/9a9284b6-eb45-4a13-97d0-91bf25f1187b)\n\n* **Derived From** [Collaborative Australian Protected Areas Database (CAPAD) 2010 (Not current release)](https://data.gov.au/dataset/7b649c6d-fdbf-40e3-b002-db521665af53)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/GLO/DATA/RiskAndUncertainty/HRVGLO_MF_dmax/df0ff3b6-b131-4cf7-9d86-33d1de01634d.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-8c9bdcbf-d332-4ccf-9307-4b2920ef9d0a",
+                "issued": "2018-07-18T22:42:57Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) R.W. Corkery & Co Pty Limited., (c) Yancoal Australia Ltd, (c) State of New South Wales (Office of Water), (c) Commonwealth of Australia (Geoscience Australia) 2014, (c) Commonwealth of Australia (Department of the Environment) 2014, (c) Commonwealth of Australia (Bureau of Meteorology), (c) Australian Heritage Council, Australian Government Department of the Environment, (c) Commonwealth of Australia (Bureau of Meteorology) 2012, (c) NSW Department of Planning and Infrastructure, (c) Commonwealth of Australia (Department of the Environment), (c) AGL Energy Ltd, (c) State of New South Wales (Department of Trade and Investment, Regional Infrastructure and Services), (c) NSW Department of Planning and Environment"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "GLO MFdmax v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-806c3770-031e-41da-99cd-9fe79f237050",
+            "indexed": "2019-06-26T08:05:18.500Z",
+            "issued": "2018-07-10T02:25:51Z",
+            "keywords": [
+                "Gloucester subregion",
+                "New South Wales",
+                "environment",
+                "inlandWaters"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/806c3770-031e-41da-99cd-9fe79f237050",
+            "languages": ["eng"],
+            "modified": "2018-07-18T22:42:57Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "GLO MFdmax v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "notPlanned"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from multiple source datasets. The source datasets are identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement. \n\n\n\nContains the output grids used to generate the AEM model interpolated exceedance probability maps for the Gloucester subregion. The dataset represents the maximum drawdown under baseline conditions, under the coal resource development pathway (CRDP) conditions and the difference between both, the additional coal resource development (ACRD). \n\n\n\nThis is described in product 2.6.2 Groundwater numerical modelling (Peeters et al. 2016).\n\n\n\nPeeters L, Dawes W, Rachakonda P, Pagendam D, Singh R, Pickett T, Frery E, Marvanek S, and McVicar T (2016) Groundwater numerical modelling for the Gloucester subregion. Product 2.6.2 for the Gloucester subregion from the Northern Sydney Basin Bioregional Assessment. Department of the Environment, Bureau of Meteorology, CSIRO and Geoscience Australia, Australia.\n\n## **Dataset History** \n\nThe dataset is derived from outputs from the AEM model and uncertainty analysis performed for the Gloucester subregion. Model cell groundwater drawdown outputs were exported to text files and interpolated to ESRI format grids for map production.\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (XXXX) GLO AEM interpolated exceedance probabilities v01. Bioregional Assessment Derived Dataset. Viewed 18 July 2018, http://data.bioregionalassessments.gov.au/dataset/94ce5624-f618-4d81-b7db-aecb2fc28028.\n\n## **Dataset Ancestors** \n\n* **Derived From** [Standard Instrument Local Environmental Plan (LEP) - Heritage (HER) (NSW)](https://data.gov.au/dataset/fd1ff106-2f48-4bda-bfd1-a7206747c483)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations - GLO v5 UID elements 27032014](https://data.gov.au/dataset/0115c2ba-73c6-4c98-b539-9f67594980cf)\n\n* **Derived From** [Groundwater Economic Assets GLO 20150326](https://data.gov.au/dataset/2e314212-0677-40b8-86ff-c5166c6906bd)\n\n* **Derived From** [Gloucester digitised coal mine boundaries](https://data.gov.au/dataset/be85b60f-49dd-485c-bb85-11d45de9792d)\n\n* **Derived From** [Groundwater Dependent Ecosystems supplied by the NSW Office of Water on 13/05/2014](https://data.gov.au/dataset/1bdc6089-c114-4485-b962-35a8b3d2357f)\n\n* **Derived From** [GLO Geological Model Extracted Horizons Final Grid XYZ V01](https://data.gov.au/dataset/18402b28-677e-45af-9860-067c258eea33)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations GLOv4 UID 14032014](https://data.gov.au/dataset/98341388-5705-4c42-9f7a-186e16647614)\n\n* **Derived From** [Communities of National Environmental Significance Database - RESTRICTED - Metadata only](https://data.gov.au/dataset/c01c4693-0a51-4dbc-bbbd-7a07952aa5f6)\n\n* **Derived From** [NSW Office of Water Groundwater Entitlements Spatial Locations](https://data.gov.au/dataset/0f4da0d0-9e82-42f3-84da-1148e0b730c1)\n\n* **Derived From** [National Groundwater Dependent Ecosystems (GDE) Atlas](https://data.gov.au/dataset/e358e0c8-7b83-4179-b321-3b4b70df857d)\n\n* **Derived From** [Asset database for the Gloucester subregion on 12 September 2014](https://data.gov.au/dataset/d0c21c5c-1b30-4aae-933a-71145b935cc6)\n\n* **Derived From** [GEODATA 9 second DEM and D8: Digital Elevation Model Version 3 and Flow Direction Grid 2008](https://data.gov.au/dataset/ebcf6ca2-513a-4ec7-9323-73508c5d7b93)\n\n* **Derived From** [National Groundwater Information System (NGIS) v1.1](https://data.gov.au/dataset/e157b1cd-3cb7-4cf9-a13c-a6bed576b8c7)\n\n* **Derived From** [Groundwater Entitlement Data GLO NSW Office of Water 20150320 PersRemoved](https://data.gov.au/dataset/5afdddd5-f5b5-42d1-8ca6-8db19ecf1fd3)\n\n* **Derived From** [R-scripts for uncertainty analysis v01](https://data.gov.au/dataset/322c38ef-272f-4e77-964c-a14259abe9cf)\n\n* **Derived From** [New South Wales 2 kilometers Residential Exclusions Zone](https://data.gov.au/dataset/8e9b4d01-bba2-4741-9ffd-aed0484eb14a)\n\n* **Derived From** [Geofabric Surface Cartography - V2.1](https://data.gov.au/dataset/5342c4ba-f094-4ac5-a65d-071ff5c642bc)\n\n* **Derived From** [Groundwater Entitlement Data Gloucester - NSW Office of Water 20150320](https://data.gov.au/dataset/bf435e81-60d4-40c7-ac00-76585fc1fe77)\n\n* **Derived From** [Collaborative Australian Protected Areas Database (CAPAD) 2010 - External Restricted](https://data.gov.au/dataset/47312aee-722e-4c6e-bef8-9e439480503e)\n\n* **Derived From** [National Groundwater Dependent Ecosystems (GDE) Atlas (including WA)](https://data.gov.au/dataset/6dbaee0d-8813-46b1-9c13-1b796e7ed3bf)\n\n* **Derived From** [EIS Gloucester Coal 2010](https://data.gov.au/dataset/04c22c59-2f7c-4ba6-a192-7bfb89f6b98d)\n\n* **Derived From** [Species Profile and Threats Database (SPRAT) - Australia - Species of National Environmental Significance Database (BA subset - RESTRICTED - Metadata only)](https://data.gov.au/dataset/7276dd93-cc8c-4c01-8df0-cef743c72112)\n\n* **Derived From** [Geological Maps Combined for NSW](https://data.gov.au/dataset/f507bb28-8095-43f8-901e-565699a290b5)\n\n* **Derived From** [Asset database for the Gloucester subregion on 28 May 2015](https://data.gov.au/dataset/5815842e-d271-4f73-9d1a-d15c90571330)\n\n* **Derived From** [Gloucester Deep Wells Completion Reports - Geology](https://data.gov.au/dataset/0529ae9a-4d40-460d-b52a-fb0e5f646746)\n\n* **Derived From** [NSW Office of Water GW licence extract linked to spatial locations GLOv3 12032014](https://data.gov.au/dataset/587c6834-09aa-4cd8-8972-5632880f5ae5)\n\n* **Derived From** [EIS for Rocky Hill Coal Project 2013](https://data.gov.au/dataset/ebc1abb5-8b0e-43fa-95e3-2c49dd3343d7)\n\n* **Derived From** [GLO AEM dmax v01](https://data.gov.au/dataset/c54640db-ca88-4ed2-8e58-6b1a198293c5)\n\n* **Derived From** [National Heritage List Spatial Database (NHL) (v2.1)](https://data.gov.au/dataset/26daa8d7-a90e-47f3-982b-0df362414e65)\n\n* **Derived From** [GLO Deep Well Locations and Depths of Formations V01](https://data.gov.au/dataset/e549473c-5b78-4279-8eeb-af86ca6522b3)\n\n* **Derived From** [GLO DEM 1sec SRTM MGA56](https://data.gov.au/dataset/ca38ed31-e15d-4bb5-a7ef-0aeba3dad3f4)\n\n* **Derived From** [NSW Office of Water combined geodatabase of regulated rivers and water sharing plan regions](https://data.gov.au/dataset/24157c41-c42f-4e1f-a791-a1ad18c8215d)\n\n* **Derived From** [GLO RMS Model Depth Structure Eroded v01](https://data.gov.au/dataset/d2d676b1-26e5-4b5f-bcf3-60ae7fe41cec)\n\n* **Derived From** [Asset database for the Gloucester subregion on 29 August 2014](https://data.gov.au/dataset/7000a82c-85f2-461a-ba35-9d7d1ba6d339)\n\n* **Derived From** [New South Wales NSW Regional CMA Water Asset Information WAIT tool databases, RESTRICTED Includes ALL Reports](https://data.gov.au/dataset/a2a929ea-2cb3-42ab-86b9-87deac68acae)\n\n* **Derived From** [Groundwater Modelling Report for Stratford Coal Mine](https://data.gov.au/dataset/4a9d9e6c-8d12-4d9c-837f-5c63fa03472a)\n\n* **Derived From** [AGL Gloucester Gas Project AECOM report location map features](https://data.gov.au/dataset/7fca4f35-6e4e-4d37-bbae-1c1029a93a40)\n\n* **Derived From** [Report for Director Generals Requirement Rocky Hill Project 2012](https://data.gov.au/dataset/d8837d3d-91bb-4496-814e-e707cf65fbb2)\n\n* **Derived From** [NSW Office of Water Groundwater Licence Extract Gloucester - Oct 2013](https://data.gov.au/dataset/56a49393-abaa-43f2-8b7d-97c5d414c1cf)\n\n* **Derived From** [New South Wales NSW - Regional - CMA - Water Asset Information Tool - WAIT - databases](https://data.gov.au/dataset/330532aa-66ba-44f5-984b-8a21a99661a0)\n\n* **Derived From** [Freshwater Fish Biodiversity Hotspots](https://data.gov.au/dataset/6093bd55-a978-4fcc-a8fa-6881fa015329)\n\n* **Derived From** [NSW Office of Water Groundwater licence extract linked to spatial locations GLOv2 19022014](https://data.gov.au/dataset/38c9e2c9-02ac-45a8-a188-936f91a58391)\n\n* **Derived From** [GLO AEM Model v02](https://data.gov.au/dataset/e76e05a1-3d3c-4014-a163-66a342278ea2)\n\n* **Derived From** [Australia - Species of National Environmental Significance Database](https://data.gov.au/dataset/4eff885b-0d68-45e8-b4b1-e3e5448354eb)\n\n* **Derived From** [Gloucester - Additional assets from local councils](https://data.gov.au/dataset/47e9540a-dd75-4e04-bddb-574de1b89ecb)\n\n* **Derived From** [Australia, Register of the National Estate (RNE) - Spatial Database (RNESDB) Internal](https://data.gov.au/dataset/878f6780-be97-469b-8517-54bd12a407d0)\n\n* **Derived From** [Asset database for the Gloucester subregion on 8 April 2015](https://data.gov.au/dataset/d559e708-089a-46bc-bad2-dc5068993574)\n\n* **Derived From** [GLO Receptors 20150828](https://data.gov.au/dataset/acdd94a6-5201-4026-8177-035f25077587)\n\n* **Derived From** [Directory of Important Wetlands in Australia (DIWA) Spatial Database (Public)](https://data.gov.au/dataset/6636846e-e330-4110-afbb-7b89491fe567)\n\n* **Derived From** [Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM)](https://data.gov.au/dataset/9a9284b6-eb45-4a13-97d0-91bf25f1187b)\n\n* **Derived From** [Collaborative Australian Protected Areas Database (CAPAD) 2010 (Not current release)](https://data.gov.au/dataset/7b649c6d-fdbf-40e3-b002-db521665af53)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/GLO/DATA/RiskAndUncertainty/FiguresGLO_AEM_interpolated_exceedance_probabilities_Mar2016/94ce5624-f618-4d81-b7db-aecb2fc28028.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-66282e4a-9f5a-4939-b45a-52b35e968b91",
+                "issued": "2018-07-18T22:47:50Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) R.W. Corkery & Co Pty Limited., (c) Yancoal Australia Ltd, (c) State of New South Wales (Office of Water), (c) Commonwealth of Australia (Geoscience Australia) 2014, (c) Commonwealth of Australia (Department of the Environment) 2014, (c) Commonwealth of Australia (Bureau of Meteorology), (c) Australian Heritage Council, Australian Government Department of the Environment, (c) Commonwealth of Australia (Bureau of Meteorology) 2012, (c) NSW Department of Planning and Infrastructure, (c) Commonwealth of Australia (Department of the Environment), (c) AGL Energy Ltd, (c) State of New South Wales (Department of Trade and Investment, Regional Infrastructure and Services), (c) NSW Department of Planning and Environment"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "GLO AEM interpolated exceedance probabilities v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-30dbf0ba-18b3-4204-8530-121741179b9c",
+            "indexed": "2019-06-26T08:05:18.501Z",
+            "issued": "2018-07-10T02:29:25Z",
+            "keywords": [
+                "Australia",
+                "Gloucester subregion",
+                "geoscientificInformation",
+                "inlandWaters"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/30dbf0ba-18b3-4204-8530-121741179b9c",
+            "languages": ["eng"],
+            "modified": "2018-07-18T22:47:50Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {
+                "geoJson": {
+                    "coordinates": [[
+                        [
+                            152.13,
+                            -32.65
+                        ],
+                        [
+                            152.13,
+                            -31.8
+                        ],
+                        [
+                            151.8,
+                            -31.8
+                        ],
+                        [
+                            151.8,
+                            -32.65
+                        ],
+                        [
+                            152.13,
+                            -32.65
+                        ]
+                    ]],
+                    "type": "Polygon"
+                },
+                "text": "POLYGON ((152.13 -32.65, 152.13 -31.8, 151.8 -31.8, 151.8 -32.65, 152.13 -32.65))"
+            },
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "GLO AEM interpolated exceedance probabilities v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from the Groundwater Modelling Report for Rocky Hill Coal Project dataset. The source dataset is identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement.\n\n\n\nThe dataset is a shapefile representing the approximate extents of the open cut pits (both existing and proposed) for the Rocky Hill coal mine in the Gloucester subregion. These were digitised from map images taken from Australian Groundwater & Environmental Consultants Pty Ltd (2013) Report number 806/04 Vols, Part 4 Groundwater Assessment, Figure 47, pp 4-106.\n\n\n\nhttp://www.rockyhillproject.com.au/wp-content/uploads/2013/08/80604-Vol-2_Part-4-Groundwater.pdf\n\n## **Dataset History** \n\nA map image from the report listed below was scanned. These were georectified to MGA 56 geotiffs using recognised features of known locations in the various map images as control points (eg road junctions, corners of administrative boundaries etc). \n\n\n\nSelected features representing the open cut pits (both existing and proposed) shown on the map were manually digitised off the computer screen using a georectified map as a backdrop. Features were saved as ESRI shapefiles in the MGA z56 projection. Pits were tagged as existing or proposed in the attribute table.\n\n\n\nAustralian Groundwater & Environmental Consultants Pty Ltd (2013) Report number 806/04 Vols, Part 4 Groundwater Assessment. Figure 47, pp 4-106\n\n\n\nhttp://www.rockyhillproject.com.au/wp-content/uploads/2013/08/80604-Vol-2_Part-4-Groundwater.pdf\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (XXXX) GLO Rocky Hill Open Cut Pits v01. Bioregional Assessment Derived Dataset. Viewed 18 July 2018, http://data.bioregionalassessments.gov.au/dataset/942398e3-0fbd-41d3-9fb1-13771942fabe.\n\n## **Dataset Ancestors** \n\n* **Derived From** [Groundwater Modelling Report for Rocky Hill Coal Project](https://data.gov.au/dataset/8c34ea0c-b3b4-44b3-8409-706adb6114b6)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/GLO/DATA/Resources/MinesRocky_Hill_OC_Pits_v01/942398e3-0fbd-41d3-9fb1-13771942fabe.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-6743d3cc-98e3-4d04-8632-38b14f157fe3",
+                "issued": "2018-07-18T22:42:31Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) R.W. Corkery & Co Pty Limited."},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "GLO Rocky Hill Open Cut Pits v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-e628116f-4cb1-4712-aa19-2d031eb94a6e",
+            "indexed": "2019-06-26T08:05:18.591Z",
+            "issued": "2018-07-12T04:55:01Z",
+            "keywords": [
+                "Gloucester subregion",
+                "INDUSTRY-Mining",
+                "New South Wales",
+                "economy",
+                "geoscientificInformation"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/e628116f-4cb1-4712-aa19-2d031eb94a6e",
+            "languages": ["eng"],
+            "modified": "2018-07-18T22:42:30Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "GLO Rocky Hill Open Cut Pits v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThis dataset and its metadata statement were supplied to the Bioregional Assessment Programme by a third party and are presented here as originally supplied.\n\n\n\nThis dataset is the results from a search of http://www.environment.nsw.gov.au/threatenedspeciesapp/GeoHabitatSearch.aspx for all habitat types and all species types within the Hunter-Central Rivers CMA on the 15/12/2015\n\n## **Dataset History** \n\nThis dataset is the results from a search of http://www.environment.nsw.gov.au/threatenedspeciesapp/GeoHabitatSearch.aspx for all habitat types and all species types within the Hunter-Central Rivers CMA on the 15/12/2015\n\n## **Dataset Citation** \n\nCSIRO (2015) SYD Habitat And Species types HCR CMA v01. Bioregional Assessment Source Dataset. Viewed 17 July 2018, http://data.bioregionalassessments.gov.au/dataset/67739ee2-e2f4-46dd-8931-4db1853494d6.",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/ALL/DATA/Ecology/SpeciesAndCommunitiesSYD_HabitatAndSpeciesTypesHCR_CMA_v01/67739ee2-e2f4-46dd-8931-4db1853494d6.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-427ce9b6-dca0-45be-9d15-8e7033cdb334",
+                "issued": "2018-07-17T05:38:52Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Office of Environment and Heritage NSW"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "SYD Habitat And Species types HCR CMA v01"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-111df28c-8a87-4144-bcc5-d959f6db603d",
+            "indexed": "2019-06-26T08:05:18.593Z",
+            "issued": "2018-07-12T21:57:10Z",
+            "keywords": [
+                "Gloucester subregion",
+                "biota"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/111df28c-8a87-4144-bcc5-d959f6db603d",
+            "languages": ["eng"],
+            "modified": "2018-07-17T05:38:52Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "SYD Habitat And Species types HCR CMA v01",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from the Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM) dataset. The source dataset is identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement.\n\n\n\nThis dataset provides a userguide and setup information relating to accessing the Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM), for visualisation and analysis using ESRI ArcMap and ArcCatalog.\n\n\n\nThe 1 second DSM, DEM, DEM-S and DEM-H are national elevation data products derived from the Shuttle Radar Topography Mission (SRTM) data. The SRTM data is not suitable for routine application due to various artifacts and noise.\n\nThe data has been treated with several processes to produce more usable products:\n\n\\* A cleaned digital surface model (DSM)\n\no regular grid representing ground surface topography as well as other features including vegetation and man-made structures\n\n\\* A bare-earth digital elevation model (DEM)\n\no regular grid representing ground surface topography, and where possible, excluding other features such as vegetation and man-made structures.\n\n\\* A smoothed digital elevation model (DEM-S)\n\no A smoothed DEM based on the bare-earth DEM that has been adaptively smoothed to reduce random noise typically associated with the SRTM data in low relief areas.\n\n\\* A hydrologically enforced digital elevation model (DEM-H)\n\no A hydrologically enforced DEM is based on DEM-S that has had drainage lines imposed and been further smoothed using the ANUDEM interpolation software.\n\n\n\nThe last product, a hydrologically enforced DEM, is most similar to the DEMs commonly in use around Australia, such as the GEODATA 9 Second DEM and the 25 m resolution DEMs produced by State and Territory agencies from digitised topographic maps.\n\nFor any analysis where surface shape is important, one of the smoothed DEMs (DEM-S or DEM-H) should be used. DEM-S is preferred for shape and vertical accuracy and DEM-H for hydrological connectivity. The DSM is suitable if you want to see the vegetation as well as the land surface height. There are few cases where DEM is the best data source, unless access to a less processed product is necessary.\n\nThe 1 second DEM (in its various incarnations) has quite different characteristics to DEMs derived by interpolation from topographic data. Those DEMs are typically quite smooth and are based on fairly accurate but sparse source data, usually contours and spot heights supplemented by drainage lines. The SRTM data is derived from radar measurements that are dense (there is essentially a measurement at almost every grid cell) but noisy.\n\nVersion 1.0 of the DSM was released in early 2009 and version 1.0 of the DEM was released in late 2009. Version 1.0 of the DEM-S was released in July 2010 and version 1.0 of the hydrologically enforced DEM-H was released in October 2011. These products provide substantial improvements in the quality and consistency of the data relative to the original SRTM data, but are not free from artefacts. Improved products will be released over time.\n\nThe 3 second products were derived from the 1 second data and version 1.0 was released in August 2010. Future releases of these products will occur when the 1 second products have been improved. At this stage there is no 3 second DEM-H product, which requires re-interpolation with drainage enforcement at that resolution.\n\n## **Dataset History** \n\nSee readme file: readme file for gloucester basin 1sec srtm.xyz\n\nThis is ascii file created by CSIRO 3 september 2013 using Geosoft Oasis Montaj software\n\nfile is 1 second shuttle radar data (28.6 x 28.6 m) which has had buildings and vegetation removed \n\n(processing by CSIRO and GA) DEM-S product\n\nfile format is gda94 easting,   gda94 northing,  height above sea level\n\nmga zone 56 coordinates, all data in metres\n\norigin (bottom left) is 379007E, 6400022N\n\n1260 pts in east direction\n\n2798 pts in north direction\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (XXXX) GLO DEM 1sec SRTM MGA56. Bioregional Assessment Derived Dataset. Viewed 18 July 2018, http://data.bioregionalassessments.gov.au/dataset/ca38ed31-e15d-4bb5-a7ef-0aeba3dad3f4.\n\n## **Dataset Ancestors** \n\n* **Derived From** [Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM)](https://data.gov.au/dataset/9a9284b6-eb45-4a13-97d0-91bf25f1187b)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/GLO/DATA/Geography/Physiography/DEMGLO_DEM_MGA56/ca38ed31-e15d-4bb5-a7ef-0aeba3dad3f4.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-c293bedb-1fd8-46a2-92f7-3d4e976d740d",
+                "issued": "2018-07-18T22:33:43Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) Commonwealth of Australia (Geoscience Australia) 2014"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "GLO DEM 1sec SRTM MGA56"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-2f033341-1009-49da-aa37-916ba9657be0",
+            "indexed": "2019-06-26T08:05:03.493Z",
+            "issued": "2018-05-31T04:29:57Z",
+            "keywords": [
+                "Gloucester subregion",
+                "elevation"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/2f033341-1009-49da-aa37-916ba9657be0",
+            "languages": ["eng"],
+            "modified": "2018-07-18T22:33:43Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "GLO DEM 1sec SRTM MGA56",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThis dataset and its metadata statement were supplied to the Bioregional Assessment Programme by a third party and are presented here as originally supplied. \n\n\n\nCollect Magnetic and Radiometric data over the Gloucester Basin in PEL285 - AGL\n\n## **Dataset History** \n\nAirborne Survey (Heli).\n\n\n\n_____________________________________________________________________\n\n  \n\n    \t\t\t  Thomson Aviation Pty. Ltd.                     \n\n   _______________________________________________________________________________\n\n  \n\n   \t\t\tGEOPHYSICAL SURVEY DATA REPORT\n\n   _______________________________________________________________________________\n\n  \n\n\t\t\t\t\t\t\tDate : 28 July 2013\n\n\n\n\n\n   This readme file describes the equipment and specifications of a geophysical\n\n   airborne survey conducted by Thomson Aviation Pty. Ltd. \n\n   The readme also summarises the data processing parameters and procedures used.\n\n\n\n   \n\n \n\n   \n\n  CLIENT DETAILS \n\n  ---------------    \n\n  Company Flown by :  Thomson Aviation Pty. Ltd\n\n  Company Processed:  Thomson Aviation Pty. Ltd\n\n  Client           :  AGL Energy Limited\n\n  Company Job      :  Thomson 13018\n\n  \n\n  \n\n\n\n  AIRBORNE SURVEY EQUIPMENT:\n\n  -------------------------\n\n  \n\n  Aircraft                         : Bell Jet Ranger\n\n  Magnetometer                     : Geometrics G822A\n\n  Magnetometer Resolution          : 0.001 nT\n\n  Magnetometer Compensation        : Post Flight\n\n  Magnetometer Sample Interval     : 0.05 seconds Hz \n\n  Data Acquisition                 : GeOZ Model 2010\n\n  Spectrometer                     : Radiation Solutions RS 500\n\n  Crystal Size                     : 16.5 lt downward array\n\n  Spectrometer Sample Interval     : 1 seconds \n\n  GPS Navigation System            : Novatel OEMV-1VBS GPS Receiver\n\n  \n\n  \n\n  AIRBORNE SURVEY SPECIFICATIONS\n\n  ------------------------------\n\n \n\n  \n\n  Area: Gloucester, NSW\n\n \n\n  Flight Line Direction            :   090 - 270  degrees\n\n  Flight Line Separation           :          50  metres\n\n  Tie Line Direction               :   180 - 000  degrees\n\n  Tie Line Separation              :         500  metres\n\n  Terrain Clearance                :          35  metres (MTC)\n\n  Survey flown                     :    June  2013\n\n\n\n  DATUM and PROJECTION\n\n  --------------------\n\n  \n\n  Datum                            :  GDA94\n\n  Projection                       :  MGA56\n\n\n\n          \n\n  \n\n  RADIOMETRIC PROCESSING PARAMETERS:\n\n  ----------------------------------------\n\n   \n\n                      Tot.Count    Potassium   Uranium     Thorium\n\n  Height Attn         0.007434     0.009432    0.008428    0.007510  \n\n  CPS to Eq           29.601       111.508     10.833      5.940\n\n  \n\n  \n\n  RADIOMETRIC STRIPPING RATIOS:\n\n  ------------------------------\n\n\n\n    Alpha = 0.276\t\ta = 0.048  \n\n\t\tBeta  = 0.418\t\tb = 0.003 \n\n\t\tGamma = 0.759\t\tg = 0.001 \n\n\n\n\n\n_____________________________________________________________________________________________\n\n  \n\n\t\t\t\tDATA PROCESSING   : MAGNETIC DATA\n\n_____________________________________________________________________________________________\n\n\n\n____________________________________\n\n\n\n   MAGNETIC PROCESSING FLOW\n\n____________________________________\n\n\n\n\n\nThe final magnetic data processing was performed using the following processing flow:\n\n\t-  Aircraft magnetic data QC\n\n\t-  Diurnal magnetic data QC\n\n\t-  System parallax removal\n\n\t-  Diurnal variation removal and addition of the mean diurnal base value\n\n\t-  IGRF removal and addition of mean IGRF value.\n\n\t-  levelling using polynomial Tie line levelling, \n\n\t-  Micro levelling if required\n\n\t-  Reduction to the pole.\n\n\t-  Gridding using Minimum Curvature algorithm \n\n\n\n\n\nMAGNETIC QUALITY CONTROL\n\n------------------------\n\nThe processing of the magnetic data firstly involved the routine quality control in the field \n\nof both the aeromagnetic and diurnal data during the acquisition phase.  Any data found not \n\nmeeting the required specifications were reflown.  \n\n\n\n\n\nMAGNETIC PARALLAX CORRECTION\n\n----------------------------\n\nThe total magnetic intensity aircraft data was firstly corrected for the effects of system \n\nparallax.  The parallax parameters were determined and checked from the results of opposing \n\ntest line flights.\n\n\n\n\n\nMAGNETIC DIURNAL CORRECTION\n\n---------------------------\n\nThe base station magnetometer data was edited and merged into the main database. The \n\naeromagnetic data was corrected for diurnal variations by subtracting the observed magnetic \n\nbase station deviations.  There were no magnetic storms recorded by the diurnal monitoring \n\nstation during the survey. The mean value was then added back to the data.  \n\n\n\n\n\nMAGNETIC IGRF CORRECTION\n\n------------------------\n\nThe data was corrected for the regional gradient of the International Geomagnetic Reference \n\nField (IGRF).      The IGRF was calculated for every point along the lines with respect to\n\nGPS height using the IGRF Model for 2005 with secular variation applied.      The mean IGRF \n\nvalue was then added back to the data.\n\n\n\n\n\nMAGNETIC PROFILE LEVELLING\n\n--------------------------\n\nThe magnetic traverse line data was then statistically levelled from the tie line data using \n\nIntrepid polynomial levelling.   The steps involved in the tie line levelling were as \n\nfollows:  \n\n\n\n\t-    A primary tie line was chosen as a reference tie.\n\n\t-    All other ties were levelled to this tie line using 1st degree polynomial adjustment.\n\n\t-    lines were adjusted individually to minimize crossover differences, using 2nd degree   \n\n     \t     polynomial adjustments.\n\n\n\nAny residual flight line effects were removed using Intrepid micro levelling techniques and \n\nthe resultant line data saved as a separate field.\n\n\n\n\n\nMAGNETIC GRIDDING\n\n-----------------\n\nThe data was gridded to a cell size of 20% of line spacing using a Minimum Curvature algorithm.\n\n\n\n\n\n\n\n_____________________________________________________________________________________________\n\n  \n\n\t\t\tDATA PROCESSING   : RADIOMETRIC DATA\n\n_____________________________________________________________________________________________\n\n\n\n  \n\n\n\n____________________________________\n\n\n\n    RADIOMETRIC PROCESSING FLOW \n\n____________________________________\n\n                \n\nRadiometric data processing consists of the following processing flow:\n\n\n\n\n\n\tFull spectrum 256 channel Overview:\n\n\n\n\n\n\t- Noise Adjusted Singular Value Deconvolution (NASVD) noise reduction \n\n\t- Dead Time correction \n\n\t- Energy  calibration  \n\n\t- Cosmic and Aircraft background Removal.\n\n\t- Radon background Removal \n\n\t- Extraction of IAEA Window data\n\n\n\n\n\n\tWindowed data processing Overview:\n\n\n\n\t- Compton Stripping correction.\n\n\t- Height Attenuation correction using IAEA coefficients. \n\n\t- Gridding\n\n\n\nThe specific processing steps are described below:\n\n\n\n\n\n____________________________________\n\n\n\n       256 CHANNEL PROCESSING\n\n____________________________________\n\n\n\n\n\nNASVD Noise Reduction:\n\n---------------------\n\nNoise-Adjusted Singular Value Decomposition (NASVD) Smoothing.   Correction of the radiometric \n\ndata involved the reduction of the 256 channels of raw gamma spectrometer data using Noise-Adjusted\n\nSingular Value Decomposition (NASVD) noise reduction method.  The signal to noise ratio of the \n\nmulti channel spectra can be substantially enhanced using Noise-Adjusted Singular Value \n\nDecomposition (NASVD) as described by Hovgaard and Grasty (1997), Schneider (1998) and Minty (1998).  \n\nThis method involves a general linear transformation of groups of spectra (a whole line or flight), \n\nusing NASVD to compute the different spectral shapes that make up the measured multi-channel \n\nspectra.  New multi-channel spectra are created by recombining the statistically significant \n\nspectral components.  Each spectral component contributes an unequal amount to the features \n\nobserved in the measured multi-channel spectrum, until a point is reached where the spectral \n\ncomponents represent only noise.\n\n\n\nThe 1st spectral component is the spectral shape that represents most of the features in the \n\nmeasured multi-channel spectra.  The 2nd spectral component represents those features not \n\ndescribed by the 1st spectral component, etc.  By excluding from the recombination those spectral \n\ncomponents that do not represent significant features in the measured multi-channel spectra, the \n\nresulting reconstructed multi-channel spectra have a much larger signal to noise ratio than the \n\nmeasured multi-channel spectra.\n\n \n\n\n\nDead Time Corrections:\n\n----------------------\n\nThe raw 256 channel spectra were corrected for spectrometer dead time using the recorded live time \n\nand the standard formula.\n\n\t\t\t\n\n\t\tN = n / (1 - t) \n\n\t\n\n\tN\t=    \tcorrected counts in each second;\n\n\tn\t=\tall counts processed in each second by the ADC; and\n\n\tt\t=\tthe recorded dead time\n\n\n\nWhere the live time (L) is recorded, the dead time t is replaced by (1 - L).\n\n\n\n\n\nEnergy Calibration:\n\n-------------------\n\nEnergy calibration was undertaken line by line using a maximum of 3 calibration peaks; and a \n\nminimum of 2 calibration peaks dependent upon their clear identification in the spectra.  The 3 \n\ncalibration peaks used were Bi 214 at 0.609 Mev, K-40 at 1.46 Mev and Tl-208 at 2.615 Mev\n\n\n\n\n\nCosmic and Aircraft Background Correction: \n\n------------------------------------------\n\nCosmic and aircraft background removal utilised the data recorded from a series of calibration flights \n\nover water.  These flight produce a normalised cosmic spectra for the system installation, together with\n\na 256ch spectra for the aircraft background.\n\nThe combined correction is calculated using:\n\n\n\n\tN\t=\ta + bC,\n\nwhere:\n\n\tN\t=\tthe combined cosmic and aircraft background in each spectral window;\n\n\ta\t=\tthe aircraft background in the window \n\n\tC\t=\tthe cosmic channel count; and\n\n\tb\t=\tthe cosmic stripping factor for the window.\n\n\n\nThe values of a and b for each window are determined from the calibration flights over the sea.  \n\nCosmic coefficients and aircraft background coefficients were derived using INTREPID CAL256 program. \n\n\n\n\n\nAtmospheric Radon: \n\n------------------\n\nThe influence of atmospheric radon has been minimised using the spectral ratio method described by \n\nMinty (1992).   However the effect of radon in the Uranium channel can be considerable; and some \n\neffects of the radon are visable in the character of the final processed data.   \n\n \n\n\n\nExtraction of Four Standard Windows:\n\n------------------------------------\n\nThe fully processed 256 channel spectra were reduced to the four IAEA (1991) standard windows or \n\nRegions of Interest (ROI):  As given by the following Energy windows and channel numbers:\n\n\n\n\tTotal Count\t0.41 to\t2.81 Mev (channels  33 to 238)\n\n\tPotassium\t1.37 to\t1.57 Mev (channels 116 to 133)\n\n\tUranium   \t1.66 to\t1.86 Mev (channels 140 to 158)\n\n\tThorium   \t2.41 to\t2.81 Mev (channels 205 to 238)\n\n\n\n\n\n____________________________________\n\n\n\n\tWINDOW PROCESSING\n\n____________________________________\n\n\n\n\n\nSpectral Stripping of Standard Window Data:\n\n-------------------------------------------\n\n\n\nCorrections for Compton stripping and height attenuation were applied to the windowed \n\ndata using constants supplied by Radiation Solutions Inc. \n\nDue to scattering of gamma rays in the air, the three principle stripping ratios \n\n( Alpha, Beta  and  Gamma) increase with altitude above the ground:\n\n\n\nStripping Ratio\tIncrease at STP per metre\n\n \t Alpha   0.00049\n\n \t Beta    0.00065\n\n \t Gamma   0.00069\n\n\n\nFollowing adjustment of the stripping ratios for altitude, the technique for producing the corrected \n\n(stripped) count rates in the potassium, uranium and thorium channels (NKC, NUC and NThC) are given \n\nby Grasty and Minty (1995)\n\n\n\nThe Compton coefficients for the system are given above: \n\n\t\n\n\t\n\n \n\nHeight Corrections\n\n-------------------\n\nThe stripped count rates vary exponentially with aircraft altitude.  Adjustments for variation \n\nin altitude were made using the formula:\n\n\n\n\tNc\t= No e^ -u(H-h)\n\n\n\nWhere \tNo\t= uncorrected counts,\n\n\tNc\t= count rate normalised to height H,\n\n\th\t= measured height above the ground,\n\n\tH\t= nominal flight height,\n\n\tu\t= attenuation coefficient for the channel being corrected.\n\n\n\n\n\nCalculation of Effective Height\n\n-------------------------------\n\nThe Effective Height, which is the aircraft terrain clearance corrected to Standard Temperature \n\nand Pressure was determined as follows:\n\n\n\n\t- Filtering of the temperature field was applied to remove spikes and smooth out the \n\n\t  instrument noise.\n\n\t- Filtering of the barometric pressure field was applied to remove spikes and to smooth \n\n\t  out the instrument noise.\n\n\t- Filtering of the radar altimeter was applied to remove spikes, spurious reflections from\n\n \t  groups of tree and very narrow gullies and to smooth out the instrument noise.\n\n\t- The formula option in the spread sheet editor was used to combine the terrain clearance,\n\n \t  pressure and temperature.\n\n\n\n\t\t\th x P x 273\n\n\tE_height =  _____________________\n\n\t\t\t1013 x (T + 273)\n\n\tWhere:\n\n\n\n\tE_height=\tthe effective height;\n\n\th\t=\tthe observed radar altitude in metres;\n\n\tT\t=\tthe measured air temperature in degrees C;\n\n\tP\t=\tthe barometric pressure in millibars.\n\n\n\nReduction to Ground Concentrations:\n\n-----------------------------------\n\n\n\nThe fully corrected window data is then converted to effective ground concentrations by dividing \n\nby the conversion coefficient to produce the following equivalent concentrations for each element.\n\n \n\n\tTotal Count\t: Dose Rate\n\n\tPotassium\t: Percent\n\n\tUranium\t    \t: PPM\n\n\tThorium  \t: PPM\n\n\n\n\n\nRadiometric gridding\n\n---------------------\n\nThe data was gridded to a cell size of 20% of line spacing using a Minimum Curvature algorithm.\n\n## **Dataset Citation** \n\nAGL (2014) AGL - 2013 Gloucester Airborne Survey. Bioregional Assessment Source Dataset. Viewed 31 May 2018, http://data.bioregionalassessments.gov.au/dataset/5cffc19a-0ff4-402c-824a-88935f70931a.",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/GLO/DATA/Geology/Geophysics/MagneticsAGL_GLO_AirborneSurvey_2013/5cffc19a-0ff4-402c-824a-88935f70931a.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-b65672ef-184d-454e-996f-95883f96d1f4",
+                "issued": "2018-05-31T04:35:30Z",
+                "license": {"name": "Creative Commons Attribution 3.0 Australia, http://creativecommons.org/licenses/by/3.0/au/, (c) AGL Energy Ltd"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "AGL - 2013 Gloucester Airborne Survey"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-9ff9f257-cfa0-4f50-a7e0-ec0c279d45a3",
+            "indexed": "2019-06-26T08:05:03.580Z",
+            "issued": "2018-05-31T04:35:30Z",
+            "keywords": [
+                "Gloucester subregion",
+                "New South Wales",
+                "elevation",
+                "geoscientificInformation",
+                "imageryBaseMapsEarthCover",
+                "planningCadastre"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/9ff9f257-cfa0-4f50-a7e0-ec0c279d45a3",
+            "languages": ["eng"],
+            "modified": "2018-05-31T04:35:30Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "POLYGON ((0 0, 0 0, 0 0, 0 0))"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "AGL - 2013 Gloucester Airborne Survey",
+            "years": null
+        },
+        {
+            "accrualPeriodicity": {"text": "NONE"},
+            "catalog": "data.gov.au",
+            "contactPoint": {"identifier": "bioregionalassessments@bom.gov.au"},
+            "creation": null,
+            "description": "## **Abstract** \n\nThe dataset was derived by the Bioregional Assessment Programme from the Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM) dataset. The source dataset is identified in the Lineage field in this metadata statement. The processes undertaken to produce this derived dataset are described in the History field in this metadata statement.\n\n\n\nThis data is an extract from the 1 second hydrologically enforced SRTM, clipped to a rectangle to take in the extent of the BA_SYD bioregion and its contributing subcatchments (BA_SYD_DEMh1sec). \n\n\n\nThe data is extracted from\n\nGeoscience Australia, 1 second SRTM Digital Elevation Model (DEM)\n\nGUID: 9a9284b6-eb45-4a13-97d0-91bf25f1187b\n\n\n\nThree additional layers are derived from this data for hydrological analysis and catchment delineation. They are:\n\nBA_SYD_DEMh1sec_fill: as above but with sinks filled\n\nBA_SYD_FDIR: Flow direction\n\nBA_SYD_FACC: Flow accumulation.\n\n## **Purpose** \n\nHydrological analysis and contribution catchment delineation\n\n## **Dataset History** \n\nThis data is an extract from the 1 second hydrologically enforced SRTM, clipped to a rectangle to take in the extent of the BA_SYD bioregion and its contributing subcatchments (BA_SYD_DEMh1sec). \n\n\n\nThe data is extracted from Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM) using the Spatial Analyst \"Extract by Rectangle\" tool snapped to the source raster.\n\nGUID: 9a9284b6-eb45-4a13-97d0-91bf25f1187b \n\n\n\nThree additional layers are derived from the extracted DEM using the respective Tools in the ArcGIS Spatial Analyst-> Hydrology toolset. They are:\n\nBA_SYD_DEMh1sec_fill: as above but with sinks Filled\n\nBA_SYD_FDIR: Flow Direction\n\nBA_SYD_FACC: Flow Accumulation.\n\n## **Dataset Citation** \n\nBioregional Assessment Programme (2014) BA SYD 1 sec SRTM (h) DEM and hydrological derivatives. Bioregional Assessment Derived Dataset. Viewed 18 July 2018, http://data.bioregionalassessments.gov.au/dataset/90f5ef3c-2141-4450-b44c-1afbd843236f.\n\n## **Dataset Ancestors** \n\n* **Derived From** [Geoscience Australia, 1 second SRTM Digital Elevation Model (DEM)](https://data.gov.au/dataset/9a9284b6-eb45-4a13-97d0-91bf25f1187b)\n\n",
+            "distributions": [{
+                "description": "Data File",
+                "downloadURL": "https://datagovau.s3.amazonaws.com/bioregionalassessments/SYD/ALL/DATA/Geography/Physiography/DEMBA_SYD_SRTM_1sec_DEM_and_Derived/90f5ef3c-2141-4450-b44c-1afbd843236f.zip",
+                "format": "ZIP",
+                "identifier": "dist-dga-b26acd0b-a34c-4689-8c0c-c7528cf8e8c4",
+                "issued": "2018-07-17T23:12:29Z",
+                "license": {"name": "Creative Commons Attribution 4.0 International, http://creativecommons.org/licenses/by/4.0/, (c) Commonwealth of Australia (Bioregional Assessment Programme http://www.bioregionalassessments.gov.au), (c) Commonwealth of Australia (Geoscience Australia) 2014"},
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "title": "BA SYD 1 sec SRTM (h) DEM and hydrological derivatives"
+            }],
+            "hasQuality": true,
+            "identifier": "ds-dga-dff1fb48-415c-4e77-832e-c5a3f1148236",
+            "indexed": "2019-06-26T08:05:03.581Z",
+            "issued": "2018-05-31T04:37:21Z",
+            "keywords": [
+                "Gloucester subregion",
+                "New South Wales",
+                "elevation"
+            ],
+            "landingPage": "https://data.gov.au/data/dataset/dff1fb48-415c-4e77-832e-c5a3f1148236",
+            "languages": ["eng"],
+            "modified": "2018-07-17T23:12:29Z",
+            "publisher": {
+                "acronym": "BAP",
+                "aggKeywords": "bioregional assessment programme:commonwealth of australia",
+                "description": "The Australian Government Bioregional Assessment Programme is a collaboration between the Department of the Environment and Energy, the Bureau of Meteorology, CSIRO and Geoscience Australia.  The Programme seeks to better understand the potential impacts of coal seam gas and large coal mining developments on water resources and water-related assets. It is one of a number of actions undertaken by the Australian Government to strengthen the science underpinning decision making on coal seam gas and large coal mining developments.",
+                "email": "bioregionalassessments@bom.gov.au",
+                "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                "imageUrl": "https://data.gov.au/data/uploads/group/2015-10-30-051742.096388Bioregional-assessments-logo-800.jpg",
+                "jurisdiction": "Commonwealth of Australia",
+                "name": "Bioregional Assessment Programme",
+                "source": {
+                    "id": "dga",
+                    "name": "data.gov.au"
+                },
+                "website": "http://www.bioregionalassessments.gov.au/"
+            },
+            "quality": 0.2,
+            "score": 9.92002010345459,
+            "source": {
+                "id": "dga",
+                "name": "data.gov.au"
+            },
+            "spatial": {"text": "NONE"},
+            "temporal": {
+                "end": {"text": "N/A"},
+                "start": {"text": "N/A"}
+            },
+            "themes": [],
+            "title": "BA SYD 1 sec SRTM (h) DEM and hydrological derivatives",
+            "years": null
+        }
+    ],
+    "facets": [
+        {
+            "id": "Publisher",
+            "options": [
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 1655,
+                    "identifier": "org-dga-69f37b4c-bdf0-4c85-bd56-82fa6d6b087a",
+                    "matched": true,
+                    "value": "Bioregional Assessment Programme"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 14770,
+                    "identifier": "org-ga-Commonwealth of Australia (Geoscience Australia)",
+                    "matched": false,
+                    "value": "Commonwealth of Australia (Geoscience Australia)"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 7506,
+                    "identifier": "org-marlin-CSIRO Oceans and Atmosphere - Information and Data Centre",
+                    "matched": false,
+                    "value": "CSIRO Oceans and Atmosphere - Information and Data Centre"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 6676,
+                    "identifier": "org-sdinsw-NSW Government",
+                    "matched": false,
+                    "value": "NSW Government"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 6653,
+                    "identifier": "org-aodn-Bureau of Mineral Resources, Geology and Geophysics",
+                    "matched": false,
+                    "value": "Bureau of Mineral Resources, Geology and Geophysics"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 6545,
+                    "identifier": "org-dga-5666db1a-1b62-4484-8ec8-350fb28bdc2f",
+                    "matched": false,
+                    "value": "Geoscience Australia"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 3872,
+                    "identifier": "org-dap-CSIRO",
+                    "matched": false,
+                    "value": "The Commonwealth Scientific and Industrial Research Organisation"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 3493,
+                    "identifier": "org-aodn-Australian Institute of Marine Science (AIMS)",
+                    "matched": false,
+                    "value": "Australian Institute of Marine Science (AIMS)"
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 2468,
+                    "identifier": "org-nsw-da61219b-ad9a-4667-bb71-7fa5f99333b1",
+                    "matched": false,
+                    "value": "Department of Planning, Industry and Environment "
+                },
+                {
+                    "countErrorUpperBound": 0,
+                    "hitCount": 2339,
+                    "identifier": "org-aodn-Commonwealth of Australia (Australian Geospatial-Intelligence Organisation)",
+                    "matched": false,
+                    "value": "Commonwealth of Australia (Australian Geospatial-Intelligence Organisation)"
+                }
+            ]
+        },
+        {
+            "id": "Format",
+            "options": [{
+                "countErrorUpperBound": 0,
+                "hitCount": 1152,
+                "matched": false,
+                "value": "zip"
+            }]
+        }
+    ],
+    "hitCount": 1655,
+    "query": {
+        "boostRegions": [],
+        "formats": [],
+        "publishers": ["Bioregional Assessment Programme"],
+        "regions": []
+    },
+    "strategy": "match-all",
+    "temporal": {
+        "end": {
+            "date": "2013-11-27T00:00Z",
+            "text": ""
+        },
+        "start": {
+            "date": "1889-01-01T00:00Z",
+            "text": ""
+        }
+    }
+}

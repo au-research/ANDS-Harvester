@@ -59,6 +59,43 @@ class test_ckan_query_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<value>FD60E2DF-678A-46FE-A189-121F83F30428</value>', content)
 
+
+    @patch.object(Request, 'getData')
+    def test_ckan_package_list_magda(self, mockGetData):
+        batch_id = "CKAN_DATA_QUERY_MAGDA"
+        ds_id = 8
+        mockGetData.side_effect = [
+            self.readTestfile('package_6.json')
+        ]
+        harvestInfo = {}
+        harvestInfo['uri'] = 'https://data.gov.au/api/v0/search/datasets?publisher=Bioregional%20Assessment%20Programme'
+        harvestInfo['provider_type'] = 'CKAN'
+        harvestInfo['harvest_method'] = 'CKAN'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['xsl_file'] = "tests/resources/xslt/data.gov.au.magda_json_to_rif-cs.xsl"
+        harvestInfo['mode'] = "TEST"
+        # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
+        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
+        # t.start()
+        harvester = CKANQUERYHarvester(harvestInfo)
+        harvester.harvest()
+
+        tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "0.tmp"
+        resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "0.xml"
+        self.assertTrue(os.path.exists(tempFile))
+        self.assertTrue(os.path.exists(resultFile))
+        content = self.readFile(resultFile)
+        self.assertIn('<key>ds-dga-85c99aa9-f053-4507-b22d-7c28e4d8ad17</key>', content)
+        content = self.readFile(tempFile)
+        self.assertIn('<identifier>ds-dga-85c99aa9-f053-4507-b22d-7c28e4d8ad17</identifier>', content)
+
+
+
     def only_during_development_test_retry_count(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://ckan.publis.service.govy'

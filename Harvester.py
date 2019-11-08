@@ -710,6 +710,11 @@ class Harvester():
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
             root.appendChild(text)
+        elif isinstance(j, list):
+            for e in j:
+                elem = self.getElement("list")
+                self.parse_element(elem, e)
+                root.appendChild(elem)
         else:
             raise Exception("bad type %s for %s" % (type(j), j,))
 
