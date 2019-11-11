@@ -4,8 +4,8 @@ import urllib.parse as urlparse
 class MAGDAQUERYHarvester(Harvester):
     """
        {
-            "id": " MAGDAQUERYHarvester",
-            "title": " MAGDAQUERY Harvester",
+            "id": "MAGDAQUERYHarvester",
+            "title": "MAGDAQUERY Harvester",
             "description": "Retrieving JSON from any service that implements  MAGDA SOLR API (for dataSets), by rows of 400",
             "params": [
                 {"name": "uri", "required": "true"},
