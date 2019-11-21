@@ -150,14 +150,10 @@ class PMHHarvester(Harvester):
             self.data = getRequest.getData()
             self.getResumptionToken()
             self.firstCall = False
-            self.retryCount = 0
         except Exception as e:
-            self.retryCount += 1
-            time.sleep(1)
-            if self.retryCount > 4:
-                self.errored = True
-                self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
+            self.errored = True
+            self.handleExceptions(e)
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, error:%s" % str(e), "ERROR")
         del getRequest
 
 
