@@ -17,7 +17,6 @@ class CSWHarvester(Harvester):
         }
     """
     __outputSchema = False
-    retryCount = 0
     pageCount = 0
     maxRecords = 100
     firstCall = True
@@ -68,6 +67,7 @@ class CSWHarvester(Harvester):
                 self.completed = True
         except Exception as e:
             self.logger.logMessage("ERROR RECEIVING CSW DATA, error:%s," %str(e), "ERROR")
+            self.handleExceptions(e, True)
         del getRequest
 
 

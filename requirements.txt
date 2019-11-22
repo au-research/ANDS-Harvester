@@ -19,3 +19,5 @@ mock
 rdflib
 rdflib_jsonld
 aiohttp
+requests
+urllib3

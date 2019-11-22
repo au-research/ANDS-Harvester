@@ -19,7 +19,6 @@ class PMHHarvester(Harvester):
     __until = None
     __metadataPrefix = ""
     __set = None
-    retryCount = 0
     firstCall = True
     noRecordsMatchCodeValue = 'noRecordsMatch'
 
@@ -68,7 +67,7 @@ class PMHHarvester(Harvester):
         try:
             data = getRequest.getData()
         except Exception as e:
-            self.handleExceptions(e)
+            self.handleExceptions(e, True)
         try:
             dom = parseString(data)
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
@@ -138,7 +137,7 @@ class PMHHarvester(Harvester):
             query += "&resumptionToken="+ self.__resumptionToken
         else:
             query += '&metadataPrefix='+ self.__metadataPrefix
-            if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
+            if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL' and self.__until is not None:
                 query += '&from='+ self.__from
                 query += '&until='+ self.__until
             if self.__set:
@@ -152,7 +151,7 @@ class PMHHarvester(Harvester):
             self.firstCall = False
         except Exception as e:
             self.errored = True
-            self.handleExceptions(e)
+            self.handleExceptions(e, True)
             self.logger.logMessage("ERROR RECEIVING OAI DATA, error:%s" % str(e), "ERROR")
         del getRequest
 

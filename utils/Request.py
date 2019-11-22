@@ -1,8 +1,7 @@
 import requests
-import ssl
-import os
 from requests.adapters import HTTPAdapter
-from requests.exceptions import ConnectionError
+import urllib3
+
 
 class Request:
     """
@@ -11,12 +10,11 @@ class Request:
     data = None
     url = None
     logger = None
+    retryCount = 0
     def __init__(self, url):
-        if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
-                getattr(ssl, '_create_unverified_context', None)):
-            ssl._create_default_https_context = ssl._create_unverified_context
+        self.retryCount = 3
+        urllib3.disable_warnings()
         self.url = url
-        #self.logger = MyLogger()
 
     def getData(self):
         """
@@ -24,19 +22,19 @@ class Request:
         :return:
         :rtype:
         """
-        retryCount = 3
-        httpAdapter = HTTPAdapter(max_retries=retryCount)
+        httpAdapter = HTTPAdapter(max_retries=self.retryCount)
         session = requests.Session()
         session.mount(self.url, httpAdapter)
         data = ''
         try:
             header = {'User-Agent': 'ARDC Harvester'}
-            response = session.get(self.url, headers=header)
+            response = session.get(self.url, headers=header, verify=False)
             response.raise_for_status()
             data = response.text
+            print("getData %s" % str(data))
             session.close()
         except Exception as e:
-            raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(retryCount), self.url))
+            raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(self.retryCount), self.url))
         else:
             return data
 
@@ -53,15 +51,15 @@ class Request:
         :return:
         :rtype:
         """
-        retryCount = 3
-        httpAdapter = HTTPAdapter(max_retries=retryCount)
+        httpAdapter = HTTPAdapter(max_retries=self.retryCount)
         session = requests.Session()
         session.mount(self.url, httpAdapter)
         try:
             header = {'User-Agent': 'ARDC Harvester'}
-            response = session.get(self.url, headers=header)
+            response = session.get(self.url, headers=header, verify=False)
             response.raise_for_status()
             data = response.text
+            print("postCompleted %s" %str(data))
             session.close()
         except Exception as e:
             pass

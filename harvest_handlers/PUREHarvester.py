@@ -18,7 +18,6 @@ class PUREHarvester(Harvester):
       }
     """
 
-    retryCount = 0
     pageCount = 1
     maxRecords = 100
     firstCall = True
@@ -52,30 +51,21 @@ class PUREHarvester(Harvester):
             return
         request_url = self.getRequestUrl()
         getRequest = Request(request_url)
-        self.retryCount = 0
-        while self.retryCount < 5:
-            try:
-                self.firstCall = False
-                self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
-                self.logger.logMessage(
-                    "PURE (getHarvestData), getting data url:%s" %(request_url),
-                    "DEBUG")
-                self.data = getRequest.getData()
-                self.getRecordCount()
-                if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
-                    self.completed = True
-                self.retryCount = 0
-                break
-            except Exception as e:
-                self.retryCount += 1
-                if self.retryCount > 4:
-                    self.errored = True
-                    self.handleExceptions("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
-                                %(str(self.retryCount), str(repr(e)), request_url))
-                else:
-                    self.logger.logMessage("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
-                                %(str(self.retryCount), str(repr(e)), request_url), "ERROR")
-                    time.sleep(1)
+        try:
+            self.firstCall = False
+            self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
+            self.logger.logMessage(
+                "PURE (getHarvestData), getting data url:%s" %(request_url),
+                "DEBUG")
+            self.data = getRequest.getData()
+            self.getRecordCount()
+            if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                self.completed = True
+        except Exception as e:
+            self.logger.logMessage("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
+                            %(str(self.retryCount), str(repr(e)), request_url), "ERROR")
+            self.handleExceptions(e, True)
+
         del getRequest
 
 

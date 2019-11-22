@@ -1,5 +1,4 @@
 import unittest
-import myconfig
 from utils.Request import Request
 
 
