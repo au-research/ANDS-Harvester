@@ -31,7 +31,7 @@ class Request:
             response = session.get(self.url, headers=header, verify=False)
             response.raise_for_status()
             data = response.text
-            print("getData %s" % str(data))
+            #print("getData %s" % str(data))
             session.close()
         except Exception as e:
             raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(self.retryCount), self.url))
@@ -59,7 +59,7 @@ class Request:
             response = session.get(self.url, headers=header, verify=False)
             response.raise_for_status()
             data = response.text
-            print("postCompleted %s" %str(data))
+            #print("postCompleted %s" %str(data))
             session.close()
         except Exception as e:
             pass
