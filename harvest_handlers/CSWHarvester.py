@@ -66,7 +66,7 @@ class CSWHarvester(Harvester):
             if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 self.completed = True
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING CSW DATA, error:%s," %str(e), "ERROR")
+            self.logger.logMessage("ERROR RECEIVING CSW DATA, %s," % str(repr(e)), "ERROR")
             self.handleExceptions(e, True)
         del getRequest
 

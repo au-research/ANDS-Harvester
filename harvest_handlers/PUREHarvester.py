@@ -40,7 +40,6 @@ class PUREHarvester(Harvester):
         self.postHarvestData()
         self.finishHarvest()
 
-
     def getHarvestData(self):
         """
         gets a set of "maxRecords" records from PURE using the page pageSize params
@@ -53,21 +52,19 @@ class PUREHarvester(Harvester):
         getRequest = Request(request_url)
         try:
             self.firstCall = False
-            self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
+            self.setStatus("HARVESTING", "getting data url:%s" % request_url)
             self.logger.logMessage(
-                "PURE (getHarvestData), getting data url:%s" %(request_url),
+                "PURE (getHarvestData), getting data url:%s" % request_url,
                 "DEBUG")
             self.data = getRequest.getData()
             self.getRecordCount()
             if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
                 self.completed = True
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING PURE DATA, retry:%s, error: %s, url:%s"
-                            %(str(self.retryCount), str(repr(e)), request_url), "ERROR")
+            self.logger.logMessage("ERROR RECEIVING PURE DATA, %s" % str(repr(e)), "ERROR")
             self.handleExceptions(e, True)
 
         del getRequest
-
 
     def getRequestUrl(self):
         """
@@ -91,7 +88,7 @@ class PUREHarvester(Harvester):
         except KeyError:
             urlParams['pageSize'] = str(self.maxRecords)
 
-        #pageSize apiKey can be defined by the datasource page
+        # pageSize apiKey can be defined by the datasource page
 
         try:
             params = json.loads(self.harvestInfo['user_defined_params'])
@@ -140,7 +137,7 @@ class PUREHarvester(Harvester):
         try:
             dom = parseString(self.data)
             self.numberOfRecordsReturned = int(len(dom.getElementsByTagName('dataSet')))
-            self.logger.logMessage("PURE (numberOfRecordsReturned) %s " % (self.numberOfRecordsReturned), "DEBUG")
+            self.logger.logMessage("PURE (numberOfRecordsReturned) %s " % self.numberOfRecordsReturned, "DEBUG")
         except Exception:
             self.numberOfRecordsReturned = 0
             pass

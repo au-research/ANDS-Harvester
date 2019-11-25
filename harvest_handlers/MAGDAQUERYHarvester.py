@@ -69,8 +69,7 @@ class MAGDAQUERYHarvester(Harvester):
             if self.numberOfRecordsReturned == 0 or (self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
                 self.completed = True
         except Exception as e:
-                self.logger.logMessage("ERROR RECEIVING  MAGDA QUERY DATA, retry left :%s, error: %s, url:%s"
-                            %(str(retryCount), str(repr(e)), request_url), "ERROR")
+                self.logger.logMessage("ERROR RECEIVING  MAGDA QUERY DATA, %s" % str(repr(e)), "ERROR")
         del getRequest
 
 

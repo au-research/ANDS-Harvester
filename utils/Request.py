@@ -10,7 +10,8 @@ class Request:
     data = None
     url = None
     logger = None
-    retryCount = 0
+    # how many retries before throwing an Error
+    retryCount = 1
     def __init__(self, url):
         self.retryCount = 3
         urllib3.disable_warnings()

@@ -151,7 +151,7 @@ class JSONLDHarvester(Harvester):
                 self.processContent(data, url)
 
         tot_elapsed = default_timer() - self.start_time['start']
-        self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'] , tot_elapsed))
+        self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'], tot_elapsed))
 
 
     def parse(self, response, **kwargs):
@@ -165,9 +165,8 @@ class JSONLDHarvester(Harvester):
         """
         self.processContent(response.text, response.url)
 
-
     def exception_handler(self, request, exception):
-        self.logger.logMessage("Request Failed for %s Exception: %s" %(str(request.url), str(exception)), "ERROR")
+        self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
 
     async def fetch_all(self, urlList):
         """
@@ -208,7 +207,6 @@ class JSONLDHarvester(Harvester):
                 await session.close()
         except Exception as exc:
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
-
 
     def processContent(self, htmlStr, url):
         """
@@ -265,7 +263,6 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
-
 
     def storeDataAsRDF(self, jsonld, fileName):
         """
@@ -327,7 +324,6 @@ class JSONLDHarvester(Harvester):
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
-
     def runCrossWalk(self):
         """
         scan through the result contents and run an xslt transfor
@@ -376,7 +372,6 @@ class JSONLDHarvester(Harvester):
         :rtype:
         """
         return self.batchSize
-
 
 
 def split(arr, size):

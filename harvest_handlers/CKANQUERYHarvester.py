@@ -70,8 +70,7 @@ class CKANQUERYHarvester(Harvester):
             if self.numberOfRecordsReturned == 0 or (self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
                 self.completed = True
         except Exception as e:
-                self.logger.logMessage("ERROR RECEIVING CKANQUERY DATA,  error: %s, url:%s"
-                            %(str(repr(e)), request_url), "ERROR")
+                self.logger.logMessage("ERROR RECEIVING CKANQUERY DATA,  %s" % str(repr(e)), "ERROR")
         del getRequest
 
 

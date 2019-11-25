@@ -146,7 +146,8 @@ class Harvester():
             self.data = getRequest.getData()
             del getRequest
         except Exception as e:
-            self.handleExceptions(e)
+            self.logger.logMessage("ERROR RECEIVING DATA, %s," % str(repr(e)), "ERROR")
+            self.handleExceptions(e, terminate=True)
 
     def setUpCrosswalk(self):
         """
@@ -192,7 +193,7 @@ class Harvester():
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
                 inFile = self.outputDir + os.sep + file
                 try:
-                    self.setStatus('RUNNING %s CROSSWALK ' %str(transformCount), "Generating %s:" % outFile)
+                    self.setStatus('RUNNING %s CROSSWALK ' % str(transformCount), "Generating %s:" % outFile)
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile, 'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
@@ -202,7 +203,7 @@ class Harvester():
                     msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
                     self.handleExceptions(msg, transformCount == 1)
                 except Exception as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" %(e), "ERROR")
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" % str(repr(e)), "ERROR")
                     self.handleExceptions(e, transformCount == 1)
 
 
