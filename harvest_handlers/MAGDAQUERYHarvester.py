@@ -6,7 +6,7 @@ class MAGDAQUERYHarvester(Harvester):
        {
             "id": "MAGDAQUERYHarvester",
             "title": "MAGDAQUERY Harvester",
-            "description": "Retrieving JSON from any service that implements  MAGDA SOLR API (for dataSets), by rows of 400",
+            "description": "Retrieving JSON from any service that implements  MAGDA SOLR API (for dataSets), by limit of 400",
             "params": [
                 {"name": "uri", "required": "true"},
                 {"name": "xsl_file", "required": "false"}
