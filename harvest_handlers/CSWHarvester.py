@@ -17,7 +17,6 @@ class CSWHarvester(Harvester):
         }
     """
     __outputSchema = False
-    retryCount = 0
     pageCount = 0
     maxRecords = 100
     firstCall = True
@@ -56,28 +55,19 @@ class CSWHarvester(Harvester):
             return
         query = self.getParamString()
         getRequest = Request(self.harvestInfo['uri'] + query)
-        self.retryCount = 0
-        while self.retryCount < 5:
-            try:
-                self.firstCall = False
-                self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
-                self.logger.logMessage(
-                    "CSW (getHarvestData), getting data url:%s" %(self.harvestInfo['uri'] + query),
-                    "DEBUG")
-                self.data = getRequest.getData()
-                self.checkNextRecord()
-                if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
-                    self.completed = True
-                self.retryCount = 0
-                break
-            except Exception as e:
-                self.retryCount += 1
-                if self.retryCount > 4:
-                    self.errored = True
-                    self.handleExceptions("ERROR RECEIVING CSW DATA, retry:%s, error: %s, url:%s" %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query))
-                else:
-                    self.logger.logMessage("ERROR RECEIVING CSW DATA, retry:%s, error: %s, url:%s" %(str(self.retryCount), str(repr(e)), self.harvestInfo['uri'] +  query), "ERROR")
-                    time.sleep(1)
+        try:
+            self.firstCall = False
+            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
+            self.logger.logMessage(
+                "CSW (getHarvestData), getting data url:%s" %(self.harvestInfo['uri'] + query),
+                "DEBUG")
+            self.data = getRequest.getData()
+            self.checkNextRecord()
+            if self.recordCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                self.completed = True
+        except Exception as e:
+            self.logger.logMessage("ERROR RECEIVING CSW DATA, %s," % str(repr(e)), "ERROR")
+            self.handleExceptions(e, True)
         del getRequest
 
 

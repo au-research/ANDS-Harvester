@@ -3,6 +3,8 @@
 # Author: u4187959
 # created 12/05/2014
 #
+from gevent import monkey
+monkey.patch_all()
 
 from datetime import datetime
 import sys, os, time, atexit
@@ -18,8 +20,6 @@ import threading
 from harvest_handlers import *
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
-from gevent import monkey
-monkey.patch_all()
 import web_server
 
 

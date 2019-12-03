@@ -13,8 +13,6 @@ class MAGDAQUERYHarvester(Harvester):
             ]
       }
     """
-    # how many times the harveter will attempt to connect before giving up
-    retryCount = 3
     # the number of pages the harvester received
     pageCount = 0
     # the total records the harvester received
@@ -59,31 +57,19 @@ class MAGDAQUERYHarvester(Harvester):
             return
         request_url = self.getRequestUrl()
         getRequest = Request(request_url)
-        # reset the retry count
-        retryCount = self.retryCount
-        while retryCount > 0:
-            try:
-                self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
-                self.logger.logMessage(
-                    "MAGDA QUERY (getHarvestData), getting data url:%s" %(request_url),
-                    "DEBUG")
-                self.data = getRequest.getData()
-                # find out how many result we have received
-                self.getRecordCount()
-                # check if the harvest is completed by receiving nothing or more than the test limit
-                if self.numberOfRecordsReturned == 0 or (self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
-                    self.completed = True
-                break
-            except Exception as e:
-                retryCount -= 1
-                if retryCount <= 0:
-                    self.errored = True
-                    self.handleExceptions("ERROR RECEIVING  MAGDA QUERY DATA, retry left:%s, error: %s, url:%s"
-                                %(str(retryCount), str(repr(e)), request_url))
-                else:
-                    self.logger.logMessage("ERROR RECEIVING  MAGDA QUERY DATA, retry left :%s, error: %s, url:%s"
-                                %(str(retryCount), str(repr(e)), request_url), "ERROR")
-                    time.sleep(1)
+        try:
+            self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
+            self.logger.logMessage(
+                "MAGDA QUERY (getHarvestData), getting data url:%s" %(request_url),
+                "DEBUG")
+            self.data = getRequest.getData()
+            # find out how many result we have received
+            self.getRecordCount()
+            # check if the harvest is completed by receiving nothing or more than the test limit
+            if self.numberOfRecordsReturned == 0 or (self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
+                self.completed = True
+        except Exception as e:
+                self.logger.logMessage("ERROR RECEIVING  MAGDA QUERY DATA, %s" % str(repr(e)), "ERROR")
         del getRequest
 
 

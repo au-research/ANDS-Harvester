@@ -87,7 +87,7 @@ class CKANHarvester(Harvester):
                 if self.stopped:
                     break
                 data_string = json.dumps({'id': itemId})
-                self.setStatus("HARVESTING", 'getting ckan record: %s' %itemId)
+                self.setStatus("HARVESTING", 'getting ckan record: %s' % itemId)
                 storeeditemId = itemId
                 try:
                     params['id'] = itemId
@@ -107,7 +107,7 @@ class CKANHarvester(Harvester):
                     self.errored = True
                     self.errorLog = self.errorLog + "\nERROR RECEIVING ITEM:%s, " %itemId
                     self.handleExceptions(e, terminate=False)
-                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" %(e, itemId), "ERROR")
+                    self.logger.logMessage("ERROR RECEIVING ITEM (%s/%s)" % (str(repr(e)), itemId), "ERROR")
         except Exception as e:
             self.errored = True
             self.logger.logMessage("ERROR WHILE RECEIVING ITEM (%s/%s)" %(self.recordCount, storeeditemId), "ERROR")

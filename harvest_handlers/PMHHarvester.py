@@ -15,11 +15,10 @@ class PMHHarvester(Harvester):
         }
     """
     __resumptionToken = ""
-    __from = "1900-01-01T00:00:00Z"
+    __from = None
     __until = None
     __metadataPrefix = ""
     __set = None
-    retryCount = 0
     firstCall = True
     noRecordsMatchCodeValue = 'noRecordsMatch'
 
@@ -46,7 +45,7 @@ class PMHHarvester(Harvester):
                     self.__from = self.harvestInfo['last_harvest_run_date']
                 else:
                     self.identifyRequest()
-            while self.firstCall or (self.__resumptionToken is not False and self.__resumptionToken != ""):
+            while self.firstCall or self.__resumptionToken != "":
                 time.sleep(0.1)
                 self.getHarvestData()
                 self.storeHarvestData()
@@ -54,28 +53,26 @@ class PMHHarvester(Harvester):
             self.postHarvestData()
             self.finishHarvest()
         except Exception as e:
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" %(self.__resumptionToken), "ERROR")
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, resumptionToken:%s" % self.__resumptionToken, "ERROR")
             self.handleExceptions(e)
 
     def identifyRequest(self):
         """
         used only if from date is required but no last harvest date is given
-        TODO we could just ignore the from then (one less call)
+        If unable to find earliestDatestamp then just leave from as None and get everything
         """
+
         getRequest = Request(self.harvestInfo['uri'] + '?verb=Identify')
         self.setStatus("HARVESTING")
-        data = ""
         try:
             data = getRequest.getData()
-        except Exception as e:
-            self.handleExceptions(e)
-        try:
             dom = parseString(data)
             if dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue:
                 self.__from = dom.getElementsByTagName('earliestDatestamp')[0].firstChild.nodeValue
         except Exception as e:
-            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s" %(str(self.harvestInfo['uri'] + '?verb=Identify')), "ERROR")
-            self.handleExceptions(e)
+            self.logger.logMessage("ERROR PARSING IDENTIFY DOC OR 'earliestDatestamp' element is not found, url:%s"
+                                   % (str(self.harvestInfo['uri'] + '?verb=Identify')), "ERROR")
+
 
     def getResumptionToken(self):
         """
@@ -100,7 +97,7 @@ class PMHHarvester(Harvester):
                     errorCode = error[0].attributes["code"].value
                     if errorCode == self.noRecordsMatchCodeValue:
                         if not self.firstCall:
-                            self.__resumptionToken = False
+                            self.__resumptionToken = ""
                         else:
                             self.handleNoRecordsMatch(errorCode)
                     else:
@@ -114,13 +111,14 @@ class PMHHarvester(Harvester):
             if self.__resumptionToken != dom.getElementsByTagName('resumptionToken')[0].firstChild.nodeValue:
                 self.__resumptionToken = dom.getElementsByTagName('resumptionToken')[0].firstChild.nodeValue
             else:
-                self.__resumptionToken = False
+                # if the new resumption token is the same as the previous one then stop harvest
+                self.__resumptionToken = ""
 
             if self.pageCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
-                self.__resumptionToken = False
+                self.__resumptionToken = ""
 
         except Exception:
-            self.__resumptionToken = False
+            self.__resumptionToken = ""
             pass
 
 
@@ -134,30 +132,27 @@ class PMHHarvester(Harvester):
         if self.stopped:
             return
         query = "?verb=ListRecords"
-        if self.__resumptionToken and self.__resumptionToken != "":
-            query += "&resumptionToken="+ self.__resumptionToken
+        if self.__resumptionToken != "":
+            query += "&resumptionToken=" + self.__resumptionToken
         else:
-            query += '&metadataPrefix='+ self.__metadataPrefix
-            if self.harvestInfo['advanced_harvest_mode'] == 'INCREMENTAL':
-                query += '&from='+ self.__from
-                query += '&until='+ self.__until
+            query += '&metadataPrefix=' + self.__metadataPrefix
+            # __until is always now
+            if self.__from is not None:
+                query += '&from=' + self.__from
+                query += '&until=' + self.__until
             if self.__set:
                 query += '&set='+ self.__set
-        getRequest = Request(self.harvestInfo['uri'] +  query)
+        getRequest = Request(self.harvestInfo['uri'] + query)
         try:
-            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] +  query), "DEBUG")
-            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] +  query))
+            self.logger.logMessage("\nHARVESTING getting data url:%s" %(self.harvestInfo['uri'] + query), "DEBUG")
+            self.setStatus("HARVESTING", "getting data url:%s" %(self.harvestInfo['uri'] + query))
             self.data = getRequest.getData()
             self.getResumptionToken()
             self.firstCall = False
-            self.retryCount = 0
         except Exception as e:
-            self.retryCount += 1
-            time.sleep(1)
-            if self.retryCount > 4:
-                self.errored = True
-                self.handleExceptions(e)
-            self.logger.logMessage("ERROR RECEIVING OAI DATA, retry:%s, url:%s" %(str(self.retryCount), self.harvestInfo['uri'] +  query), "ERROR")
+            self.errored = True
+            self.handleExceptions(e, True)
+            self.logger.logMessage("ERROR RECEIVING OAI DATA, %s" % str(repr(e)), "ERROR")
         del getRequest
 
 
