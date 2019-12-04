@@ -41,7 +41,7 @@ class test_magda_query_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 7
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = "tests/resources/xslt/data.gov.au.magda_json_to_rif-cs.xsl"
+        harvestInfo['xsl_file'] = "tests/resources/xslt/data_gov_au_magda_api_PARAMS_json_to_rif-cs.xsl"
         harvestInfo['mode'] = "TEST"
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
@@ -54,7 +54,7 @@ class test_magda_query_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         content = self.readFile(resultFile)
-        self.assertIn('<key>ds-dga-806c3770-031e-41da-99cd-9fe79f237050</key>', content)
+        self.assertIn('<key>data.gov.au/ds-dga-806c3770-031e-41da-99cd-9fe79f237050</key>', content)
         content = self.readFile(tempFile)
         self.assertIn('<identifier>ds-dga-806c3770-031e-41da-99cd-9fe79f237050</identifier>', content)
 
