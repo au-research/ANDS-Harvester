@@ -13,6 +13,12 @@ class GETHarvester(Harvester):
       }
     """
     def harvest(self):
+        """
+        The GET Harvester doesn't override any of the Harvester's methods
+        it retrieves the data from the given url
+        stores it / crosswalks it (if needed)
+        and finishes the harvest
+        """
         self.setupdirs()
         self.data = None
         self.updateHarvestRequest()

@@ -19,6 +19,15 @@ class DataBase:
         self.__port = myconfig.db_port
 
     def getConnection(self):
+        """
+        a very simple database connection that is used through out the harvester
+
+        since the database is used purely to report status and check for harvests
+        the harvester is design to continue to function even if the database goes away during harvest
+
+        :return:
+        :rtype:
+        """
         #if self.__connection is None:
         #print("getConnection")
         try:

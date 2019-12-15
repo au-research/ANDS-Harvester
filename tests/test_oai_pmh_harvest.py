@@ -56,11 +56,13 @@ class test_oai_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(file2))
 
 
-    def only_during_development_test_oai_pmh_harvest_external(self):
+    def only_during_dev_chunked_oai_pmh_harvest_external(self):
         harvestInfo = {}
+        batch_id = "PMH_ESPACE_LIVE"
+        ds_id = 2
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['batch_number'] = "PMH_DEAKIN_LIVE"
-        harvestInfo['data_source_id'] = 7
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['data_source_id'] = ds_id
         harvestInfo['data_source_slug'] = "TEST"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
@@ -68,14 +70,18 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['mode'] = "TEST"
         harvestInfo['provider_type'] = 'rif'
         harvestInfo['response_url'] = ""
-        harvestInfo['title'] = "TEST"
-        harvestInfo['uri'] = "http://dro.deakin.edu.au/oai.php"
+        harvestInfo['title'] = "HARVEST"
+        harvestInfo['uri'] = "https://espace.library.uq.edu.au/oai.php"
         harvestInfo['xsl_file'] = ""
         # harvestReq = JSONLDHarvester.JSONLDHarvester(harvestInfo)
         # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
         # t.start()
         harvester = PMHHarvester(harvestInfo)
         harvester.harvest()
+        file1 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.xml"
+        file2 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "2.xml"
+        self.assertTrue(os.path.exists(file1))
+        self.assertTrue(os.path.exists(file2))
 
 
 if __name__ == '__main__':

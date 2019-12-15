@@ -1,12 +1,12 @@
 from Harvester import *
 import urllib
 import urllib.parse as urlparse
-class CKANQUERYHarvester(Harvester):
+class MAGDAQUERYHarvester(Harvester):
     """
        {
-            "id": "CKANQUERYHarvester",
-            "title": "CKANQUERY Harvester",
-            "description": "Retrieving JSON from CKAN by rows of 400",
+            "id": "MAGDAQUERYHarvester",
+            "title": "MAGDAQUERY Harvester",
+            "description": "Retrieving JSON from any service that implements  MAGDA SOLR API (for dataSets), by limit of 400",
             "params": [
                 {"name": "uri", "required": "true"},
                 {"name": "xsl_file", "required": "false"}
@@ -50,18 +50,17 @@ class CKANQUERYHarvester(Harvester):
 
     def getHarvestData(self):
         """
-        gets a set of 400 CKAN results in JSON format
+        gets a set of 400  MAGDA SOLR results in JSON format
         :return:
         """
         if self.stopped:
             return
         request_url = self.getRequestUrl()
         getRequest = Request(request_url)
-
         try:
             self.setStatus("HARVESTING", "getting data url:%s" %(request_url))
             self.logger.logMessage(
-                "CKANQUERY (getHarvestData), getting data url:%s" %(request_url),
+                "MAGDA QUERY (getHarvestData), getting data url:%s" %(request_url),
                 "DEBUG")
             self.data = getRequest.getData()
             # find out how many result we have received
@@ -70,17 +69,17 @@ class CKANQUERYHarvester(Harvester):
             if self.numberOfRecordsReturned == 0 or (self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
                 self.completed = True
         except Exception as e:
-                self.logger.logMessage("ERROR RECEIVING CKANQUERY DATA,  %s" % str(repr(e)), "ERROR")
+                self.logger.logMessage("ERROR RECEIVING  MAGDA QUERY DATA, %s" % str(repr(e)), "ERROR")
         del getRequest
 
 
     def getRequestUrl(self):
         """
-        append the start and rows to the end of the query
+        append the start and limit to the end of the query
         :return url:
         """
         urlParams = {}
-        urlParams['rows'] = self.rows
+        urlParams['limit'] = self.rows
         urlParams['start'] = self.rows * self.pageCount
 
         query = urllib.parse.urlencode(urlParams)
@@ -96,15 +95,15 @@ class CKANQUERYHarvester(Harvester):
             return
         try:
             data = json.loads(self.data, strict=False)
-            if data['success'] == 'true' or data['success'] == True:
-                self.numberOfRecordsReturned = int(len(data['result']['results']))
-                self.totalCount = int(data['result']['count'])
+            self.totalCount = int(data['hitCount'])
+            if self.totalCount > 0:
+                self.numberOfRecordsReturned = int(len(data['dataSets']))
                 self.pageCount += 1
-            self.logger.logMessage("CKANQUERY (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount), "DEBUG")
+            self.logger.logMessage("MAGDAQUERY Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount), "DEBUG")
             # sanity check
             self.recordCount += self.numberOfRecordsReturned
             if self.recordCount >= self.totalCount:
-                self.logger.logMessage("CKANQUERY (Harvest Completed)", "DEBUG")
+                self.logger.logMessage(" MAGDAQUERY Harvester (Harvest Completed)", "DEBUG")
                 self.completed = True
         except Exception:
             self.numberOfRecordsReturned = 0

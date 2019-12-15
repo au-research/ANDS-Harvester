@@ -59,6 +59,7 @@ class test_ckan_query_harvester(unittest.TestCase):
         content = self.readFile(tempFile)
         self.assertIn('<value>FD60E2DF-678A-46FE-A189-121F83F30428</value>', content)
 
+
     def only_during_development_test_retry_count(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://ckan.publis.service.govy'

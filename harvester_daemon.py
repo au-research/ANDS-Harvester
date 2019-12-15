@@ -1,8 +1,10 @@
 # harvester daemon script in python
-# for ANDS registry
+# for ARDC registry
 # Author: u4187959
 # created 12/05/2014
 #
+from gevent import monkey
+monkey.patch_all()
 
 from datetime import datetime
 import sys, os, time, atexit
@@ -18,8 +20,6 @@ import threading
 from harvest_handlers import *
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
-from gevent import monkey
-monkey.patch_all()
 import web_server
 
 
@@ -209,6 +209,15 @@ class HarvesterDaemon(Daemon):
 
 
     def handleException(self, harvestId, exception):
+        """
+        Sets the harvest's status to STOPPED and updates the given record in the database
+        :param harvestId:
+        :type harvestId:
+        :param exception:
+        :type exception:
+        :return:
+        :rtype:
+        """
         harvesterStatus = 'STOPPED'
         self.__harvestErrored += 1
         eMessage = repr(exception).replace("'", "").replace('"', "")
@@ -231,8 +240,27 @@ class HarvesterDaemon(Daemon):
                     '(handleException) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
         return
 
-    def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
 
+    def addHarvestRequest(self, harvestID, dataSourceId, nextRun, lastRun, mode, batchNumber):
+        """
+        extracts metadata about the given Datasource ad based on the harvest_method it instantiate a harvest Handler
+        adds a new harvest Handler to the self.__harvestRequests[harvestID] list
+
+        :param harvestID:
+        :type harvestID:
+        :param dataSourceId:
+        :type dataSourceId:
+        :param nextRun:
+        :type nextRun:
+        :param lastRun:
+        :type lastRun:
+        :param mode:
+        :type mode:
+        :param batchNumber:
+        :type batchNumber:
+        :return:
+        :rtype:
+        """
         harvestInfo = {}
         attempts = 0
         while attempts < 3:
@@ -282,6 +310,11 @@ class HarvesterDaemon(Daemon):
         return harvestInfo
 
     def manageHarvests(self):
+        """
+        Checks for Harvest Request
+        If there are running harvest check if their status is changed by the Registry eg STOPPED
+        if there are harvest requests and there are free thread spaces then start the queued harvests until reached maxSimHarvests
+        """
         # self.reportToRegistry()
         if len(self.__runningHarvests) < self.__maxSimHarvestRun:
             self.checkForHarvestRequests(self.__maxSimHarvestRun - len(self.__runningHarvests))
@@ -323,6 +356,12 @@ class HarvesterDaemon(Daemon):
 
 
     def checkForHarvestRequests(self, limit):
+        """
+        checks if there are SCHEDULED harvests that are in the past
+        and adds them to the Queue by calling addHarvestRequest
+        :param limit:
+        :type limit:
+        """
         attempts = 0
         while attempts < 3:
             try:
@@ -346,6 +385,14 @@ class HarvesterDaemon(Daemon):
                     '(checkForHarvestRequests) %s, , limit %s, Retry: %d' % (str(repr(e)), str(limit), attempts), "ERROR")
 
     def runHarvestById(self, ds_id):
+        """
+        This method is implemented by a service endpoint for future usage
+        it adds a harvest request for the given datasource id (if there is an entry in the harvests table
+        :param ds_id:
+        :type ds_id:
+        :return:
+        :rtype:
+        """
         attempts = 0
         harvestInfo = {}
         while attempts < 3:
@@ -373,6 +420,19 @@ class HarvesterDaemon(Daemon):
                     '(Adding Harvest by DS_ID) %s, , ds_id %s, Retry: %d' % (str(repr(e)), str(ds_id), attempts), "ERROR")
 
     def runBatch(self, ds_id, batch_id):
+        """
+        This method is implemented by a service endpoint for future usage
+        It finds a harvest request in the database for the given datasource id
+        locates the content by the given batch id
+        instantiate the harvest handler and runs the harvest from the crosswalk task
+        no actual harvest is performed
+        :param ds_id:
+        :type ds_id:
+        :param batch_id:
+        :type batch_id:
+        :return:
+        :rtype:
+        """
         attempts = 0
         harvestInfo = {}
         if not os.path.exists(myconfig.data_store_path + str(ds_id) + os.sep + batch_id):
@@ -412,6 +472,11 @@ class HarvesterDaemon(Daemon):
 
 
     def fixBrokenHarvestRequests(self):
+        """
+        This method is called the time the harvester daemon is stated
+        it check if there are entries in the database for "running" (ghost) Harvests
+        if there are any it sets their status to SCHEDULED so they can start again from start
+        """
         attempts = 0
         while attempts < 3:
             try:
@@ -434,6 +499,10 @@ class HarvesterDaemon(Daemon):
                     '(fixBrokenHarvestRequests) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
     def describeModules(self):
+        """
+        creates a JSON representation for the set of harvest handlers
+
+        """
         self.__logger.logMessage("\nDESCRIBING HARVESTER MODULES:\n")
         harvesterDefinitions = '{"harvester_config":{"harvester_methods":['
         notFirst = False
@@ -450,6 +519,11 @@ class HarvesterDaemon(Daemon):
         self.saveHarvestDefinition(harvesterDefinitions)
 
     def saveHarvestDefinition(self, harvesterDefinitions):
+        """
+        stores the harvest handlers information in the registry's config table
+        :param harvesterDefinitions:
+        :type harvesterDefinitions:
+        """
         #save definition to file
         file = open(self.__harvesterDefinitionFile, "w+")
         file.write(harvesterDefinitions)
@@ -539,7 +613,9 @@ class HarvesterDaemon(Daemon):
 
 
     def setupEnv(self):
-
+        """
+        creates all directories for the harvester
+        """
         if not os.path.exists(myconfig.data_dir):
             os.makedirs(myconfig.data_dir)
             os.chmod(myconfig.data_dir, 0o775)
@@ -551,6 +627,11 @@ class HarvesterDaemon(Daemon):
             os.chmod(myconfig.log_dir, 0o775)
 
     def run(self):
+        """
+        starts the harvester daemon as a process in the foreground
+        also starts a webservice to listen on 7020
+        to receive requests
+        """
         self.__startUpTime = time.time()
         self.__lastLogCount = 99
         self.__database = MyDataBase()
@@ -594,6 +675,11 @@ class HarvesterDaemon(Daemon):
 
 
     def printLogs(self, hCounter):
+        """
+        only print a log entry if harvests are running
+        :param hCounter: number of the currently running harvest handlers
+        :type hCounter:
+        """
         if(self.__lastLogCounter > 0 or hCounter > 0):
             self.__lastLogCounter = hCounter
             self.__logger.logMessage('RUNNING: %s WAITING: %s' %(str(len(self.__runningHarvests)), str(len(self.__harvestRequests))), "DEBUG")
@@ -609,6 +695,10 @@ class HarvesterDaemon(Daemon):
 
 
     def shutDown(self):
+        """
+        When the harvester daemon is shut down it will attempt to reschedule currently running harvests
+        also prints the currently logged in users (so we know who killed the harvester)
+        """
         #self.__logger.logMessage("SHUTTING DOWN...")
         loggedUserMsg = os.popen('who').read()
         self.__logger.logMessage("SHUTTING DOWN...\nLogged In Users:\n%s" %(loggedUserMsg), "DEBUG")
