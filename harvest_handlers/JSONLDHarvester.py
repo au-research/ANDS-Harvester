@@ -220,13 +220,14 @@ class JSONLDHarvester(Harvester):
         :param url:
         :type url:
         """
-        self.logger.logMessage("processContent jsonlds[0].text url:%s CONTENT: %s" % (url, htmlStr))
+        self.logger.logMessage("processContent url:%s CONTENT: %s" % (url, htmlStr))
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         jsonld = None
         if len(jsonlds) > 0:
             jsonld = jsonlds[0].text
-            self.logger.logMessage("processContent jsonlds[0].text %s" %jsonlds[0].text)
+            self.logger.logMessage("processContent jsonlds %s" %str(jsonlds))
+            self.logger.logMessage("processContent jsonld %s" %jsonld)
         if jsonld is not None:
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
             try:
