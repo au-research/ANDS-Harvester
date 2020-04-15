@@ -223,7 +223,7 @@ class JSONLDHarvester(Harvester):
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonld = None
         try:
-            jsonld = html_soup.find("script", attrs={'type':'application/ld+json'}).getText()
+            jsonld = html_soup.find("script", attrs={'type':'application/ld+json'}).get_text()
             self.logger.logMessage("processContent jsonld %s" %jsonld)
         except Exception as e:
             self.logger.logMessage("processContent Exception: %s" % str(e), "ERROR")
