@@ -57,7 +57,7 @@ class test_ckan_harvester(unittest.TestCase):
         content = self.readFile(resultFile)
         self.assertIn('<collection type="dataset">', content)
         content = self.readFile(tempFile)
-        self.assertIn('<private>False</private>', content)
+        self.assertIn('<private>false</private>', content)
 
     def only_during_development_test_ckan_package_list_external(self):
         harvestInfo = {}
