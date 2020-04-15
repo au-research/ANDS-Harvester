@@ -221,26 +221,23 @@ class JSONLDHarvester(Harvester):
         :param url:
         :type url:
         """
-        html_soup = BeautifulSoup(htmlStr, 'html.parser')
-        diagnose(htmlStr)
+        html_soup = BeautifulSoup(htmlStr, 'html5lib')
         jsonld = None
         try:
-            jsonld = html_soup.find("script", attrs={'type':'application/ld+json'}).get_text()
-            self.logger.logMessage("processContent jsonld %s" %jsonld)
+            jsonld = html_soup.find("script", attrs={'type': 'application/ld+json'})
         except Exception as e:
             self.logger.logMessage("processContent Exception: %s" % str(e), "ERROR")
-
         if jsonld is not None:
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
             try:
                 data = {}
                 try:
-                    data = json.loads(jsonld, strict=False)
+                    data = json.loads(str(jsonld.get_text()), strict=False)
 
                     if not 'url' in data:
                         data['url'] = url
                 except Exception as e:
-                    data = ast.literal_eval(jsonld)
+                    data = ast.literal_eval(str(jsonld.get_text()))
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
                 self.jsonDict.append(data)
                 self.recordCount += 1
