@@ -1,5 +1,6 @@
 from Harvester import *
 from bs4 import BeautifulSoup
+from bs4.diagnose import diagnose
 from crawler.SiteMapCrawler import SiteMapCrawler
 import json
 from xml.dom.minidom import Document
@@ -221,6 +222,7 @@ class JSONLDHarvester(Harvester):
         :type url:
         """
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
+        diagnose(htmlStr)
         jsonld = None
         try:
             jsonld = html_soup.find("script", attrs={'type':'application/ld+json'}).get_text()
