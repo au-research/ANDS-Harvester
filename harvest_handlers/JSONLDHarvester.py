@@ -220,6 +220,7 @@ class JSONLDHarvester(Harvester):
         :param url:
         :type url:
         """
+        print(htmlStr)
         html_soup = BeautifulSoup(htmlStr, 'html.parser')
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         jsonld = None
