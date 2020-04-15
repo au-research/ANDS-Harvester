@@ -58,10 +58,11 @@ class test_jsonld_harvester(unittest.TestCase):
         #t.start()
         harvester = JSONLDHarvester(harvestInfo)
         harvester.harvest()
-
+        jsonFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.json"
         tempFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
         resultFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
         #rdfFile = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.rdf"
+        self.assertTrue(os.path.exists(jsonFile))
         self.assertTrue(os.path.exists(tempFile))
         self.assertTrue(os.path.exists(resultFile))
         #self.assertTrue(os.path.exists(rdfFile))
