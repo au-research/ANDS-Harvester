@@ -225,7 +225,7 @@ class JSONLDHarvester(Harvester):
         jsonlds = html_soup.find_all("script", attrs={'type':'application/ld+json'})
         jsonld = None
         if len(jsonlds) > 0:
-            jsonld = jsonlds[0].text
+            jsonld = jsonlds[0].getText()
             self.logger.logMessage("processContent jsonlds %s" %str(jsonlds))
             self.logger.logMessage("processContent jsonld %s" %jsonld)
         if jsonld is not None:
