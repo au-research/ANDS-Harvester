@@ -9,7 +9,7 @@ from utils.Request import Request
 from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
-import json, numbers
+import json, numbers, html
 
 class Harvester():
     startUpTime = 0
@@ -687,8 +687,8 @@ class Harvester():
         :return:
         :rtype:
         """
-        if j is None:
-            return
+        # if j is None:
+        #     return
         if isinstance(j, dict):
             for key in j.keys():
                 value = j[key]
@@ -705,8 +705,18 @@ class Harvester():
                         elem = self.getElement(key)
                     self.parse_element(elem, value)
                     root.appendChild(elem)
+        elif j is None:
+            text = self.__xml.createTextNode("null")
+            root.appendChild(text)
+        elif j is False:
+            text = self.__xml.createTextNode("false")
+            root.appendChild(text)
+        elif j is True:
+            text = self.__xml.createTextNode("true")
+            root.appendChild(text)
         elif isinstance(j, str):
-            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            #text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            text = self.__xml.createTextNode(html.escape(j, quote=True))
             root.appendChild(text)
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
