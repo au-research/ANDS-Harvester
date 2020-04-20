@@ -715,8 +715,8 @@ class Harvester():
             text = self.__xml.createTextNode("true")
             root.appendChild(text)
         elif isinstance(j, str):
-            #text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
-            text = self.__xml.createTextNode(html.escape(j, quote=True))
+            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            #text = self.__xml.createTextNode(html.escape(j, quote=True))
             root.appendChild(text)
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
