@@ -63,7 +63,7 @@ class test_open_data_harvester(unittest.TestCase):
 
 
 
-    def test_only_whne_developing_test_open_data_live(self):
+    def only_when_developing_test_open_data_live(self):
         batch_id = "OPENDATA_DATA_ACT_GOV"
         ds_id = 7
         harvestInfo = {}
