@@ -42,7 +42,7 @@ class test_open_data_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 9
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/open_data_to_rifcs.xsl"
+        harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "TEST"
 
         harvester = OPENDATAHarvester(harvestInfo)

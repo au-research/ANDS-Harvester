@@ -22,6 +22,13 @@ class OPENDATAHarvester(Harvester):
     # the number of records received in the current request
     numberOfRecordsReturned = 1
 
+
+    def __init__(self, harvestInfo):
+        super().__init__(harvestInfo)
+        # generic in-house xslt to convert json-ld (xml) to rifcs
+        if self.harvestInfo['xsl_file'] == "":
+            self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/open_data_to_rifcs.xsl"
+
     def harvest(self):
         self.setupdirs()
         self.updateHarvestRequest()
