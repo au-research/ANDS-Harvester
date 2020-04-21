@@ -1,0 +1,511 @@
+[ {
+  "id" : "q4wx-hbbp",
+  "name" : "ACT Deaths - Dementia & related disorders (F00-F03,G30-G32)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T04:07:36+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/q4wx-hbbp",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T04:07:55+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T04:07:55+0000",
+  "webUri" : "https://www.data.act.gov.au/d/q4wx-hbbp",
+  "approvals" : [ {
+    "reviewedAt" : 1578266487,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709485,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266487,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266487,
+      "failureCount" : 0,
+      "startedAt" : 1578266487,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "b8ge-iizx",
+  "name" : "ACT Deaths - Accidental poisoning (X40-X49)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T04:01:49+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/b8ge-iizx",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T04:02:06+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T04:02:06+0000",
+  "webUri" : "https://www.data.act.gov.au/d/b8ge-iizx",
+  "approvals" : [ {
+    "reviewedAt" : 1578266494,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709486,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266494,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266494,
+      "failureCount" : 0,
+      "startedAt" : 1578266494,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "c3kv-64kk",
+  "name" : "ACT Deaths - Pulmonary heart disease and diseases of pulmonary circulation (I26-I28)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:27:02+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/c3kv-64kk",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:27:25+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:27:25+0000",
+  "webUri" : "https://www.data.act.gov.au/d/c3kv-64kk",
+  "approvals" : [ {
+    "reviewedAt" : 1578266524,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709487,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266524,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266524,
+      "failureCount" : 0,
+      "startedAt" : 1578266524,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "258d-sx75",
+  "name" : "ACT Deaths - Aortic aneurysm and dissection (I71)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:22:47+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/258d-sx75",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:23:00+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:23:00+0000",
+  "webUri" : "https://www.data.act.gov.au/d/258d-sx75",
+  "approvals" : [ {
+    "reviewedAt" : 1578266531,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709488,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266531,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266531,
+      "failureCount" : 0,
+      "startedAt" : 1578266531,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "k9mc-gg3k",
+  "name" : "ACT Deaths - Land transport accidents (V01-V89)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:17:34+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/k9mc-gg3k",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:17:46+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:17:46+0000",
+  "webUri" : "https://www.data.act.gov.au/d/k9mc-gg3k",
+  "approvals" : [ {
+    "reviewedAt" : 1578266538,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709489,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266538,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266538,
+      "failureCount" : 0,
+      "startedAt" : 1578266538,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "2bij-7cp5",
+  "name" : "ACT Deaths - Accidental falls (W00-W19)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:12:21+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/2bij-7cp5",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:12:40+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:12:40+0000",
+  "webUri" : "https://www.data.act.gov.au/d/2bij-7cp5",
+  "approvals" : [ {
+    "reviewedAt" : 1578266545,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709490,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266545,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266545,
+      "failureCount" : 0,
+      "startedAt" : 1578266545,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "hmip-76bz",
+  "name" : "ACT Deaths - Influenza and Pneumonia (J09-J18)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:08:00+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/hmip-76bz",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:08:27+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:08:27+0000",
+  "webUri" : "https://www.data.act.gov.au/d/hmip-76bz",
+  "approvals" : [ {
+    "reviewedAt" : 1578266553,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709491,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266553,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266553,
+      "failureCount" : 0,
+      "startedAt" : 1578266553,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "bwu6-bf3h",
+  "name" : "ACT Deaths - Diabetes (E10-E14)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T03:01:29+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/bwu6-bf3h",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T03:02:00+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T03:02:00+0000",
+  "webUri" : "https://www.data.act.gov.au/d/bwu6-bf3h",
+  "approvals" : [ {
+    "reviewedAt" : 1578266581,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709492,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266581,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266581,
+      "failureCount" : 0,
+      "startedAt" : 1578266581,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "9zd4-dyx3",
+  "name" : "ACT Deaths - Parkinson's disease (G20)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T02:39:18+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/9zd4-dyx3",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T02:40:17+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T02:40:17+0000",
+  "webUri" : "https://www.data.act.gov.au/d/9zd4-dyx3",
+  "approvals" : [ {
+    "reviewedAt" : 1578266597,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709495,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266597,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266597,
+      "failureCount" : 0,
+      "startedAt" : 1578266597,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "wjfk-f4nf",
+  "name" : "ACT deaths - All Causes",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T02:32:39+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/wjfk-f4nf",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T02:41:16+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T02:41:16+0000",
+  "webUri" : "https://www.data.act.gov.au/d/wjfk-f4nf",
+  "approvals" : [ {
+    "reviewedAt" : 1578266591,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709494,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266591,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266591,
+      "failureCount" : 0,
+      "startedAt" : 1578266591,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+} ]
