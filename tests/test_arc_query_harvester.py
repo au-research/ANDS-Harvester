@@ -10,7 +10,7 @@ import numpy as np
 class test_arc_query_harvester(unittest.TestCase):
 
     def readTestfile(self, path):
-        f = io.open(myconfig.abs_path + 'tests/resources/test_source/arc/' + path, mode="r")
+        f = io.open(myconfig.abs_path + '/tests/resources/test_source/arc/' + path, mode="r")
         data = f.read()
         f.close()
         return data
@@ -69,7 +69,7 @@ class test_arc_query_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = '7'
         harvestInfo['batch_number'] = "ARC_GRANTS"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path +  "tests/resources/xslt/ARCAPI_json_to_rif-cs.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path +  "/tests/resources/xslt/ARCAPI_json_to_rif-cs.xsl"
         harvestInfo['mode'] = "TEST"
         harvester = ARCQUERYHarvester(harvestInfo)
         harvester.harvest()
