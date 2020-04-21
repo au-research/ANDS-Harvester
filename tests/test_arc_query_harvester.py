@@ -5,7 +5,6 @@ import io, os
 from mock import patch
 from utils.Request import Request
 import threading
-import numpy as np
 
 class test_arc_query_harvester(unittest.TestCase):
 
