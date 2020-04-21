@@ -22,7 +22,13 @@ class ARCQUERYHarvester(Harvester):
     # the parameter "rows" and value that is passed in the request
     rows = 400
     # the number of records received in the current request
-    numberOfRecordsReturned = 0
+    numberOfRecordsReturned = 1
+
+    def __init__(self, harvestInfo):
+        super().__init__(harvestInfo)
+        # generic in-house xslt to convert arc grant json (xml) to rifcs
+        if self.harvestInfo['xsl_file'] == "":
+            self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/ARCAPI_json_to_rif-cs.xsl"
 
     __grantList = []
 
