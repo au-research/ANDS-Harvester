@@ -75,10 +75,14 @@ class Harvester():
                     self.logger.logMessage("Unable to remove %s" % fileName, "ERROR")
         #set up the batch path
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
-        else:
-            self.emptyDirectory(self.outputDir)
+        try:
+            if not os.path.exists(self.outputDir):
+                os.makedirs(self.outputDir)
+            else:
+                self.emptyDirectory(self.outputDir)
+        except Exception as e:
+            self.logger.logMessage("ERROR Creating directory:%s (%s)," % str(self.outputDir, repr(e)), "ERROR")
+            self.handleExceptions(e, terminate=True)
 
 
     def harvest(self):
