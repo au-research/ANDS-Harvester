@@ -64,7 +64,7 @@
                     </xsl:attribute>
                 </xsl:if>  
                 <name type="primary">
-                    <xsl:value-of select="normalize-space(name)"/>
+                    <namePart><xsl:value-of select="normalize-space(name)"/></namePart>
                 </name>
                 <location>
                     <address>
