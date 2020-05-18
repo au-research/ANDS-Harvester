@@ -21,7 +21,7 @@ class test_arc_query_harvester(unittest.TestCase):
         return data
 
     @patch.object(Request, 'getData')
-    def test_arc_query(self, mockGetData):
+    def arc_query(self, mockGetData):
         batch_id = "ARC"
         ds_id = 31
         mockGetData.side_effect = [
