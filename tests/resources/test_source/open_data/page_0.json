@@ -1,0 +1,506 @@
+[ {
+  "id" : "xvid-q4du",
+  "name" : "Light Rail Patronage 15 min interval",
+  "attribution" : "Transport Canberra",
+  "attributionLink" : null,
+  "category" : "Transport",
+  "createdAt" : "2020-03-16T05:34:02+0000",
+  "dataUpdatedAt" : "2020-04-20T01:02:33+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/xvid-q4du",
+  "description" : "This dataset contains Light Rail Patronage for every 15 mins starting from interval (00:00 to 00:14) to interval (23:45 to 23:59). This includes both MyWay boardings and paper ticket boardings. This dataset can be aggregated to provide daily Light Rail (LR) patronage number that is published at https://www.data.act.gov.au/Transport/Light-Rail-Patronage/x7dn-77he\n\nNote: Due to delays in data processing, final number may take up to three days to accurately report on all passenger boardings",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-20T01:02:20+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-20T01:02:20+0000",
+  "webUri" : "https://www.data.act.gov.au/d/xvid-q4du",
+  "approvals" : [ {
+    "reviewedAt" : 1584930812,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1995897,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1584930812,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1584930812,
+      "failureCount" : 0,
+      "startedAt" : 1584930812,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "Transport Canberra",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "Daily",
+      "Temporal Coverage" : "15 min"
+    }
+  },
+  "tags" : [ "light rail", "patronage", "passenger boardings", "boardings" ]
+}, {
+  "id" : "ntma-hmkv",
+  "name" : "Light Rail Patronage",
+  "attribution" : "Transport Canberra",
+  "attributionLink" : null,
+  "category" : "Transport",
+  "createdAt" : "2020-03-12T01:08:41+0000",
+  "dataUpdatedAt" : "2020-04-20T01:01:07+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/ntma-hmkv",
+  "description" : "This dataset contains information relating to the daily patronage figure (number of boardings) on the Light Rail Network in Canberra. The dataset contains patronage data since light rail operations commenced with the first fiscal week beginning on Monday 22nd of April 2019. This dataset contains boardings calculated using MyWay Card and Paper Tickets.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-03-12T01:19:27+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-03-12T01:19:27+0000",
+  "webUri" : "https://www.data.act.gov.au/d/ntma-hmkv",
+  "approvals" : [ {
+    "reviewedAt" : 1583975338,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1958851,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1583975338,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1583975338,
+      "failureCount" : 0,
+      "startedAt" : 1583975338,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "Transport Canberra",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "Daily",
+      "Temporal Coverage" : "Daily"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "yw7r-8f6i",
+  "name" : "Raw Survey Results Cemeteries and Crematoria Act",
+  "attribution" : "FoI Team in TCCS",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-19T02:38:50+0000",
+  "dataUpdatedAt" : "2020-02-19T02:38:50+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/yw7r-8f6i",
+  "description" : "This dataset consists of raw survey results of public consultations conducted as part of ACT Government's 2018 public review of the Cemeteries and Crematoria Act.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-19T02:47:39+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-19T02:47:39+0000",
+  "webUri" : "https://www.data.act.gov.au/d/yw7r-8f6i",
+  "approvals" : [ {
+    "reviewedAt" : 1582080459,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1876717,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1582080459,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1582080459,
+      "failureCount" : 0,
+      "startedAt" : 1582080459,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Directorate" : "Transport Canberra and City Services"
+    }
+  },
+  "tags" : [ "survey", "cemeteries", "cemeteries and crematoria act" ]
+}, {
+  "id" : "x7dn-77he",
+  "name" : "Light Rail Patronage",
+  "attribution" : "Transport Canberra",
+  "attributionLink" : null,
+  "category" : "Transport",
+  "createdAt" : "2020-02-18T00:26:39+0000",
+  "dataUpdatedAt" : "2020-04-20T01:01:07+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/x7dn-77he",
+  "description" : "This dataset contains information relating to the daily patronage figure (number of boardings) on the Light Rail Network in Canberra. The dataset contains patronage data since light rail operations commenced with the first fiscal week beginning on Monday 22nd of April 2019. This dataset contains boardings calculated using MyWay Card and Paper Tickets.\n\nNote: Due to delays in data processing, final number may take up to three days to accurately report on all passenger boardings",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-20T01:00:57+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-20T01:00:57+0000",
+  "webUri" : "https://www.data.act.gov.au/d/x7dn-77he",
+  "approvals" : [ {
+    "reviewedAt" : 1581987349,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1872512,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581987349,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581987349,
+      "failureCount" : 0,
+      "startedAt" : 1581987349,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "Transport Canberra",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "Daily",
+      "Temporal Coverage" : "Daily"
+    }
+  },
+  "tags" : [ "light rail", "patronage", "ticket" ]
+}, {
+  "id" : "y4we-6iwe",
+  "name" : "Budget 2019-2020 Review - 2019-20 program savings table",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T06:31:50+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/y4we-6iwe",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T06:37:43+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T06:37:43+0000",
+  "webUri" : "https://www.data.act.gov.au/d/y4we-6iwe",
+  "approvals" : [ {
+    "reviewedAt" : 1581570352,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856881,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570352,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570352,
+      "failureCount" : 0,
+      "startedAt" : 1581570352,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "xudk-dvdb",
+  "name" : "Budget 2019-2020 Review - by category table",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T05:53:16+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/xudk-dvdb",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T06:18:19+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T06:18:19+0000",
+  "webUri" : "https://www.data.act.gov.au/d/xudk-dvdb",
+  "approvals" : [ {
+    "reviewedAt" : 1581570335,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856880,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570335,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570335,
+      "failureCount" : 0,
+      "startedAt" : 1581570335,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "47ij-ew9u",
+  "name" : "Budget 2019-2020 Review - by government priority table",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T05:22:34+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/47ij-ew9u",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T05:35:45+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T05:35:45+0000",
+  "webUri" : "https://www.data.act.gov.au/d/47ij-ew9u",
+  "approvals" : [ {
+    "reviewedAt" : 1581570369,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856882,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570369,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570370,
+      "failureCount" : 0,
+      "startedAt" : 1581570369,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "rp9b-nvpk",
+  "name" : "Budget 2019-2020 Review - by project type table",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T05:18:30+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/rp9b-nvpk",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T05:36:01+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T05:36:01+0000",
+  "webUri" : "https://www.data.act.gov.au/d/rp9b-nvpk",
+  "approvals" : [ {
+    "reviewedAt" : 1581570388,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856883,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570388,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570388,
+      "failureCount" : 0,
+      "startedAt" : 1581570388,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "fyy6-8r9y",
+  "name" : "Budget 2019-2020 Review - by directorate table",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T05:04:49+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/fyy6-8r9y",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T05:36:26+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T05:36:26+0000",
+  "webUri" : "https://www.data.act.gov.au/d/fyy6-8r9y",
+  "approvals" : [ {
+    "reviewedAt" : 1581570406,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856884,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570406,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570406,
+      "failureCount" : 0,
+      "startedAt" : 1581570406,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "pdcf-v835",
+  "name" : "Budget 2019-2020 Review - by project type chart",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T04:37:40+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/pdcf-v835",
+  "description" : "",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T23:23:09+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T23:23:09+0000",
+  "webUri" : "https://www.data.act.gov.au/d/pdcf-v835",
+  "approvals" : [ {
+    "reviewedAt" : 1581570511,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856887,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570511,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570511,
+      "failureCount" : 0,
+      "startedAt" : 1581570511,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+} ]

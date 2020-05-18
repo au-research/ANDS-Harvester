@@ -1,0 +1,308 @@
+[ {
+  "id" : "vgkb-w2zn",
+  "name" : "ACT Deaths - Avoidable mortality",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T02:25:56+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/vgkb-w2zn",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T02:42:05+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T02:42:05+0000",
+  "webUri" : "https://www.data.act.gov.au/d/vgkb-w2zn",
+  "approvals" : [ {
+    "reviewedAt" : 1578266585,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709493,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266585,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266585,
+      "failureCount" : 0,
+      "startedAt" : 1578266585,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "aamw-u83y",
+  "name" : "ACT Deaths data",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T02:08:52+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/aamw-u83y",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-01-05T23:19:16+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-01-05T23:19:16+0000",
+  "webUri" : "https://www.data.act.gov.au/d/aamw-u83y",
+  "approvals" : [ {
+    "reviewedAt" : 1578266396,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709482,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266396,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266396,
+      "failureCount" : 0,
+      "startedAt" : 1578266396,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "xhma-xpic",
+  "name" : "Transport Canberra & City Services Open Data Strategy 2019 - 2021",
+  "attribution" : "TCCS",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2019-12-04T03:50:43+0000",
+  "dataUpdatedAt" : "2019-12-04T03:50:43+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/xhma-xpic",
+  "description" : "This dataset contains Transport Canberra & City Services (TCCS) open data strategy 2019 - 2021. The approved version is in pdf format and the word document is available for open access",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : null,
+  "metadataUpdatedAt" : "2019-12-06T02:11:36+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-06T02:11:36+0000",
+  "webUri" : "https://www.data.act.gov.au/d/xhma-xpic",
+  "approvals" : [ {
+    "reviewedAt" : 1575432737,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1571129,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1575432737,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1575432737,
+      "failureCount" : 0,
+      "startedAt" : 1575432737,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "TCCS",
+      "Directorate" : "Transport Canberra and City Services"
+    }
+  },
+  "tags" : [ "tccs", "strategy", "open data", "policy" ]
+}, {
+  "id" : "s4rw-vi3a",
+  "name" : "ACT Dog Parks",
+  "attribution" : "Transport Canberra and City Services",
+  "attributionLink" : null,
+  "category" : "Sport and Recreation",
+  "createdAt" : "2019-11-29T03:37:25+0000",
+  "dataUpdatedAt" : "2019-11-29T03:58:59+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/s4rw-vi3a",
+  "description" : "This dataset contains information relating to ACT Dog Park locations and shapes.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution | Share Alike 4.0 International",
+  "metadataUpdatedAt" : "2019-11-29T03:59:00+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-11-29T03:59:00+0000",
+  "webUri" : "https://www.data.act.gov.au/d/s4rw-vi3a",
+  "approvals" : [ {
+    "reviewedAt" : 1574999940,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1551807,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1574999940,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1574999940,
+      "failureCount" : 0,
+      "startedAt" : 1574999940,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Related Data" : {
+      "Related Data Set" : "https://www.data.act.gov.au/Sport-and-Recreation/Fenced-Dog-Parks/9w3s-wzf4"
+    }
+  },
+  "tags" : [ "dog", "dog park", "pet", "off leash" ]
+}, {
+  "id" : "hy95-2hum",
+  "name" : "ACT Speed Zones",
+  "attribution" : "TCCS",
+  "attributionLink" : null,
+  "category" : "Transport",
+  "createdAt" : "2019-10-11T06:06:30+0000",
+  "dataUpdatedAt" : "2019-11-29T04:04:28+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/hy95-2hum",
+  "description" : "This dataset contains information relating to ACT Speed Zones.\n\nDATASET DISCLAIMER: \nThis dataset shall be used for general reference only. Because of the complexity in processing to generate this dataset, we cannot be liable for omissions and inaccuracies. Users of this dataset are encouraged to check with related agencies if you have any concerns about the data displayed. Please be aware that new data are added and changed periodically, and data may become out-of-date quickly due to change in business processes and data processing time. TCCS disclaims liability to any person/entity who acts in reliance on the information provided on this dataset. This dataset does not have any legal status, and it may not correspond with the actual speed limit since the date of publication.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-11-29T04:04:21+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-11-29T04:04:21+0000",
+  "webUri" : "https://www.data.act.gov.au/d/hy95-2hum",
+  "approvals" : [ {
+    "reviewedAt" : 1570775793,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1336161,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1570775792,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1570775793,
+      "failureCount" : 0,
+      "startedAt" : 1570775793,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Directorate" : "Transport Canberra and City Services"
+    }
+  },
+  "tags" : [ "speed", "street", "car", "roads", "travel" ]
+}, {
+  "id" : "gnn5-w9u3",
+  "name" : "Civic AQI Graph",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Environment",
+  "createdAt" : "2019-10-08T22:42:32+0000",
+  "dataUpdatedAt" : "2020-04-20T03:10:10+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/gnn5-w9u3",
+  "description" : "Ambient air quality monitoring is undertaken in the ACT to both support both the National Environment Protection Measures and an Air Quality Index (AQI) to better communicate the ambient air quality to the ACT Community.\r\n\r\nUnverified data in this dataset. The data displayed may have undergone no or only preliminary quality assurance checks. These data may require modification as a result of calibration changes, power failures, instrument failures etc.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-01-15T05:36:04+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-01-15T05:36:04+0000",
+  "webUri" : "https://www.data.act.gov.au/d/gnn5-w9u3",
+  "approvals" : [ {
+    "reviewedAt" : 1570574571,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1749550,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1570574571,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1570574572,
+      "failureCount" : 0,
+      "startedAt" : 1570574571,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "6tk2-pz5c",
+      "displayName" : "Health Protection Service"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "hps@act.gov.au",
+      "Program Website" : "health.act.gov.au/hps",
+      "Agency Name" : "Health Protection Service",
+      "Directorate" : "Health"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "Hourly"
+    }
+  },
+  "tags" : null
+}]

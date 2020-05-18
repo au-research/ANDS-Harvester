@@ -30,7 +30,13 @@ Converts the json response to serialised XML
     * Using asynchronous request (max 5)
     * Attempts to extract json-ld from all pages
     * Combines the result into batches of 400
-
+* ARCQUERY - json metadata over HTTP
+    * The ARCQUERY harvester attempts to get a list of Grant Identifiers and retrieve the json data for each record.
+    * Combines the result into batches of 400
+* OPENDATA Harvester
+    * The OPEN DATA API Harvester retrieves JSON from any service that implements the US Government Project Open Data API (for dataSets)
+    * Combines the results into batches of 400
+    
 Whilst the Harvester can retrieve metadata in any format, it must be transformed into RIF-CS XML to be compatible with the ARDC Registry's ingest process
 
 If a Crosswalk is added in the harvest setting by the Registry, the Harvester will save the response(s) as .tmp file(s) and after all data is retrieved it will attempt to run a crosswalk on each .tmp file to generate the rifcs (.xml)
