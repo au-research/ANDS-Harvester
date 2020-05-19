@@ -340,7 +340,10 @@ class HarvesterDaemon(Daemon):
             for harvestID in list(self.__harvestRequests):
                 try:
                     harvestReq = self.__harvestRequests[harvestID]
-                    # can use harvest_id to stop multiple harvest into same datasource  
+                    # if harvest was stopped by the registry
+                    if harvestReq.getStatus() == "STOPPED":
+                        del self.__harvestRequests[harvestID]
+                    # can use harvest_id to stop multiple harvest into same datasource
                     if harvestReq.getStatus() == "WAITING" and harvestID not in self.__runningHarvests.keys():
                         self.__runningHarvests[harvestID] = harvestReq
                         del self.__harvestRequests[harvestID]

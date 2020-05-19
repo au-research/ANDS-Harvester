@@ -1,0 +1,508 @@
+[ {
+  "id" : "5y6a-pe24",
+  "name" : "Budget 2019-2020 Review - by government priority chart",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T04:30:52+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/5y6a-pe24",
+  "description" : "",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T23:11:45+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T23:11:45+0000",
+  "webUri" : "https://www.data.act.gov.au/d/5y6a-pe24",
+  "approvals" : [ {
+    "reviewedAt" : 1581570484,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856886,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570484,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570484,
+      "failureCount" : 0,
+      "startedAt" : 1581570484,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "f86z-nht8",
+  "name" : "Budget 2019-2020 Review - by directorate chart",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T04:04:05+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/f86z-nht8",
+  "description" : "",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T23:21:40+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T23:21:40+0000",
+  "webUri" : "https://www.data.act.gov.au/d/f86z-nht8",
+  "approvals" : [ {
+    "reviewedAt" : 1581570460,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856885,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570460,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570460,
+      "failureCount" : 0,
+      "startedAt" : 1581570460,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "j549-jkj8",
+  "name" : "Budget 2019-2020 Review capital works",
+  "attribution" : "ACT Government",
+  "attributionLink" : null,
+  "category" : "Government and Transparency",
+  "createdAt" : "2020-02-11T03:09:46+0000",
+  "dataUpdatedAt" : "2020-02-11T05:52:11+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/j549-jkj8",
+  "description" : null,
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-02-11T05:52:10+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-02-11T05:52:10+0000",
+  "webUri" : "https://www.data.act.gov.au/d/j549-jkj8",
+  "approvals" : [ {
+    "reviewedAt" : 1581570291,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1856879,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1581570291,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1581570291,
+      "failureCount" : 0,
+      "startedAt" : 1581570291,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "ew7w-93ma",
+      "displayName" : "Greg Tankard"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "CMTEDD.webmaster@act.gov.au",
+      "Directorate" : "Chief Minister, Treasury and Economic Development"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "vcfc-swxe",
+  "name" : "Register of ACT Veterinary Premises (Historical Archive)",
+  "attribution" : "VET Board",
+  "attributionLink" : null,
+  "category" : "Plants and Animals",
+  "createdAt" : "2020-02-06T06:12:08+0000",
+  "dataUpdatedAt" : "2020-04-06T11:31:57+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/vcfc-swxe",
+  "description" : "This data set contains historical archive of Register of ACT Veterinary Premises",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-06T11:31:56+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-06T11:31:56+0000",
+  "webUri" : "https://www.data.act.gov.au/d/vcfc-swxe",
+  "approvals" : [ {
+    "reviewedAt" : 1580969870,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1831352,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1580969870,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1580969871,
+      "failureCount" : 0,
+      "startedAt" : 1580969870,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "VET Board",
+      "Directorate" : "Transport Canberra and City Services"
+    }
+  },
+  "tags" : [ "vet", "veterinary", "premises" ]
+}, {
+  "id" : "hm86-nq6a",
+  "name" : "Register of ACT Veterinary Practitioners (Historical Archive)",
+  "attribution" : "VET Board",
+  "attributionLink" : "https://www.cityservices.act.gov.au/pets-and-wildlife/veterinary-practitioners-board/meet-the-board",
+  "category" : "Plants and Animals",
+  "createdAt" : "2020-02-06T06:03:16+0000",
+  "dataUpdatedAt" : "2020-04-16T01:01:10+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/hm86-nq6a",
+  "description" : "This data set stores the historical Register of ACT Veterinary Practitioners",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-16T01:01:09+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-16T01:01:09+0000",
+  "webUri" : "https://www.data.act.gov.au/d/hm86-nq6a",
+  "approvals" : [ {
+    "reviewedAt" : 1580969454,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1831350,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1580969454,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1580969454,
+      "failureCount" : 0,
+      "startedAt" : 1580969454,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdpspatial@act.gov.au",
+      "Agency Name" : "VET Board",
+      "Directorate" : "Transport Canberra and City Services"
+    }
+  },
+  "tags" : [ "vet", "veterinary", "practitioners" ]
+}, {
+  "id" : "yjyt-758v",
+  "name" : "Register of ACT Veterinary Practitioners",
+  "attribution" : "VET Board",
+  "attributionLink" : "https://www.cityservices.act.gov.au/pets-and-wildlife/veterinary-practitioners-board/register-of-veterinary-practitioners-and-veterinary-premises",
+  "category" : "Plants and Animals",
+  "createdAt" : "2020-02-06T05:30:39+0000",
+  "dataUpdatedAt" : "2020-04-16T00:47:57+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/yjyt-758v",
+  "description" : "This dataset gives you current Register of ACT Veterinary Practitioners\n\nhttps://www.cityservices.act.gov.au/pets-and-wildlife/veterinary-practitioners-board/register-of-veterinary-practitioners-and-veterinary-premises",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-16T00:47:56+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-16T00:47:56+0000",
+  "webUri" : "https://www.data.act.gov.au/d/yjyt-758v",
+  "approvals" : [ {
+    "reviewedAt" : 1580967793,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1831328,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1580967793,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1580967793,
+      "failureCount" : 0,
+      "startedAt" : 1580967793,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Name" : "VET Board",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "As per VET Board schedule"
+    }
+  },
+  "tags" : [ "vet", "veterinary", "practitioners" ]
+}, {
+  "id" : "5g9m-zdfa",
+  "name" : "Register of ACT Veterinary Premises",
+  "attribution" : "TCCS",
+  "attributionLink" : "https://www.cityservices.act.gov.au/pets-and-wildlife/veterinary-practitioners-board/register-of-veterinary-practitioners-and-veterinary-premises",
+  "category" : "Plants and Animals",
+  "createdAt" : "2020-02-06T04:21:09+0000",
+  "dataUpdatedAt" : "2020-04-06T11:22:09+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/5g9m-zdfa",
+  "description" : "This dataset contains the current register of ACT Veterinary Premises\n\nDetails about registration process is found at https://www.cityservices.act.gov.au/pets-and-wildlife/veterinary-practitioners-board/veterinary-premises-registration",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-04-06T11:22:08+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-04-06T11:22:08+0000",
+  "webUri" : "https://www.data.act.gov.au/d/5g9m-zdfa",
+  "approvals" : [ {
+    "reviewedAt" : 1580963731,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1831321,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1580963731,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1580963731,
+      "failureCount" : 0,
+      "startedAt" : 1580963731,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "m7km-7fxa",
+      "displayName" : "TAMS"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "tamsdspatial@act.gov.au",
+      "Agency Program" : "Vet Board",
+      "Agency Name" : "Vet Board",
+      "Directorate" : "Transport Canberra and City Services"
+    },
+    "Data Set Coverage" : {
+      "Update Frequency" : "As per VET board schedule"
+    }
+  },
+  "tags" : [ "vet", "premises", "veterinary" ]
+}, {
+  "id" : "djif-gmbf",
+  "name" : "PM 2.5 hourly and 24 Hour rolling average data",
+  "attribution" : "ACT Health Directorate",
+  "attributionLink" : null,
+  "category" : "Environment",
+  "createdAt" : "2020-01-06T01:37:12+0000",
+  "dataUpdatedAt" : "2020-04-20T03:11:10+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/djif-gmbf",
+  "description" : "PM2.5 1 hour and 24 hour rolling average from air monitoring stations.",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2020-01-07T02:38:37+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2020-01-07T02:38:37+0000",
+  "webUri" : "https://www.data.act.gov.au/d/djif-gmbf",
+  "approvals" : [ {
+    "reviewedAt" : 1578286966,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1714333,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578286966,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578286967,
+      "failureCount" : 0,
+      "startedAt" : 1578286966,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "6tk2-pz5c",
+      "displayName" : "Health Protection Service"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "swarup.chatterjee@act.gov.au",
+      "Agency Program" : "Public Health Response to Wood Smoke",
+      "Agency Name" : "Health Protection Service",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "xa7x-i9ii",
+  "name" : "ACT Deaths - Ischaemic heart diseases (I20-I25)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T20:47:18+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/xa7x-i9ii",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T20:47:38+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T20:47:38+0000",
+  "webUri" : "https://www.data.act.gov.au/d/xa7x-i9ii",
+  "approvals" : [ {
+    "reviewedAt" : 1578266472,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709483,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266472,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266472,
+      "failureCount" : 0,
+      "startedAt" : 1578266472,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+}, {
+  "id" : "2bqr-3ygy",
+  "name" : "ACT Deaths - Intentional self-harm (X60-X84)",
+  "attribution" : "Epidemiology Section",
+  "attributionLink" : null,
+  "category" : "Health",
+  "createdAt" : "2019-12-12T20:39:55+0000",
+  "dataUpdatedAt" : "2019-12-12T02:16:13+0000",
+  "dataUri" : "https://www.data.act.gov.au/resource/2bqr-3ygy",
+  "description" : "The data contained in this dataset is based on the Cause Of Death Unit Record File (CODURF) provided by the Australian Coordinating Registry (ACR), the data has been aggregated based on either a single or grouped ICD-10* classification.\nThe ACT deaths data is collected and maintained by the ACT registrar of Births, Deaths and Marriages (ACT RBDM), which records all medical conditions that directly caused or contributed to the death and were applicable, ie the circumstances surrounding a death (eg. motor vehicle accident).\nThe National Coronial Information System (NCIS) records and stores information relating to coroner certified deaths for the purposes of retrieval, analysis, interpretation and dissemination to allow for informed death and injury prevention activities.\nThe Australian Coordinating Registry (ACR) is an agency appointed by state and territory RBDMs and coroners to coordinate and manage approval of coded deaths data.\n*The International Statistical Classification of Diseases and Related Health Problems Tenth Revision\nThe data is presented by the ACT Government for the purpose of disseminating information for the benefit of the public. The ACT Government has taken great care to ensure the information in this report is as correct and accurate as possible. Whilst the information is considered to be true and correct at the date of publication, changes in circumstances after the time of publication may impact on the accuracy of the information. Differences in statistical methods and calculations, data updates and guidelines may result in the information contained in this report varying from previously published information",
+  "domain" : "www.data.act.gov.au",
+  "externalId" : null,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "license" : "Creative Commons Attribution 4.0 International",
+  "metadataUpdatedAt" : "2019-12-12T20:42:22+0000",
+  "provenance" : "OFFICIAL",
+  "updatedAt" : "2019-12-12T20:42:22+0000",
+  "webUri" : "https://www.data.act.gov.au/d/2bqr-3ygy",
+  "approvals" : [ {
+    "reviewedAt" : 1578266478,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 1709484,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1578266478,
+    "workflowId" : 2135,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1578266478,
+      "failureCount" : 0,
+      "startedAt" : 1578266478,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "t26z-89ap",
+      "displayName" : "Epidemiology Section"
+    }
+  } ],
+  "customFields" : {
+    "Contributing Agency" : {
+      "Contact Email" : "healthinfo@act.gov.au",
+      "Program Website" : "http://stats.health.act.gov.au/",
+      "Agency Name" : "Epidemiology Section",
+      "Directorate" : "Health"
+    }
+  },
+  "tags" : null
+} ]

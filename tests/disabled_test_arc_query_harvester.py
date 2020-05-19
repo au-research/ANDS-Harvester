@@ -1,6 +1,6 @@
 import unittest
 import myconfig
-from harvest_handlers.ARCQUERYHarvester import ARCQUERYHarvester
+#from harvest_handlers.ARCQUERYHarvester import ARCQUERYHarvester
 import io, os
 from mock import patch
 from utils.Request import Request
