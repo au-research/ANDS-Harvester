@@ -1,6 +1,6 @@
 import unittest
 import myconfig
-#from harvest_handlers.ARCQUERYHarvester import ARCQUERYHarvester
+from harvest_handlers.ARCQUERYHarvester import ARCQUERYHarvester
 import io, os
 from mock import patch
 from utils.Request import Request
@@ -55,7 +55,7 @@ class test_arc_query_harvester(unittest.TestCase):
         self.assertIn('<id>LP190100083</id>', content)
 
 
-    def only_during_development_test_retry_count(self):
+    def test_only_during_development_test_retry_count(self):
         batch_id = "ARC_GRANTS"
         ds_id = 29
         harvestInfo = {}
@@ -68,7 +68,7 @@ class test_arc_query_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = '7'
         harvestInfo['batch_number'] = "ARC_GRANTS"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path +  "/tests/resources/xslt/ARCAPI_json_to_rif-cs.xsl"
+        harvestInfo['xsl_file'] = myconfig.abs_path +  "/resources/xslt/ARCAPI_json_to_rif-cs.xsl"
         harvestInfo['mode'] = "TEST"
         harvester = ARCQUERYHarvester(harvestInfo)
         harvester.harvest()
