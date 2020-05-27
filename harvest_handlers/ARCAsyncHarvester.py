@@ -1,5 +1,3 @@
-import gevent.monkey
-gevent.monkey.patch_all()
 import urllib
 from Harvester import *
 from bs4 import BeautifulSoup
