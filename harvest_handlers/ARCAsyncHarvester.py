@@ -64,7 +64,7 @@ class ARCAsyncHarvester(Harvester):
         super().__init__(harvestInfo)
         self.jsonDict = []
         self.data = None
-        self.grantsList = []
+        self.__grantsList = []
         try:
             if self.harvestInfo['requestHandler'] :
                 pass

@@ -21,9 +21,8 @@ class test_arcasync_harvester(unittest.TestCase):
         f.close()
         return data
 
-
-
-    def small_getGrantList(self, mockGetData):
+    @patch.object(Request, 'getData')
+    def test_small_getGrantList(self, mockGetData):
         batch_id = "ARCAsync_1"
         ds_id = 33
         mockGetData.side_effect = [
