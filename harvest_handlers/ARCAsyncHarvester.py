@@ -47,6 +47,7 @@ class ARCAsyncHarvester(Harvester):
 
     #Only used in development testing
     testList = []
+    test_limit = 3
 
     # the list of grant_ids the harvester received
     __grantsList = []
@@ -148,7 +149,7 @@ class ARCAsyncHarvester(Harvester):
                     i += 1
                 # check if the collection of ids is completed by receiving nothing or more than the test limit
                 if self.numberOfRecordsReturned == 0 or (
-                        self.harvestInfo['mode'] == 'TEST' and self.recordCount >= myconfig.test_limit):
+                        self.harvestInfo['mode'] == 'TEST' and self.recordCount >= self.test_limit):
                     self.stopped = True
         except Exception as e:
             self.handleExceptions(e)
