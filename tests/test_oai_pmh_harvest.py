@@ -85,7 +85,7 @@ class test_oai_harvester(unittest.TestCase):
 
 
 
-    def test_igsn_records_harvester_for_migration(self):
+    def igsn_records_harvester_for_migration(self):
         """
         This "test" is used to harvest all production IGSN records for the IGSN 2040 sprint in May 2020
         :return:
