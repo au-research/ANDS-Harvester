@@ -108,13 +108,14 @@ class PMHHarvester(Harvester):
             metadataElList = dom.getElementsByTagName('metadata')
             self.recordCount = self.recordCount + len(metadataElList)
             self.pageCount = self.pageCount + 1
-            if self.__resumptionToken != dom.getElementsByTagName('resumptionToken')[0].firstChild.nodeValue:
+            if len(metadataElList) > 0:
                 self.__resumptionToken = dom.getElementsByTagName('resumptionToken')[0].firstChild.nodeValue
             else:
-                # if the new resumption token is the same as the previous one then stop harvest
+                # if no more metadata is received then stop harvest
                 self.__resumptionToken = ""
 
             if self.pageCount >= myconfig.test_limit and self.harvestInfo['mode'] == 'TEST':
+                # also end if reached the test limit in test mode
                 self.__resumptionToken = ""
 
         except Exception:

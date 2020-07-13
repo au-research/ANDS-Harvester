@@ -84,5 +84,36 @@ class test_oai_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(file2))
 
 
+
+    def igsn_records_harvester_for_migration(self):
+        """
+        This "test" is used to harvest all production IGSN records for the IGSN 2040 sprint in May 2020
+        :return:
+        :rtype:
+        """
+        harvestInfo = {}
+        batch_id = "PMH_IGSN_PROD"
+        ds_id = 11
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['batch_number'] = batch_id
+        harvestInfo['data_source_id'] = ds_id
+        harvestInfo['data_source_slug'] = "TEST"
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['harvest_method'] = "PMHHarvester"
+        harvestInfo['mode'] = "HARVEST"
+        harvestInfo['provider_type'] = 'cs_igsn'
+        harvestInfo['response_url'] = ""
+        harvestInfo['title'] = "HARVEST"
+        harvestInfo['uri'] = "https://identifiers.ardc.edu.au/igsn/api/service/30/oai"
+        harvestInfo['xsl_file'] = myconfig.abs_path + "/resources/xslt/igsn-oai.xsl"
+        harvester = PMHHarvester(harvestInfo)
+
+        harvester.harvest()
+        file1 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "1.tmp"
+        file2 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "2.tmp"
+        self.assertTrue(os.path.exists(file1))
+        self.assertTrue(os.path.exists(file2))
+
 if __name__ == '__main__':
     unittest.main()
