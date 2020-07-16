@@ -2,8 +2,6 @@ import unittest
 import myconfig
 from harvest_handlers.DynamicJSONLDHarvester import DynamicJSONLDHarvester
 import io, os
-from mock import patch
-from utils.Request import Request
 import threading
 import time
 

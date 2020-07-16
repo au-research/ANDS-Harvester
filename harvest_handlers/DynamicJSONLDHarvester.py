@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from concurrent import futures
-from multiprocessing import Pool
 from webdriver_manager.chrome import ChromeDriverManager
 from crawler.SiteMapCrawler import SiteMapCrawler
 import json
@@ -30,21 +29,27 @@ class DynamicJSONLDHarvester(Harvester):
     """
     # the list of urls the crawler has found
     urlLinksList = []
+    # the list of urls that the webdriver failed to receive back json-ld from
+    urlFailedRequest = []
     # the number of pages stored per batchfile
     batchSize = 400
     # the number of simultaneous connections
-    tcp_connection_limit = 5
+    tcp_connection_limit = 4
     # time to wait for application/ld_json script tag to load
     wait_page_load = 10
     # the array to store the harvested json-lds
     jsonDict = []
     # use to benchmark asyncio vs grequest vs request
     start_time = {}
+    # use to create a pool of webdrivers
+    driver_list = []
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
     # Chrome browser options for the webdriver - headless, no images and disk-cache size
     browser_options = Options()
     browser_options.add_argument("--headless")
+    browser_options.add_argument('--disable-setuid-sandbox')
+    browser_options.add_argument('--no-sandbox')
     prefs = {'profile.managed_default_content_settings.images': 2,  'disk-cache-size': 4096 }
     browser_options.add_experimental_option("prefs", prefs)
 
@@ -64,6 +69,9 @@ class DynamicJSONLDHarvester(Harvester):
             # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
+
+
+
 
     def harvest(self):
         """
@@ -85,6 +93,7 @@ class DynamicJSONLDHarvester(Harvester):
         self.getPageList()
         batchCount = 1
         self.logger.logMessage("Found %d urls in file, batching %d" % (len(self.urlLinksList) , self.batchSize))
+        self.openDrivers()
         if len(self.urlLinksList) > self.batchSize:
             urlLinkLists = split(self.urlLinksList, self.batchSize)
             for batches in urlLinkLists:
@@ -95,12 +104,23 @@ class DynamicJSONLDHarvester(Harvester):
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
                     batchCount += 1
-                #time.sleep(2) # let them breathe
+                time.sleep(2)  # let them breathe
         else:
             self.crawlPages(self.urlLinksList)
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
+                self.logger.logMessage("Saving %d records in combined" % len(self.jsonDict))
+                self.jsonDict.clear()
+        if(len(self.urlFailedRequest)>0):
+            self.wait_page_load += 10
+            self.crawlPages(self.urlFailedRequest)
+            if len(self.jsonDict) > 0:
+                self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
+                self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
+                self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
+                self.jsonDict.clear()
+        self.closeDrivers()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -136,25 +156,58 @@ class DynamicJSONLDHarvester(Harvester):
         :type webdriver:
         """
 
-        #pool = Pool(processes=self.test_tcp_connection_limit)
-        #pool.map(self.fetch, urlList)
         with futures.ThreadPoolExecutor(max_workers=self.tcp_connection_limit) as executor:
             executor.map(self.fetch, urlList)
 
 
-    #def parse(self, response, **kwargs):
-    #    """
-    #    grequest parse callback
-    #    just get the content and call the generic content handler processContent
-    #    :param response:
-    #    :type response:
-    #    :param kwargs:
-    #   :type kwargs:
-    #    """
-        #self.processContent(response.text, response.url)
-
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
+
+
+
+    def openDrivers(self):
+        """
+          creates a pool of webdrivers and sets them to abailable
+        """
+        for i in range(0, self.tcp_connection_limit):
+            theDriver =   webdriver.Chrome(ChromeDriverManager().install(), options=self.browser_options)
+            self.driver_list.append([theDriver, 0])
+
+    def closeDrivers(self):
+        """
+        closes the pool of webdrivers
+        """
+        for i in range(0, self.tcp_connection_limit):
+            driver = self.driver_list[i][0]
+            driver.quit()
+
+    def getDriver(self):
+        """
+        get an available webdriver
+        """
+
+        for driverInfo in self.driver_list:
+            try:
+                if (driverInfo[1] == 0):
+                    driver = driverInfo[0]
+                    driverInfo[1] = 1
+                    return driver
+                    break
+            except Exception as exc:
+                self.logger.logMessage("Failed assigning driver %s Exception: %s" % (str(driver), str(exc)), "ERROR")
+
+    def returnDriver(self, driver):
+        """
+        free the webdriver
+        """
+
+        for driverInfo in self.driver_list:
+            try:
+                if (driverInfo[0] == driver):
+                    driverInfo[1] = 0
+                    break
+            except Exception as exc:
+                self.logger.logMessage("Failed freeing driver%s Exception: %s" % (str(driver) , str(exc)), "ERROR")
 
 
     def fetch(self, url):
@@ -166,7 +219,8 @@ class DynamicJSONLDHarvester(Harvester):
         :param driver:
         :type webdriver:
         """
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=self.browser_options)
+        time.sleep(.25)  # let them breathe a bit
+        driver = self.getDriver()
         try:
             driver.get(url)
             WebDriverWait(driver, self.wait_page_load).until(
@@ -175,22 +229,9 @@ class DynamicJSONLDHarvester(Harvester):
             the_json = final_results.get_attribute("innerHTML")
             self.processContent(str(the_json), url)
         except Exception as exc:
-            # error may be due to open driver issue so lets try again with a whole new driver
-            # A new driver results in a longer load time per page
-            self.logger.logMessage("1st Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
-            try:
-                driver2 = webdriver.Chrome(ChromeDriverManager().install(),options=self.browser_options)
-                driver.get(url)
-                WebDriverWait(driver2, 5).until(
-                    EC.presence_of_element_located((By.XPATH, '//script[@type="application/ld+json"]')))
-                final_results = driver2.find_element_by_xpath('//script[@type="application/ld+json"]')
-                the_info = final_results.get_attribute("innerHTML")
-                self.processContent(str(the_info), url)
-                driver2.close()
-                driver2.quit()
-            except Exception as exc:
-                self.logger.logMessage("2nd Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
-        driver.close()
+            self.urlFailedRequest.append(url)
+            self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
+        self.returnDriver(driver)
 
     def processContent(self, jsonStr, url):
         """
@@ -217,7 +258,6 @@ class DynamicJSONLDHarvester(Harvester):
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
                 self.jsonDict.append(data)
                 self.recordCount += 1
-                #self.logger.logMessage("processContent url:%s CONTENT: %s" % (url, jsonStr),'DEBUG')
             except Exception as e:
                 pass
         else:
