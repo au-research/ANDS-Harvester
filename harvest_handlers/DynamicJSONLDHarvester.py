@@ -1,5 +1,6 @@
 from Harvester import *
-from selenium import webdriver
+#from selenium import webdriver
+from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,6 +44,7 @@ class DynamicJSONLDHarvester(Harvester):
     start_time = {}
     # use to create a pool of webdrivers
     driver_list = []
+    re_run = None
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
     # Chrome browser options for the webdriver - headless, no images and disk-cache size
@@ -58,7 +60,7 @@ class DynamicJSONLDHarvester(Harvester):
         self.jsonDict = []
         self.data = None
         self.urlLinksList = []
-
+        self.re_run = False
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
@@ -113,6 +115,8 @@ class DynamicJSONLDHarvester(Harvester):
                 self.logger.logMessage("Saving %d records in combined" % len(self.jsonDict))
                 self.jsonDict.clear()
         if(len(self.urlFailedRequest)>0):
+            self.re_run = True
+            self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
             self.wait_page_load += 10
             self.crawlPages(self.urlFailedRequest)
             if len(self.jsonDict) > 0:
@@ -223,13 +227,21 @@ class DynamicJSONLDHarvester(Harvester):
         driver = self.getDriver()
         try:
             driver.get(url)
+            self.logger.logMessage("Fetching url : %s" % url, "DEBUG")
             WebDriverWait(driver, self.wait_page_load).until(
                 EC.presence_of_element_located((By.XPATH,'//script[@type="application/ld+json"]')))
             final_results= driver.find_element_by_xpath('//script[@type="application/ld+json"]')
             the_json = final_results.get_attribute("innerHTML")
             self.processContent(str(the_json), url)
         except Exception as exc:
-            self.urlFailedRequest.append(url)
+            self.logger.logMessage("Fetching url : %s Rerun:" % (url, (str(self.re_run))), "ERROR")
+            for request in driver.requests:
+                if request.response and request.response.status_code != 200:
+                    self.logger.logMessage("status code %s, url : %s" %
+                                           (str(request.response.status_code),
+                                            request.url), "ERROR")
+            if not self.re_run:
+                self.urlFailedRequest.append(url)
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
         self.returnDriver(driver)
 

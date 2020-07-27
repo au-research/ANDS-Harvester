@@ -52,7 +52,7 @@ class test_dynamicjsonld_harvester(unittest.TestCase):
         harvestInfo_1['harvest_id'] = 8
         harvestInfo_1['batch_number'] = batch_id_1
         harvestInfo_1['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo_1['xsl_file'] = myconfig.abs_path + "tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo_1['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
         harvestInfo_1['mode'] = "TEST"
         harvestInfo_1['requestHandler'] = "asyncio"
         harvestInfo_1['title'] = "The Datasource Title"
