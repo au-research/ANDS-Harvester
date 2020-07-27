@@ -100,7 +100,7 @@ class test_jsonld_harvester(unittest.TestCase):
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
-        harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/schemadotorg2rif.xsl"
+        harvestInfo['xsl_file'] = None
         harvestInfo['mode'] = "TEST"
         harvestInfo['requestHandler'] = "basic"
         harvestInfo['title'] = "The Datasource Title"
