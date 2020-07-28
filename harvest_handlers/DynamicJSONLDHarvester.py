@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from concurrent import futures
 from webdriver_manager.chrome import ChromeDriverManager
 from crawler.SiteMapCrawler import SiteMapCrawler
@@ -95,11 +96,13 @@ class DynamicJSONLDHarvester(Harvester):
         self.getPageList()
         batchCount = 1
         self.logger.logMessage("Found %d urls in file, batching %d" % (len(self.urlLinksList) , self.batchSize))
-        self.openDrivers()
+
         if len(self.urlLinksList) > self.batchSize:
             urlLinkLists = split(self.urlLinksList, self.batchSize)
             for batches in urlLinkLists:
+                self.openDrivers()
                 self.crawlPages(batches)
+                self.closeDrivers()
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
@@ -108,7 +111,9 @@ class DynamicJSONLDHarvester(Harvester):
                     batchCount += 1
                 time.sleep(2)  # let them breathe
         else:
+            self.openDrivers()
             self.crawlPages(self.urlLinksList)
+            self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
@@ -118,13 +123,15 @@ class DynamicJSONLDHarvester(Harvester):
             self.re_run = True
             self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
             self.wait_page_load += 10
+            self.openDrivers()
             self.crawlPages(self.urlFailedRequest)
+            self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
                 self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
                 self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                 self.jsonDict.clear()
-        self.closeDrivers()
+
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -143,6 +150,7 @@ class DynamicJSONLDHarvester(Harvester):
             sc = SiteMapCrawler(self.harvestInfo['mode'])
             sc.parse_sitemap(self.harvestInfo['uri'])
             self.urlLinksList = sc.getLinksToCrawl()
+            #self.urlLinksList.reverse()
             self.listSize = len(self.urlLinksList)
             self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
             self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)), 'INFO')
@@ -230,19 +238,25 @@ class DynamicJSONLDHarvester(Harvester):
             self.logger.logMessage("Fetching url : %s" % url, "DEBUG")
             WebDriverWait(driver, self.wait_page_load).until(
                 EC.presence_of_element_located((By.XPATH,'//script[@type="application/ld+json"]')))
-            final_results= driver.find_element_by_xpath('//script[@type="application/ld+json"]')
+            final_results = driver.find_element_by_xpath('//script[@type="application/ld+json"]')
             the_json = final_results.get_attribute("innerHTML")
             self.processContent(str(the_json), url)
-        except Exception as exc:
-            self.logger.logMessage("Unable to fetch the page url : %s Rerun: %s" % (url, (str(self.re_run))), "ERROR")
-            for request in driver.requests:
-                if request.response and request.response.status_code != 200:
-                    self.logger.logMessage("url request returns with tatus code %s, for url : %s" %
-                                           (str(request.response.status_code),
-                                            request.url), "ERROR")
+        except TimeoutException as tEx:
+            self.logger.logMessage("TimeoutException: url: %s, exc:%s" % (url, repr(tEx)), "ERROR")
             if not self.re_run:
                 self.urlFailedRequest.append(url)
-            self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
+        except NoSuchElementException as nExc:
+            self.logger.logMessage("Page contains no json-ld, url: %s, exc: %s" % (url, repr(nExc)), "ERROR")
+        # except Exception as exc:
+        #     self.logger.logMessage("Unable to fetch the page url : %s Rerun: %s" % (url, (str(self.re_run))), "ERROR")
+        #     for request in driver.requests:
+        #         if request.response and request.response.status_code != 200:
+        #             self.logger.logMessage("url request returns with tatus code %s, for url : %s" %
+        #                                    (str(request.response.status_code),
+        #                                     request.url), "ERROR")
+        #     if not self.re_run:
+        #         self.urlFailedRequest.append(url)
+        #     self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
         self.returnDriver(driver)
 
     def processContent(self, jsonStr, url):
