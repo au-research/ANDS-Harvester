@@ -234,10 +234,10 @@ class DynamicJSONLDHarvester(Harvester):
             the_json = final_results.get_attribute("innerHTML")
             self.processContent(str(the_json), url)
         except Exception as exc:
-            self.logger.logMessage("Fetching url : %s Rerun:" % (url, (str(self.re_run))), "ERROR")
+            self.logger.logMessage("Unable to fetch the page url : %s Rerun: %s" % (url, (str(self.re_run))), "ERROR")
             for request in driver.requests:
                 if request.response and request.response.status_code != 200:
-                    self.logger.logMessage("status code %s, url : %s" %
+                    self.logger.logMessage("url request returns with tatus code %s, for url : %s" %
                                            (str(request.response.status_code),
                                             request.url), "ERROR")
             if not self.re_run:
@@ -257,7 +257,7 @@ class DynamicJSONLDHarvester(Harvester):
         :type url:
 
         """
-        if jsonStr is not None:
+        if jsonStr is not None and jsonStr != '':
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
             try:
                 data = {}
