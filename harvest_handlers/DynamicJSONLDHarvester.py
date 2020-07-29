@@ -1,6 +1,8 @@
 from Harvester import *
-#from selenium import webdriver
-from seleniumwire import webdriver
+from selenium import webdriver
+import time
+#use webdriver from seleniumwire if you want to check for response code
+#from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -37,8 +39,8 @@ class DynamicJSONLDHarvester(Harvester):
     batchSize = 400
     # the number of simultaneous connections
     tcp_connection_limit = 4
-    # time to wait for application/ld_json script tag to load
-    wait_page_load = 10
+    # time in seconds to wait for application/ld_json script tag to load
+    wait_page_load = 15
     # the array to store the harvested json-lds
     jsonDict = []
     # use to benchmark asyncio vs grequest vs request
@@ -55,6 +57,8 @@ class DynamicJSONLDHarvester(Harvester):
     browser_options.add_argument('--no-sandbox')
     prefs = {'profile.managed_default_content_settings.images': 2,  'disk-cache-size': 4096 }
     browser_options.add_experimental_option("prefs", prefs)
+    start_time_dict = None
+    end_time_dict = None
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
@@ -62,6 +66,8 @@ class DynamicJSONLDHarvester(Harvester):
         self.data = None
         self.urlLinksList = []
         self.re_run = False
+        self.start_time_dict = dict()
+        self.end_time_dict = dict()
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
@@ -122,7 +128,8 @@ class DynamicJSONLDHarvester(Harvester):
         if(len(self.urlFailedRequest)>0):
             self.re_run = True
             self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
-            self.wait_page_load += 10
+            #double the wait time, feel generous
+            self.wait_page_load = 60  # increase wait time to 60 seconds
             self.openDrivers()
             self.crawlPages(self.urlFailedRequest)
             self.closeDrivers()
@@ -135,8 +142,20 @@ class DynamicJSONLDHarvester(Harvester):
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
+        self.logStats()
         self.postHarvestData()
         self.finishHarvest()
+
+    def logStats(self):
+        for url, start_time in self.start_time_dict.items():
+            try:
+                end_time = self.end_time_dict[url]
+                overall = end_time - start_time
+                self.logger.logMessage("URL: %s took %s seconds" % (url, str(overall)), 'INFO')
+            except KeyError:
+                self.logger.logMessage("URL: %s failed to load" % url, 'INFO')
+
+
 
     def getPageList(self):
         """
@@ -232,17 +251,22 @@ class DynamicJSONLDHarvester(Harvester):
         :type webdriver:
         """
         time.sleep(.25)  # let them breathe a bit
-        driver = self.getDriver()
+        driver = self.getDriver()    
         try:
+            # capture the time it takes to load urls that failed under the initial wait time
+            if self.re_run:
+                self.start_time_dict[url] = time.time()
             driver.get(url)
             self.logger.logMessage("Fetching url : %s" % url, "DEBUG")
             WebDriverWait(driver, self.wait_page_load).until(
                 EC.presence_of_element_located((By.XPATH,'//script[@type="application/ld+json"]')))
+            if self.re_run:
+                self.end_time_dict[url] = time.time()
             final_results = driver.find_element_by_xpath('//script[@type="application/ld+json"]')
             the_json = final_results.get_attribute("innerHTML")
             self.processContent(str(the_json), url)
         except TimeoutException as tEx:
-            self.logger.logMessage("TimeoutException: url: %s, exc:%s" % (url, repr(tEx)), "ERROR")
+            self.logger.logMessage("TimeoutException: url: %s, wait_time:%s" % (url, str(self.wait_page_load)), "ERROR")
             if not self.re_run:
                 self.urlFailedRequest.append(url)
         except NoSuchElementException as nExc:

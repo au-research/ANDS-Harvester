@@ -23,7 +23,9 @@ class test_dynamicjsonld_harvester(unittest.TestCase):
         batch_id = "JSONLD_3"
         ds_id = 47
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://data.csiro.au/dap/sitemap.xml'
+        # 31 of the slowest loading pages
+        harvestInfo['uri'] = "https://raw.githubusercontent.com/j-benn/AutomatedTesting_TestData/master/test_data/RDA/Harvester_Import_Test_Records/CSIRO_Sample_Sitemap_Slow_Records.txt"
+        #harvestInfo['uri'] = 'https://data.csiro.au/dap/sitemap.xml'
         harvestInfo['provider_type'] = 'DynamicJSONLD'
         harvestInfo['harvest_method'] = 'DynamicJSONLD'
         harvestInfo['data_store_path'] = myconfig.data_store_path
