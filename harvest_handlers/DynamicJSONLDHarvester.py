@@ -36,9 +36,9 @@ class DynamicJSONLDHarvester(Harvester):
     # the list of urls that the webdriver failed to receive back json-ld from
     urlFailedRequest = []
     # the number of pages stored per batchfile
-    batchSize = 400
+    batchSize = 500
     # the number of simultaneous connections
-    tcp_connection_limit = 4
+    tcp_connection_limit = 2
     # time in seconds to wait for application/ld_json script tag to load
     wait_page_load = 15
     # the array to store the harvested json-lds
@@ -73,8 +73,8 @@ class DynamicJSONLDHarvester(Harvester):
                 pass
         except KeyError:
             self.harvestInfo['requestHandler'] = 'asyncio'
-        if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
-            self.tcp_connection_limit = myconfig.tcp_connection_limit
+        	#if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
+            #self.tcp_connection_limit = myconfig.tcp_connection_limit
             # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
