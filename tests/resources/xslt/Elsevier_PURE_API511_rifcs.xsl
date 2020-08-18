@@ -37,7 +37,7 @@
     </xsl:template>
    
     <xsl:template match="*:dataSet">
-        <xsl:message select="concat('workflow: ', *:workflow)"/>
+       <!-- <xsl:message select="concat('workflow: ', *:workflow)"/> -->
         <xsl:if test="($global_validateWorkflow = false()) or lower-case(*:workflow) = 'validated'">
             <xsl:apply-templates select="." mode="registryObject">
                    <xsl:with-param name="type" select="'dataset'"/>
@@ -51,7 +51,7 @@
     <xsl:template match="*:equipment">
         
         <!-- Create equipment record only if approved -->
-        <xsl:message select="concat('workflow: ', *:workflow)"/>
+        <!-- <xsl:message select="concat('workflow: ', *:workflow)"/> -->
         <xsl:if test="($global_validateWorkflow = false()) or lower-case(*:workflow) = 'approved'">
             <xsl:apply-templates select="." mode="registryObject">
                 <xsl:with-param name="type" select="'create'"/>
@@ -67,7 +67,7 @@
         <xsl:param name="class" as="xs:string"/>
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('mapped type: ', $type)"/>
+           <!--  <xsl:message select="concat('mapped type: ', $type)"/> -->
         </xsl:if>
         
         <registryObject>
@@ -133,9 +133,9 @@
 
                 <!-- xsl:apply-templates select="*:personAssociations" mode="collection_description_notes_external_publicProfile"/-->
                 
-                <!-->xsl:apply-templates select="*:personAssociations/*:personAssociation[(string-length(*:externalPerson/@uuid) > 0) ]" mode="collection_relatedObject_external"/-->
+                <!-- xsl:apply-templates select="*:personAssociations/*:personAssociation[(string-length(*:externalPerson/@uuid) > 0) ]" mode="collection_relatedObject_external"/-->
                 
-                <!--xsl:apply-templates select="*:keywordGroups/*:keywordGroup/*:keyword/*:userDefinedKeyword/*:freeKeyword[string-length(.) > 0]" mode="collection_subject"/-->
+                <!-- xsl:apply-templates select="*:keywordGroups/*:keywordGroup/*:keyword/*:userDefinedKeyword/*:freeKeyword[string-length(.) > 0]" mode="collection_subject"/-->
                 
                 <xsl:apply-templates select="*:keywordGroups/*:keywordGroup" mode="collection_subject"/>
                
@@ -197,7 +197,7 @@
         </identifier>
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('metadata id: ', .)"/>
+            <!-- <xsl:message select="concat('metadata id: ', .)"/> -->
         </xsl:if>
     </xsl:template>
     
@@ -400,7 +400,7 @@
                     </xsl:attribute>
                 </relation>
        </xsl:if>
-    </xsl:template-->
+    </xsl:template -->
     
     <xsl:template match="*:personRole" mode="relation">
             <relation>
@@ -413,7 +413,7 @@
     <xsl:template match="*:personAssociation" mode="collection_relatedObject_publicProfile">
         <xsl:variable name="personName" select="concat(normalize-space(*:name/*:firstName), ' ', normalize-space(*:name/*:lastName))"/>
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('Internal public personName for relatedObject: ', $personName)"/>
+            <!-- <xsl:message select="concat('Internal public personName for relatedObject: ', $personName)"/> -->
         </xsl:if>
         
         <xsl:if test="string-length($personName) > 0">
@@ -449,7 +449,7 @@
                 <xsl:for-each select="*:personAssociation[((count(*:externalPerson) = 0) and (count(*:person) = 0)) and ((string-length(*:name/*:firstName) > 0) or (string-length(*:name/*:lastName) > 0))]">
                         <xsl:variable name="fullName" select="concat(*:name/*:firstName, ' ', *:name/*:lastName)"/>
                         <xsl:variable name="role" select="*:personRole"/>
-                         <xsl:message select="concat('Associated Persons - External?Internal private: ', $fullName)"/>
+                         <!-- <xsl:message select="concat('Associated Persons - External?Internal private: ', $fullName)"/> -->
                         <xsl:if test="string-length($fullName) > 0">
                             <xsl:if test="position() > 1">
                                 <xsl:text>; </xsl:text>
@@ -463,7 +463,7 @@
                 <xsl:for-each select="*:personAssociation[(string-length(*:externalPerson/@uuid) > 0)]">
                         <xsl:variable name="fullName" select="concat(*:name/*:firstName, ' ', *:name/*:lastName)"/>
                         <xsl:variable name="role" select="*:personRole"/>
-                        <xsl:message select="concat('More Associated Persons - external, public: ', $fullName)"/>
+                       <!--  <xsl:message select="concat('More Associated Persons - external, public: ', $fullName)"/> -->
                         <xsl:if test="string-length($fullName) > 0">
                             <xsl:if test="(count(*:personAssociation[((count(*:externalPerson) = 0) and (count(*:person) = 0)) and ((string-length(*:name/*:firstName) > 0) or (string-length(*:name/*:lastName) > 0))]) > 0) or (position() > 1)">
                                 <xsl:text>; </xsl:text>
@@ -502,7 +502,7 @@
         </xsl:if>
     </xsl:template-->
     
-    <!-->xsl:template match="*:personAssociation" mode="collection_relatedObject_external">
+    <!-- xsl:template match="*:personAssociation" mode="collection_relatedObject_external">
         <xsl:variable name="personName" select="concat(normalize-space(*:name/*:firstName), ' ', normalize-space(*:name/*:lastName))"/>
         <xsl:if test="$global_debug">
             <xsl:message select="concat('personName for relatedObject: ', $personName)"/>
@@ -685,12 +685,12 @@
     
     <xsl:template match="*:point" mode="collection_coverage_spatial_point">
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('processing point coordinates input: ', normalize-space(.))"/>
+           <!--  <xsl:message select="concat('processing point coordinates input: ', normalize-space(.))"/> -->
         </xsl:if>
         
         <xsl:variable name="coordsAsProvided" select="local:convertCoordinatesLatLongToLongLat(normalize-space(.))" as="xs:string"/>
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('processing point coordinates determined: ', $coordsAsProvided)"/>
+           <!--  <xsl:message select="concat('processing point coordinates determined: ', $coordsAsProvided)"/> -->
         </xsl:if>
         
         <xsl:if test="string-length($coordsAsProvided) > 0">
@@ -711,7 +711,7 @@
     <xsl:template match="*:polygon" mode="collection_coverage_spatial_polygon">
         
         <xsl:if test="$global_debug">
-            <xsl:message select="'processing polygon coordinates'"/>
+           <!--  <xsl:message select="'processing polygon coordinates'"/> -->
         </xsl:if>
         
         <xsl:variable name="coordsAsProvided" select="local:convertCoordinatesLatLongToLongLat(normalize-space(.))"/>
@@ -754,15 +754,15 @@
         <xsl:variable name="fileLicense_sequence" select="*:document/*:documentLicense/@uri[string-length(.) > 0]"/>   
        
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('count fileLicense_sequence: ', count($fileLicense_sequence))"/> 
-            <xsl:message select="concat('values fileLicense_sequence: ', string-join($fileLicense_sequence, ','))"/> 
+           <!--  <xsl:message select="concat('count fileLicense_sequence: ', count($fileLicense_sequence))"/> -->
+           <!--  <xsl:message select="concat('values fileLicense_sequence: ', string-join($fileLicense_sequence, ','))"/> -->
         </xsl:if>
         
         <xsl:choose>
             <xsl:when test="(count($fileLicense_sequence) > 0) and (count(distinct-values($fileLicense_sequence)) = 1)">
                     <xsl:if test="string-length(substring-after($fileLicense_sequence[1], '/dk/atira/pure/dataset/documentlicenses/')) > 0">
                         <xsl:if test="$global_debug">
-                                <xsl:message select="concat('license to apply: ', substring-after($fileLicense_sequence[1], '/dk/atira/pure/dataset/documentlicenses/'))"/> 
+                               <!--  <xsl:message select="concat('license to apply: ', substring-after($fileLicense_sequence[1], '/dk/atira/pure/dataset/documentlicenses/'))"/> -->
                         </xsl:if>
                         <rights>
                             <licence type="{upper-case(substring-after($fileLicense_sequence[1], '/dk/atira/pure/dataset/documentlicenses/'))}"/>
@@ -806,12 +806,12 @@
     <xsl:template match="*:equipment | *:dataSet" mode="collection_rights">
     
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('openAccessPermission: ', *:openAccessPermission)"/>
-            <xsl:message select="concat('openAccessPermission description: ', *:openAccessPermission/*:description)"/>
-            <xsl:message select="concat('visibility: ', *:visibility/@key)"/>
+           <!--  <xsl:message select="concat('openAccessPermission: ', *:openAccessPermission)"/> -->
+           <!--  <xsl:message select="concat('openAccessPermission description: ', *:openAccessPermission/*:description)"/> -->
+          <!--  <xsl:message select="concat('visibility: ', *:visibility/@key)"/> -->
             <xsl:for-each select="*:legalConditions/*:legalCondition/*:typeClassification">
-                <xsl:message select="concat('legalCondition uri: ', *:uri)"/>
-                <xsl:message select="concat('legalCondition uri: ', *:description)"/>
+              <!--   <xsl:message select="concat('legalCondition uri: ', *:uri)"/> -->
+               <!-- <xsl:message select="concat('legalCondition uri: ', *:description)"/> -->
             </xsl:for-each>
        </xsl:if>
         
@@ -824,7 +824,7 @@
                                 <xsl:when test="(count(*:openAccessPermission) = 0) or (string-length(*:openAccessPermission) = 0)">
                                     <!--  do not set access - access unknown -->
                                     <xsl:if test="$global_debug">
-                                        <xsl:message select="'not setting accessrights -- collection-level visibility is ''free'' - however, access permission is unknown'"/>  
+                                        <!-- <xsl:message select="'not setting accessrights  collection-level visibility is ''free'' - however, access permission is unknown'"/>  -->
                                     </xsl:if>  
                                 </xsl:when>
                                 <xsl:when test="contains(lower-case(*:openAccessPermission), 'open')">
@@ -832,12 +832,12 @@
                                     <xsl:variable name="containsClosedFile_sequence" as="xs:boolean*">
                                         <xsl:for-each select="*:documents/*:document">
                                             <xsl:if test="$global_debug">
-                                                <xsl:message select="concat('file-level visibility: ', *:visibility/@key)"/>   
+                                               <!--  <xsl:message select="concat('file-level visibility: ', *:visibility/@key)"/>   -->
                                             </xsl:if>  
                                             <!-- file-level visibility not set, or not open -->
                                             <xsl:if test="(count(*:visibility/@key) = 0) or (string-length(*:visibility/@key) = 0) or not(contains(lower-case(*:visibility/@key), 'free'))">
                                                 <xsl:if test="$global_debug">
-                                                    <xsl:message select="concat('found closed file ', *:title)"/> 
+                                                    <!-- <xsl:message select="concat('found closed file ', *:title)"/> -->
                                                 </xsl:if>
                                                 <xsl:value-of select="true()"/> 
                                             </xsl:if>  
@@ -847,13 +847,13 @@
                                         <xsl:when test="count($containsClosedFile_sequence) > 0">
                                             <xsl:text>restricted</xsl:text>
                                             <xsl:if test="$global_debug">
-                                                <xsl:message select="'setting accessrights to ''restricted'' -- collection-level visibility is ''free'', access permission is ''open''; however, not all files have visibility set, or ''free'' visibility'"/>  
+                                                <!-- <xsl:message select="'setting accessrights to ''restricted'' - collection-level visibility is ''free'', access permission is ''open''; however, not all files have visibility set, or ''free'' visibility'"/>  -->
                                             </xsl:if> 
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:text>open</xsl:text>
                                             <xsl:if test="$global_debug">
-                                                <xsl:message select="'setting accessrights to ''open'' -- collection-level visibility is ''free'', access permission is ''open'', all files have ''free'' visibility'"/>  
+                                                <!-- <xsl:message select="'setting accessrights to ''open'' - collection-level visibility is ''free'', access permission is ''open'', all files have ''free'' visibility'"/>  -->
                                             </xsl:if>
                                         </xsl:otherwise>
                                     </xsl:choose>
@@ -861,26 +861,26 @@
                                 <xsl:when test="(contains(lower-case(*:openAccessPermission), 'embargoed') or contains(lower-case(*:openAccessPermission), 'restricted') or contains(lower-case(*:openAccessPermission), 'closed'))">
                                     <xsl:text>restricted</xsl:text>
                                     <xsl:if test="$global_debug">
-                                        <xsl:message select="'setting accessrights to ''restricted'' -- collection-level visibility is ''free'', access permission is one of either: ''embargoed'', ''restricted''; or ''closed'''"/>  
+                                        <!-- <xsl:message select="'setting accessrights to ''restricted'' - collection-level visibility is ''free'', access permission is one of either: ''embargoed'', ''restricted''; or ''closed'''"/> -->
                                     </xsl:if> 
                                 </xsl:when> 
                                 <xsl:when test=" contains(lower-case(*:openAccessPermission), 'unknown')">
                                     <xsl:text>other</xsl:text>
                                     <xsl:if test="$global_debug">
-                                      <xsl:message select="'setting access rights to ''other'' -- collection-level visibility is ''free'', but access permission is ''unknown'''"/>  
+                                      <!-- <xsl:message select="'setting access rights to ''other'' - collection-level visibility is ''free'', but access permission is ''unknown'''"/>  -->
                                     </xsl:if>
                                 </xsl:when>    
                                 <xsl:otherwise>
                                     <xsl:text>other</xsl:text>
                                     <xsl:if test="$global_debug">
-                                        <xsl:message select="'setting access rights to ''other'' -- collection-level visibility is ''free'', but access permission is not set'"/>  
+                                      <!--  <xsl:message select="'setting access rights to ''other'' - collection-level visibility is ''free'', but access permission is not set'"/>  -->
                                     </xsl:if>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:if test="$global_debug">
-                                <xsl:message select="'not setting accessrights -- collection-level visibility is not set or not ''free'''"/>  
+                              <!--   <xsl:message select="'not setting accessrights - collection-level visibility is not set or not ''free'''"/>  -->
                             </xsl:if> 
                         </xsl:otherwise>
                     </xsl:choose>
@@ -1018,7 +1018,7 @@
     <xsl:template match="*:contactPerson" mode="party_people">
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('Contact personName (party_people): ', *:name)"/>
+            <!-- >select="concat('Contact personName (party_people): ', *:name)"/> -->
         </xsl:if>
         
         <xsl:variable name="allNames_sequence" select="tokenize( *:name, ' ')" as="xs:string*"/>
@@ -1067,7 +1067,7 @@
            
             <xsl:variable name="personName" select="concat(normalize-space(*:name/*:firstName), ' ', normalize-space(*:name/*:lastName))"/>
             <xsl:if test="$global_debug">
-                <xsl:message select="concat('Internal public personName (party_people): ', $personName)"/>
+               <!--  <xsl:message select="concat('Internal public personName (party_people): ', $personName)"/> -->
             </xsl:if>
         
             <xsl:if test="(string-length($personName) > 0)">
@@ -1268,7 +1268,7 @@
         <xsl:param name="coordinates" as="xs:string"/>
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('coordinates ', $coordinates)"/>
+           <!--  <xsl:message select="concat('coordinates ', $coordinates)"/> -->
         </xsl:if>
         
         <!--  (?![\s|^|,])[\d\.-]+ -->
@@ -1278,7 +1278,7 @@
                 <xsl:matching-substring>
                     <xsl:value-of select="regex-group(0)"/>
                     <xsl:if test="$global_debug">
-                        <xsl:message select="concat('match: ', regex-group(0))"/>
+                      <!--   <xsl:message select="concat('match: ', regex-group(0))"/> -->
                     </xsl:if>
                 </xsl:matching-substring>
             </xsl:analyze-string>
@@ -1294,8 +1294,8 @@
         <xsl:variable name="longCoords_sequence" select="local:getEvenCoordSequence($coordinates)" as="xs:string*"/>
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/>
-            <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/>
+           <!--  <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/> -->
+            <!-- <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/> -->
         </xsl:if>
             
         <xsl:value-of select="local:formatCoordinatesFromSequences($longCoords_sequence, $latCoords_sequence)"/>
@@ -1308,8 +1308,8 @@
         <xsl:variable name="longCoords_sequence" select="local:getEvenCoordSequence($coordinates)" as="xs:string*"/>
         
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/>
-            <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/>
+           <!--  <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/> -->
+            <!-- <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/> -->
         </xsl:if>
         
         <xsl:value-of select="local:formatCoordinatesFromSequences($longCoords_sequence, $latCoords_sequence)"/>
@@ -1320,15 +1320,15 @@
         <xsl:param name="latCoords_sequence" as="xs:string*"/>
          
         <xsl:if test="$global_debug">
-            <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/>
-            <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/>
+          <!--   <xsl:message select="concat('longCoords ', string-join(for $i in $longCoords_sequence return $i, ' '))"/> -->
+          <!--   <xsl:message select="concat('latCoords ', string-join(for $i in $latCoords_sequence return $i, ' '))"/> -->
         </xsl:if>
         
         <xsl:variable name="coordinatePair_sequence" as="xs:string*">
             <xsl:for-each select="$longCoords_sequence">
                 <xsl:if test="count($latCoords_sequence) > position()-1">
-                    <xsl:variable name="index" select="position()" as="xs:integer"/>
-                    <xsl:value-of select="concat(., ',', normalize-space($latCoords_sequence[$index]))"/>
+                   <!-- <xsl:variable name="index" select="position()" as="xs:integer"/> -->
+                   <!--  <xsl:value-of select="concat(., ',', normalize-space($latCoords_sequence[$index]))"/> -->
                 </xsl:if>
             </xsl:for-each> 
         </xsl:variable>
