@@ -79,7 +79,7 @@
             </xsl:if>
         </xsl:variable>
            
-        <xsl:message select="concat('crs :', $coordinateReferenceSystem)"/>
+       <!--  <xsl:message select="concat('crs :', $coordinateReferenceSystem)"/> -->
         
         <xsl:variable name="locationURL_sequence" as="xs:string*">
             <xsl:choose>
@@ -1253,15 +1253,15 @@
         
         
         <xsl:variable name="CI_Citation" select="." as="node()"/>
-        <xsl:message select="concat('CI_Citation: ', $CI_Citation)"/>
+        <!-- <xsl:message select="concat('CI_Citation: ', $CI_Citation)"/> -->
         <xsl:variable name="citedResponsibleParty_sequence" select="$CI_Citation/*:citedResponsibleParty" as="node()*"/>
         
         <!-- Attempt to obtain contributor names; only construct citation if we have contributor names -->
-        
+
         <xsl:variable name="principalInvestigatorName_sequence" as="xs:string*">
             <xsl:if test="$citedResponsibleParty_sequence and (count($citedResponsibleParty_sequence) > 0)">
                 <xsl:for-each select="$citedResponsibleParty_sequence">
-                    <xsl:copy-of select="custom:getIndividualNameSequence(., 'principalInvestigator')"/>  
+                    <xsl:copy-of select="custom:getIndividualNameSequence(., 'principalInvestigator')"/>
                 </xsl:for-each>
             </xsl:if>
             
@@ -1398,8 +1398,8 @@
             </xsl:if>
         </xsl:variable>
         
-        <xsl:message select="concat('count($citedResponsibleParty_sequence): ', count($citedResponsibleParty_sequence))"/>
-        <xsl:message select="concat('count($allCitedPartyName_sequence): ', count($allCitedPartyName_sequence))"/>
+        <!-- <xsl:message select="concat('count($citedResponsibleParty_sequence): ', count($citedResponsibleParty_sequence))"/> -->
+        <!-- <xsl:message select="concat('count($allCitedPartyName_sequence): ', count($allCitedPartyName_sequence))"/> -->
          
         <xsl:variable name="allContributorName_sequence" as="xs:string*">
             <xsl:for-each select="distinct-values($principalInvestigatorName_sequence)">
@@ -1456,7 +1456,7 @@
             </xsl:choose>
         </xsl:variable>
         
-        <xsl:message select="concat('count($allContributorName_sequence): ', count($allContributorName_sequence))"/>
+        <!-- <xsl:message select="concat('count($allContributorName_sequence): ', count($allContributorName_sequence))"/> -->
         
         <xsl:if test="count($allContributorName_sequence) > 0">
            <citationInfo>
