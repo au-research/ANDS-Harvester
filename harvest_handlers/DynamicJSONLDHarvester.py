@@ -102,13 +102,13 @@ class DynamicJSONLDHarvester(Harvester):
         self.getPageList()
         batchCount = 1
         self.logger.logMessage("Found %d urls in file, batching %d" % (len(self.urlLinksList) , self.batchSize))
-
+        self.openDrivers()
         if len(self.urlLinksList) > self.batchSize:
             urlLinkLists = split(self.urlLinksList, self.batchSize)
             for batches in urlLinkLists:
-                self.openDrivers()
+                #self.openDrivers()
                 self.crawlPages(batches)
-                self.closeDrivers()
+                #self.closeDrivers()
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
@@ -117,9 +117,9 @@ class DynamicJSONLDHarvester(Harvester):
                     batchCount += 1
                 time.sleep(2)  # let them breathe
         else:
-            self.openDrivers()
+            #self.openDrivers()
             self.crawlPages(self.urlLinksList)
-            self.closeDrivers()
+            #self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
@@ -130,15 +130,15 @@ class DynamicJSONLDHarvester(Harvester):
             self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
             #double the wait time, feel generous
             self.wait_page_load = 60  # increase wait time to 60 seconds
-            self.openDrivers()
+            #self.openDrivers()
             self.crawlPages(self.urlFailedRequest)
-            self.closeDrivers()
+            #self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
                 self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
                 self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                 self.jsonDict.clear()
-
+        self.closeDrivers()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
@@ -210,6 +210,8 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             driver = self.driver_list[i][0]
+            self.logger.logMessage("Quiting driver %d ( %s ) of %d "  % (i ,str(driver), len(self.driver_list)), "DEBUG")
+            driver.destroy()
             driver.quit()
 
     def getDriver(self):
