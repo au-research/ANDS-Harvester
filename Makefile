@@ -15,7 +15,7 @@ run:
 	${PYTHON} task_processor_daemon.py run
 
 test:
-	${ENV_NAME}/bin/nose2 -c nose2.cfg
+	${ENV_NAME}/bin/nose2 -c nose2.cfg -v
 
 package: clean
 	zip -9 -r artifact.zip . -x '/*.git/*'
