@@ -210,8 +210,7 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             driver = self.driver_list[i][0]
-            self.logger.logMessage("Quiting driver %d ( %s ) of %d "  % (i ,str(driver), len(self.driver_list)), "DEBUG")
-            driver.destroy()
+            self.logger.logMessage("Quiting driver ( %s ) of %d "  % (str(driver), len(self.driver_list)), "DEBUG")
             driver.quit()
 
     def getDriver(self):
