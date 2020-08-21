@@ -34,6 +34,7 @@ redis==2.10.6
 requests==2.22.0
 selenium==3.141.0
 selenium-wire==2.1.0
+six==1.11.0
 soupsieve==2.0.1
 urllib3==1.25.3
 webdriver-manager==3.2.1

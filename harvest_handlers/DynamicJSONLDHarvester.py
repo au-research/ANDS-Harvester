@@ -1,6 +1,7 @@
 from Harvester import *
 from selenium import webdriver
 import time
+import socket, http.client
 #use webdriver from seleniumwire if you want to check for response code
 #from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -52,13 +53,15 @@ class DynamicJSONLDHarvester(Harvester):
     headers = {'User-Agent': 'ARDC Harvester'}
     # Chrome browser options for the webdriver - headless, no images and disk-cache size
     browser_options = Options()
+    # chromedriver = myconfig.run_dir + "resources/chromedriver"
     browser_options.add_argument("--headless")
     browser_options.add_argument('--disable-setuid-sandbox')
     browser_options.add_argument('--no-sandbox')
-    prefs = {'profile.managed_default_content_settings.images': 2,  'disk-cache-size': 4096 }
+    prefs = {'profile.managed_default_content_settings.images': 2}
     browser_options.add_experimental_option("prefs", prefs)
     start_time_dict = None
     end_time_dict = None
+
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
@@ -73,9 +76,6 @@ class DynamicJSONLDHarvester(Harvester):
                 pass
         except KeyError:
             self.harvestInfo['requestHandler'] = 'asyncio'
-        	#if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
-            #self.tcp_connection_limit = myconfig.tcp_connection_limit
-            # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
 
@@ -106,9 +106,7 @@ class DynamicJSONLDHarvester(Harvester):
         if len(self.urlLinksList) > self.batchSize:
             urlLinkLists = split(self.urlLinksList, self.batchSize)
             for batches in urlLinkLists:
-                #self.openDrivers()
                 self.crawlPages(batches)
-                #self.closeDrivers()
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
@@ -117,9 +115,7 @@ class DynamicJSONLDHarvester(Harvester):
                     batchCount += 1
                 time.sleep(2)  # let them breathe
         else:
-            #self.openDrivers()
             self.crawlPages(self.urlLinksList)
-            #self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
@@ -130,9 +126,7 @@ class DynamicJSONLDHarvester(Harvester):
             self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
             #double the wait time, feel generous
             self.wait_page_load = 60  # increase wait time to 60 seconds
-            #self.openDrivers()
             self.crawlPages(self.urlFailedRequest)
-            #self.closeDrivers()
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
                 self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
@@ -169,7 +163,6 @@ class DynamicJSONLDHarvester(Harvester):
             sc = SiteMapCrawler(self.harvestInfo['mode'])
             sc.parse_sitemap(self.harvestInfo['uri'])
             self.urlLinksList = sc.getLinksToCrawl()
-            #self.urlLinksList.reverse()
             self.listSize = len(self.urlLinksList)
             self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
             self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)), 'INFO')
@@ -189,7 +182,7 @@ class DynamicJSONLDHarvester(Harvester):
 
         with futures.ThreadPoolExecutor(max_workers=self.tcp_connection_limit) as executor:
             executor.map(self.fetch, urlList)
-
+            executor.shutdown(wait=True)
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
@@ -210,9 +203,18 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             driver = self.driver_list[i][0]
-            self.logger.logMessage("Quiting driver %d ( %s ) of %d "  % (i ,str(driver), len(self.driver_list)), "DEBUG")
-            driver.destroy()
-            driver.quit()
+            thePid = driver.service.process.pid
+            try:
+                driver.quit()
+            except http.client.CannotSendRequest:
+                self.logger.logMessage( "Driver did not terminate")
+            except socket.error:
+                self.logger.logMessage("Socket did not terminate")
+            else:
+                self.logger.logMessage("Quiting driver  %s with pid %s " % (str(driver), str(thePid)), "DEBUG")
+
+        self.driver_list = []
+
 
     def getDriver(self):
         """
@@ -273,16 +275,6 @@ class DynamicJSONLDHarvester(Harvester):
                 self.urlFailedRequest.append(url)
         except NoSuchElementException as nExc:
             self.logger.logMessage("Page contains no json-ld, url: %s, exc: %s" % (url, repr(nExc)), "ERROR")
-        # except Exception as exc:
-        #     self.logger.logMessage("Unable to fetch the page url : %s Rerun: %s" % (url, (str(self.re_run))), "ERROR")
-        #     for request in driver.requests:
-        #         if request.response and request.response.status_code != 200:
-        #             self.logger.logMessage("url request returns with tatus code %s, for url : %s" %
-        #                                    (str(request.response.status_code),
-        #                                     request.url), "ERROR")
-        #     if not self.re_run:
-        #         self.urlFailedRequest.append(url)
-        #     self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
         self.returnDriver(driver)
 
     def processContent(self, jsonStr, url):
