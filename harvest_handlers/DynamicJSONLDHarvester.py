@@ -41,7 +41,7 @@ class DynamicJSONLDHarvester(Harvester):
     # the number of simultaneous connections
     tcp_connection_limit = 2
     # time in seconds to wait for application/ld_json script tag to load
-    wait_page_load = 15
+    wait_page_load = 45
     # the array to store the harvested json-lds
     jsonDict = []
     # use to benchmark asyncio vs grequest vs request
@@ -110,7 +110,7 @@ class DynamicJSONLDHarvester(Harvester):
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
-                    self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
+                    self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
                     self.jsonDict.clear()
                     batchCount += 1
                 time.sleep(2)  # let them breathe
@@ -119,7 +119,7 @@ class DynamicJSONLDHarvester(Harvester):
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
-                self.logger.logMessage("Saving %d records in combined" % len(self.jsonDict))
+                self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
                 self.jsonDict.clear()
         if(len(self.urlFailedRequest)>0):
             self.re_run = True
@@ -130,7 +130,7 @@ class DynamicJSONLDHarvester(Harvester):
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
                 self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
-                self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
+                self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
                 self.jsonDict.clear()
         self.closeDrivers()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
@@ -182,7 +182,32 @@ class DynamicJSONLDHarvester(Harvester):
 
         with futures.ThreadPoolExecutor(max_workers=self.tcp_connection_limit) as executor:
             executor.map(self.fetch, urlList)
-            executor.shutdown(wait=True)
+            executor.shutdown(wait=True);
+            try:
+                executor.awaitTermination(1, TimeUnit.MINUTES);
+                print("just terminated")
+            except:
+                print("can't terminate")
+
+
+
+
+        #with futures.ProcessPoolExecutor(max_workers=self.tcp_connection_limit,mp_context=None) as pool:
+            #for numb in range(0, len(urlList)):
+                #url = urlList[numb];
+                #pool.submit(self.fetch, url)
+            #pool.map(self.fetch, urlList)
+
+        #with futures.ProcessPoolExecutor(max_workers=4) as executor:
+            #for result in executor.map(self.fetch(url) for url in urlList):
+                #print(result);
+
+            #futures.wait(result)
+
+        #for future in futures.as_completed(future_results):
+            #print(future.result())
+            #self.processContent(future.result())
+
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
@@ -203,7 +228,6 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             driver = self.driver_list[i][0]
-            thePid = driver.service.process.pid
             try:
                 driver.quit()
             except http.client.CannotSendRequest:
@@ -211,7 +235,7 @@ class DynamicJSONLDHarvester(Harvester):
             except socket.error:
                 self.logger.logMessage("Socket did not terminate")
             else:
-                self.logger.logMessage("Quiting driver  %s with pid %s " % (str(driver), str(thePid)), "DEBUG")
+                self.logger.logMessage("Quiting driver  %s " % (str(driver)), "DEBUG")
 
         self.driver_list = []
 
