@@ -34,8 +34,6 @@ class DynamicJSONLDHarvester(Harvester):
     """
     # the list of urls the crawler has found
     urlLinksList = []
-    # the list of urls that the webdriver failed to receive back json-ld from
-    urlFailedRequest = []
     # the number of pages stored per batchfile
     batchSize = 500
     # the number of simultaneous connections
@@ -46,9 +44,14 @@ class DynamicJSONLDHarvester(Harvester):
     jsonDict = []
     # use to benchmark asyncio vs grequest vs request
     start_time = {}
-    # use to create a pool of webdrivers
+    urlFailedRequest = []
     driver_list = []
     re_run = None
+
+    # batchInt will be used to force webDrivers to be utilised
+    # only by the current harvest - avoiding cross thread driver shutdowns
+    batchInt = 0;
+
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
     # Chrome browser options for the webdriver - headless, no images and disk-cache size
@@ -71,6 +74,10 @@ class DynamicJSONLDHarvester(Harvester):
         self.re_run = False
         self.start_time_dict = dict()
         self.end_time_dict = dict()
+        self.batchInt = harvestInfo['data_source_id']
+        # the list of urls that the webdriver failed to receive back json-ld from
+        self.urlFailedRequest= []
+        self.driver_list = []
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
@@ -185,28 +192,9 @@ class DynamicJSONLDHarvester(Harvester):
             executor.shutdown(wait=True);
             try:
                 executor.awaitTermination(1, TimeUnit.MINUTES);
-                print("just terminated")
+                self.logger.logMessage("ThreadPool executor terminated with wait", 'INFO')
             except:
-                print("can't terminate")
-
-
-
-
-        #with futures.ProcessPoolExecutor(max_workers=self.tcp_connection_limit,mp_context=None) as pool:
-            #for numb in range(0, len(urlList)):
-                #url = urlList[numb];
-                #pool.submit(self.fetch, url)
-            #pool.map(self.fetch, urlList)
-
-        #with futures.ProcessPoolExecutor(max_workers=4) as executor:
-            #for result in executor.map(self.fetch(url) for url in urlList):
-                #print(result);
-
-            #futures.wait(result)
-
-        #for future in futures.as_completed(future_results):
-            #print(future.result())
-            #self.processContent(future.result())
+                self.logger.logMessage("ThreadPool executor shutdown without wait", 'INFO')
 
 
     def exception_handler(self, request, exception):
@@ -220,7 +208,7 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             theDriver =   webdriver.Chrome(ChromeDriverManager().install(), options=self.browser_options)
-            self.driver_list.append([theDriver, 0])
+            self.driver_list.append([theDriver, 0, self.batchInt])
 
     def closeDrivers(self):
         """
@@ -228,16 +216,16 @@ class DynamicJSONLDHarvester(Harvester):
         """
         for i in range(0, self.tcp_connection_limit):
             driver = self.driver_list[i][0]
-            try:
-                driver.quit()
-            except http.client.CannotSendRequest:
-                self.logger.logMessage( "Driver did not terminate")
-            except socket.error:
-                self.logger.logMessage("Socket did not terminate")
-            else:
-                self.logger.logMessage("Quiting driver  %s " % (str(driver)), "DEBUG")
-
-        self.driver_list = []
+            id = self.driver_list[i][2]
+            if(id == self.batchInt):
+                try:
+                    driver.quit()
+                except http.client.CannotSendRequest:
+                    self.logger.logMessage( "Driver did not terminate")
+                except socket.error:
+                    self.logger.logMessage("Socket did not terminate")
+                else:
+                    self.logger.logMessage("Quiting driver  %s for ds %d" % (str(driver), self.batchInt), "DEBUG")
 
 
     def getDriver(self):
@@ -247,7 +235,7 @@ class DynamicJSONLDHarvester(Harvester):
 
         for driverInfo in self.driver_list:
             try:
-                if (driverInfo[1] == 0):
+                if (driverInfo[1] == 0 and driverInfo[2] == self.batchInt):
                     driver = driverInfo[0]
                     driverInfo[1] = 1
                     return driver
@@ -271,7 +259,7 @@ class DynamicJSONLDHarvester(Harvester):
 
     def fetch(self, url):
         """
-        the fetch method for asyncio requests
+        the fetch method for threadPool requests requests
         pass the response to the generic content handler: processContent
         :param url:
         :type url:
@@ -285,7 +273,7 @@ class DynamicJSONLDHarvester(Harvester):
             if self.re_run:
                 self.start_time_dict[url] = time.time()
             driver.get(url)
-            self.logger.logMessage("Fetching url : %s" % url, "DEBUG")
+            self.logger.logMessage("Fetching url : %s for ds %d" % (url, self.batchInt), "DEBUG")
             WebDriverWait(driver, self.wait_page_load).until(
                 EC.presence_of_element_located((By.XPATH,'//script[@type="application/ld+json"]')))
             if self.re_run:
