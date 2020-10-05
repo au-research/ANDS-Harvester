@@ -1,0 +1,93 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:default="http://ands.org.au/standards/rif-cs/registryObjects" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2020-10-02T03:31:43Z</responseDate>
+  <request verb="ListRecords" metadataPrefix="rif" set="datasource:608">https://demo.researchdata.ardc.edu.au/api/registry/oai</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:ands.org.au::1409399</identifier>
+        <datestamp>2020-10-01T06:02:49Z</datestamp>
+        <setSpec>class:collection</setSpec>
+        <setSpec>datasource:608</setSpec>
+        <setSpec>datasource:AUTestingRecords2</setSpec>
+        <setSpec>group:84</setSpec>
+        <setSpec>group:Flinders-University</setSpec>
+        <setSpec>group:Flinders0x20University</setSpec>
+      </header>
+      <metadata>
+        <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+          <registryObject group="Flinders University">
+            <key>http://hdl.handle.net/2328.1/1483d</key>
+            <originatingSource>https://redbox.flinders.edu.au/redbox/</originatingSource>
+            <collection dateAccessioned="2020-09-25T00:00:00.000+09:30" type="dataset">
+              <identifier type="handle">http://hdl.handle.net/2328.1/1483</identifier>
+              <dates type="dc.created">
+                <date dateFormat="W3CDTF" type="dateFrom">2020-09-25T00:00:00.000+09:30</date>
+              </dates>
+              <relatedObject>
+                <key>http://nla.gov.au/nla.party-1518619</key>
+                <relation type="hasCollector"/>
+              </relatedObject>
+              <name type="primary" xml:lang="en">
+                <namePart>Breeding data of little penguins collected at ten colonies in South Australia between 1990 and 2018</namePart>
+              </name>
+              <location>
+                <address>
+                  <physical>
+                    <addressPart type="text">Flinders University</addressPart>
+                  </physical>
+                </address>
+                <address>
+                  <electronic type="url">
+                    <value>https://dspace.flinders.edu.au/xmlui/handle/2328/39403</value>
+                  </electronic>
+                </address>
+                <address>
+                  <electronic type="email">
+                    <value>diane.colombelli-negrel@flinders.edu.au</value>
+                  </electronic>
+                </address>
+              </location>
+              <coverage>
+                <temporal>
+                  <date dateFormat="W3CDTF" type="dateFrom">1990-01-01T00:00:00.000+10:30</date>
+                </temporal>
+                <temporal>
+                  <date dateFormat="W3CDTF" type="dateTo">2018-01-01T00:00:00.000+10:30</date>
+                </temporal>
+              </coverage>
+              <coverage/>
+              <subject type="local" xml:lang="en">little penguins</subject>
+              <subject type="local" xml:lang="en">breeding success</subject>
+              <subject type="local" xml:lang="en">Southern Australia</subject>
+              <subject type="anzsrc-for" xml:lang="en">060308</subject>
+              <subject type="anzsrc-for" xml:lang="en">060306</subject>
+              <subject type="anzsrc-seo" xml:lang="en">9603</subject>
+              <subject type="anzsrc-seo" xml:lang="en">9608</subject>
+              <subject type="anzsrc-seo" xml:lang="en">9701</subject>
+              <description type="full" xml:lang="en">As bio-indicators, seabirds across the globe help us understand how our environment is changing, and how this is affecting our wildlife. Little penguins (Eudyptula minor) in Australia are a key species in understanding the changes to the Australian environment. However, studies generally focus on the effects of oceanic changes without always accounting for the potential interactions with the environmental conditions experienced on land during breeding. This study examined the relationships between both marine and terrestrial environmental variables and breeding success in South Australian little penguins, observing ten colonies over a non-consecutive 28-year time period. Our results showed that South Australian little penguins had a lower breeding success (fewer fledglings produced per pair) when sea surface temperatures were higher in the three months before breeding and when high winds occurred during the breeding season. We also observed local variation between the colonies: breeding success was only influenced by environmental variables for colonies located near open waters and not for colonies located in enclosed bays. These results confirms the idea that future oceanographic warming is expected to reduce the breeding success (and population size) of some Australian seabirds, including little penguins.  </description>
+              <rights>
+                <accessRights rightsUri="https://creativecommons.org/licenses/by/4.0/" type="open">Creative Commons-Attribution (CC-BY) </accessRights>
+                <licence rightsUri="http://creativecommons.org/licenses/by/4.0" type="CC-BY">CC BY 4.0: Attribution 4.0 International</licence>
+                <rightsStatement rightsUri="https://creativecommons.org/licenses/by/4.0/">Creative Commons-Attribution (CC-BY) </rightsStatement>
+              </rights>
+              <relatedInfo type="website">
+                <title>This dataset</title>
+                <notes>Link to dataset as M2M DOI mint was not available</notes>
+                <identifier type="uri">https://doi.org/10.25957/dyv5-4a64</identifier>
+              </relatedInfo>
+              <relatedInfo type="party">
+                <title>Bianca Johnson</title>
+                <identifier type="orcid">0000-0002-4352-3851</identifier>
+              </relatedInfo>
+              <citationInfo>
+                <fullCitation style="Datacite">Johnson, Bianca; Colombelli-Négrel, Diane (2020): Breeding data of little penguins collected at ten colonies in South Australia between 1990 and 2018. Flinders University. http://hdl.handle.net/2328.1/1483</fullCitation>
+              </citationInfo>
+            </collection>
+          </registryObject>
+        </registryObjects>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>
