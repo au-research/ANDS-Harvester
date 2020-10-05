@@ -1,25 +1,31 @@
 from Harvester import *
-from bs4 import BeautifulSoup
-from bs4.diagnose import diagnose
+from selenium import webdriver
+import time
+import socket, http.client
+#use webdriver from seleniumwire if you want to check for response code
+#from seleniumwire import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from concurrent import futures
+from webdriver_manager.chrome import ChromeDriverManager
 from crawler.SiteMapCrawler import SiteMapCrawler
 import json
 from xml.dom.minidom import Document
-from utils.Request import Request as myRequest
 from rdflib import Graph
 from rdflib.plugin import register, Serializer
 register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
-import asyncio
-from aiohttp import ClientSession, TCPConnector, ClientTimeout, DummyCookieJar, http_exceptions
-from timeit import default_timer
 import ast
-import grequests
 import urllib.parse as urlparse
-class JSONLDHarvester(Harvester):
+
+class DynamicJSONLDHarvester(Harvester):
     """
        {
-            "id": "JSONLDHarvester",
-            "title": "JSONLD Harvester",
-            "description": "JSONLD Harvester to fetch JSONLD metadata using a site map (xml or text)",
+            "id": "DynamicJSONLDHarvester",
+            "title": "Dynamically inserted JSONLD Harvester",
+            "description": "JSONLD Harvester to fetch JSONLD metadata dynamically inserted . Uses a site map (xml or text)",
             "params": [
                 {"name": "uri", "required": "true"},
                 {"name": "xsl_file", "required": "false"}
@@ -29,31 +35,58 @@ class JSONLDHarvester(Harvester):
     # the list of urls the crawler has found
     urlLinksList = []
     # the number of pages stored per batchfile
-    batchSize = 400
+    batchSize = 500
     # the number of simultaneous connections
-    tcp_connection_limit = 5
+    tcp_connection_limit = 2
+    # time in seconds to wait for application/ld_json script tag to load
+    wait_page_load = 45
     # the array to store the harvested json-lds
     jsonDict = []
     # use to benchmark asyncio vs grequest vs request
     start_time = {}
+    urlFailedRequest = []
+    driver_list = []
+    re_run = None
+
+    # batchInt will be used to force webDrivers to be utilised
+    # only by the current harvest - avoiding cross thread driver shutdowns
+    batchInt = 0;
+
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
+    # Chrome browser options for the webdriver - headless, no images and disk-cache size
+    browser_options = Options()
+    # chromedriver = myconfig.run_dir + "resources/chromedriver"
+    browser_options.add_argument("--headless")
+    browser_options.add_argument('--disable-setuid-sandbox')
+    browser_options.add_argument('--no-sandbox')
+    prefs = {'profile.managed_default_content_settings.images': 2}
+    browser_options.add_experimental_option("prefs", prefs)
+    start_time_dict = None
+    end_time_dict = None
+
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.jsonDict = []
         self.data = None
         self.urlLinksList = []
+        self.re_run = False
+        self.start_time_dict = dict()
+        self.end_time_dict = dict()
+        self.batchInt = harvestInfo['data_source_id']
+        # the list of urls that the webdriver failed to receive back json-ld from
+        self.urlFailedRequest= []
+        self.driver_list = []
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
         except KeyError:
-            self.harvestInfo['requestHandler'] = 'grequests'
-        if myconfig.tcp_connection_limit is not None and isinstance(myconfig.tcp_connection_limit, int):
-            self.tcp_connection_limit = myconfig.tcp_connection_limit
-            # generic in-house xslt to convert json-ld (xml) to rifcs
+            self.harvestInfo['requestHandler'] = 'asyncio'
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
+
+
 
 
     def harvest(self):
@@ -71,33 +104,58 @@ class JSONLDHarvester(Harvester):
         self.setupdirs()
         self.setUpCrosswalk()
         self.updateHarvestRequest()
-        self.logger.logMessage("JSONLDHarvester Started")
+        self.logger.logMessage("DynamicJSONLDHarvester Started")
         self.recordCount = 0
         self.getPageList()
         batchCount = 1
+        self.logger.logMessage("Found %d urls in file, batching %d" % (len(self.urlLinksList) , self.batchSize))
+        self.openDrivers()
         if len(self.urlLinksList) > self.batchSize:
             urlLinkLists = split(self.urlLinksList, self.batchSize)
             for batches in urlLinkLists:
                 self.crawlPages(batches)
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
-                    #self.storeDataAsRDF(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
-                    self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
+                    self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
                     self.jsonDict.clear()
                     batchCount += 1
-                time.sleep(2) # let them breathe
+                time.sleep(2)  # let them breathe
         else:
             self.crawlPages(self.urlLinksList)
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
-                #self.storeDataAsRDF(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
+                self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
+                self.jsonDict.clear()
+        if(len(self.urlFailedRequest)>0):
+            self.re_run = True
+            self.logger.logMessage("Trying to reload %d pages" % len(self.urlFailedRequest))
+            #double the wait time, feel generous
+            self.wait_page_load = 60  # increase wait time to 60 seconds
+            self.crawlPages(self.urlFailedRequest)
+            if len(self.jsonDict) > 0:
+                self.storeJsonData(self.jsonDict,  'combined_%d' %(batchCount))
+                self.storeDataAsXML(self.jsonDict,  'combined_%d' %(batchCount))
+                self.logger.logMessage("Saving %d records in combined_%d for %s" % (len(self.jsonDict), batchCount, str(self.harvestInfo['batch_number'] )))
+                self.jsonDict.clear()
+        self.closeDrivers()
         self.setStatus("Generated %s File(s)" % str(self.recordCount))
         self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
+        self.logStats()
         self.postHarvestData()
         self.finishHarvest()
+
+    def logStats(self):
+        for url, start_time in self.start_time_dict.items():
+            try:
+                end_time = self.end_time_dict[url]
+                overall = end_time - start_time
+                self.logger.logMessage("URL: %s took %s seconds" % (url, str(overall)), 'INFO')
+            except KeyError:
+                self.logger.logMessage("URL: %s failed to load" % url, 'INFO')
+
 
 
     def getPageList(self):
@@ -105,6 +163,8 @@ class JSONLDHarvester(Harvester):
         use the SitemapCrawler to get all urls for a given site
         add all urls to the urlLinksList
         """
+
+        self.logger.logMessage("getting the urls")
         try:
             self.setStatus("Scanning Sitemap(s)")
             sc = SiteMapCrawler(self.harvestInfo['mode'])
@@ -117,134 +177,147 @@ class JSONLDHarvester(Harvester):
             self.logger.logMessage(str(repr(e)), "ERROR")
             self.handleExceptions(e, terminate=True)
 
-
     def crawlPages(self, urlList):
         """
-        depending on the implementation we can use either asyncio, grequest of simple request object to crawl the pages
-        fund that grequest was somewhat best so set it as default
+        create threads for calls to urls to obtain the json+ld
+
         :param urlList:
-        :type urlList:
+        :type array:
+        :param driver:
+        :type webdriver:
         """
-        self.start_time['start'] = default_timer()
 
-        if self.harvestInfo['requestHandler'] == 'asyncio':
-            # the standard way to run asynchronous requests using asyncio
-            asyncio.set_event_loop(asyncio.new_event_loop())
-            loop = asyncio.get_event_loop()  # event loop
-            future = asyncio.ensure_future(self.fetch_all(urlList))  # tasks to do
-            loop.run_until_complete(future)  # loop until done
-            loop.run_until_complete(asyncio.sleep(0.25))
-            loop.run_until_complete(asyncio.sleep(0))
-            loop.close()
-        elif self.harvestInfo['requestHandler'] == 'grequests':
-            # the standard way of implementing grequest using a map and action items
-            async_list = []
-            for url in urlList:
-                action_item = grequests.get(url, headers=self.headers, timeout=5, hooks={'response': self.parse})
-                async_list.append(action_item)
-            grequests.map(async_list, size=self.tcp_connection_limit)
-            asyncio.sleep(0.25)
-            asyncio.sleep(0)
-        else:
-            for url in urlList:
-                r = myRequest(url)
-                data = r.getData()
-                self.processContent(data, url)
+        with futures.ThreadPoolExecutor(max_workers=self.tcp_connection_limit) as executor:
+            executor.map(self.fetch, urlList)
+            executor.shutdown(wait=True);
+            try:
+                executor.awaitTermination(1, TimeUnit.MINUTES);
+                self.logger.logMessage("ThreadPool executor terminated with wait", 'INFO')
+            except:
+                self.logger.logMessage("ThreadPool executor shutdown without wait", 'INFO')
 
-        tot_elapsed = default_timer() - self.start_time['start']
-        self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'], tot_elapsed))
-
-
-    def parse(self, response, **kwargs):
-        """
-        grequest parse callback
-        just get the content and call the generic content handler processContent
-        :param response:
-        :type response:
-        :param kwargs:
-        :type kwargs:
-        """
-        self.processContent(response.text, response.url)
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
 
-    async def fetch_all(self, urlList):
-        """
-        fetch all using asyncio to handle request
-        :param urlList:
-        :type urlList:
-        """
-        tasks = []
-        minute = 60
-
-        sessionTimeout = myconfig.max_up_seconds_per_harvest - minute
-        cTimeout = ClientTimeout(total=sessionTimeout)
-        connector = TCPConnector(limit=self.batchSize, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
-        jar = DummyCookieJar()
-        async with ClientSession(headers=self.headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
-            for url in urlList:
-                task = asyncio.ensure_future(self.fetch(url, session))
-                tasks.append(task)  # create list of tasks
-            _ = await asyncio.gather(*tasks)  # gather task responses
 
 
-    async def fetch(self, url, session):
+    def openDrivers(self):
         """
-        the fetch method for asyncio requests
+          creates a pool of webdrivers and sets them to abailable
+        """
+        for i in range(0, self.tcp_connection_limit):
+            theDriver =   webdriver.Chrome(ChromeDriverManager().install(), options=self.browser_options)
+            self.driver_list.append([theDriver, 0, self.batchInt])
+
+    def closeDrivers(self):
+        """
+        closes the pool of webdrivers
+        """
+        for i in range(0, self.tcp_connection_limit):
+            driver = self.driver_list[i][0]
+            id = self.driver_list[i][2]
+            if(id == self.batchInt):
+                try:
+                    driver.quit()
+                except http.client.CannotSendRequest:
+                    self.logger.logMessage( "Driver did not terminate")
+                except socket.error:
+                    self.logger.logMessage("Socket did not terminate")
+                else:
+                    self.logger.logMessage("Quiting driver  %s for ds %d" % (str(driver), self.batchInt), "DEBUG")
+
+
+    def getDriver(self):
+        """
+        get an available webdriver
+        """
+
+        for driverInfo in self.driver_list:
+            try:
+                if (driverInfo[1] == 0 and driverInfo[2] == self.batchInt):
+                    driver = driverInfo[0]
+                    driverInfo[1] = 1
+                    return driver
+                    break
+            except Exception as exc:
+                self.logger.logMessage("Failed assigning driver %s Exception: %s" % (str(driver), str(exc)), "ERROR")
+
+    def returnDriver(self, driver):
+        """
+        free the webdriver
+        """
+
+        for driverInfo in self.driver_list:
+            try:
+                if (driverInfo[0] == driver):
+                    driverInfo[1] = 0
+                    break
+            except Exception as exc:
+                self.logger.logMessage("Failed freeing driver%s Exception: %s" % (str(driver) , str(exc)), "ERROR")
+
+
+    def fetch(self, url):
+        """
+        the fetch method for threadPool requests requests
         pass the response to the generic content handler: processContent
         :param url:
         :type url:
-        :param session:
-        :type session:
+        :param driver:
+        :type webdriver:
         """
-        minute = 60
-        cTimeout = ClientTimeout(connect=minute)
+        time.sleep(.25)  # let them breathe a bit
+        driver = self.getDriver()    
         try:
-            async with session.get(url, ssl=False, timeout=cTimeout) as response:
-                resp = await response.read()
-                self.processContent(resp.decode('utf-8'), url)
-                response.close()
-                await session.close()
-        except Exception as exc:
-            self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
+            # capture the time it takes to load urls that failed under the initial wait time
+            if self.re_run:
+                self.start_time_dict[url] = time.time()
+            driver.get(url)
+            self.logger.logMessage("Fetching url : %s for ds %d" % (url, self.batchInt), "DEBUG")
+            WebDriverWait(driver, self.wait_page_load).until(
+                EC.presence_of_element_located((By.XPATH,'//script[@type="application/ld+json"]')))
+            if self.re_run:
+                self.end_time_dict[url] = time.time()
+            final_results = driver.find_element_by_xpath('//script[@type="application/ld+json"]')
+            the_json = final_results.get_attribute("innerHTML")
+            self.processContent(str(the_json), url)
+        except TimeoutException as tEx:
+            self.logger.logMessage("TimeoutException: url: %s, wait_time:%s" % (url, str(self.wait_page_load)), "ERROR")
+            if not self.re_run:
+                self.urlFailedRequest.append(url)
+        except NoSuchElementException as nExc:
+            self.logger.logMessage("Page contains no json-ld, url: %s, exc: %s" % (url, repr(nExc)), "ERROR")
+        self.returnDriver(driver)
 
-    def processContent(self, htmlStr, url):
+    def processContent(self, jsonStr, url):
         """
         the json-ld content extractor all request pass their data to this content handler
-        it tries to find a script tag with type application/ld+json
-        if ther's any it will attempt to parse the first json-ld string into a json object
+        it will attempt to parse the jsonStr string into a json object
         if successful it adds the json-ld into an list (to be processed once all page in the current batch is extracted
-        or no more pages left
-        :param htmlStr:
-        :type htmlStr:
+        or no more pages left)
+        :param jsonStr:
+        :type str:
         :param url:
         :type url:
+
         """
-        html_soup = BeautifulSoup(htmlStr, 'html5lib')
-        jsonld = None
-        try:
-            jsonld = html_soup.find("script", attrs={'type': 'application/ld+json'})
-        except Exception as e:
-            self.logger.logMessage("processContent Exception: %s" % str(e), "ERROR")
-        if jsonld is not None:
+        if jsonStr is not None and jsonStr != '':
             message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
             try:
                 data = {}
                 try:
-                    data = json.loads(str(jsonld.get_text()), strict=False)
-
+                    data = json.loads(jsonStr, strict=False)
                     if not 'url' in data:
                         data['url'] = url
                 except Exception as e:
-                    data = ast.literal_eval(str(jsonld.get_text()))
+                    data = ast.literal_eval(jsonStr)
                 self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
                 self.jsonDict.append(data)
                 self.recordCount += 1
             except Exception as e:
                 pass
         else:
-            self.logger.logMessage("processContent url:%s CONTENT: %s" % (url, htmlStr))
+            self.logger.logMessage("processContent url:%s CONTENT: %s" % (url, jsonStr))
 
 
     def storeJsonData(self, data, fileName):
@@ -378,6 +451,11 @@ class JSONLDHarvester(Harvester):
         """
         return self.batchSize
 
+    def addItemtoTestList(self, item):
+        self.testList.append(item)
+
+    def printTestList(self):
+        print(*self.testList, sep = "\n")
 
 def split(arr, size):
     """

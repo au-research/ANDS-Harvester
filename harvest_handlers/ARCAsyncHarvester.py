@@ -1,3 +1,4 @@
+import urllib
 from Harvester import *
 from bs4 import BeautifulSoup
 from bs4.diagnose import diagnose
@@ -14,36 +15,55 @@ from timeit import default_timer
 import ast
 import grequests
 import urllib.parse as urlparse
-class JSONLDHarvester(Harvester):
+class ARCAsyncHarvester(Harvester):
     """
        {
-            "id": "JSONLDHarvester",
-            "title": "JSONLD Harvester",
-            "description": "JSONLD Harvester to fetch JSONLD metadata using a site map (xml or text)",
+            "id": "ARCAsyncHarvester",
+            "title": "ARC async Harvester",
+            "description": "ARC Harvester to fetch grant metadata",
             "params": [
                 {"name": "uri", "required": "true"},
                 {"name": "xsl_file", "required": "false"}
             ]
       }
     """
-    # the list of urls the crawler has found
-    urlLinksList = []
     # the number of pages stored per batchfile
     batchSize = 400
+
     # the number of simultaneous connections
     tcp_connection_limit = 5
-    # the array to store the harvested json-lds
+
+    # the array to store the harvested grant json
     jsonDict = []
+
     # use to benchmark asyncio vs grequest vs request
     start_time = {}
+
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
+
+    # the number of records received in the current request
+    numberOfRecordsReturned = 1
+
+    #Only used in development testing
+    testList = []
+    test_limit = 3
+
+    # the list of grant_ids the harvester received
+    __grantsList = []
+
+    # the number of pages the harvester received
+    pageCount = 0
+    pageCall = 1
+
+    # the number of grants in initial call to scrape grant_ids
+    rows = 1000
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.jsonDict = []
         self.data = None
-        self.urlLinksList = []
+        self.__grantsList = []
         try:
             if self.harvestInfo['requestHandler'] :
                 pass
@@ -53,7 +73,7 @@ class JSONLDHarvester(Harvester):
             self.tcp_connection_limit = myconfig.tcp_connection_limit
             # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
-            self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/schemadotorg2rif.xsl"
+            self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/ARCAPI_json_to_rif-cs.xsl"
 
 
     def harvest(self):
@@ -71,57 +91,120 @@ class JSONLDHarvester(Harvester):
         self.setupdirs()
         self.setUpCrosswalk()
         self.updateHarvestRequest()
-        self.logger.logMessage("JSONLDHarvester Started")
+        self.logger.logMessage("ARCSyncHarvester Started")
         self.recordCount = 0
-        self.getPageList()
+        while not self.errored and not self.completed and not self.stopped \
+                and self.numberOfRecordsReturned > 0:
+            self.getGrantsList()
         batchCount = 1
-        if len(self.urlLinksList) > self.batchSize:
-            urlLinkLists = split(self.urlLinksList, self.batchSize)
-            for batches in urlLinkLists:
-                self.crawlPages(batches)
+        self.stopped = False
+        if len(self.__grantsList) > self.batchSize:
+            grantLists = split(self.__grantsList, self.batchSize)
+            for batches in grantLists:
+                self.getGrants(batches)
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
-                    #self.storeDataAsRDF(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
                     batchCount += 1
                 time.sleep(2) # let them breathe
         else:
-            self.crawlPages(self.urlLinksList)
+            self.getGrants(self.__grantsList)
             if len(self.jsonDict) > 0:
                 self.storeJsonData(self.jsonDict, 'combined')
-                #self.storeDataAsRDF(self.jsonDict, 'combined')
                 self.storeDataAsXML(self.jsonDict, 'combined')
-        self.setStatus("Generated %s File(s)" % str(self.recordCount))
-        self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
+                self.setStatus("Generated %s File(s)" % str(self.recordCount))
+                self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
         self.postHarvestData()
         self.finishHarvest()
 
-
-    def getPageList(self):
+    def getGrantsList(self):
         """
-        use the SitemapCrawler to get all urls for a given site
-        add all urls to the urlLinksList
+        Using the arc grants portal  query we can obtain the identifiers all items the dataportal server provides
+        :return:
+        :rtype:
         """
+        if self.stopped:
+            return
+        # while not self.errored and not self.completed and not self.stopped:
+        request_url = self.getRequestUrl()
+        getRequest = Request(request_url)
+        self.logger.logMessage("getGrantsList uri %s " % (request_url) )
+        self.setStatus("HARVESTING")
+        # we will collect grantids from the output page by page for later processing
         try:
-            self.setStatus("Scanning Sitemap(s)")
-            sc = SiteMapCrawler(self.harvestInfo['mode'])
-            sc.parse_sitemap(self.harvestInfo['uri'])
-            self.urlLinksList = sc.getLinksToCrawl()
-            self.listSize = len(self.urlLinksList)
-            self.setStatus("Scanning %d Pages" %len(self.urlLinksList))
-            self.logger.logMessage("%s Pages found" %str(len(self.urlLinksList)), 'INFO')
+            self.logger.logMessage("getGrantsList getting data")
+            self.data = getRequest.getData()
+            self.logger.logMessage("got data")
+            self.pageCall += 1
+            self.pageCount += 1
+            package = json.loads(self.data);
+            self.getRecordCount()
+            if isinstance(package, dict):
+                i = 0
+                while i < len(package['data']):
+                    self.__grantsList.append(package['data'][i]['id'])
+                    i += 1
+                # check if the collection of ids is completed by receiving nothing or more than the test limit
+                if self.numberOfRecordsReturned == 0 or (
+                        self.harvestInfo['mode'] == 'TEST' and self.recordCount >= self.test_limit):
+                    self.stopped = True
         except Exception as e:
-            self.logger.logMessage(str(repr(e)), "ERROR")
-            self.handleExceptions(e, terminate=True)
+            self.handleExceptions(e)
+            self.errored = True
+            self.__grantsList.append(e)
+            return(e)
+            return
+        del getRequest
+        return(self.__grantsList)
 
-
-    def crawlPages(self, urlList):
+    def getRequestUrl(self):
         """
-        depending on the implementation we can use either asyncio, grequest of simple request object to crawl the pages
-        fund that grequest was somewhat best so set it as default
+        append the start and limit to the end of the query
+        :return url:
+        """
+        urlParams = {}
+        urlParams['page[number]'] = str(self.pageCall)
+        urlParams['page[size]'] = self.rows
+
+        query = urllib.parse.urlencode(urlParams)
+
+        return self.harvestInfo['uri'] + "?" + query
+
+    def getRecordCount(self):
+        """
+        checks if the request is successful and determines the record count we received and increments the total count
+        :return:
+        """
+
+        self.numberOfRecordsReturned = 0
+        if self.stopped:
+            return
+        try:
+            data = json.loads(self.data, strict=False)
+            self.totalCount = int(data['meta']['total-size'])
+
+            if self.totalCount > 0:
+                self.numberOfRecordsReturned = int(data['meta']['actual-page-size'])
+
+            self.logger.logMessage("ARC Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount), "DEBUG")
+            # sanity check
+            self.recordCount += self.numberOfRecordsReturned
+            if self.recordCount >= self.totalCount:
+                self.logger.logMessage(" ARC Harvester (Harvest Completed)", "DEBUG")
+                self.completed = True
+        except Exception:
+            self.numberOfRecordsReturned = 0
+            self.errored = True
+            pass
+
+
+    def getGrants(self, grantList):
+        """
+        depending on the implementation we can use either asyncio, grequest of simple request object to get the grant json
+        found that grequest was somewhat best so set it as default
         :param urlList:
         :type urlList:
         """
@@ -131,7 +214,7 @@ class JSONLDHarvester(Harvester):
             # the standard way to run asynchronous requests using asyncio
             asyncio.set_event_loop(asyncio.new_event_loop())
             loop = asyncio.get_event_loop()  # event loop
-            future = asyncio.ensure_future(self.fetch_all(urlList))  # tasks to do
+            future = asyncio.ensure_future(self.fetch_all(grantList))  # tasks to do
             loop.run_until_complete(future)  # loop until done
             loop.run_until_complete(asyncio.sleep(0.25))
             loop.run_until_complete(asyncio.sleep(0))
@@ -139,17 +222,19 @@ class JSONLDHarvester(Harvester):
         elif self.harvestInfo['requestHandler'] == 'grequests':
             # the standard way of implementing grequest using a map and action items
             async_list = []
-            for url in urlList:
-                action_item = grequests.get(url, headers=self.headers, timeout=5, hooks={'response': self.parse})
+            for grant in grantList:
+                url = self.harvestInfo['uri'] + grant
+                action_item = grequests.get(url, headers=self.headers, timeout=5, allow_redirects=True, hooks={'response': self.parse})
                 async_list.append(action_item)
             grequests.map(async_list, size=self.tcp_connection_limit)
             asyncio.sleep(0.25)
             asyncio.sleep(0)
         else:
-            for url in urlList:
+            for grant in grantList:
+                url = self.harvestInfo['uri'] + grant
                 r = myRequest(url)
                 data = r.getData()
-                self.processContent(data, url)
+                self.jsonDict.append(data)
 
         tot_elapsed = default_timer() - self.start_time['start']
         self.logger.logMessage("Using %s ran %.2f seconds" %(self.harvestInfo['requestHandler'], tot_elapsed))
@@ -164,16 +249,18 @@ class JSONLDHarvester(Harvester):
         :param kwargs:
         :type kwargs:
         """
-        self.processContent(response.text, response.url)
+        if response.status_code < 400:
+            self.jsonDict.append(response.text)
+            self.recordCount += 1
 
     def exception_handler(self, request, exception):
         self.logger.logMessage("Request Failed for %s Exception: %s" % (str(request.url), str(exception)), "ERROR")
 
-    async def fetch_all(self, urlList):
+    async def fetch_all(self, grantList):
         """
         fetch all using asyncio to handle request
-        :param urlList:
-        :type urlList:
+        :param grantList:
+        :type grantList:
         """
         tasks = []
         minute = 60
@@ -183,7 +270,8 @@ class JSONLDHarvester(Harvester):
         connector = TCPConnector(limit=self.batchSize, limit_per_host=self.tcp_connection_limit, force_close=True, ssl=False, enable_cleanup_closed=True)
         jar = DummyCookieJar()
         async with ClientSession(headers=self.headers, cookie_jar=jar,connector=connector, timeout=cTimeout, connector_owner=False) as session:
-            for url in urlList:
+            for grant in grantList:
+                url = self.harvestInfo['uri'] + grant
                 task = asyncio.ensure_future(self.fetch(url, session))
                 tasks.append(task)  # create list of tasks
             _ = await asyncio.gather(*tasks)  # gather task responses
@@ -200,51 +288,16 @@ class JSONLDHarvester(Harvester):
         """
         minute = 60
         cTimeout = ClientTimeout(connect=minute)
+
         try:
             async with session.get(url, ssl=False, timeout=cTimeout) as response:
                 resp = await response.read()
-                self.processContent(resp.decode('utf-8'), url)
+                self.jsonDict.append(resp.decode('utf-8'))
                 response.close()
                 await session.close()
         except Exception as exc:
             self.logger.logMessage("Request Failed for %s Exception: %s" % (str(url), str(exc)), "ERROR")
 
-    def processContent(self, htmlStr, url):
-        """
-        the json-ld content extractor all request pass their data to this content handler
-        it tries to find a script tag with type application/ld+json
-        if ther's any it will attempt to parse the first json-ld string into a json object
-        if successful it adds the json-ld into an list (to be processed once all page in the current batch is extracted
-        or no more pages left
-        :param htmlStr:
-        :type htmlStr:
-        :param url:
-        :type url:
-        """
-        html_soup = BeautifulSoup(htmlStr, 'html5lib')
-        jsonld = None
-        try:
-            jsonld = html_soup.find("script", attrs={'type': 'application/ld+json'})
-        except Exception as e:
-            self.logger.logMessage("processContent Exception: %s" % str(e), "ERROR")
-        if jsonld is not None:
-            message = "%d-%d, url: %s" % (self.recordCount, len(self.urlLinksList), url)
-            try:
-                data = {}
-                try:
-                    data = json.loads(str(jsonld.get_text()), strict=False)
-
-                    if not 'url' in data:
-                        data['url'] = url
-                except Exception as e:
-                    data = ast.literal_eval(str(jsonld.get_text()))
-                self.setStatus("Scanning %d Pages" % len(self.urlLinksList), message)
-                self.jsonDict.append(data)
-                self.recordCount += 1
-            except Exception as e:
-                pass
-        else:
-            self.logger.logMessage("processContent url:%s CONTENT: %s" % (url, htmlStr))
 
 
     def storeJsonData(self, data, fileName):
@@ -260,36 +313,13 @@ class JSONLDHarvester(Harvester):
         if self.stopped:
            return
         outputFilePath = self.outputDir + os.sep + fileName + ".json"
+        self.logger.logMessage("ARCSyncHarvester (storeJsonData) %s " % (outputFilePath))
         dataFile = open(outputFilePath, 'w')
         try:
             json.dump(data, dataFile)
         except Exception as e:
             self.handleExceptions(e)
-            self.logger.logMessage("JSONLDHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
-        dataFile.close()
-        os.chmod(outputFilePath, 0o775)
-
-    def storeDataAsRDF(self, jsonld, fileName):
-        """
-        creates a graph of a bacth of json-ld objects and serialise it as RDF file
-        not used but are considering
-        :param jsonld:
-        :type jsonld:
-        :param fileName:
-        :type fileName:
-        """
-        outputFilePath = self.outputDir + os.sep + fileName + ".rdf"
-        dataFile = open(outputFilePath, 'w')
-        g = Graph()
-        try:
-            if(isinstance(jsonld, list)):
-                for j in jsonld:
-                    g.parse(data=json.dumps(j), format='application/ld+json')
-            elif(isinstance(jsonld, str)):
-                g = Graph().parse(data=jsonld, format='application/ld+json')
-            g.serialize(outputFilePath, "xml")
-        except Exception as e:
-            self.logger.logMessage("JSONLDHarvester (storeDataAsRDF) %s " % (str(repr(e))), "ERROR")
+            self.logger.logMessage("ARCSyncHarvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
@@ -306,26 +336,37 @@ class JSONLDHarvester(Harvester):
         """
         self.__xml = Document()
         outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
+        self.logger.logMessage("ARCSyncHarvester (storeDataAsXML) for %s grants" % (len(data)))
         dataFile = open(outputFilePath, 'w')
         try:
             if self.stopped:
                 return
             elif isinstance(data, list):
-                root = self.__xml.createElement('datasets')
+                root = self.__xml.createElement('grants')
                 self.__xml.appendChild(root)
-                for j in data:
-                    ds = self.__xml.createElement('dataset')
-                    self.parse_element(ds, j)
-                    root.appendChild(ds)
+                for grantJson in data:
+                    grant = json.loads(grantJson)
+                    if isinstance(grant['links']['self'], str):
+                        egrant = self.__xml.createElement('grant')
+                        egrant.setAttribute('uri', grant['links']['self'])
+                        self.parse_element(egrant, grant['data'])
+                        root.appendChild(egrant)
+                    else:
+                        self.logger.logMessage("ARDCSyncHarvester (storeDataAsXML) %s " % (grant), 'ERROR')
                 self.__xml.writexml(dataFile)
             else:
-                root = self.__xml.createElement('dataset')
-                self.__xml.appendChild(root)
-                self.parse_element(root, data)
+                grant = json.loads(data)
+                if isinstance(grant['links']['self'], str):
+                    root = self.__xml.createElement('grants')
+                    egrant = self.__xml.createElement('grant')
+                    egrant.setAttribute('uri', grant['links']['self'])
+                    self.parse_element(egrant, grant['data'])
+                    root.appendChild(egrant)
+                else:
+                    self.logger.logMessage("ARDCSyncHarvester data not a list (storeDataAsXML) ", 'ERROR')
                 self.__xml.writexml(dataFile)
         except Exception as e:
-            self.logger.logMessage("JSONLDHarvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
-
+            self.logger.logMessage("ARDCSyncDHarvester (storeDataAsXML) %s" % (str(repr(e))), "ERROR")
         dataFile.close()
         os.chmod(outputFilePath, 0o775)
 
@@ -378,6 +419,11 @@ class JSONLDHarvester(Harvester):
         """
         return self.batchSize
 
+    def addItemtoTestList(self, item):
+        self.testList.append(item)
+
+    def printTestList(self):
+        print(*self.testList, sep = "\n")
 
 def split(arr, size):
     """

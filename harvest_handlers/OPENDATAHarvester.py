@@ -26,7 +26,7 @@ class OPENDATAHarvester(Harvester):
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         # generic in-house xslt to convert (ACT Gov's) Open Data content to rifcs
-        if self.harvestInfo['xsl_file'] == "":
+        if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/open_data_to_rifcs.xsl"
 
     def harvest(self):
