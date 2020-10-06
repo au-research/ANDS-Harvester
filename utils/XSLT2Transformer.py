@@ -1,4 +1,6 @@
 import subprocess
+import urllib.parse
+
 import myconfig
 
 class XSLT2Transformer:
@@ -32,7 +34,7 @@ class XSLT2Transformer:
             elif key == 'inFile':
                 self.__inputFile = value
             else:
-                self.__params += " " + key + "='" + value + "'"
+                self.__params += " " + key + "='" + self.clean_param(value) + "'"
 
 
     def transform(self):
@@ -49,3 +51,7 @@ class XSLT2Transformer:
             shellCommand += self.__params
         subprocess.check_output(shellCommand, stderr=subprocess.STDOUT, shell=True)
         subprocess.call(shellCommand, shell=True)
+
+    def clean_param(self, value):
+        new_value = urllib.parse.quote_plus(value)
+        return new_value
