@@ -31,8 +31,14 @@ class Request:
             header = {'User-Agent': 'ARDC Harvester'}
             response = session.get(self.url, headers=header, verify=False)
             response.raise_for_status()
-            data = response.text
-            #print("getData %s" % str(data))
+            contentType = response.headers.__getitem__('Content-Type').split(';')
+
+            # check if the response provides an encoding type in the header
+            # and if not, then decode using utf-8 else use apparent encoding
+            if len(contentType)<2:
+                data = response.content.decode('utf-8')
+            else:
+                data = response.content.decode(response.apparent_encoding)
             session.close()
         except Exception as e:
             raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(self.retryCount), self.url))
