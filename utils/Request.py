@@ -35,13 +35,15 @@ class Request:
 
             # check if the response provides an encoding type in the header
             # and if not, then decode using utf-8 else use apparent encoding
-            if len(contentType)<2:
+            # apparent_encoding is allways ISO-8859-1 for HTTP 1.1 Responses
+            # use encoding to decode the data
+            if len(contentType) < 2:
                 data = response.content.decode('utf-8')
             else:
-                data = response.content.decode(response.apparent_encoding)
+                data = response.content.decode(response.encoding)
             session.close()
         except Exception as e:
-            raise RuntimeError("Error while trying (%s) times to connect to url:%s " %(str(self.retryCount), self.url))
+            raise RuntimeError("Error while trying (%s) times to connect to url:%s " % (str(self.retryCount), self.url))
         else:
             return data
 
