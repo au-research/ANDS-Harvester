@@ -118,7 +118,7 @@ class test_pure_harvester(unittest.TestCase):
     # API KEYS PROVIDED BY Melanie (for testing)
     def only_during_development_test_bond_pure_external(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/513/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
+        harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/517/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
         harvestInfo['harvest_method'] = 'PUREHarvester'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
@@ -128,12 +128,29 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = ""
         harvestInfo['mode'] = "TEST"
-        # harvestInfo['apiKey'] = myconfig.bond_api_key
-        # harvestReq =   PUREHarvester(harvestInfo)
-        # t = threading.Thread(name='JSONLD', target=harvestReq.harvest)
-        # t.start()
+
         harvester = PUREHarvester(harvestInfo)
         harvester.harvest()
+
+    def only_during_development_test_bond_pure_external(self):
+        harvestInfo = {}
+        harvestInfo['uri'] = 'https://api.research-repository.uwa.edu.au/ws/api/517/equipments?apiKey=63cdba7a-e25e-4d2f-9692-2d4cc9bd9d97'
+        harvestInfo['harvest_method'] = 'PUREHarvester'
+        harvestInfo['data_store_path'] = myconfig.data_store_path
+        harvestInfo['response_url'] = myconfig.response_url
+        harvestInfo['data_source_id'] = 7
+        harvestInfo['harvest_id'] = 1
+        harvestInfo['batch_number'] = "PURE_UWA_EQUIP"
+        harvestInfo['xsl_file'] = ''
+        print(myconfig.abs_path)
+        harvestInfo['advanced_harvest_mode'] = "STANDARD"
+        harvestInfo['mode'] = "TEST"
+        harvestInfo['apiKey'] = myconfig.uwa_api_key
+
+        harvester = PUREHarvester(harvestInfo)
+        harvester.harvest()
+
+
 
 if __name__ == '__main__':
     unittest.main()

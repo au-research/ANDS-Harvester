@@ -115,8 +115,12 @@ class PUREHarvester(Harvester):
         if self.stopped or self.numberOfRecordsReturned == 0:
             return
         try:
+            self.logger.logMessage("PURE HARVESTING", "saving file %s" % (
+                        self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
             dataFile = open(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension , 'w', 0o777)
+
             self.setStatus("HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
+            self.logger.logMessage("PURE HARVESTING" , "saving file %s" %(self.outputDir + os.sep + str(self.pageCount) + "." + self.storeFileExtension))
             dataFile.write(self.data)
             dataFile.close()
             self.pageCount = self.pageCount + 1
@@ -127,6 +131,7 @@ class PUREHarvester(Harvester):
     def getRecordCount(self):
         """
         the number of records are determined by the number of elements called 'dataSet'
+        and the number of elements called 'equipment'
 
         :return:
         :rtype:
@@ -136,7 +141,7 @@ class PUREHarvester(Harvester):
             return
         try:
             dom = parseString(self.data)
-            self.numberOfRecordsReturned = int(len(dom.getElementsByTagName('dataSet')))
+            self.numberOfRecordsReturned = int(len(dom.getElementsByTagName('equipment'))) + int(len(dom.getElementsByTagName('dataSet')))
             self.logger.logMessage("PURE (numberOfRecordsReturned) %s " % self.numberOfRecordsReturned, "DEBUG")
         except Exception:
             self.numberOfRecordsReturned = 0
