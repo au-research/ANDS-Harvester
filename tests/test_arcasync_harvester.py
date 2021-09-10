@@ -22,7 +22,7 @@ class test_arcasync_harvester(unittest.TestCase):
         return data
 
     @patch.object(Request, 'getData')
-    def test_small_getGrantList(self, mockGetData):
+    def not_yet_test_small_getGrantList(self, mockGetData):
         batch_id = "ARCAsync_1"
         ds_id = 33
         mockGetData.side_effect = [
@@ -60,7 +60,7 @@ class test_arcasync_harvester(unittest.TestCase):
         self.assertIn('<grant uri="https://dataportal.arc.gov.au/NCGP/API/grants/LP190100083">', content)
 
     @patch.object(Request, 'getData')
-    def test_text_site_map_combined_files(self, mockGetData):
+    def not_yet_test_text_site_map_combined_files(self, mockGetData):
         batch_id = "ARCAsync_2"
         ds_id = 33
         mockGetData.side_effect = [
