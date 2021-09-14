@@ -8,22 +8,24 @@
     <xsl:strip-space elements="*"/>
 
     <!-- ARC GRANTs Publications are harvested from Trove and cached for 30 days -->
-    <xsl:param name="arc_grantpubs_file" select="'/media/leo/work/ARC_XSLT/arc_grantpubs_2021.xml'"/>
+    <xsl:param name="arc_grantpubs_file"
+        select="'/media/leo/work/var/data/harvester/harvested_contents/arc_grantpubs.xml'"/>
     <!-- Administering Institutions are pulled from SOLR every time a harvest is run (shouldn't be cached)-->
-    <xsl:param name="admin_institutions_file" select="'arc_admin_institutions.xml'"/>
-
+    <xsl:param name="admin_institutions_file"
+        select="'/media/leo/work/var/data/harvester/harvested_contents/arc_admin_institutions.xml'"/>
 
     <xsl:variable name="adminInstitutions" select="document($admin_institutions_file)"/>
+    
     <xsl:variable name="grantpubs" select="document($arc_grantpubs_file)"/>
 
-    <!-- these files should be added at the dtatasource setting page as supporting XML documents -->
+    <!-- these files should be added at the datatasource setting page as supporting XML documents -->
     <xsl:variable name="titles" select="document('/media/leo/work/ARC_XSLT/arc_project_titles.xml')"/>
 
     <xsl:variable name="global_originatingSource"
         >https://dataportal.arc.gov.au/NCGP/API/grants/</xsl:variable>
     <xsl:variable name="purl_url">http://purl.org/au-research/grants/arc/</xsl:variable>
     <xsl:variable name="global_baseURI"
-        >https://dataportal.arc.gov.au/NCGP/API/grants/</xsl:variable>
+        >https://dataportal.arc.gov.au/NCGP/Web/Grant/Grant/</xsl:variable>
     <xsl:variable name="global_group">Australian Research Council</xsl:variable>
     <xsl:template match="/">
         <xsl:apply-templates/>
@@ -64,39 +66,81 @@
                 </xsl:attribute>
                 <xsl:apply-templates select="id" mode="activity_identifier"/>
 
-                
-                <xsl:variable name="title" select="$titles/root/row[Project_ID/text()=$grant_id]/Project_Title"/>
-                
+<!-- title added if found in an existing list we stored before ARC stopped providing them -->
+                <xsl:variable name="title" select="$titles/root/row[Project_ID/text() = $grant_id]/Project_Title"/>
+
                 <xsl:choose>
                     <xsl:when test="$title != ''">
-                        <xsl:message><xsl:value-of select="$title"/></xsl:message>
+                        <!--xsl:message>
+                            <xsl:value-of select="$title"/>
+                        </xsl:message-->
                         <xsl:element name="name">
                             <xsl:attribute name="type">primary</xsl:attribute>
                             <xsl:element name="namePart">
-                                <xsl:value-of  select="$title"/>
+                                <xsl:value-of select="$title"/>
                             </xsl:element>
-                        </xsl:element>                       
+                        </xsl:element>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="name">
                             <xsl:attribute name="type">primary</xsl:attribute>
-                            <xsl:element name="namePart"><xsl:value-of select="attributes/scheme-name"/><xsl:text> - Grant ID: </xsl:text><xsl:value-of select="id"/></xsl:element>
+                            <xsl:element name="namePart">
+                                <xsl:value-of select="attributes/scheme-name"/>
+                                <xsl:text> - Grant ID: </xsl:text>
+                                <xsl:value-of select="id"/>
+                            </xsl:element>
                         </xsl:element>
                     </xsl:otherwise>
                 </xsl:choose>
-                
-                <xsl:apply-templates select="id" mode="activity_url"/>
-                
-                <xsl:apply-templates select="attributes/grant-summary"/>
-                <!-- related publications -->
-                <xsl:variable name="pubinfo"
-                    select="$grantpubs/troveGrants/grantPubInfo[grantKey = $ro_key]"/>
-                <xsl:if test="$pubinfo">
-                    <xsl:text>&#xA;</xsl:text>
-                    <xsl:copy-of select="$pubinfo/ro:relatedInfo"/>
 
+                <!-- add electronic address to the grant page not the API endpoint -->
+                <xsl:apply-templates select="id" mode="activity_url"/>
+
+                <!--   existenceDates are added from project-start-date and anticipated-end-date -->           
+
+                <xsl:if test="attributes/project-start-date/text() != ''">
+                    <xsl:element name="existenceDates" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                        <xsl:element name="startDate">
+                            <xsl:attribute name="dateFormat">W3CDTF</xsl:attribute>
+                            <xsl:value-of select="attributes/project-start-date/text()"/>
+                        </xsl:element>
+                        <xsl:if test="attributes/anticipated-end-date">
+                            <xsl:element name="endDate">
+                                <xsl:attribute name="dateFormat">W3CDTF</xsl:attribute>
+                                <xsl:value-of select="attributes/anticipated-end-date/text()"/>
+                            </xsl:element>
+                        </xsl:if>
+                    </xsl:element>
                 </xsl:if>
 
+
+                <!-- grant summary and cheme added as descriptions -->
+                <xsl:apply-templates select="attributes/grant-summary"/>
+                <xsl:apply-templates select="attributes/scheme-name"/>
+                <!-- investigators without ORCID go in to descriptions -->
+                <xsl:apply-templates select="attributes/investigators-at-announcement[orcidIdentifier = 'null']" mode="description"/>
+                <!-- FOR and SEO codes added as subjects -->
+                <xsl:apply-templates select="attributes/field-of-research"/>
+                <xsl:apply-templates select="attributes/socio-economic-objective"/>
+
+
+                <!-- add ARC as Funder-->
+                <relatedObject>
+                    <key>http://dx.doi.org/10.13039/501100000923</key>
+                    <relation type="isFundedBy"/>
+                </relatedObject>
+
+
+                <!-- administering institution -->
+
+                <xsl:apply-templates select="attributes/announcement-administering-organisation"/>
+                <!-- investigators with ORCID added as related info -->
+                <xsl:apply-templates select="attributes/investigators-at-announcement[orcidIdentifier != 'null']" mode="relatedInfo"/>
+
+                <!-- related publications that were harvested from Trove are added as relatedInfo type publication to the activity -->
+                <xsl:for-each select="$grantpubs/troveGrants/grantPubInfo[grantKey = $ro_key]">
+                    <xsl:copy-of select="ro:relatedInfo"/>
+                </xsl:for-each>
             </activity>
 
         </registryObject>
@@ -107,6 +151,23 @@
     <!-- =========================================== -->
     <!-- Activity RegistryObject - Child Templates -->
     <!-- =========================================== -->
+
+
+    <xsl:template match="field-of-research">
+        <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">anzsrc-for</xsl:attribute>
+            <xsl:value-of select="normalize-space(code)"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="socio-economic-objective">
+        <xsl:element name="subject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">anzsrc-seo</xsl:attribute>
+            <xsl:value-of select="normalize-space(code)"/>
+        </xsl:element>
+    </xsl:template>
+
+
 
     <!-- Collection - Identifier Element  -->
     <xsl:template match="id" mode="activity_identifier">
@@ -124,7 +185,7 @@
         </identifier>
     </xsl:template>
 
-    <!-- Collection - Name Element  -->
+    <!-- Name Element  -->
     <xsl:template match="id" mode="activity_name">
         <xsl:if test="string-length(normalize-space(.))">
             <name xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
@@ -146,6 +207,9 @@
                     <xsl:attribute name="type">
                         <xsl:text>url</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="target">
+                        <xsl:text>landingPage</xsl:text>
+                    </xsl:attribute>
                     <value>
                         <xsl:value-of select="$global_baseURI"/>
                         <xsl:value-of select="normalize-space(.)"/>
@@ -155,6 +219,30 @@
         </location>
     </xsl:template>
 
+
+    <xsl:template match="investigators-at-announcement" mode="relatedInfo">
+        <xsl:element name="relatedInfo" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">party</xsl:attribute> 
+            <xsl:element name="title"><xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName)"/></xsl:element>
+            <xsl:element name="identifier">
+                <xsl:attribute name="type"><xsl:text>orcid</xsl:text></xsl:attribute>
+                <xsl:value-of select="orcidIdentifier"/>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
+
+
+
+    <xsl:template match="investigators-at-announcement" mode="description">
+        <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>researchers</xsl:text>
+            </xsl:attribute>
+            <xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName, ' - ', roleName)"/>
+        </description>
+    </xsl:template>
+
+
     <xsl:template match="grant-summary">
         <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="type">
@@ -163,6 +251,41 @@
             <xsl:value-of select="."/>
         </description>
     </xsl:template>
+    
+    <xsl:template match="scheme-name">
+        <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:attribute name="type">
+                <xsl:text>fundingScheme</xsl:text>
+            </xsl:attribute>
+            <xsl:value-of select="."/>
+        </description>
+    </xsl:template>
 
+
+    <xsl:template match="attributes/announcement-administering-organisation">
+
+        <!-- This section uses a lookup table 'arc_admin_institutions.xml' -->
+
+        <xsl:variable name="admin_inst" select="normalize-space(.)"/>
+        <xsl:variable name="inst_key"
+            select="$adminInstitutions/institutions/institution[name = $admin_inst]/key"/>
+        <xsl:if test="$inst_key">
+            <xsl:element name="relatedObject"
+                xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:element name="key">
+                    <xsl:value-of select="$inst_key"/>
+                </xsl:element>
+                <xsl:element name="relation">
+                    <xsl:attribute name="type">isManagedBy</xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+        </xsl:if>
+        <xsl:if test="$inst_key = ''">
+            <xsl:message>
+                <xsl:text>Unmatched admin organisation </xsl:text>
+                <xsl:value-of select="Administering_Organisation"/>
+            </xsl:message>
+        </xsl:if>
+    </xsl:template>
 
 </xsl:stylesheet>

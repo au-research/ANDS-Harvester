@@ -170,6 +170,7 @@ class test_arcasync_harvester(unittest.TestCase):
         harvestInfo['title'] = "The Datasource Title"
         harvester = ARCAsyncHarvester(harvestInfo)
         harvester.harvest()
+        #harvester.runCrossWalk()
 
 
     def fun_test_instance_vs_class_variables(self):

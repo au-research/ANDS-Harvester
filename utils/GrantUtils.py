@@ -21,7 +21,7 @@ class TroveClient:
         file = open(self.result_file_path, "w")
         file.write("<?xml version='1.0' encoding='UTF-8'?>\n<troveGrants>\n")
         file.close()
-        print(os.path.getsize(self.result_file_path))
+        #print(os.path.getsize(self.result_file_path))
         url = self.trove_url + "/result"
         params = {}
         params["key"] = self.trove_api_key
@@ -35,10 +35,10 @@ class TroveClient:
         #print(data)
         next = self.processData(data)
         while next is not None:
-            print(next)
+            #print(next)
             data = self.getArcGrantsPublication(self.trove_url + next + "&key=" + self.trove_api_key)
             next = self.processData(data)
-            print(os.path.getsize(self.result_file_path))
+            #print(os.path.getsize(self.result_file_path))
         file = open(self.result_file_path, "a")
         file.write("\n</troveGrants>")
         file.close()
@@ -64,7 +64,7 @@ class TroveClient:
             return next
         except Exception as e:
             file.close()
-            print(e)
+            #print(e)
             return None
 
 
@@ -75,6 +75,7 @@ class SolrClient:
 
     def get_trove_groups(self, file_path):
         url = self.solr_url + "/portal/select"
+        file = open(file_path, "wb")
         params = {}
         params["fl"] = "title,key,group,identifier_value"
         params["fq"] = "group:Trove*"
@@ -84,7 +85,11 @@ class SolrClient:
         query = urllib.parse.urlencode(params)
         request = Request(url + "?" + query)
         result = request.getData()
-        file = open(file_path, "w")
-        file.write(result)
+        styledoc = etree.parse(myconfig.abs_path + "/resources/solr_admin_institutions.xsl")
+        transform = etree.XSLT(styledoc)
+        doc = etree.XML(result.encode())
+        result = transform(doc)
+        #print(result)
+        result.write_output(file)
         file.close()
        # "http://130.56.62.162:8983/solr/portal/select?fl=title%2Ckey%2C%20group%2Cidentifier_value&fq=group%3A*People*&q=type%3Agroup&rows=1000&wt=xml"

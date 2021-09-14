@@ -81,6 +81,8 @@ class ARCAsyncHarvester(Harvester):
             # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/ARCAPI_json_to_rif-cs.xsl"
+        self.storeFileExtension = 'tmp'
+        self.resultFileExtension = 'xml'
         self.arc_publications_file = myconfig.data_store_path + "arc_grantpubs.xml"
         self.admin_institutions_file = myconfig.data_store_path + "arc_admin_institutions.xml"
 
@@ -168,8 +170,6 @@ class ARCAsyncHarvester(Harvester):
             self.handleExceptions(e)
             self.errored = True
             self.__grantsList.append(e)
-            return(e)
-            return
         del getRequest
         return(self.__grantsList)
 
@@ -390,6 +390,8 @@ class ARCAsyncHarvester(Harvester):
         :return:
         :rtype:
         """
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
         self.logger.logMessage("runCrossWalk XSLT: %s" % self.harvestInfo['xsl_file'])
@@ -441,19 +443,30 @@ class ARCAsyncHarvester(Harvester):
         print(*self.testList, sep = "\n")
 
     def getTrovePublications(self):
-        troveClient = TroveClient(myconfig.trove_api2_url, myconfig.trove_api_key, "/tmp/trove_publications.xml")
+
+        temp_file = "/tmp/trove_publications.xml"
+        troveClient = TroveClient(myconfig.trove_api2_url, myconfig.trove_api_key, temp_file)
         if os.path.isfile(self.arc_publications_file):
             file_last_modified = os.path.getmtime(self.arc_publications_file)
             if time.time() - file_last_modified > (3 * 30 * 24 * 60 * 60):
+                self.logger.logMessage("Trove publications cache is older than 30 days, re-harvesting...")
                 troveClient.harvest()
+                if (os.path.getsize(temp_file) > 100000):
+                    # we've got something so copy it into cache
+                    shutil.copy(temp_file, self.arc_publications_file)
+            else:
+                self.logger.logMessage("Current up to date (less than 30 days old) Trove publications cache exists")
         else:
+            self.logger.logMessage("Trove publications cache doesn't exist, harvesting from Trove started...")
             troveClient.harvest()
-        if (os.path.getsize("/tmp/trove_publications.xml") > 100000):
-            # we've got something so copy it into cache
-            shutil.copy("/tmp/trove_publications.xml", self.arc_publications_file)
+            if (os.path.getsize(temp_file) > 100000):
+                # we've got something so copy it into cache
+                shutil.copy(temp_file, self.arc_publications_file)
+
 
 
     def getFundingInstitutions(self):
+        self.logger.logMessage("Gathering Funding Institutions from SOLR %s" % myconfig.solr_url)
         solrClient = SolrClient(myconfig.solr_url)
         solrClient.get_trove_groups(self.admin_institutions_file)
 
