@@ -8,18 +8,16 @@
     <xsl:strip-space elements="*"/>
 
     <!-- ARC GRANTs Publications are harvested from Trove and cached for 30 days -->
-    <xsl:param name="arc_grantpubs_file"
-        select="'/media/leo/work/var/data/harvester/harvested_contents/arc_grantpubs.xml'"/>
+    <xsl:param name="arc_grantpubs_file" select="'/var/data/harvester/harvested_contents/arc_grantpubs.xml'"/>
     <!-- Administering Institutions are pulled from SOLR every time a harvest is run (shouldn't be cached)-->
-    <xsl:param name="admin_institutions_file"
-        select="'/media/leo/work/var/data/harvester/harvested_contents/arc_admin_institutions.xml'"/>
+    <xsl:param name="admin_institutions_file" select="'/var/data/harvester/harvested_contents/arc_admin_institutions.xml'"/>
 
     <xsl:variable name="adminInstitutions" select="document($admin_institutions_file)"/>
     
     <xsl:variable name="grantpubs" select="document($arc_grantpubs_file)"/>
 
     <!-- these files should be added at the datatasource setting page as supporting XML documents -->
-    <xsl:variable name="titles" select="document('/media/leo/work/ARC_XSLT/arc_project_titles.xml')"/>
+    <xsl:variable name="titles" select="document('arc_project_titles.xml')"/>
 
     <xsl:variable name="global_originatingSource"
         >https://dataportal.arc.gov.au/NCGP/API/grants/</xsl:variable>
@@ -242,7 +240,7 @@
                 <xsl:text>researchers</xsl:text>
             </xsl:attribute>
             <xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName)"/>
-            <xsl:apply-templates select="../investigators-at-announcement[orcidIdentifier = 'null']" mode="name"/>
+            <xsl:apply-templates select="following-sibling::investigators-at-announcement[orcidIdentifier = 'null']" mode="name"/>
         </description>
     </xsl:template>
 
