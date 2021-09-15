@@ -118,7 +118,7 @@
                 <xsl:apply-templates select="attributes/grant-summary"/>
                 <xsl:apply-templates select="attributes/scheme-name"/>
                 <!-- investigators without ORCID go in to descriptions -->
-                <xsl:apply-templates select="attributes/investigators-at-announcement[orcidIdentifier = 'null']" mode="description"/>
+                <xsl:apply-templates select="attributes/investigators-at-announcement[orcidIdentifier = 'null'][1]" mode="description"/>
                 <!-- FOR and SEO codes added as subjects -->
                 <xsl:apply-templates select="attributes/field-of-research"/>
                 <xsl:apply-templates select="attributes/socio-economic-objective"/>
@@ -226,7 +226,10 @@
             <xsl:element name="title"><xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName)"/></xsl:element>
             <xsl:element name="identifier">
                 <xsl:attribute name="type"><xsl:text>orcid</xsl:text></xsl:attribute>
-                <xsl:value-of select="orcidIdentifier"/>
+                <xsl:value-of select="normalize-space(orcidIdentifier/text())"/>
+            </xsl:element>
+            <xsl:element name="relation">
+                <xsl:attribute name="type"><xsl:value-of select="roleName"/></xsl:attribute>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -238,8 +241,14 @@
             <xsl:attribute name="type">
                 <xsl:text>researchers</xsl:text>
             </xsl:attribute>
-            <xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName, ' - ', roleName)"/>
+            <xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName)"/>
+            <xsl:apply-templates select="../investigators-at-announcement[orcidIdentifier = 'null']" mode="name"/>
         </description>
+    </xsl:template>
+
+
+    <xsl:template match="investigators-at-announcement" mode="name">
+            <xsl:text>; </xsl:text><xsl:value-of select="concat(title, ' ' , firstName, ' ', familyName)"/>
     </xsl:template>
 
 
