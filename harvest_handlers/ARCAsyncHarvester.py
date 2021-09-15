@@ -409,8 +409,8 @@ class ARCAsyncHarvester(Harvester):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
                 transformCount += 1
-                self.setStatus('RUNNING %s CROSSWALK ' % str(transformCount), "Generating %s:" % outFile)
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                self.setStatus('RUNNING %s CROSSWALK ' % str(transformCount), "Generating %s:" % outFile)
                 inFile = self.outputDir + os.sep + file
                 try:
                     parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
