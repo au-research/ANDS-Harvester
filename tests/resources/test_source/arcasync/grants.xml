@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grants>
+    <grant uri="http://dataportal.arc.gov.au/NCGP/API/grants/DP210100157">
+        <type>grant-details</type>
+        <id>DP210100157</id>
+        <attributes>
+            <code>DP210100157</code>
+            <administering-organisation>University of Canberra</administering-organisation>
+            <announcement-administering-organisation>University of
+                Canberra</announcement-administering-organisation>
+            <scheme-name>Discovery Projects</scheme-name>
+            <grant-status>Active</grant-status>
+            <funding-commencement-year>2021</funding-commencement-year>
+            <years-funded>3</years-funded>
+            <project-start-date>2021-01-01</project-start-date>
+            <anticipated-end-date>2023-12-31</anticipated-end-date>
+            <grant-summary>The rise of mistrust: Digital platforms and trust in news media. This
+                project aims to investigate how trust and mistrust in news changes
+                audiences&amp;#8217; behaviours as they increasingly access news through digital
+                platforms. Observing the global crisis of trust, the project will undertake a
+                longitudinal analysis of trust and mistrust in news, a four-country experiment that
+                links trust and audience responses, and an in-depth qualitative study that provides
+                specific contexts of these choices. The research will directly benefit policy
+                makers, as it addresses questions of how to better secure trustworthy news content
+                in an age of increasing dominance of digital platforms that algorithmically sort the
+                range of news available to the Australian public.\n\n</grant-summary>
+            <funding-current>380677.0</funding-current>
+            <funding-at-announcement>376841</funding-at-announcement>
+            <investigators-current>
+                <title>Prof</title>
+                <firstName>Sora</firstName>
+                <familyName>Park</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0003-3082-314X </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Prof</title>
+                <firstName>Terry</firstName>
+                <familyName>Flew</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0003-4485-9338 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Dr</title>
+                <firstName>Caroline</firstName>
+                <familyName>Fisher</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-7443-3787 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Prof</title>
+                <firstName>Uwe</firstName>
+                <familyName>Dulleck</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-0953-5963 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Dr</title>
+                <firstName>Richard</firstName>
+                <familyName>Fletcher</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5496-2112 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>A/Prof</title>
+                <firstName>Edson</firstName>
+                <familyName>Tandoc</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-8740-9313 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Dr</title>
+                <firstName>Se-Uk</firstName>
+                <familyName>Oh</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5391-6958 </orcidIdentifier>
+            </investigators-current>
+            <investigators-at-announcement>
+                <title>Prof</title>
+                <firstName>Sora</firstName>
+                <familyName>Park</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0003-3082-314X </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Prof</title>
+                <firstName>Terry</firstName>
+                <familyName>Flew</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0003-4485-9338 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Dr</title>
+                <firstName>Caroline</firstName>
+                <familyName>Fisher</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-7443-3787 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Prof</title>
+                <firstName>Uwe</firstName>
+                <familyName>Dulleck</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-0953-5963 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Dr</title>
+                <firstName>Richard</firstName>
+                <familyName>Fletcher</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5496-2112 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>A/Prof</title>
+                <firstName>Edson</firstName>
+                <familyName>Tandoc</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-8740-9313 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Dr</title>
+                <firstName>Se-Uk</firstName>
+                <familyName>Oh</familyName>
+                <roleName>Partner Investigator</roleName>
+                <roleCode>PI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5391-6958 </orcidIdentifier>
+            </investigators-at-announcement>
+            <organisations-current>
+                <organisationName>University of Canberra</organisationName>
+                <roleName>Administering Organisation</roleName>
+                <state>ACT</state>
+            </organisations-current>
+            <organisations-current>
+                <organisationName>Queensland University of Technology</organisationName>
+                <roleName>Other Eligible Organisation</roleName>
+                <state>QLD</state>
+            </organisations-current>
+            <organisations-current>
+                <organisationName>Reuters Institute for the Study of Journalism</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-current>
+            <organisations-current>
+                <organisationName>Nanyang Technological University, Singapore</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-current>
+            <organisations-current>
+                <organisationName>Korea Press Foundation</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-current>
+            <organisations-current>
+                <organisationName>The University of Sydney</organisationName>
+                <roleName>Other Eligible Organisation</roleName>
+                <state>NSW</state>
+            </organisations-current>
+            <organisations-at-announcement>
+                <organisationName>University of Canberra</organisationName>
+                <roleName>Administering Organisation</roleName>
+                <state>ACT</state>
+            </organisations-at-announcement>
+            <organisations-at-announcement>
+                <organisationName>Queensland University of Technology</organisationName>
+                <roleName>Other Eligible Organisation</roleName>
+                <state>QLD</state>
+            </organisations-at-announcement>
+            <organisations-at-announcement>
+                <organisationName>Reuters Institute for the Study of Journalism</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-at-announcement>
+            <organisations-at-announcement>
+                <organisationName>Nanyang Technological University, Singapore</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-at-announcement>
+            <organisations-at-announcement>
+                <organisationName>Korea Press Foundation</organisationName>
+                <roleName>Other Organisation</roleName>
+                <state>N/A</state>
+            </organisations-at-announcement>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>140206</code>
+                <name>Experimental Economics</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>190301</code>
+                <name>Journalism Studies</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>true</isPrimary>
+                <code>2001</code>
+                <name>Communication and Media Studies</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>200104</code>
+                <name>Media Studies</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <socio-economic-objective>
+                <code>890303</code>
+                <name>News Collection Services</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <socio-economic-objective>
+                <code>890404</code>
+                <name>Publishing and Print Services (Incl. Internet Publishing)</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <socio-economic-objective>
+                <code>950204</code>
+                <name>The Media</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <international-collaboration>England</international-collaboration>
+            <international-collaboration>Korea, Republic of (South)</international-collaboration>
+            <international-collaboration>Singapore</international-collaboration>
+            <achievement-summary>null</achievement-summary>
+        </attributes>
+    </grant>
+    <grant uri="http://dataportal.arc.gov.au/NCGP/API/grants/DP210100167">
+        <type>grant-details</type>
+        <id>DP210100167</id>
+        <attributes>
+            <code>DP210100167</code>
+            <administering-organisation>University of Wollongong</administering-organisation>
+            <announcement-administering-organisation>University of
+                Wollongong</announcement-administering-organisation>
+            <scheme-name>Discovery Projects</scheme-name>
+            <grant-status>Active</grant-status>
+            <funding-commencement-year>2021</funding-commencement-year>
+            <years-funded>3</years-funded>
+            <project-start-date>2021-01-01</project-start-date>
+            <anticipated-end-date>2023-12-31</anticipated-end-date>
+            <grant-summary>Roadblocks in DNA replication. This project aims to develop the
+                technology to visualise and understand the molecular processes responsible for the
+                faithful copying of cellular DNA in the presence of roadblocks caused by chemical
+                pressures and competing intracellular events. Understanding this process is
+                important as DNA replication is responsible for copying the DNA genetic blueprint of
+                cells and is crucial to all life on earth. This project will have as key outcomes
+                the development of novel molecular visualisation technology and the first molecular
+                description of the dynamic processes used by the DNA-replication machinery to
+                navigate roadblocks. These outcomes should provide significant benefits including
+                enhanced collaboration and scientific capacity in Australia.</grant-summary>
+            <funding-current>607472.0</funding-current>
+            <funding-at-announcement>600364</funding-at-announcement>
+            <investigators-current>
+                <title>Prof</title>
+                <firstName>Antoine</firstName>
+                <familyName>van Oijen</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-1794-5161 </orcidIdentifier>
+            </investigators-current>
+            <investigators-current>
+                <title>Prof</title>
+                <firstName>Nicholas</firstName>
+                <familyName>Dixon</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5958-6945 </orcidIdentifier>
+            </investigators-current>
+            <investigators-at-announcement>
+                <title>Prof</title>
+                <firstName>Antoine</firstName>
+                <familyName>van Oijen</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-1794-5161 </orcidIdentifier>
+            </investigators-at-announcement>
+            <investigators-at-announcement>
+                <title>Prof</title>
+                <firstName>Nicholas</firstName>
+                <familyName>Dixon</familyName>
+                <roleName>Chief Investigator</roleName>
+                <roleCode>CI</roleCode>
+                <isFellowship>false</isFellowship>
+                <orcidIdentifier>0000-0002-5958-6945 </orcidIdentifier>
+            </investigators-at-announcement>
+            <organisations-current>
+                <organisationName>University of Wollongong</organisationName>
+                <roleName>Administering Organisation</roleName>
+                <state>NSW</state>
+            </organisations-current>
+            <organisations-at-announcement>
+                <organisationName>University of Wollongong</organisationName>
+                <roleName>Administering Organisation</roleName>
+                <state>NSW</state>
+            </organisations-at-announcement>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>030403</code>
+                <name>Characterisation of Biological MacRomolecules</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>true</isPrimary>
+                <code>0601</code>
+                <name>Biochemistry and Cell Biology</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>060107</code>
+                <name>Enzymes</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <field-of-research>
+                <isPrimary>false</isPrimary>
+                <code>060112</code>
+                <name>Structural Biology (Incl. MacRomolecular Modelling)</name>
+                <type>FOR08</type>
+            </field-of-research>
+            <socio-economic-objective>
+                <code>920109</code>
+                <name>Infectious Diseases</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <socio-economic-objective>
+                <code>970103</code>
+                <name>Expanding Knowledge In the Chemical Sciences</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <socio-economic-objective>
+                <code>970106</code>
+                <name>Expanding Knowledge In the Biological Sciences</name>
+                <type>SEO08</type>
+            </socio-economic-objective>
+            <international-collaboration>England</international-collaboration>
+            <international-collaboration>United States of America</international-collaboration>
+            <achievement-summary>null</achievement-summary>
+        </attributes>
+    </grant>
+</grants>
