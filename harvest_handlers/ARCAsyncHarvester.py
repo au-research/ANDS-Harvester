@@ -101,10 +101,16 @@ class ARCAsyncHarvester(Harvester):
         self.stopped = False
         self.setupdirs()
         self.setUpCrosswalk()
-        self.getTrovePublications()
-        self.getFundingInstitutions()
+        self.logger.logMessage("Gathering Research Publications from Trove")
+        self.setStatus("HARVESTING", "Gathering Research Publications from Trove")
         self.updateHarvestRequest()
+        self.getTrovePublications()
+        self.logger.logMessage("Gathering Funding Institutions From Solr")
+        self.setStatus("HARVESTING", "Gathering Funding Institutions From Solr")
+        self.updateHarvestRequest()
+        self.getFundingInstitutions()
         self.logger.logMessage("ARCSyncHarvester Started")
+        self.updateHarvestRequest()
         self.recordCount = 0
         while not self.errored and not self.completed and not self.stopped \
                 and self.numberOfRecordsReturned > 0:
@@ -120,6 +126,7 @@ class ARCAsyncHarvester(Harvester):
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
+                    self.setStatus("HARVESTING", "Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
                     batchCount += 1
@@ -155,7 +162,7 @@ class ARCAsyncHarvester(Harvester):
             self.logger.logMessage("got data")
             self.pageCall += 1
             self.pageCount += 1
-            package = json.loads(self.data);
+            package = json.loads(self.data)
             self.getRecordCount()
             if isinstance(package, dict):
                 i = 0
@@ -201,6 +208,7 @@ class ARCAsyncHarvester(Harvester):
 
             if self.totalCount > 0:
                 self.numberOfRecordsReturned = int(data['meta']['actual-page-size'])
+            self.setStatus("HARVESTING", "ARC Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount))
 
             self.logger.logMessage("ARC Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount), "DEBUG")
             # sanity check
