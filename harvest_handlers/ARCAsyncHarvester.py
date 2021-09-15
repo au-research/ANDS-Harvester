@@ -402,21 +402,21 @@ class ARCAsyncHarvester(Harvester):
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
+        transformCount = 0
         self.logger.logMessage("runCrossWalk XSLT: %s" % self.harvestInfo['xsl_file'])
         self.logger.logMessage("OutDir: %s" % self.outputDir)
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
+                transformCount += 1
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                self.setStatus('RUNNING %s CROSSWALK ' % str(transformCount), "Generating %s:" % outFile)
                 inFile = self.outputDir + os.sep + file
                 try:
                     parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
                     transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
                                          'outFile': outFile,
-                                         'inFile': inFile,
-                                         'arc_grantpubs': self.arc_publications_file,
-                                         'admin_institutions': self.admin_institutions_file}
-
+                                         'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     tr.transform()
                 except subprocess.CalledProcessError as e:
