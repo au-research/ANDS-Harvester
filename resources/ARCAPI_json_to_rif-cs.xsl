@@ -114,6 +114,7 @@
 
                 <!-- grant summary and cheme added as descriptions -->
                 <xsl:apply-templates select="attributes/grant-summary"/>
+                <xsl:apply-templates select="attributes/funding-at-announcement"/>
                 <xsl:apply-templates select="attributes/scheme-name"/>
                 <!-- investigators without ORCID go in to descriptions -->
                 <!--xsl:apply-templates select="attributes/investigators-at-announcement[orcidIdentifier = 'null'][1]" mode="description"/-->
@@ -262,22 +263,39 @@
     </xsl:template-->
 
 
+
+
+    <xsl:template match="funding-at-announcement">
+        <xsl:if test="normalize-space(.) != ''">
+            <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">
+                    <xsl:text>fundingAmount</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="concat('$', format-number(., '###,###,###'))"/>
+            </description>
+        </xsl:if>
+    </xsl:template>
+    
     <xsl:template match="grant-summary">
-        <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="type">
-                <xsl:text>brief</xsl:text>
-            </xsl:attribute>
-            <xsl:value-of select="."/>
-        </description>
+        <xsl:if test="normalize-space(.) != ''">
+            <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">
+                    <xsl:text>brief</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space(.)"/>
+            </description>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="scheme-name">
-        <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
-            <xsl:attribute name="type">
-                <xsl:text>fundingScheme</xsl:text>
-            </xsl:attribute>
-            <xsl:value-of select="."/>
-        </description>
+        <xsl:if test="normalize-space(.) != ''">
+            <description xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+                <xsl:attribute name="type">
+                    <xsl:text>fundingScheme</xsl:text>
+                </xsl:attribute>
+                <xsl:value-of select="normalize-space(.)"/>
+            </description>
+        </xsl:if>
     </xsl:template>
 
 
