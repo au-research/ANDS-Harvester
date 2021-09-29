@@ -306,7 +306,8 @@
         <xsl:variable name="admin_inst" select="normalize-space(.)"/>
         <xsl:variable name="inst_key"
             select="$adminInstitutions/institutions/institution[name = $admin_inst]/key"/>
-        <xsl:if test="$inst_key">
+        <xsl:choose>
+        <xsl:when test="$inst_key">
             <xsl:element name="relatedObject"
                 xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:element name="key">
@@ -316,13 +317,13 @@
                     <xsl:attribute name="type">isManagedBy</xsl:attribute>
                 </xsl:element>
             </xsl:element>
-        </xsl:if>
-        <xsl:if test="$inst_key = ''">
+        </xsl:when>
+        <xsl:otherwise>
             <xsl:message>
-                <xsl:text>Unmatched admin organisation </xsl:text>
-                <xsl:value-of select="Administering_Organisation"/>
+                <xsl:value-of select="$admin_inst"/>
             </xsl:message>
-        </xsl:if>
+        </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>

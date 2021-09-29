@@ -151,11 +151,11 @@ class test_arcasync_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(resultFile_1))
         self.assertTrue(os.path.exists(resultFile_2))
 
-    def only_during_development_creating_whole_grant_list(self):
+    def test_mockoon_endpoint(self):
         batch_id = "ARCAsync_4"
         ds_id = 33
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://dataportal.arc.gov.au/NCGP/API/grants/'
+        harvestInfo['uri'] = 'https://mock.test.ardc.edu.au/NCGP/API/grants/'
         harvestInfo['provider_type'] = 'ARCAsync'
         harvestInfo['harvest_method'] = 'ARCAsync'
         harvestInfo['data_store_path'] = myconfig.data_store_path
@@ -165,12 +165,15 @@ class test_arcasync_harvester(unittest.TestCase):
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['xsl_file'] = myconfig.abs_path + "/tests/resources/xslt/ARCAPI_json_to_rif-cs.xsl"
-        harvestInfo['mode'] = "TEST"
+        harvestInfo['mode'] = "HARVEST"
         harvestInfo['requestHandler'] = "grequests"
         harvestInfo['title'] = "The Datasource Title"
         harvester = ARCAsyncHarvester(harvestInfo)
         harvester.harvest()
-        #harvester.runCrossWalk()
+        resultFile_1 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.tmp"
+        resultFile_2 = myconfig.data_store_path + str(ds_id) + os.sep + batch_id + os.sep + "combined.xml"
+        self.assertTrue(os.path.exists(resultFile_1))
+        self.assertTrue(os.path.exists(resultFile_2))
 
 
     def fun_test_instance_vs_class_variables(self):

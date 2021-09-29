@@ -65,6 +65,7 @@ class ARCAsyncHarvester(Harvester):
 
     arc_publications_file = None
     admin_institutions_file = None
+    unmatched_admin_organisations = []
 
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
@@ -130,7 +131,7 @@ class ARCAsyncHarvester(Harvester):
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
                     batchCount += 1
-                time.sleep(2) # let them breathe
+                time.sleep(2)  # let them breathe
         else:
             self.getGrants(self.__grantsList)
             if len(self.jsonDict) > 0:
@@ -139,6 +140,14 @@ class ARCAsyncHarvester(Harvester):
                 self.setStatus("Generated %s File(s)" % str(self.recordCount))
                 self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
+        # if the crosswalks have captured unmatched admin institutions add them as an error to the harvester's logs
+        #
+        if len(self.unmatched_admin_organisations) > 0:
+            error_message = "Unmatched admin organisation(s):"
+            for admin_institution in self.unmatched_admin_organisations:
+                error_message += admin_institution.decode("utf-8") + "\n"
+            self.handleExceptions(error_message, False)
+            self.logger.logMessage("%s" % error_message)
         self.postHarvestData()
         self.finishHarvest()
 
@@ -214,7 +223,7 @@ class ARCAsyncHarvester(Harvester):
             # sanity check
             self.recordCount += self.numberOfRecordsReturned
             if self.recordCount >= self.totalCount:
-                self.logger.logMessage(" ARC Harvester (Harvest Completed)", "DEBUG")
+                self.logger.logMessage("ARC Harvester (Harvest Completed)", "DEBUG")
                 self.completed = True
         except Exception:
             self.numberOfRecordsReturned = 0
@@ -356,6 +365,8 @@ class ARCAsyncHarvester(Harvester):
         :rtype:
         """
         self.__xml = Document()
+
+        self.logger.logMessage(fileName)
         outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
         self.logger.logMessage("ARCSyncHarvester (storeDataAsXML) for %s grants" % (len(data)))
         dataFile = open(outputFilePath, 'w')
@@ -365,6 +376,7 @@ class ARCAsyncHarvester(Harvester):
             elif isinstance(data, list):
                 root = self.__xml.createElement('grants')
                 self.__xml.appendChild(root)
+
                 for grantJson in data:
                     grant = json.loads(grantJson)
                     if isinstance(grant['links']['self'], str):
@@ -418,7 +430,11 @@ class ARCAsyncHarvester(Harvester):
                                          'outFile': outFile,
                                          'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
-                    tr.transform()
+                    out, err = tr.transform()
+                    lines = err.splitlines()
+                    for line in lines:
+                        if line not in self.unmatched_admin_organisations:
+                            self.unmatched_admin_organisations.append(line)
                 except subprocess.CalledProcessError as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
                     msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())

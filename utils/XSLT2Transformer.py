@@ -49,8 +49,10 @@ class XSLT2Transformer:
         shellCommand += " " + self.__xsl
         if self.__params != '':
             shellCommand += self.__params
-        subprocess.check_output(shellCommand, stderr=subprocess.STDOUT, shell=True)
-        subprocess.call(shellCommand, shell=True)
+        # we need to access xslt messages in some ARC harvester err <= xsl:messages
+        process = subprocess.Popen(shellCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        out, err = process.communicate()
+        return out, err
 
     def clean_param(self, value):
         new_value = urllib.parse.quote_plus(value)
