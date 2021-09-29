@@ -151,7 +151,9 @@ class test_arcasync_harvester(unittest.TestCase):
         self.assertTrue(os.path.exists(resultFile_1))
         self.assertTrue(os.path.exists(resultFile_2))
 
-    def test_mockoon_endpoint(self):
+    def too_long_test_mockoon_endpoint(self):
+        # since ARC harvester does a Trove harvest if can't find a cache 30 days or newer,
+        # this test shouldn't be run as CI 
         batch_id = "ARCAsync_4"
         ds_id = 33
         harvestInfo = {}
