@@ -21,7 +21,7 @@ class test_magda_query_harvester(unittest.TestCase):
         return data
 
     @patch.object(Request, 'getData')
-    def test_magda_query(self, mockGetData):
+    def only_during_develop_test_magda_query(self, mockGetData):
         batch_id = "MAGDA"
         ds_id = 9
         mockGetData.side_effect = [

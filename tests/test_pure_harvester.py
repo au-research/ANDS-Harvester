@@ -21,7 +21,7 @@ class test_pure_harvester(unittest.TestCase):
         return data
 
     @patch.object(Request, 'getData')
-    def test_uwa_pure(self, mockGetData):
+    def dont_test_uwa_pure(self, mockGetData):
         batch_id = "PURE_UWA"
         ds_id = 1
         mockGetData.side_effect = [
@@ -59,7 +59,7 @@ class test_pure_harvester(unittest.TestCase):
         self.assertIn('<identifier type="doi">http://doi.org/10.4225/57/5b29e9c09280e</identifier>', content)
 
     @patch.object(Request, 'getData')
-    def test_uwa_pure_crosswalk_only(self, mockGetData):
+    def only_dev_test_uwa_pure_crosswalk_only(self, mockGetData):
         batch_id = "PURE_UWA"
         ds_id = 1
         mockGetData.side_effect = [
@@ -116,7 +116,7 @@ class test_pure_harvester(unittest.TestCase):
         harvester.harvest()
 
     # API KEYS PROVIDED BY Melanie (for testing)
-    def only_during_development_test_bond_pure_external(self):
+    def only_during_development_test_bond_pure_external1(self):
         harvestInfo = {}
         harvestInfo['uri'] = 'https://pure.bond.edu.au/ws/api/517/datasets?apiKey=00149b1a-1318-4994-85b7-a4de20105716'
         harvestInfo['harvest_method'] = 'PUREHarvester'

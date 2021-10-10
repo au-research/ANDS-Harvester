@@ -53,3 +53,8 @@ tcp_connection_limit=5
 harvester_specific_datasource_attributes = "'xsl_file','title','harvest_method','uri','provider_type'," \
                                            "'advanced_harvest_mode','oai_set', 'last_harvest_run_date', " \
                                            "'harvest_params','user_defined_params', 'harvest_frequency'"
+
+#ARC API harvest specific configuration
+trove_api2_url = "http://api.trove.nla.gov.au/v2"
+trove_api_key = "API key is acquired and stored by ARDC services team"
+solr_url = 'http://solr_server:solr_port/solr'

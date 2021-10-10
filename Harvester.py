@@ -543,7 +543,7 @@ class Harvester():
         path, dirs, files = next(os.walk(target))
         result = []
 
-        if extension is "*":
+        if extension == "*":
             return files
 
         for file in files:

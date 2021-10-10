@@ -1,4 +1,6 @@
 import urllib
+
+import myconfig
 from Harvester import *
 from bs4 import BeautifulSoup
 from bs4.diagnose import diagnose
@@ -12,7 +14,9 @@ register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
 import asyncio
 from aiohttp import ClientSession, TCPConnector, ClientTimeout, DummyCookieJar, http_exceptions
 from timeit import default_timer
-import ast
+from utils.GrantUtils import SolrClient
+from utils.GrantUtils import TroveClient
+import shutil
 import grequests
 import urllib.parse as urlparse
 class ARCAsyncHarvester(Harvester):
@@ -59,6 +63,10 @@ class ARCAsyncHarvester(Harvester):
     # the number of grants in initial call to scrape grant_ids
     rows = 1000
 
+    arc_publications_file = None
+    admin_institutions_file = None
+    unmatched_admin_organisations = []
+
     def __init__(self, harvestInfo):
         super().__init__(harvestInfo)
         self.jsonDict = []
@@ -74,6 +82,10 @@ class ARCAsyncHarvester(Harvester):
             # generic in-house xslt to convert json-ld (xml) to rifcs
         if self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == "":
             self.harvestInfo['xsl_file'] = myconfig.run_dir + "resources/ARCAPI_json_to_rif-cs.xsl"
+        self.storeFileExtension = 'tmp'
+        self.resultFileExtension = 'xml'
+        self.arc_publications_file = myconfig.data_store_path + "arc_grantpubs.xml"
+        self.admin_institutions_file = myconfig.data_store_path + "arc_admin_institutions.xml"
 
 
     def harvest(self):
@@ -90,14 +102,24 @@ class ARCAsyncHarvester(Harvester):
         self.stopped = False
         self.setupdirs()
         self.setUpCrosswalk()
+        self.logger.logMessage("Gathering Research Publications from Trove")
+        self.setStatus("HARVESTING", "Gathering Research Publications from Trove")
         self.updateHarvestRequest()
+        self.getTrovePublications()
+        self.logger.logMessage("Gathering Funding Institutions From Solr")
+        self.setStatus("HARVESTING", "Gathering Funding Institutions From Solr")
+        self.updateHarvestRequest()
+        self.getFundingInstitutions()
         self.logger.logMessage("ARCSyncHarvester Started")
+        self.updateHarvestRequest()
         self.recordCount = 0
         while not self.errored and not self.completed and not self.stopped \
                 and self.numberOfRecordsReturned > 0:
             self.getGrantsList()
         batchCount = 1
         self.stopped = False
+        self.getFundingInstitutions()
+        self.getTrovePublications()
         if len(self.__grantsList) > self.batchSize:
             grantLists = split(self.__grantsList, self.batchSize)
             for batches in grantLists:
@@ -105,10 +127,11 @@ class ARCAsyncHarvester(Harvester):
                 if len(self.jsonDict) > 0:
                     self.storeJsonData(self.jsonDict, 'combined_%d' %(batchCount))
                     self.storeDataAsXML(self.jsonDict, 'combined_%d' %(batchCount))
+                    self.setStatus("HARVESTING", "Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.logger.logMessage("Saving %d records in combined_%d" % (len(self.jsonDict), batchCount))
                     self.jsonDict.clear()
                     batchCount += 1
-                time.sleep(2) # let them breathe
+                time.sleep(2)  # let them breathe
         else:
             self.getGrants(self.__grantsList)
             if len(self.jsonDict) > 0:
@@ -117,6 +140,14 @@ class ARCAsyncHarvester(Harvester):
                 self.setStatus("Generated %s File(s)" % str(self.recordCount))
                 self.logger.logMessage("Generated %s File(s)" % str(self.recordCount))
         self.runCrossWalk()
+        # if the crosswalks have captured unmatched admin institutions add them as an error to the harvester's logs
+        #
+        if len(self.unmatched_admin_organisations) > 0:
+            error_message = "Unmatched admin organisation(s):"
+            for admin_institution in self.unmatched_admin_organisations:
+                error_message += admin_institution.decode("utf-8") + "\n"
+            self.handleExceptions(error_message, False)
+            self.logger.logMessage("%s" % error_message)
         self.postHarvestData()
         self.finishHarvest()
 
@@ -140,7 +171,7 @@ class ARCAsyncHarvester(Harvester):
             self.logger.logMessage("got data")
             self.pageCall += 1
             self.pageCount += 1
-            package = json.loads(self.data);
+            package = json.loads(self.data)
             self.getRecordCount()
             if isinstance(package, dict):
                 i = 0
@@ -155,8 +186,6 @@ class ARCAsyncHarvester(Harvester):
             self.handleExceptions(e)
             self.errored = True
             self.__grantsList.append(e)
-            return(e)
-            return
         del getRequest
         return(self.__grantsList)
 
@@ -188,12 +217,13 @@ class ARCAsyncHarvester(Harvester):
 
             if self.totalCount > 0:
                 self.numberOfRecordsReturned = int(data['meta']['actual-page-size'])
+            self.setStatus("HARVESTING", "ARC Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount))
 
             self.logger.logMessage("ARC Harvester (numberOfRecordsReturned) %d of %d" % ((self.numberOfRecordsReturned * self.pageCount), self.totalCount), "DEBUG")
             # sanity check
             self.recordCount += self.numberOfRecordsReturned
             if self.recordCount >= self.totalCount:
-                self.logger.logMessage(" ARC Harvester (Harvest Completed)", "DEBUG")
+                self.logger.logMessage("ARC Harvester (Harvest Completed)", "DEBUG")
                 self.completed = True
         except Exception:
             self.numberOfRecordsReturned = 0
@@ -335,6 +365,8 @@ class ARCAsyncHarvester(Harvester):
         :rtype:
         """
         self.__xml = Document()
+
+        self.logger.logMessage(fileName)
         outputFilePath = self.outputDir + os.sep + fileName + "." + self.storeFileExtension
         self.logger.logMessage("ARCSyncHarvester (storeDataAsXML) for %s grants" % (len(data)))
         dataFile = open(outputFilePath, 'w')
@@ -344,6 +376,7 @@ class ARCAsyncHarvester(Harvester):
             elif isinstance(data, list):
                 root = self.__xml.createElement('grants')
                 self.__xml.appendChild(root)
+
                 for grantJson in data:
                     grant = json.loads(grantJson)
                     if isinstance(grant['links']['self'], str):
@@ -377,23 +410,31 @@ class ARCAsyncHarvester(Harvester):
         :return:
         :rtype:
         """
+        self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+        self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
         if self.stopped or self.harvestInfo['xsl_file'] is None or self.harvestInfo['xsl_file'] == '':
             return
+        transformCount = 0
         self.logger.logMessage("runCrossWalk XSLT: %s" % self.harvestInfo['xsl_file'])
         self.logger.logMessage("OutDir: %s" % self.outputDir)
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
                 self.logger.logMessage("runCrossWalk %s" %file)
+                transformCount += 1
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
+                self.setStatus('RUNNING %s CROSSWALK ' % str(transformCount), "Generating %s:" % outFile)
                 inFile = self.outputDir + os.sep + file
                 try:
                     parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
-                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'], 'outFile': outFile,
-                                         'inFile': inFile, 'originatingSource':"%s://%s" % (parsed_url.scheme, parsed_url.netloc),
-                                         'group': self.harvestInfo['title']}
-
+                    transformerConfig = {'xsl': self.harvestInfo['xsl_file'],
+                                         'outFile': outFile,
+                                         'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
-                    tr.transform()
+                    out, err = tr.transform()
+                    lines = err.splitlines()
+                    for line in lines:
+                        if line not in self.unmatched_admin_organisations:
+                            self.unmatched_admin_organisations.append(line)
                 except subprocess.CalledProcessError as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
                     msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
@@ -424,6 +465,34 @@ class ARCAsyncHarvester(Harvester):
 
     def printTestList(self):
         print(*self.testList, sep = "\n")
+
+    def getTrovePublications(self):
+
+        temp_file = "/tmp/trove_publications.xml"
+        troveClient = TroveClient(myconfig.trove_api2_url, myconfig.trove_api_key, temp_file)
+        if os.path.isfile(self.arc_publications_file):
+            file_last_modified = os.path.getmtime(self.arc_publications_file)
+            if time.time() - file_last_modified > (3 * 30 * 24 * 60 * 60):
+                self.logger.logMessage("Trove publications cache is older than 30 days, re-harvesting...")
+                troveClient.harvest()
+                if (os.path.getsize(temp_file) > 100000):
+                    # we've got something so copy it into cache
+                    shutil.copy(temp_file, self.arc_publications_file)
+            else:
+                self.logger.logMessage("Current up to date (less than 30 days old) Trove publications cache exists")
+        else:
+            self.logger.logMessage("Trove publications cache doesn't exist, harvesting from Trove started...")
+            troveClient.harvest()
+            if (os.path.getsize(temp_file) > 100000):
+                # we've got something so copy it into cache
+                shutil.copy(temp_file, self.arc_publications_file)
+
+
+
+    def getFundingInstitutions(self):
+        self.logger.logMessage("Gathering Funding Institutions from SOLR %s" % myconfig.solr_url)
+        solrClient = SolrClient(myconfig.solr_url)
+        solrClient.get_trove_groups(self.admin_institutions_file)
 
 def split(arr, size):
     """
