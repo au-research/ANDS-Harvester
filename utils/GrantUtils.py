@@ -78,7 +78,7 @@ class SolrClient:
         file = open(file_path, "wb")
         params = {}
         params["fl"] = "title,key,group,identifier_value"
-        params["fq"] = "group:Trove*"
+        params["fq"] = "group:*Organisations || group:*Institutions"
         params["q"] = "type:group"
         params["rows"] = "1000"
         params["wt"] = "xml"

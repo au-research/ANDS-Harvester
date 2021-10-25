@@ -105,11 +105,11 @@ class ARCAsyncHarvester(Harvester):
         self.logger.logMessage("Gathering Research Publications from Trove")
         self.setStatus("HARVESTING", "Gathering Research Publications from Trove")
         self.updateHarvestRequest()
-        self.getTrovePublications()
+        self.getFundingInstitutions()
         self.logger.logMessage("Gathering Funding Institutions From Solr")
         self.setStatus("HARVESTING", "Gathering Funding Institutions From Solr")
         self.updateHarvestRequest()
-        self.getFundingInstitutions()
+        self.getTrovePublications()
         self.logger.logMessage("ARCSyncHarvester Started")
         self.updateHarvestRequest()
         self.recordCount = 0
@@ -118,8 +118,6 @@ class ARCAsyncHarvester(Harvester):
             self.getGrantsList()
         batchCount = 1
         self.stopped = False
-        self.getFundingInstitutions()
-        self.getTrovePublications()
         if len(self.__grantsList) > self.batchSize:
             grantLists = split(self.__grantsList, self.batchSize)
             for batches in grantLists:
@@ -145,9 +143,9 @@ class ARCAsyncHarvester(Harvester):
         if len(self.unmatched_admin_organisations) > 0:
             error_message = "Unmatched admin organisation(s):"
             for admin_institution in self.unmatched_admin_organisations:
-                error_message += admin_institution.decode("utf-8") + "\n"
-            self.handleExceptions(error_message, False)
-            self.logger.logMessage("%s" % error_message)
+                error_message += admin_institution.decode("utf-8") + ","
+            self.handleExceptions(error_message[:-1], False)
+            self.logger.logMessage("%s" % error_message[:-1])
         self.postHarvestData()
         self.finishHarvest()
 
@@ -431,8 +429,10 @@ class ARCAsyncHarvester(Harvester):
                                          'inFile': inFile}
                     tr = XSLT2Transformer(transformerConfig)
                     out, err = tr.transform()
+                    # collect all missing admin organisation messages from the XSLT
                     lines = err.splitlines()
                     for line in lines:
+                        # add only unique ones
                         if line not in self.unmatched_admin_organisations:
                             self.unmatched_admin_organisations.append(line)
                 except subprocess.CalledProcessError as e:
