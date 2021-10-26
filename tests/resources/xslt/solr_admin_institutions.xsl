@@ -30,10 +30,13 @@
     -->  
     
     <xsl:template match="doc">
+        <!-- don't add duplicate institutions to the output document -->
+        <xsl:if test="not(preceding-sibling::doc/str[@name='title'] = str[@name='title'])">
             <institution>
                 <name><xsl:value-of select="str[@name='title']/text()"/></name>
                 <key><xsl:value-of select="str[@name='key']/text()"/></key>
             </institution>
+        </xsl:if>
     </xsl:template>
     
 </xsl:stylesheet>
