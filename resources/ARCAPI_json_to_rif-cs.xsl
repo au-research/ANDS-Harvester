@@ -304,12 +304,13 @@
         <!-- This section uses a lookup table 'arc_admin_institutions.xml' -->
 
         <xsl:variable name="admin_inst" select="normalize-space(.)"/>
-        <xsl:variable name="inst_key"
-            select="$adminInstitutions/institutions/institution[name = $admin_inst]/key"/>
+        <!-- we may have more than one match;
+                the group order is Trove first then the rest 
+                so pick the first one -->
+        <xsl:variable name="inst_key" select="$adminInstitutions/institutions/institution[name = $admin_inst][1]/key"/>
         <xsl:choose>
         <xsl:when test="$inst_key">
-            <xsl:element name="relatedObject"
-                xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:element name="relatedObject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:element name="key">
                     <xsl:value-of select="$inst_key"/>
                 </xsl:element>

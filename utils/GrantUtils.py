@@ -80,6 +80,9 @@ class SolrClient:
         params["fl"] = "title,key,group,identifier_value"
         params["fq"] = "group:*Organisations || group:*Institutions"
         params["q"] = "type:group"
+        # Order by group descending so "Trove - People and Organisations" will bubble up
+        # and "Australian Research Institutions" will show up last
+        params["sort"] = "group desc"
         params["rows"] = "1000"
         params["wt"] = "xml"
         query = urllib.parse.urlencode(params)
@@ -92,4 +95,10 @@ class SolrClient:
         #print(result)
         result.write_output(file)
         file.close()
-       # "http://130.56.62.162:8983/solr/portal/select?fl=title%2Ckey%2C%20group%2Cidentifier_value&fq=group%3A*People*&q=type%3Agroup&rows=1000&wt=xml"
+        # "http://130.56.62.162:8983/solr/portal/select
+        # ?fl=title%2Ckey%2Cgroup%2Cidentifier_value
+        # &fq=group%3A*Organisations%20%7C%7C%20group%3A*Institutions
+        # &q=type%3Agroup
+        # &rows=1000
+        # &sort=group%20desc
+        # &wt=xml"
