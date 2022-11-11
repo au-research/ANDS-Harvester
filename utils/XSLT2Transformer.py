@@ -44,9 +44,9 @@ class XSLT2Transformer:
         """
         shellCommand = myconfig.java_home + " "
         shellCommand += " -cp " + myconfig.saxon_jar + " net.sf.saxon.Transform"
-        shellCommand += " -o " + self.__outfile
-        shellCommand += " " + self.__inputFile
-        shellCommand += " " + self.__xsl
+        shellCommand += " -o:" + self.__outfile
+        shellCommand += " -s:" + self.__inputFile
+        shellCommand += " -xsl:" + self.__xsl
         if self.__params != '':
             shellCommand += self.__params
         # we need to access xslt messages in some ARC harvester err <= xsl:messages

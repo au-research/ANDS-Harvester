@@ -16,7 +16,7 @@
         <setSpec>group:Flinders0x20University</setSpec>
       </header>
       <metadata>
-        <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd">
+        <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects https://researchdata.edu.au/documentation/rifcs/schema/registryObjects.xsd">
           <registryObject group="Flinders University">
             <key>http://hdl.handle.net/2328.1/1483d</key>
             <originatingSource>https://redbox.flinders.edu.au/redbox/</originatingSource>

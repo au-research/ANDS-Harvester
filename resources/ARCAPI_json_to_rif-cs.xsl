@@ -36,7 +36,7 @@
     <xsl:template match="grants">
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="xsi:schemaLocation">
-                <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
+                <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects https://researchdata.edu.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
             </xsl:attribute>
             <xsl:apply-templates select="grant" mode="activity"/>
         </registryObjects>
