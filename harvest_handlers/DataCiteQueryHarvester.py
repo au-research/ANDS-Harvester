@@ -1,13 +1,6 @@
 import base64
-import urllib
-
 from Harvester import *
-from crawler.SiteMapCrawler import SiteMapCrawler
 import json
-from xml.dom.minidom import Document
-from utils.Request import Request as myRequest
-import asyncio
-from timeit import default_timer
 import urllib.parse as urlparse
 
 
