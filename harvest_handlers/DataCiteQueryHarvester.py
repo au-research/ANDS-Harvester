@@ -34,6 +34,7 @@ class DataCiteQueryHarvester(Harvester):
     # request header; some servers refuse to respond unless User-Agent is given
     headers = {'User-Agent': 'ARDC Harvester'}
 
+    data_cite_api_url = ""
     data = []
     searchResults = []
     totalCount = 0
@@ -70,6 +71,9 @@ class DataCiteQueryHarvester(Harvester):
         self.setupdirs()
         self.setUpCrosswalk()
         self.updateHarvestRequest()
+
+        parsed_url = urlparse.urlparse(self.harvestInfo['uri'])
+        self.data_cite_api_url = "%s://%s" %(parsed_url.scheme, parsed_url.netloc)
         self.logger.logMessage("DataCiteQueryHarvester Started")
         page_count = 1
         self.retrieveDOIMetadata(page_count)
@@ -98,11 +102,12 @@ class DataCiteQueryHarvester(Harvester):
 
     def getDOIAsXML(self, doi_id):
         try:
-            url = myconfig.data_cite_api_url + '/dois/' + doi_id
-            getRequest = Request(url)
-            self.setStatus("HARVESTING", "Getting single DOI url:%s" %(url))
+
+            api_request_url = self.data_cite_api_url + '/dois/' + doi_id
+            getRequest = Request(api_request_url)
+            self.setStatus("HARVESTING", "Getting single DOI url:%s" % api_request_url)
             self.logger.logMessage(
-                "DATACITE QUERY (Retrieving Single DOI), getting data url:%s" %(url),
+                "DATACITE QUERY (Retrieving Single DOI), getting data url:%s" % api_request_url,
                 "DEBUG")
             response = getRequest.getData()
             doi_metadata = json.loads(response, strict=False)
