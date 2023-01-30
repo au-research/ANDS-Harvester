@@ -36,7 +36,7 @@
     <xsl:template match="grants">
         <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
             <xsl:attribute name="xsi:schemaLocation">
-                <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
+                <xsl:text>http://ands.org.au/standards/rif-cs/registryObjects http://services.ardc.edu.au/documentation/rifcs/schema/registryObjects.xsd</xsl:text>
             </xsl:attribute>
             <xsl:apply-templates select="grant" mode="activity"/>
         </registryObjects>
@@ -303,13 +303,17 @@
 
         <!-- This section uses a lookup table 'arc_admin_institutions.xml' -->
 
-        <xsl:variable name="admin_inst" select="normalize-space(.)"/>
-        <xsl:variable name="inst_key"
-            select="$adminInstitutions/institutions/institution[name = $admin_inst]/key"/>
+        <xsl:variable name="admin_inst" select="."/>
+        <xsl:message>
+            <xsl:value-of select="$admin_inst"/>
+        </xsl:message>
+        <!-- we may have more than one match;
+                the group order is Trove first then the rest 
+                so pick the first one -->
+        <xsl:variable name="inst_key" select="$adminInstitutions/institutions/institution[name = $admin_inst][1]/key"/>
         <xsl:choose>
         <xsl:when test="$inst_key">
-            <xsl:element name="relatedObject"
-                xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
+            <xsl:element name="relatedObject" xmlns="http://ands.org.au/standards/rif-cs/registryObjects">
                 <xsl:element name="key">
                     <xsl:value-of select="$inst_key"/>
                 </xsl:element>
