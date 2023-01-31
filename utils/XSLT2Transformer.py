@@ -49,6 +49,7 @@ class XSLT2Transformer:
         shellCommand += " -xsl:" + self.__xsl
         if self.__params != '':
             shellCommand += self.__params
+            print(shellCommand)
         # we need to access xslt messages in some ARC harvester err <= xsl:messages
         process = subprocess.Popen(shellCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = process.communicate()
