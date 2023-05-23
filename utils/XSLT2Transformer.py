@@ -1,6 +1,6 @@
 import subprocess
 import urllib.parse
-
+from utils.Logger import Logger as MyLogger
 import myconfig
 
 class XSLT2Transformer:
@@ -13,6 +13,7 @@ class XSLT2Transformer:
     __outfile = None
     __inputFile = None
     __params = ''
+    logger = None
 
     def __init__(self, transformerConfig):
         """
@@ -35,7 +36,7 @@ class XSLT2Transformer:
                 self.__inputFile = value
             else:
                 self.__params += " " + key + "='" + self.clean_param(value) + "'"
-
+        self.logger = MyLogger()
 
     def transform(self):
         """
@@ -49,6 +50,7 @@ class XSLT2Transformer:
         shellCommand += " -xsl:" + self.__xsl
         if self.__params != '':
             shellCommand += self.__params
+        self.logger.logMessage("Running xslt transform %s" % shellCommand, "DEBUG")
         # we need to access xslt messages in some ARC harvester err <= xsl:messages
         process = subprocess.Popen(shellCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = process.communicate()

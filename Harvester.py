@@ -9,9 +9,11 @@ from utils.Request import Request
 from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
-import json, numbers, html
+import json
+import numbers
 
-class Harvester():
+
+class Harvester:
     startUpTime = 0
     pageCount = 0
     recordCount = 0
@@ -52,14 +54,16 @@ class Harvester():
         self.logger = MyLogger()
         self.database = MyDataBase()
 
-
-
     def setupdirs(self):
         number_to_keep = 3
         # set up the data source path
         self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
         if not os.path.exists(self.outputDir):
-            os.makedirs(self.outputDir)
+            try:
+                os.makedirs(self.outputDir)
+            except Exception as e:
+                self.logger.logMessage("ERROR Creating directory:%s (%s)," % (self.outputDir, repr(e)), "ERROR")
+                self.handleExceptions(e, terminate=True)
         elif len(os.listdir(self.outputDir)) > number_to_keep:
             the_files = self.listdir_fullpath(self.outputDir)
             the_files.sort(key=os.path.getmtime, reverse=True)
@@ -71,19 +75,22 @@ class Harvester():
                     else:
                         self.emptyDirectory(the_files[i])
                         os.rmdir(the_files[i])
-                except PermissionError as e:
+                except Exception as e:
                     self.logger.logMessage("Unable to remove %s" % fileName, "ERROR")
-        #set up the batch path
+        # set up the batch path
         self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-        try:
-            if not os.path.exists(self.outputDir):
+        if not os.path.exists(self.outputDir):
+            try:
                 os.makedirs(self.outputDir)
-            else:
+            except Exception as e:
+                self.logger.logMessage("ERROR Creating directory:%s (%s)," % (self.outputDir, repr(e)), "ERROR")
+                self.handleExceptions(e, terminate=True)
+        else:
+            try:
                 self.emptyDirectory(self.outputDir)
-        except Exception as e:
-            self.logger.logMessage("ERROR Creating directory:%s (%s)," % str(self.outputDir, repr(e)), "ERROR")
-            self.handleExceptions(e, terminate=True)
-
+            except Exception as e:
+                self.logger.logMessage("ERROR Emptying directory:%s (%s)," % (self.outputDir, repr(e)), "ERROR")
+                self.handleExceptions(e, terminate=False)
 
     def harvest(self):
         """
@@ -108,7 +115,6 @@ class Harvester():
         self.postHarvestData()
         self.finishHarvest()
 
-
     def listdir_fullpath(self, d):
         return [os.path.join(d, f) for f in os.listdir(d)]
 
@@ -132,7 +138,7 @@ class Harvester():
                 else:
                     self.emptyDirectory(file_path)
                     os.rmdir(file_path)
-            except PermissionError as e:
+            except Exception as e:
                 self.logger.logMessage("Unable to emptyDirectory %s" % file_path, "ERROR")
 
     def getHarvestData(self):
@@ -159,24 +165,22 @@ class Harvester():
         also removes all "registry import pipeline" generated content if any
         """
         if self.harvestInfo['xsl_file'] is not None and self.harvestInfo['xsl_file'] != '':
-           self.storeFileExtension = 'tmp'
-        #clean up previous crosswalk and import content
-           self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
-           self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
-           for file in os.listdir(self.outputDir):
-               if file.endswith(self.resultFileExtension) or \
-                       file.endswith(self.resultFileExtension + ".validated") or\
-                       file.endswith(self.resultFileExtension + ".processed"):
-                   try:
-                       if os.path.isfile(self.outputDir + os.sep + file):
-                           os.unlink(self.outputDir + os.sep + file)
-                       else:
-                           self.emptyDirectory(self.outputDir + os.sep + file)
-                           os.rmdir(self.outputDir + os.sep + file)
-                   except PermissionError as e:
-                       self.logger.logMessage("Unable to remove %s" % (self.outputDir + os.sep + file), "ERROR")
-
-
+            self.storeFileExtension = 'tmp'
+            # clean up previous crosswalk and import content
+            self.outputDir = self.harvestInfo['data_store_path'] + str(self.harvestInfo['data_source_id'])
+            self.outputDir = self.outputDir + os.sep + str(self.harvestInfo['batch_number'])
+            for file in os.listdir(self.outputDir):
+                if file.endswith(self.resultFileExtension) or \
+                        file.endswith(self.resultFileExtension + ".validated") or \
+                        file.endswith(self.resultFileExtension + ".processed"):
+                    try:
+                        if os.path.isfile(self.outputDir + os.sep + file):
+                            os.unlink(self.outputDir + os.sep + file)
+                        else:
+                            self.emptyDirectory(self.outputDir + os.sep + file)
+                            os.rmdir(self.outputDir + os.sep + file)
+                    except PermissionError as e:
+                        self.logger.logMessage("Unable to remove %s" % (self.outputDir + os.sep + file), "ERROR")
 
     def runCrossWalk(self):
         """
@@ -193,7 +197,7 @@ class Harvester():
                 transformCount += 1
         for file in os.listdir(self.outputDir):
             if file.endswith(self.storeFileExtension):
-                self.logger.logMessage("runCrossWalk %s" %file)
+                self.logger.logMessage("runCrossWalk %s" % file)
                 outFile = self.outputDir + os.sep + file.replace(self.storeFileExtension, self.resultFileExtension)
                 inFile = self.outputDir + os.sep + file
                 try:
@@ -203,13 +207,12 @@ class Harvester():
                     tr.transform()
                     os.chmod(outFile, 0o775)
                 except subprocess.CalledProcessError as e:
-                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " %(e.output.decode()), "ERROR")
-                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" %(e.output.decode())
+                    self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s " % (e.output.decode()), "ERROR")
+                    msg = "'ERROR WHILE RUNNING CROSSWALK %s '" % (e.output.decode())
                     self.handleExceptions(msg, transformCount == 1)
                 except Exception as e:
                     self.logger.logMessage("ERROR WHILE RUNNING CROSSWALK %s" % str(repr(e)), "ERROR")
                     self.handleExceptions(e, transformCount == 1)
-
 
     def postHarvestData(self):
         """
@@ -219,7 +222,7 @@ class Harvester():
         """
         if self.stopped or self.mode == 'TEST':
             return
-        self.setStatus('HARVESTING' , "batch number completed:"+ self.harvestInfo['batch_number'])
+        self.setStatus('HARVESTING', "batch number completed:" + self.harvestInfo['batch_number'])
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.data = postRequest.postCompleted()
@@ -233,7 +236,9 @@ class Harvester():
         """
         if self.stopped or self.mode == 'TEST':
             return
-        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        self.setStatus(self.__status,
+                       "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(
+                           self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.logger.logMessage("ERROR URL:" + postRequest.getURL(), "INFO")
@@ -249,13 +254,14 @@ class Harvester():
         """
         if self.stopped or self.mode == 'TEST':
             return
-        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(self.errorLog))
+        self.setStatus(self.__status,
+                       "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(
+                           self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.logger.logMessage("NO RECORDS RETURNED URL:" + postRequest.getURL(), "INFO")
         self.data = postRequest.postCompleted()
         del postRequest
-
 
     def updateHarvestRequest(self):
         """
@@ -268,19 +274,19 @@ class Harvester():
         if self.stopped or self.mode == 'TEST':
             return
         upTime = int(time.time()) - self.startUpTime
-        statusDict = {'status':self.__status,
-                      'batch_number':self.harvestInfo['batch_number'],
-                      'mode' : self.harvestInfo['mode'],
+        statusDict = {'status': self.__status,
+                      'batch_number': self.harvestInfo['batch_number'],
+                      'mode': self.harvestInfo['mode'],
                       'message': self.message,
                       'importer_message': self.message,
-                      'error':{'log':str.strip(self.errorLog), 'errored': self.errored},
-                      'completed':str(self.completed),
-                      'start_utc' : str(datetime.fromtimestamp(self.startUpTime,
-                                                               timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
-                      'output':{'file': self.outputFilePath, 'dir': self.outputDir},
-                      'progress':{'current':self.recordCount, 'total':self.listSize,
-                                  'time':str(upTime),'start':str(self.startUpTime), 'end':''}
-                    }
+                      'error': {'log': str.strip(self.errorLog), 'errored': self.errored},
+                      'completed': str(self.completed),
+                      'start_utc': str(datetime.fromtimestamp(self.startUpTime,
+                                                              timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
+                      'output': {'file': self.outputFilePath, 'dir': self.outputDir},
+                      'progress': {'current': self.recordCount, 'total': self.listSize,
+                                   'time': str(upTime), 'start': str(self.startUpTime), 'end': ''}
+                      }
         attempts = 0
         while attempts < 3:
             try:
@@ -304,7 +310,6 @@ class Harvester():
                 self.logger.logMessage(
                     '(updateHarvestRequest) %s, Retry: %d' % (str(repr(e)), attempts), "ERROR")
 
-
     def checkHarvestStatus(self):
         """
         Periodically check the harvester status in case the registry user stopped the harvest while it was running
@@ -319,27 +324,27 @@ class Harvester():
                 conn = self.database.getConnection()
                 cur = conn.cursor()
                 cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
-                if(cur.rowcount > 0):
+                            % (myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "STOPPED%"))
+                if (cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
                     self.logger.logMessage("HARVEST STOPPED WHILE RUNNING", "DEBUG")
                 if self.completed:
                     cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                                %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
-                    if(cur.rowcount > 0):
+                                % (myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "SCHEDULED%"))
+                    if (cur.rowcount > 0):
                         self.__status = cur.fetchone()[0]
                         self.stopped = True
                         self.logger.logMessage("HARVEST COMPLETED / RE-SCHEDULED", "DEBUG")
                     cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                                %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
-                    if(cur.rowcount > 0):
+                                % (myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "IMPORTING%"))
+                    if (cur.rowcount > 0):
                         self.__status = cur.fetchone()[0]
                         self.stopped = True
                         self.logger.logMessage("REGISTRY IS IMPORTING", "DEBUG")
                 cur.execute("SELECT status FROM %s where `harvest_id` =%s and `status` like '%s';"
-                            %(myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
-                if(cur.rowcount > 0):
+                            % (myconfig.harvest_table, str(self.harvestInfo['harvest_id']), "COMPLETED%"))
+                if (cur.rowcount > 0):
                     self.__status = cur.fetchone()[0]
                     self.stopped = True
                     self.logger.logMessage("HARVEST COMPLETED", "DEBUG")
@@ -359,7 +364,7 @@ class Harvester():
         :return:
         :rtype:
         """
-        if self.stopped or not(self.data):
+        if self.stopped or not (self.data):
             return
         try:
             if self.is_json(self.data):
@@ -378,7 +383,6 @@ class Harvester():
             self.handleExceptions(e)
             self.logger.logMessage("Harvester (storeHarvestData) %s " % (str(repr(e))), "ERROR")
 
-
     def storeJsonData(self, data, fileName):
         """
         Use jsondump to save the json Objects into a file
@@ -390,7 +394,7 @@ class Harvester():
         :rtype:
         """
         if self.stopped:
-           return
+            return
         try:
             outputFilePath = self.outputDir + os.sep + fileName + ".json"
             self.logger.logMessage("Harvester (storeJsonData) %s " % (outputFilePath), "DEBUG")
@@ -401,7 +405,6 @@ class Harvester():
         except Exception as e:
             self.handleExceptions(e)
             self.logger.logMessage("Harvester (storeJsonData) %s " % (str(repr(e))), "ERROR")
-
 
     def storeDataAsXML(self, data, fileName):
         """
@@ -414,7 +417,7 @@ class Harvester():
         :rtype:
         """
         if self.stopped:
-           return
+            return
         try:
             self.__xml = Document()
             root = self.__xml.createElement('datasets')
@@ -436,8 +439,6 @@ class Harvester():
             self.logger.logMessage("Harvester (storeDataAsXML) %s " % (self.outputFilePath), "DEBUG")
         except Exception as e:
             self.logger.logMessage("Harvester (storeDataAsXML) %s " % (str(repr(e))), "ERROR")
-
-
 
     def is_json(self, myjson):
         """
@@ -463,16 +464,16 @@ class Harvester():
         self.checkRunTime()
         upTime = int(time.time()) - self.startUpTime
         return "STATUS: %s, UP TIME: %s, METHOD: %s, HARVEST ID: %s, DATA_SOURCE_TITLE %s SCHEDULED %s" \
-               %(self.__status, str(upTime), self.harvestInfo['harvest_method'],
-                 str(self.harvestInfo['harvest_id']),self.harvestInfo['title'],
-                 self.harvestInfo['until_date'])
+            % (self.__status, str(upTime), self.harvestInfo['harvest_method'],
+               str(self.harvestInfo['harvest_id']), self.harvestInfo['title'],
+               self.harvestInfo['until_date'])
 
     def finishHarvest(self):
         self.completed = True
-        self.__status= 'HARVEST COMPLETED'
-        if(self.errorLog != ''):
+        self.__status = 'HARVEST COMPLETED'
+        if (self.errorLog != ''):
             self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
-                                   %(str(self.harvestInfo['harvest_id']),self.errorLog), "ERROR")
+                                   % (str(self.harvestInfo['harvest_id']), self.errorLog), "ERROR")
         self.updateHarvestRequest()
         self.write_summary()
         self.stopped = True
@@ -560,14 +561,14 @@ class Harvester():
         :return: integer
         """
         if os.path.isfile(target):
-            return os.path.getsize(target) / (1024*1024.0)
+            return os.path.getsize(target) / (1024 * 1024.0)
         elif os.path.isdir(target):
             folder_size = 0
             for (path, dirs, files) in os.walk(target):
                 for file in files:
                     filename = os.path.join(path, file)
                     folder_size += os.path.getsize(filename)
-            return folder_size / (1024*1024.0)
+            return folder_size / (1024 * 1024.0)
         else:
             return 0
 
@@ -616,22 +617,21 @@ class Harvester():
         if self.stopped:
             return
         self.logger.logMessage("STOPPING harvestID: %s WITH STATUS: %s"
-                               %(str(self.harvestInfo['harvest_id']), self.__status), "INFO")
+                               % (str(self.harvestInfo['harvest_id']), self.__status), "INFO")
         self.updateHarvestRequest()
         self.stopped = True
 
     def rescheduleHarvest(self):
-        self.__status= 'SCHEDULED'
+        self.__status = 'SCHEDULED'
         self.message = "harvester shut down"
         self.logger.logMessage("harvest_id: %s status: %s"
-                               %(str(self.harvestInfo['harvest_id']) ,self.__status), "INFO")
+                               % (str(self.harvestInfo['harvest_id']), self.__status), "INFO")
         try:
             self.updateHarvestRequest()
             self.stopped = True
         except Exception as e:
             self.logger.logMessage("CAN NOT RESCHEDULE harvestid: %s ERROR: %s"
-                                   %(str(self.harvestInfo['harvest_id']), str(repr(e))), "ERROR")
-
+                                   % (str(self.harvestInfo['harvest_id']), str(repr(e))), "ERROR")
 
     def setStatus(self, status, message="no message"):
         self.__status = status
@@ -651,9 +651,9 @@ class Harvester():
         upTime = int(time.time()) - self.startUpTime
         if upTime > myconfig.max_up_seconds_per_harvest:
             self.errorLog = 'HARVEST TOOK LONGER THAN %s minutes' \
-                            %(str(myconfig.max_up_seconds_per_harvest/60)) + self.errorLog
-            self.handleExceptions(exception={'message':'HARVEST TOOK LONGER THAN %s minutes'
-                                                       %(str(myconfig.max_up_seconds_per_harvest/60))})
+                            % (str(myconfig.max_up_seconds_per_harvest / 60)) + self.errorLog
+            self.handleExceptions(exception={'message': 'HARVEST TOOK LONGER THAN %s minutes'
+                                                        % (str(myconfig.max_up_seconds_per_harvest / 60))})
 
     def handleNoRecordsMatch(self, errorCode):
         self.__status = 'NORECORDS'
@@ -672,14 +672,13 @@ class Harvester():
         """
         self.errored = True
         if terminate:
-            self.__status= 'ERROR'
-            self.errorLog = self.errorLog  + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
+            self.__status = 'ERROR'
+            self.errorLog = self.errorLog + str(exception).replace('\n', ',').replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
             self.postHarvestError()
             self.stopped = True
         else:
-            self.errorLog = self.errorLog + str(exception).replace('\n',',').replace("'", "").replace('"', "") + ", "
-
+            self.errorLog = self.errorLog + str(exception).replace('\n', ',').replace("'", "").replace('"', "") + ", "
 
     def parse_element(self, root, j):
         """
@@ -719,8 +718,9 @@ class Harvester():
             text = self.__xml.createTextNode("true")
             root.appendChild(text)
         elif isinstance(j, str):
-            text = self.__xml.createTextNode(j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
-            #text = self.__xml.createTextNode(html.escape(j, quote=True))
+            text = self.__xml.createTextNode(
+                j.encode('ascii', 'xmlcharrefreplace').decode('utf-8').encode('unicode-escape').decode('utf-8'))
+            # text = self.__xml.createTextNode(html.escape(j, quote=True))
             root.appendChild(text)
         elif isinstance(j, numbers.Number):
             text = self.__xml.createTextNode(str(j))
@@ -732,7 +732,6 @@ class Harvester():
                 root.appendChild(elem)
         else:
             raise Exception("bad type %s for %s" % (type(j), j,))
-
 
     def getElement(self, jsonld_key):
         """
