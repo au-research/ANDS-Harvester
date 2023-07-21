@@ -17,10 +17,7 @@ class SlackUtils:
 
     def post_message(self, text, data_source_id, message_type='INFO'):
         """
-        actually this method just send a GET request
-        this is the "agreed" communication between the harvester and the registry
-        :return:
-        :rtype:
+        Send Messages to the configured Slack channel
         """
         if not self.webhook_url:
             return

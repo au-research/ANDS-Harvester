@@ -470,9 +470,13 @@ class Harvester:
     def finishHarvest(self):
         self.completed = True
         self.__status = 'HARVEST COMPLETED'
-        if (self.errorLog != ''):
-            self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
-                                   % (str(self.harvestInfo['harvest_id']), self.errorLog), "ERROR")
+        if self.errorLog != '':
+            msg = "HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s" % (str(self.harvestInfo['harvest_id']), self.errorLog)
+            self.logger.logMessage(msg, "ERROR")
+            self.updateSlackChannel(msg, self.harvestInfo['data_source_id'], "INFO")
+        else:
+            self.updateSlackChannel("Harvest Completed For:" + self.harvestInfo['title'],
+                                    self.harvestInfo['data_source_id'], "INFO")
         self.updateHarvestRequest()
         self.write_summary()
         self.stopped = True
@@ -526,7 +530,6 @@ class Harvester:
                 'size': output_size
             }
         }
-        self.updateSlackChannel("harvest Completed For:" + self.harvestInfo['title'], self.harvestInfo['data_source_id'], "INFO")
         self.write_to_field(summary, 'summary')
 
     @staticmethod
