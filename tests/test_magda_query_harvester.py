@@ -38,6 +38,7 @@ class test_magda_query_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 7
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -67,6 +68,7 @@ class test_magda_query_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = '9'
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = '7'
         harvestInfo['batch_number'] = "MAGDA_SOLR_DATA_GOV"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"

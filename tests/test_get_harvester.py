@@ -31,6 +31,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 2
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -64,6 +65,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 2
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -104,6 +106,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 3
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -135,12 +138,13 @@ class test_get_harvester(unittest.TestCase):
 
     def only_during_development_test_XML_get_external(self):
         harvestInfo = {}
-        harvestInfo['uri'] = 'https://devl.ands.org.au/leo/UniSA_reimport280817.xml'
+        harvestInfo['uri'] = 'http://www.austlii.edu.au/resources.xml'
         harvestInfo['provider_type'] = 'GET'
         harvestInfo['harvest_method'] = 'GET'
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "GET_XML_LIVE"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -160,6 +164,7 @@ class test_get_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "GET_JSON_LIVE"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"

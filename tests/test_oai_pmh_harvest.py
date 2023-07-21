@@ -34,6 +34,7 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['last_harvest_run_date'] = ''
         harvestInfo['batch_number'] = batch_id
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['data_source_slug'] = "TEST"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
@@ -63,6 +64,7 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['batch_number'] = batch_id
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['data_source_slug'] = "TEST"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
@@ -97,6 +99,7 @@ class test_oai_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
         harvestInfo['batch_number'] = batch_id
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['data_source_slug'] = "TEST"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1

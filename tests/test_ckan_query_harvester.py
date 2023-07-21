@@ -39,6 +39,7 @@ class test_ckan_query_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -68,6 +69,7 @@ class test_ckan_query_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = '8'
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = '6'
         harvestInfo['batch_number'] = "CKAN_DATA_GOV_UK"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -88,6 +90,7 @@ class test_ckan_query_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = '8'
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = '6'
         harvestInfo['batch_number'] = "CKAN_DATA_GOV_UK"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
