@@ -54,6 +54,8 @@ class Harvester:
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
+        self.updateSlackChannel("Harvest Starting For:" + self.harvestInfo['title'],
+                                self.harvestInfo['data_source_id'], "INFO")
 
     def setupdirs(self):
         number_to_keep = 3
@@ -473,7 +475,7 @@ class Harvester:
         if self.errorLog != '':
             msg = "HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s" % (str(self.harvestInfo['harvest_id']), self.errorLog)
             self.logger.logMessage(msg, "ERROR")
-            self.updateSlackChannel(msg, self.harvestInfo['data_source_id'], "INFO")
+            self.updateSlackChannel(msg, self.harvestInfo['data_source_id'], "ERROR")
         else:
             self.updateSlackChannel("Harvest Completed For:" + self.harvestInfo['title'],
                                     self.harvestInfo['data_source_id'], "INFO")
