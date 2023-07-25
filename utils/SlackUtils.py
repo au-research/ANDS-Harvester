@@ -25,17 +25,17 @@ class SlackUtils:
             return
         if self.logLevels[message_type] < self.logLevel:
             return
-        colour = "#00FF00"
+        colour = "#00AA00"
         if message_type == 'ERROR':
-            colour = "#FF0000"
+            colour = "#AA0000"
         if message_type == 'DEBUG':
-            colour = "#0000FF"
+            colour = "#0000AA"
         http_adapter = HTTPAdapter(max_retries=self.retryCount)
         session = requests.Session()
         session.mount(self.webhook_url, http_adapter)
         data = {
                 "channel": self.channel_id,
-                "text": myconfig.slack_harvester_name + " " + message_type,
+                "text": myconfig.slack_app_name + " " + message_type,
                 "attachments": [
                     {
                         "text": text,
