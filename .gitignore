@@ -22,3 +22,4 @@ coverage.xml
 junit.xml
 htmlcov
 venv
+/venv-local/

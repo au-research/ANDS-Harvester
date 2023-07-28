@@ -2,9 +2,10 @@ import requests
 from requests.adapters import HTTPAdapter
 import urllib3
 import myconfig
+import sys
+
 
 class SlackUtils:
-
     webhook_url = None
     channel_id = None
     logLevels = {'ERROR': 100, 'INFO': 50, 'DEBUG': 10}
@@ -34,26 +35,28 @@ class SlackUtils:
         session = requests.Session()
         session.mount(self.webhook_url, http_adapter)
         data = {
-                "channel": self.channel_id,
-                "text": myconfig.slack_app_name + " " + message_type,
-                "attachments": [
-                    {
-                        "text": text,
-                        "color": colour
-                    },
-                    {
-                        "type": "mrkdwn",
-                        "text": "View the <" + myconfig.slack_registry_datasource_view_url + str(data_source_id)
-                                + "|DataSource> for more details",
-                        "color": colour
-                    }
-                ]
-            }
+            "channel": self.channel_id,
+            "text": myconfig.slack_app_name + " " + message_type,
+            "attachments": [
+                {
+                    "text": text,
+                    "color": colour
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "View the <" + myconfig.slack_registry_datasource_view_url + str(data_source_id)
+                            + "|DataSource> for more details",
+                    "color": colour
+                }
+            ]
+        }
         try:
             header = {'User-Agent': 'ARDC Harvester'}
             response = session.post(self.webhook_url, json=data, headers=header, verify=False)
             response.raise_for_status()
             session.close()
-        except Exception as e:
+            return response.status_code
+        except Exception:
+            e = sys.exc_info()[1]
             session.close()
-            pass
+            return repr(e)
