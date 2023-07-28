@@ -22,10 +22,11 @@ class SlackUtils:
         """
         Send Messages to the configured Slack channel
         """
+        # if not set fake the 200 response code
         if not self.webhook_url:
-            return
+            return 200
         if self.logLevels[message_type] < self.logLevel:
-            return
+            return 200
         colour = "#00AA00"
         if message_type == 'ERROR':
             colour = "#AA0000"
