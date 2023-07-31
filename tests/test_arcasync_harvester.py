@@ -76,6 +76,7 @@ class test_arcasync_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -107,6 +108,7 @@ class test_arcasync_harvester(unittest.TestCase):
         harvestInfo_1['data_store_path'] = myconfig.data_store_path
         harvestInfo_1['response_url'] = myconfig.response_url
         harvestInfo_1['data_source_id'] = ds_id_1
+        harvestInfo_1['title'] = "The Title of the datasource"
         harvestInfo_1['harvest_id'] = 1
         harvestInfo_1['batch_number'] = batch_id_1
         harvestInfo_1['advanced_harvest_mode'] = "STANDARD"
@@ -124,6 +126,7 @@ class test_arcasync_harvester(unittest.TestCase):
         harvestInfo_2['data_store_path'] = myconfig.data_store_path
         harvestInfo_2['response_url'] = myconfig.response_url
         harvestInfo_2['data_source_id'] = ds_id_2
+        harvestInfo_2['title'] = "The Title of the datasource"
         harvestInfo_2['harvest_id'] = 9
         harvestInfo_2['batch_number'] = batch_id_2
         harvestInfo_2['advanced_harvest_mode'] = "STANDARD"

@@ -29,6 +29,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "REFRESH"
         harvestInfo['batch_number'] = batch_id
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['data_source_slug'] = "TERN-Geonetwork"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1
@@ -60,6 +61,7 @@ class test_csw_harvester(unittest.TestCase):
         harvestInfo['advanced_harvest_mode'] = "REFRESH"
         harvestInfo['batch_number'] = "CSW_TERN_LIVE"
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['data_source_slug'] = "TERN-Geonetwork"
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['harvest_id'] = 1

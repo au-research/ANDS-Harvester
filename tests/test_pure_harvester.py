@@ -37,6 +37,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -75,6 +76,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = ds_id
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = batch_id
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -103,6 +105,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "PURE_UWA_LIVE"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -123,6 +126,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "PURE_BOND_LIVE"
         harvestInfo['advanced_harvest_mode'] = "STANDARD"
@@ -139,6 +143,7 @@ class test_pure_harvester(unittest.TestCase):
         harvestInfo['data_store_path'] = myconfig.data_store_path
         harvestInfo['response_url'] = myconfig.response_url
         harvestInfo['data_source_id'] = 7
+        harvestInfo['title'] = "The Title of the datasource"
         harvestInfo['harvest_id'] = 1
         harvestInfo['batch_number'] = "PURE_UWA_EQUIP"
         harvestInfo['xsl_file'] = ''

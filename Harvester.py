@@ -6,6 +6,7 @@ from utils.RedisPoster import RedisPoster
 from utils.Logger import Logger as MyLogger
 from utils.Database import DataBase as MyDataBase
 from utils.Request import Request
+from utils.SlackUtils import SlackUtils
 from utils.XSLT2Transformer import XSLT2Transformer
 import subprocess
 import myconfig
@@ -53,6 +54,8 @@ class Harvester:
         self.redisPoster = RedisPoster()
         self.logger = MyLogger()
         self.database = MyDataBase()
+        self.updateSlackChannel("Harvest Starting For:" + self.harvestInfo['title'],
+                                self.harvestInfo['data_source_id'], "INFO")
 
     def setupdirs(self):
         number_to_keep = 3
@@ -230,15 +233,13 @@ class Harvester:
 
     def postHarvestError(self):
         """
-        same as postHarvestData except the status will be ERROR so the apropriate import pipeline will be applied
+        same as postHarvestData except the status will be ERROR so the appropriate import pipeline will be applied
         :return:
         :rtype:
         """
         if self.stopped or self.mode == 'TEST':
             return
-        self.setStatus(self.__status,
-                       "batch number " + self.harvestInfo['batch_number'] + " completed witherror:" + str.strip(
-                           self.errorLog))
+        self.setStatus(self.__status, "batch number " + self.harvestInfo['batch_number'] + " completed with error:" + str.strip(self.errorLog))
         postRequest = Request(self.harvestInfo['response_url'] + "?ds_id=" + str(self.harvestInfo['data_source_id'])
                               + "&batch_id=" + self.harvestInfo['batch_number'] + "&status=" + self.__status)
         self.logger.logMessage("ERROR URL:" + postRequest.getURL(), "INFO")
@@ -471,9 +472,13 @@ class Harvester:
     def finishHarvest(self):
         self.completed = True
         self.__status = 'HARVEST COMPLETED'
-        if (self.errorLog != ''):
-            self.logger.logMessage("HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s"
-                                   % (str(self.harvestInfo['harvest_id']), self.errorLog), "ERROR")
+        if self.errorLog != '':
+            msg = "HARVEST ID:%s COMPLETED WITH SOME ERRORS:%s" % (str(self.harvestInfo['harvest_id']), self.errorLog)
+            self.logger.logMessage(msg, "ERROR")
+            self.updateSlackChannel(msg, self.harvestInfo['data_source_id'], "ERROR")
+        else:
+            self.updateSlackChannel("Harvest Completed For:" + self.harvestInfo['title'],
+                                    self.harvestInfo['data_source_id'], "INFO")
         self.updateHarvestRequest()
         self.write_summary()
         self.stopped = True
@@ -675,10 +680,15 @@ class Harvester:
             self.__status = 'ERROR'
             self.errorLog = self.errorLog + str(exception).replace('\n', ',').replace("'", "").replace('"', "") + ", "
             self.updateHarvestRequest()
+            self.updateSlackChannel(self.errorLog, self.harvestInfo['data_source_id'], "ERROR")
             self.postHarvestError()
             self.stopped = True
         else:
             self.errorLog = self.errorLog + str(exception).replace('\n', ',').replace("'", "").replace('"', "") + ", "
+
+    def updateSlackChannel(self, message, data_source_id, log_level):
+        slack_util = SlackUtils(myconfig.slack_channel_webhook_url, myconfig.slack_channel_id)
+        slack_util.post_message(message, data_source_id, log_level)
 
     def parse_element(self, root, j):
         """
